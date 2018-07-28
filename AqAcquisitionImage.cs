@@ -50,7 +50,7 @@ namespace AqVision.Acquistion
         {
             int ibmpLen = strBmpBase64.Length;
             m_RevBitmap = AqVision.Utility.Base64.Base64ToBitmap(strBmpBase64);
-            AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting OnReceiveBitmap end ");
+            AqVision.Interaction.UI2LibInterface.OutputDebugString("end show bmp");
             m_GetBitmapSuc = true;
         }
 
@@ -61,52 +61,25 @@ namespace AqVision.Acquistion
 
         public bool Connect()
         {
-            try
-            {
-                AqVision.Interaction.UI2LibInterface.Disconnect();
-                AqVision.Interaction.UI2LibInterface.Connect();
-            }
-            catch(Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("IntegrationTesting Connect error " + ex.Message);
-                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect error " + ex.Message);
-            }
-            
+            AqVision.Interaction.UI2LibInterface.Connect();
             return true;
         }
 
         public bool DisConnect()
         {
-            try
-            {
-                AqVision.Interaction.UI2LibInterface.Disconnect();
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("IntegrationTesting DisConnect error " + ex.Message);
-                AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting DisConnect error " + ex.Message);
-            }
-            
+            AqVision.Interaction.UI2LibInterface.Disconnect();
             return true;
         }
 
         public System.Drawing.Bitmap Acquisition()
         {
-            try
+            m_GetBitmapSuc = false;
+            AqVision.Interaction.UI2LibInterface.GetBitmap(1, 0);
+            while(!m_GetBitmapSuc)
             {
-                m_GetBitmapSuc = false;
-                AqVision.Interaction.UI2LibInterface.GetBitmap(1, 0);
-                while (!m_GetBitmapSuc)
-                {
-                    Thread.Sleep(10);
-                }
-                return RevBitmap;
+                Thread.Sleep(10);
             }
-            catch (Exception ex)
-            {
-                AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting get bitmp error " + ex.Message);
-                return null;
-            }
+            return RevBitmap;
         }
     }
 }

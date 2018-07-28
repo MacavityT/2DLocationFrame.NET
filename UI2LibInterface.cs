@@ -31,13 +31,5 @@ namespace AqVision.Interaction
 
         [System.Runtime.InteropServices.DllImport("ProtoLayer.dll")]
         public static extern void Disconnect();
-
-        [System.Runtime.InteropServices.DllImport("ProtoLayer.dll")]
-        public static extern void GetImageSpecificLocation1(int _center_x, int _center_y,
-                                                             int _rect_roi_x, int _rect_roi_y,
-                                                             int _rect_roi_width, int _rect_roi_height,
-                                                             string _template_path, ref int _state,
-                                                             ref int _point_x, ref int _point_y,
-                                                             string _angle);
     }
 }

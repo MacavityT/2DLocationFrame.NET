@@ -13,6 +13,7 @@ using AqVision.Shape;
 
 namespace IntegrationTesting
 {
+
     public partial class Form1 : Form
     {
         AqVision.Acquistion.AqAcquisitionImage acquisition = new AqVision.Acquistion.AqAcquisitionImage();
@@ -110,6 +111,5 @@ namespace IntegrationTesting
             aqDisplay1.InteractiveGraphics.Clear();
             aqDisplay1.Update();
         }
-
     }
 }
