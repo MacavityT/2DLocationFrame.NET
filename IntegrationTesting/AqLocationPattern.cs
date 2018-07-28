@@ -28,7 +28,12 @@ namespace AqVision.Location
         public AqVision.Shape.AqRectangleAffine RoiRegionTemplate
         {
             get { return m_RoiRegionTemplate; }
-            set { m_RoiRegionTemplate = value; }
+            set 
+            { 
+                m_RoiRegionTemplate = value;
+                m_TemplateRegionCenter.X = (int)(((int)(m_RoiRegionTemplate.LeftTopPointX)) + ((int)(m_RoiRegionTemplate.RightBottomX)) / 2);
+                m_TemplateRegionCenter.Y = (int)(((int)(m_RoiRegionTemplate.LeftTopPointY)) + ((int)(m_RoiRegionTemplate.RightBottomY)) / 2);
+            }
         }
         
         private Point m_TemplateRegionCenter = new Point();
@@ -98,8 +103,7 @@ namespace AqVision.Location
 
         public bool RunMatcher()
         {
-            m_TemplateRegionCenter.X = (int)(((int)(m_RoiRegionTemplate.LeftTopPointX)) + ((int)(m_RoiRegionTemplate.RightBottomX)) / 2);
-            m_TemplateRegionCenter.Y = (int)(((int)(m_RoiRegionTemplate.LeftTopPointY)) + ((int)(m_RoiRegionTemplate.RightBottomY)) / 2);
+            char[] angle = new char[500];
             AqVision.Interaction.UI2LibInterface.GetImageSpecificLocation1(m_TemplateRegionCenter.X, m_TemplateRegionCenter.Y,
                                                                            (int)(m_RoiRegionTemplate.LeftTopPointX),
                                                                            (int)(m_RoiRegionTemplate.LeftTopPointY),
@@ -108,7 +112,10 @@ namespace AqVision.Location
                                                                            m_TemplatePath,
                                                                            ref m_matherState,
                                                                            ref m_ResultX,  ref m_ResultY,
-                                                                           m_ResultAngle);
+                                                                           angle);
+
+            
+            m_ResultAngle = new string(angle);
             return MatherResult;
         }
 

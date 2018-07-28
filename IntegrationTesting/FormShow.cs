@@ -223,9 +223,14 @@ namespace IntegrationTesting
         {
             try
             {
-                m_Location.RunMatcher();
-                string strMessage = m_Location.ResultX.ToString() + " " + m_Location.ResultY.ToString() + " " + m_Location.ResultAngle.ToString();
+                string strMessage = m_Location.TemplateRegionCenter.X.ToString() + " " + m_Location.TemplateRegionCenter.X.ToString();
                 AddMessageToListView(strMessage);
+                m_Location.RunMatcher();
+                strMessage = m_Location.MatherResult.ToString() + " " + m_Location.ResultX.ToString() + " " + m_Location.ResultY.ToString() + " (" + m_Location.ResultAngle.ToString() +" )";
+                AddMessageToListView(strMessage);
+
+                //aqDisplay1.Image = m_Acquisition.RevBitmap;
+                //aqDisplay1.Update();
             }
             catch (Exception ex)
             {
@@ -245,6 +250,19 @@ namespace IntegrationTesting
         private void buttonCloseCamera_Click(object sender, EventArgs e)
         {
             m_Acquisition.DisConnect();
+        }
+
+        private void button1_Test_Click(object sender, EventArgs e)
+        {
+            int iState = 0;
+            int resultX = 0;
+            int resultY = 0;
+            string path = "D:\\Bitmap.bmp";
+            char[] angle = new char[5];
+            AqVision.Interaction.UI2LibInterface.GetImageSpecificLocation1(1218, 1218, 752, 517, 180, 180, path, ref iState, ref resultX, ref resultY, angle);
+            string anglestring = new string(angle);
+            string strMessage = resultX.ToString() + " " + resultY.ToString() + " ( " + angle[0].ToString() + angle[1].ToString() + angle[2].ToString() + " )" + " >> " + anglestring;
+            AddMessageToListView(strMessage);
         }
     }
 }

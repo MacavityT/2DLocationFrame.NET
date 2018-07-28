@@ -37,11 +37,12 @@
             this.buttonContinuousAcquisition = new System.Windows.Forms.Button();
             this.buttonAddRectangleRegion = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1_Test = new System.Windows.Forms.Button();
             this.buttonStopAcquisition = new System.Windows.Forms.Button();
+            this.buttonCloseCamera = new System.Windows.Forms.Button();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonTraining = new System.Windows.Forms.Button();
             this.listViewRecord = new System.Windows.Forms.ListView();
-            this.buttonCloseCamera = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +76,7 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "移除所有图形";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             // 
             // buttonAddLine
             // 
@@ -85,6 +87,7 @@
             this.buttonAddLine.TabIndex = 2;
             this.buttonAddLine.Text = "添加直线";
             this.buttonAddLine.UseVisualStyleBackColor = true;
+            this.buttonAddLine.Visible = false;
             this.buttonAddLine.Click += new System.EventHandler(this.buttonAddLine_Click);
             // 
             // buttonAddCircle
@@ -96,6 +99,7 @@
             this.buttonAddCircle.TabIndex = 3;
             this.buttonAddCircle.Text = "添加圆形";
             this.buttonAddCircle.UseVisualStyleBackColor = true;
+            this.buttonAddCircle.Visible = false;
             this.buttonAddCircle.Click += new System.EventHandler(this.buttonAddCircle_Click);
             // 
             // buttonContinuousAcquisition
@@ -123,6 +127,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btn_LoadBitmap);
+            this.groupBox2.Controls.Add(this.button1_Test);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.buttonStopAcquisition);
             this.groupBox2.Controls.Add(this.buttonContinuousAcquisition);
@@ -139,6 +144,18 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             // 
+            // button1_Test
+            // 
+            this.button1_Test.Location = new System.Drawing.Point(8, 606);
+            this.button1_Test.Margin = new System.Windows.Forms.Padding(2);
+            this.button1_Test.Name = "button1_Test";
+            this.button1_Test.Size = new System.Drawing.Size(92, 34);
+            this.button1_Test.TabIndex = 4;
+            this.button1_Test.Text = "test";
+            this.button1_Test.UseVisualStyleBackColor = true;
+            this.button1_Test.Visible = false;
+            this.button1_Test.Click += new System.EventHandler(this.button1_Test_Click);
+            // 
             // buttonStopAcquisition
             // 
             this.buttonStopAcquisition.Location = new System.Drawing.Point(6, 73);
@@ -149,6 +166,17 @@
             this.buttonStopAcquisition.Text = "停止采集";
             this.buttonStopAcquisition.UseVisualStyleBackColor = true;
             this.buttonStopAcquisition.Click += new System.EventHandler(this.buttonStopAcquisition_Click);
+            // 
+            // buttonCloseCamera
+            // 
+            this.buttonCloseCamera.Location = new System.Drawing.Point(8, 300);
+            this.buttonCloseCamera.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCloseCamera.Name = "buttonCloseCamera";
+            this.buttonCloseCamera.Size = new System.Drawing.Size(92, 34);
+            this.buttonCloseCamera.TabIndex = 3;
+            this.buttonCloseCamera.Text = "关闭相机";
+            this.buttonCloseCamera.UseVisualStyleBackColor = true;
+            this.buttonCloseCamera.Click += new System.EventHandler(this.buttonCloseCamera_Click);
             // 
             // buttonRun
             // 
@@ -185,17 +213,6 @@
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
             // 
-            // buttonCloseCamera
-            // 
-            this.buttonCloseCamera.Location = new System.Drawing.Point(8, 300);
-            this.buttonCloseCamera.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonCloseCamera.Name = "buttonCloseCamera";
-            this.buttonCloseCamera.Size = new System.Drawing.Size(92, 34);
-            this.buttonCloseCamera.TabIndex = 3;
-            this.buttonCloseCamera.Text = "关闭相机";
-            this.buttonCloseCamera.UseVisualStyleBackColor = true;
-            this.buttonCloseCamera.Click += new System.EventHandler(this.buttonCloseCamera_Click);
-            // 
             // FormShow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -227,6 +244,7 @@
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.ListView listViewRecord;
         private System.Windows.Forms.Button buttonCloseCamera;
+        private System.Windows.Forms.Button button1_Test;
     }
 }
 

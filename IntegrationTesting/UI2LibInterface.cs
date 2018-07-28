@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace AqVision.Interaction
 {
@@ -38,6 +39,6 @@ namespace AqVision.Interaction
                                                              int _rect_roi_width, int _rect_roi_height,
                                                              string _template_path, ref int _state,
                                                              ref int _point_x, ref int _point_y,
-                                                             string _angle);
+                                                             [Out, MarshalAs(UnmanagedType.LPArray)] char[] _angle);
     }
 }
