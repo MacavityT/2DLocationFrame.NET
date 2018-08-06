@@ -13,56 +13,44 @@ using AqVision.Shape;
 
 namespace IntegrationTesting
 {
-    public partial class FormShow : Form
+    public partial class MainForm : Form
     {
         AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
         AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
-        public Thread showPic = null;
-        public bool m_endThread = false;
+        Thread showPic = null;
+        bool m_endThread = false;
+        CalibrationSet m_calibrateShow = new CalibrationSet();
+        AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
+        TemplateSet m_templateSet = new TemplateSet();
 
-        public FormShow()
+        public MainForm()
         {
             InitializeComponent();
-            m_Acquisition.Connect();
             listViewRecord.Columns.Add("Serial NO", -2, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Time", -2, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Message", -2, HorizontalAlignment.Center);
         }
 
-        ~FormShow()
+        ~MainForm()
         {
-        }
-
-        private void buttonAcquisition_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                aqDisplay1.InteractiveGraphics.Clear();
-                aqDisplay1.Update();
-
-                if (ReferenceEquals(showPic, null))
-                {
-                    showPic = new Thread(new ThreadStart(RegisterVisionAPI));
-                    showPic.Start();
-                }
-                if(showPic.ThreadState == ThreadState.Suspended)
-                {
-                    showPic.Resume();
-                }
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             m_endThread = true;
-            Thread.Sleep(4000);
             m_Acquisition.DisConnect();
+            if (!ReferenceEquals(showPic, null))
+            {
+                if (showPic.ThreadState == ThreadState.Suspended)
+                {
+                    showPic.Resume();
+                }
+                showPic.Abort();
+                while (showPic.ThreadState != ThreadState.Aborted)
+                {
+                    Thread.Sleep(10);
+                }
+            }
         }
 
         public void RegisterVisionAPI()
@@ -139,7 +127,7 @@ namespace IntegrationTesting
         {
             try
             {
-                buttonStopAcquisition_Click(null, null);
+                // Stop Acquisition Image
 
                 AqRectangleAffine rectangle = new AqRectangleAffine();
                 rectangle.LeftTopPointX = 120;
@@ -165,25 +153,6 @@ namespace IntegrationTesting
                 AqCircularArc arc = new AqCircularArc(LeftTopPoint, RightBottomPoint, 0, 315);
                 aqDisplay1.InteractiveGraphics.Add(arc, "AAA 33333", true);
                 aqDisplay1.Update();
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonStopAcquisition_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if(!ReferenceEquals(showPic, null))
-                {
-                    //if (showPic.ThreadState == ThreadState.Running)
-                    {
-                        showPic.Suspend();
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -252,17 +221,71 @@ namespace IntegrationTesting
             m_Acquisition.DisConnect();
         }
 
-        private void button1_Test_Click(object sender, EventArgs e)
+        private void checkBoxCameraAcquisition_CheckedChanged(object sender, EventArgs e)
         {
-            int iState = 0;
-            int resultX = 0;
-            int resultY = 0;
-            string path = "D:\\Bitmap.bmp";
-            char[] angle = new char[5];
-            AqVision.Interaction.UI2LibInterface.GetImageSpecificLocation1(1218, 1218, 752, 517, 180, 180, path, ref iState, ref resultX, ref resultY, angle);
-            string anglestring = new string(angle);
-            string strMessage = resultX.ToString() + " " + resultY.ToString() + " ( " + angle[0].ToString() + angle[1].ToString() + angle[2].ToString() + " )" + " >> " + anglestring;
-            AddMessageToListView(strMessage);
+            if(checkBoxCameraAcquisition.Checked)
+            {
+                try
+                {
+                    aqDisplay1.InteractiveGraphics.Clear();
+                    aqDisplay1.Update();
+
+                    if (ReferenceEquals(showPic, null))
+                    {
+                        m_Acquisition.Connect();
+                        showPic = new Thread(new ThreadStart(RegisterVisionAPI));
+                        showPic.Start();                        
+                    }
+                    if (showPic.ThreadState == ThreadState.Suspended)
+                    {
+                        showPic.Resume();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    m_Acquisition.DisConnect();
+                    MessageBox.Show(ex.Message);
+                }
+
+                checkBoxCameraAcquisition.Text = "停止采集";
+                checkBoxCameraAcquisition.BackColor = Color.Red;
+            }
+            else
+            {
+                try
+                {
+                    if (!ReferenceEquals(showPic, null))
+                    {
+                        //if (showPic.ThreadState == ThreadState.Running)
+                        {
+                            showPic.Suspend();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    m_Acquisition.DisConnect();
+                    MessageBox.Show(ex.Message);
+                }
+
+                checkBoxCameraAcquisition.Text = "连续采集";
+                checkBoxCameraAcquisition.BackColor = Color.Green;
+            }
+        }
+
+        private void buttonCalibration_Click(object sender, EventArgs e)
+        {
+            m_calibrateShow.ShowDialog();
+        }
+
+        private void buttonAcquisitionModule_Click(object sender, EventArgs e)
+        {
+            m_acqusitionImageSet.ShowDialog();
+        }
+
+        private void buttonTemplateSet_Click(object sender, EventArgs e)
+        {
+            m_templateSet.ShowDialog();
         }
     }
 }
