@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 431);
+            this.ClientSize = new System.Drawing.Size(552, 472);
             this.Name = "ProcessEditor";
             this.Text = "ProcessEditor";
             this.ResumeLayout(false);
