@@ -75,9 +75,9 @@ namespace IntegrationTesting
             {
                 try
                 {
-//                     m_calibrationCenter.ImagePoint.SetValue(
-//                     Convert.ToDouble(listViewParameterSet.Items[i].SubItems[0].Text),
-//                     Convert.ToDouble(listViewParameterSet.Items[i].SubItems[1].Text), 0);
+                    m_calibrationCenter.ImagePoint.SetValue(
+                    Convert.ToDouble(listViewParameterSet.Items[i].SubItems[0].Text),
+                    Convert.ToDouble(listViewParameterSet.Items[i].SubItems[1].Text), 0);
 
                     m_calibrationCenter.RobotPoint.SetValue(
                     Convert.ToDouble(listViewParameterSet.Items[i].SubItems[2].Text),
@@ -107,14 +107,9 @@ namespace IntegrationTesting
         {
             try
             {
-                ((AqCalibration.ImageCoordinateGroup)m_calibrationCenter.ImagePoint).SetValue(Convert.ToDouble(textBoxImageX.Text),
+                m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
                                         Convert.ToDouble(textBoxImageY.Text),
                                         Convert.ToDouble(textBoxImageA.Text));
-
-//                 textBoxCameraX.Text = Convert.ToString(m_calibrationCenter.ImagePoint.ImageX.ToString());
-//                 textBoxCameraY.Text = Convert.ToString(m_calibrationCenter.ImagePoint.ImageY.ToString());
-//                 textBoxImageA.Text = Convert.ToString(m_calibrationCenter.ImagePoint.ImageA.ToString());
-
 
                 m_calibrationCenter.RobotPoint.SetValue(Convert.ToDouble(textBoxRobotPosX.Text),
                                                         Convert.ToDouble(textBoxRobotPosY.Text),
@@ -139,9 +134,9 @@ namespace IntegrationTesting
         {
             try
             {
-//                 m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
-//                                         Convert.ToDouble(textBoxImageY.Text),
-//                                         Convert.ToDouble(textBoxImageA.Text));
+                m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
+                                        Convert.ToDouble(textBoxImageY.Text),
+                                        Convert.ToDouble(textBoxImageA.Text));
 
                 m_calibrationCenter.RobotPoint.SetValue(Convert.ToDouble(textBoxRobotPosX.Text),
                                                         Convert.ToDouble(textBoxRobotPosY.Text),

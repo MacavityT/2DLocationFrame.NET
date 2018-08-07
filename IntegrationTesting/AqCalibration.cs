@@ -29,7 +29,7 @@ namespace IntegrationTesting
             set { m_resultRMS = value; }
         }
 
-        public struct ImageCoordinateGroup
+        public class ImageCoordinateGroup
         {
             double m_ImageX;
             public double ImageX
@@ -92,7 +92,7 @@ namespace IntegrationTesting
 //             }
 //         }
 
-        public struct RobotCoordinateGroup
+        public class RobotCoordinateGroup
         {
             double m_robotX;
             public double RobotX
@@ -124,7 +124,7 @@ namespace IntegrationTesting
             }
         }
 
-        public struct CatchCoordinateGroup
+        public class CatchCoordinateGroup
         {
             double m_catchX;
             public double CatchX
