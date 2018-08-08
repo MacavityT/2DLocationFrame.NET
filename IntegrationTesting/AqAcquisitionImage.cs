@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
+using IntegrationTesting;
 
 namespace AqVision.Acquistion
 {
@@ -19,6 +20,27 @@ namespace AqVision.Acquistion
         private GCHandle m_gcBitmap;
         
         System.Drawing.Bitmap m_RevBitmap = null;
+        string m_cameraName = "Aqrose_T";
+        public string CameraName
+        {
+            get { return m_cameraName; }
+            set { m_cameraName = value; }
+        }
+        UInt32 m_cameraExposure = 50000;
+        public UInt32 CameraExposure
+        {
+            get { return m_cameraExposure; }
+            set { m_cameraExposure = value; }
+        }
+
+
+        AqCameraBrand m_cameraBrand = AqCameraBrand.DaHeng;
+        public AqCameraBrand CameraBrand
+        {
+            get { return m_cameraBrand; }
+            set { m_cameraBrand = value; }
+        }
+
 
         public System.Drawing.Bitmap RevBitmap
         {
@@ -64,12 +86,17 @@ namespace AqVision.Acquistion
             try
             {
                 AqVision.Interaction.UI2LibInterface.Disconnect();
-                AqVision.Interaction.UI2LibInterface.Connect();
+                AqVision.Interaction.UI2LibInterface.Connect(Convert.ToInt32(CameraBrand), CameraName, CameraExposure);
             }
-            catch(Exception ex)
+            catch(FormatException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("IntegrationTesting Connect Format error " + ex.Message);
+                AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect Format error " + ex.Message);
+            }
+            catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("IntegrationTesting Connect error " + ex.Message);
-                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect error " + ex.Message);
+                AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect error " + ex.Message);
             }
             
             return true;

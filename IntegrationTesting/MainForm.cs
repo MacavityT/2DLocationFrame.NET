@@ -128,7 +128,6 @@ namespace IntegrationTesting
             try
             {
                 // Stop Acquisition Image
-
                 AqRectangleAffine rectangle = new AqRectangleAffine();
                 rectangle.LeftTopPointX = 120;
                 rectangle.LeftTopPointY = 120;
@@ -171,7 +170,8 @@ namespace IntegrationTesting
                     m_Location.RoiRegionTemplate = (AqRectangleAffine)(aqDisplay1.InteractiveGraphics[0]);
                     m_Location.CreateTempateImage();
                     AddMessageToListView((new Rectangle((int)(m_Location.RoiRegionTemplate.LeftTopPointX), (int)(m_Location.RoiRegionTemplate.LeftTopPointY),
-                                           (int)(m_Location.RoiRegionTemplate.Width), (int)(m_Location.RoiRegionTemplate.Height))).ToString());
+                                           (int)(m_Location.RoiRegionTemplate.RightBottomX-m_Location.RoiRegionTemplate.LeftTopPointX),
+                                           (int)(m_Location.RoiRegionTemplate.RightBottomY-m_Location.RoiRegionTemplate.LeftTopPointY))).ToString());
                     aqDisplay1.InteractiveGraphics.Clear();
                     aqDisplay1.Update();
                 }
@@ -195,12 +195,14 @@ namespace IntegrationTesting
                 string strMessage = m_Location.TemplateRegionCenter.X.ToString() + " " + m_Location.TemplateRegionCenter.X.ToString();
                 AddMessageToListView(strMessage);
                 m_Location.RunMatcher();
-                strMessage = m_Location.MatherResult.ToString() + " " + m_Location.ResultX.ToString() + " " + m_Location.ResultY.ToString() + " (" + m_Location.ResultAngle.ToString() +" )";
-                AddMessageToListView(strMessage);
-
-                //aqDisplay1.Image = m_Acquisition.RevBitmap;
-                //aqDisplay1.Update();
-            }
+                strMessage = m_Location.MatherResult.ToString() + " " + m_Location.ResultX.ToString() + " " + m_Location.ResultY.ToString() + " (" + m_Location.ResultAngle.ToString();// +" )";
+//                 MessageBox.Show(m_Location.MatherResult.ToString());
+//                 MessageBox.Show(m_Location.ResultX.ToString());
+//                 MessageBox.Show(m_Location.ResultY.ToString());
+//                 MessageBox.Show(m_Location.ResultAngle.ToString());
+//                 MessageBox.Show(strMessage);
+//                 MessageBox.Show(strMessage + ")"); //为什么这里无法添加括号")".
+                AddMessageToListView(strMessage);            }
             catch (Exception ex)
             {
                 m_Acquisition.DisConnect();
@@ -281,6 +283,16 @@ namespace IntegrationTesting
         private void buttonAcquisitionModule_Click(object sender, EventArgs e)
         {
             m_acqusitionImageSet.ShowDialog();
+            m_Acquisition.CameraExposure = m_acqusitionImageSet.ExposureTime;
+            m_Acquisition.CameraName = m_acqusitionImageSet.CameraName;
+            if(m_acqusitionImageSet.CameraBrand == 0)
+            {
+                m_Acquisition.CameraBrand = AqCameraBrand.DaHeng;
+            }
+            else if( m_acqusitionImageSet.CameraBrand == 1 )
+            {
+                m_Acquisition.CameraBrand = AqCameraBrand.Basler;
+            }
         }
 
         private void buttonTemplateSet_Click(object sender, EventArgs e)

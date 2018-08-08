@@ -30,7 +30,7 @@ namespace AqVision.Interaction
         public static extern void RegisterBitmapFunction(IntPtr pFn);
 
         [DllImport("ProtoLayer.dll")]
-        public static extern void Connect();
+        public static extern void Connect(int cameraType, string cameraName, UInt32 cameraExpose);
 
         [DllImport("ProtoLayer.dll")]
         public static extern void Disconnect();

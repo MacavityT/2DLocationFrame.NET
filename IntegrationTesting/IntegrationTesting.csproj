@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="AqAcquisitionImage.cs" />
     <Compile Include="AqCalibration.cs" />
+    <Compile Include="AqCameraBrand.cs" />
     <Compile Include="AqLocationPattern.cs" />
     <Compile Include="CalibrationSet.cs">
       <SubType>Form</SubType>

@@ -90,11 +90,13 @@ namespace AqVision.Location
                 File.Delete(m_TemplatePath);
             }
             Image originImage = Image.FromHbitmap(m_OriginImage.GetHbitmap());
-            Bitmap bitmap = new Bitmap((int)(m_RoiRegionTemplate.Width), (int)(m_RoiRegionTemplate.Height));
+            Bitmap bitmap = new Bitmap((int)(RoiRegionTemplate.RightBottomX-RoiRegionTemplate.LeftTopPointX),
+                                           (int)(RoiRegionTemplate.RightBottomY-RoiRegionTemplate.LeftTopPointY));
 
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle((int)(m_RoiRegionTemplate.LeftTopPointX), (int)(m_RoiRegionTemplate.LeftTopPointY),
-                                                   (int)(m_RoiRegionTemplate.Width), (int)(m_RoiRegionTemplate.Height)),System.Drawing.GraphicsUnit.Pixel);
+                                           (int)(RoiRegionTemplate.RightBottomX-RoiRegionTemplate.LeftTopPointX),
+                                           (int)(RoiRegionTemplate.RightBottomY-RoiRegionTemplate.LeftTopPointY)),System.Drawing.GraphicsUnit.Pixel);
             bitmap.Save(m_TemplatePath, System.Drawing.Imaging.ImageFormat.Bmp);
             gTemplate.Dispose();
             bitmap.Dispose();
@@ -107,8 +109,8 @@ namespace AqVision.Location
             AqVision.Interaction.UI2LibInterface.GetImageSpecificLocation1(m_TemplateRegionCenter.X, m_TemplateRegionCenter.Y,
                                                                            (int)(m_RoiRegionTemplate.LeftTopPointX),
                                                                            (int)(m_RoiRegionTemplate.LeftTopPointY),
-                                                                           (int)(m_RoiRegionTemplate.Width),
-                                                                           (int)(m_RoiRegionTemplate.Height),
+                                           (int)(RoiRegionTemplate.RightBottomX-RoiRegionTemplate.LeftTopPointX),
+                                           (int)(RoiRegionTemplate.RightBottomY-RoiRegionTemplate.LeftTopPointY),
                                                                            m_TemplatePath,
                                                                            ref m_matherState,
                                                                            ref m_ResultX,  ref m_ResultY,
