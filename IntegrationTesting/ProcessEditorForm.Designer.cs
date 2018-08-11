@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTesting
 {
-    partial class ProcessEditor
+    partial class ProcessEditorForm
     {
         /// <summary>
         /// Required designer variable.

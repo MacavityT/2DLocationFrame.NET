@@ -64,6 +64,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Release\AqVision.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="halcondotnet">
+      <HintPath>..\..\..\Program Files\MVTec\HALCON-12.0\bin\dotnet35\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,55 +83,98 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcqusitionImageSet.cs">
+    <Compile Include="Acquisition\AcqusitionImageSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AcqusitionImageSet.Designer.cs">
-      <DependentUpon>AcqusitionImageSet.cs</DependentUpon>
+    <Compile Include="Acquisition\AcqusitionImageSetForm.Designer.cs">
+      <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AqAcquisitionImage.cs" />
-    <Compile Include="AqCalibration.cs" />
-    <Compile Include="AqCameraBrand.cs" />
-    <Compile Include="AqLocationPattern.cs" />
-    <Compile Include="CalibrationSet.cs">
+    <Compile Include="Aidi\AIDI.cs" />
+    <Compile Include="Aidi\AidiCalculation.cs" />
+    <Compile Include="Aidi\AidiClassify.cs" />
+    <Compile Include="Aidi\AIDIEntrance.cs" />
+    <Compile Include="Aidi\AidiImage.cs" />
+    <Compile Include="Aidi\AidiLocation.cs" />
+    <Compile Include="Aidi\AIDIManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CalibrationSet.Designer.cs">
-      <DependentUpon>CalibrationSet.cs</DependentUpon>
+    <Compile Include="Aidi\AIDIManagementForm.Designer.cs">
+      <DependentUpon>AIDIManagementForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Aidi\AidiSegment.cs" />
+    <Compile Include="Aidi\AidiTools.cs" />
+    <Compile Include="Aidi\BatchAidiImage.cs" />
+    <Compile Include="Aidi\ClassifyClientParamWrapper.cs" />
+    <Compile Include="Aidi\ClassifyResultWrapper.cs" />
+    <Compile Include="Aidi\csharpaidiclient.cs" />
+    <Compile Include="Aidi\csharpaidiclientPINVOKE.cs" />
+    <Compile Include="Aidi\DefectDetectResultWrapper.cs" />
+    <Compile Include="Aidi\FactoryClientParamWrapper.cs" />
+    <Compile Include="Aidi\FeatureLocationResultWrapper.cs" />
+    <Compile Include="Aidi\FloatVector.cs" />
+    <Compile Include="Aidi\IntVector.cs" />
+    <Compile Include="Aidi\LocationClientParamWrapper.cs" />
+    <Compile Include="Aidi\LocationResultWrapper.cs" />
+    <Compile Include="Aidi\SegmentClientParamWrapper.cs" />
+    <Compile Include="Aidi\StringIntMap.cs" />
+    <Compile Include="Aidi\StringVector.cs" />
+    <Compile Include="Aidi\SWIGTYPE_p_cv__Mat.cs" />
+    <Compile Include="Aidi\SWIGTYPE_p_std__vectorT_cv__Mat_t.cs" />
+    <Compile Include="Aidi\SWIGTYPE_p_uchar.cs" />
+    <Compile Include="Acquisition\AqAcquisitionImage.cs" />
+    <Compile Include="Calibration\AqCalibration.cs" />
+    <Compile Include="Acquisition\AqCameraBrand.cs" />
+    <Compile Include="Location\AqLocationPattern.cs" />
+    <Compile Include="Calibration\CalibrationSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calibration\CalibrationSetForm.Designer.cs">
+      <DependentUpon>CalibrationSetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Location\FindModel.cs" />
+    <Compile Include="ImageConvert.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocationMatcher.cs" />
-    <Compile Include="ProcessEditor.cs">
+    <Compile Include="Location\LocationMatcher.cs" />
+    <Compile Include="ProcessEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProcessEditor.Designer.cs">
-      <DependentUpon>ProcessEditor.cs</DependentUpon>
+    <Compile Include="ProcessEditorForm.Designer.cs">
+      <DependentUpon>ProcessEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateSet.cs">
+    <Compile Include="Robot\robotManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TemplateSet.Designer.cs">
-      <DependentUpon>TemplateSet.cs</DependentUpon>
+    <Compile Include="Robot\robotManagementForm.Designer.cs">
+      <DependentUpon>robotManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Location\TemplateSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Location\TemplateSetForm.Designer.cs">
+      <DependentUpon>TemplateSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI2LibInterface.cs" />
-    <EmbeddedResource Include="AcqusitionImageSet.resx">
-      <DependentUpon>AcqusitionImageSet.cs</DependentUpon>
+    <EmbeddedResource Include="Acquisition\AcqusitionImageSetForm.resx">
+      <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CalibrationSet.resx">
-      <DependentUpon>CalibrationSet.cs</DependentUpon>
+    <EmbeddedResource Include="Aidi\AIDIManagementForm.resx">
+      <DependentUpon>AIDIManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calibration\CalibrationSetForm.resx">
+      <DependentUpon>CalibrationSetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProcessEditor.resx">
-      <DependentUpon>ProcessEditor.cs</DependentUpon>
+    <EmbeddedResource Include="ProcessEditorForm.resx">
+      <DependentUpon>ProcessEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -135,8 +185,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TemplateSet.resx">
-      <DependentUpon>TemplateSet.cs</DependentUpon>
+    <EmbeddedResource Include="Location\TemplateSetForm.resx">
+      <DependentUpon>TemplateSetForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

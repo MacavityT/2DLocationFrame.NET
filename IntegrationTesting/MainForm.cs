@@ -4,24 +4,24 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using System.Runtime.InteropServices;
-using AqVision.Shape;
+
 
 namespace IntegrationTesting
 {
     public partial class MainForm : Form
     {
         AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
-        AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
+
         Thread showPic = null;
         bool m_endThread = false;
-        CalibrationSet m_calibrateShow = new CalibrationSet();
+        CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
-        TemplateSet m_templateSet = new TemplateSet();
+        TemplateSetForm m_templateSet = new TemplateSetForm();
 
         public MainForm()
         {
@@ -35,18 +35,19 @@ namespace IntegrationTesting
         {
         }
 
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             m_endThread = true;
             m_Acquisition.DisConnect();
             if (!ReferenceEquals(showPic, null))
             {
-                if (showPic.ThreadState == ThreadState.Suspended)
+                if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
                 {
                     showPic.Resume();
                 }
                 showPic.Abort();
-                while (showPic.ThreadState != ThreadState.Aborted)
+                while (showPic.ThreadState != System.Threading.ThreadState.Aborted)
                 {
                     Thread.Sleep(10);
                 }
@@ -84,130 +85,8 @@ namespace IntegrationTesting
                 Thread.Sleep(10);
             }
         }
-
-        private void btn_LoadBitmap_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
-                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    aqDisplay1.Image = new Bitmap(openFileDialog.FileName);
-                    aqDisplay1.FitToScreen();
-                }
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonAddLine_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                AqLineSegment lineSegment = new AqLineSegment();
-                lineSegment.StartX = 20;
-                lineSegment.StartY = 20;
-                lineSegment.EndX = 200;
-                lineSegment.EndY = 200;
-                aqDisplay1.InteractiveGraphics.Add(lineSegment, "AAA 11111", true);
-                aqDisplay1.Update();
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonAddRectangle_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Stop Acquisition Image
-                AqRectangleAffine rectangle = new AqRectangleAffine();
-                rectangle.LeftTopPointX = 120;
-                rectangle.LeftTopPointY = 120;
-                rectangle.RightBottomX = 300;
-                rectangle.RightBottomY = 300;
-                aqDisplay1.InteractiveGraphics.Add(rectangle, "AAA 22222", true);
-                aqDisplay1.Update();
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonAddCircle_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                AqGdiPointF LeftTopPoint = new AqGdiPointF(200, 200);
-                AqGdiPointF RightBottomPoint = new AqGdiPointF(500, 500);
-                AqCircularArc arc = new AqCircularArc(LeftTopPoint, RightBottomPoint, 0, 315);
-                aqDisplay1.InteractiveGraphics.Add(arc, "AAA 33333", true);
-                aqDisplay1.Update();
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonTraining_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (aqDisplay1.InteractiveGraphics.Count > 0)
-                {
-                    m_Location.OriginImage = aqDisplay1.Image;
-                    m_Location.RoiRegionTemplate = (AqRectangleAffine)(aqDisplay1.InteractiveGraphics[0]);
-                    m_Location.CreateTempateImage();
-                    AddMessageToListView((new Rectangle((int)(m_Location.RoiRegionTemplate.LeftTopPointX), (int)(m_Location.RoiRegionTemplate.LeftTopPointY),
-                                           (int)(m_Location.RoiRegionTemplate.RightBottomX-m_Location.RoiRegionTemplate.LeftTopPointX),
-                                           (int)(m_Location.RoiRegionTemplate.RightBottomY-m_Location.RoiRegionTemplate.LeftTopPointY))).ToString());
-                    aqDisplay1.InteractiveGraphics.Clear();
-                    aqDisplay1.Update();
-                }
-                else
-                {
-                    AddMessageToListView("aqDisplay1 is empty");
-                }
-            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
         private void buttonRun_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string strMessage = m_Location.TemplateRegionCenter.X.ToString() + " " + m_Location.TemplateRegionCenter.X.ToString();
-                AddMessageToListView(strMessage);
-                m_Location.RunMatcher();
-                strMessage = m_Location.MatherResult.ToString() + " " + m_Location.ResultX.ToString() + " " + m_Location.ResultY.ToString() + " (" + m_Location.ResultAngle.ToString();// +" )";
-//                 MessageBox.Show(m_Location.MatherResult.ToString());
-//                 MessageBox.Show(m_Location.ResultX.ToString());
-//                 MessageBox.Show(m_Location.ResultY.ToString());
-//                 MessageBox.Show(m_Location.ResultAngle.ToString());
-//                 MessageBox.Show(strMessage);
-//                 MessageBox.Show(strMessage + ")"); //为什么这里无法添加括号")".
-                AddMessageToListView(strMessage);            }
-            catch (Exception ex)
-            {
-                m_Acquisition.DisConnect();
-                MessageBox.Show(ex.Message);
-            }
+        {  
         }
 
         public void AddMessageToListView(string strMessage)
@@ -220,7 +99,7 @@ namespace IntegrationTesting
 
         private void buttonCloseCamera_Click(object sender, EventArgs e)
         {
-            m_Acquisition.DisConnect();
+             m_Acquisition.DisConnect();
         }
 
         private void checkBoxCameraAcquisition_CheckedChanged(object sender, EventArgs e)
@@ -238,7 +117,7 @@ namespace IntegrationTesting
                         showPic = new Thread(new ThreadStart(RegisterVisionAPI));
                         showPic.Start();                        
                     }
-                    if (showPic.ThreadState == ThreadState.Suspended)
+                    if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
                     {
                         showPic.Resume();
                     }
@@ -269,7 +148,6 @@ namespace IntegrationTesting
                     m_Acquisition.DisConnect();
                     MessageBox.Show(ex.Message);
                 }
-
                 checkBoxCameraAcquisition.Text = "连续采集";
                 checkBoxCameraAcquisition.BackColor = Color.Green;
             }
@@ -297,7 +175,25 @@ namespace IntegrationTesting
 
         private void buttonTemplateSet_Click(object sender, EventArgs e)
         {
+            if (checkBoxCameraAcquisition.Checked)
+            {
+                checkBoxCameraAcquisition.Checked = false;
+                checkBoxCameraAcquisition_CheckedChanged(null, null);
+                m_templateSet.ImageInput = aqDisplay1.Image.Clone() as Bitmap;
+            }
             m_templateSet.ShowDialog();
+        }
+
+        private void buttonAddRectangleRegion_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void buttonTemplateManagement_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }

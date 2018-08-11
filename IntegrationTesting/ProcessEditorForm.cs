@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace IntegrationTesting
 {
-    public partial class ProcessEditor : Form
+    public partial class ProcessEditorForm : Form
     {
-        public ProcessEditor()
+        public ProcessEditorForm()
         {
             InitializeComponent();
         }

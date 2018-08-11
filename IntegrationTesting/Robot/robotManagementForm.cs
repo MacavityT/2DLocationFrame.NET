@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace IntegrationTesting
+namespace IntegrationTesting.Robot
 {
-    public partial class TemplateSet : Form
+    public partial class robotManagementForm : Form
     {
-        public TemplateSet()
+        public robotManagementForm()
         {
             InitializeComponent();
         }

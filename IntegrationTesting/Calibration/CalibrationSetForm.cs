@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace IntegrationTesting
 {
-    public partial class CalibrationSet : Form
+    public partial class CalibrationSetForm : Form
     {
         AqCalibration m_calibrationCenter = new AqCalibration();
-        public CalibrationSet()
+        public CalibrationSetForm()
         {
             InitializeComponent();
             listViewParameterSet.Columns.Add("Camera X", 100, HorizontalAlignment.Center);

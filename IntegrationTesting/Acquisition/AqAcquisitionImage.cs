@@ -18,19 +18,40 @@ namespace AqVision.Acquistion
         private bool m_GetBitmapSuc = false;
         private GCHandle m_gcError;
         private GCHandle m_gcBitmap;
+
+        bool m_acquisitionParamChanged = false;
+        public bool AcquisitionParamChanged
+        {
+            get { return m_acquisitionParamChanged; }
+            set { m_acquisitionParamChanged = value; }
+        }
         
         System.Drawing.Bitmap m_RevBitmap = null;
         string m_cameraName = "Aqrose_T";
         public string CameraName
         {
             get { return m_cameraName; }
-            set { m_cameraName = value; }
+            set 
+            {
+                if(value != m_cameraName)
+                {
+                    AcquisitionParamChanged = true;
+                }
+                m_cameraName = value; 
+            }
         }
         UInt32 m_cameraExposure = 50000;
         public UInt32 CameraExposure
         {
             get { return m_cameraExposure; }
-            set { m_cameraExposure = value; }
+            set 
+            {
+                if (value != m_cameraExposure)
+                {
+                    AcquisitionParamChanged = true;
+                }
+                m_cameraExposure = value; 
+            }
         }
 
 
@@ -38,7 +59,14 @@ namespace AqVision.Acquistion
         public AqCameraBrand CameraBrand
         {
             get { return m_cameraBrand; }
-            set { m_cameraBrand = value; }
+            set 
+            { 
+                if(m_cameraBrand != value)
+                {
+                    AcquisitionParamChanged = true;
+                }
+                m_cameraBrand = value; 
+            }
         }
 
 
@@ -121,6 +149,11 @@ namespace AqVision.Acquistion
         {
             try
             {
+                if (AcquisitionParamChanged)
+                {
+                    Connect();
+                    AcquisitionParamChanged = false;
+                }
                 m_GetBitmapSuc = false;
                 AqVision.Interaction.UI2LibInterface.GetBitmap(1, 0);
                 while (!m_GetBitmapSuc)

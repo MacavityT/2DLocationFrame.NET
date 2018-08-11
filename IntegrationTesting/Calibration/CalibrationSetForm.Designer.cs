@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTesting
 {
-    partial class CalibrationSet
+    partial class CalibrationSetForm
     {
         /// <summary>
         /// Required designer variable.
