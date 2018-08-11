@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using IntegrationTesting.Aidi;
 
 namespace IntegrationTesting
 {
@@ -22,6 +22,7 @@ namespace IntegrationTesting
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
         TemplateSetForm m_templateSet = new TemplateSetForm();
+        AIDIManagementForm m_aidiMangement = new AIDIManagementForm();
 
         public MainForm()
         {
@@ -194,6 +195,11 @@ namespace IntegrationTesting
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            m_aidiMangement.ShowDialog();
         }
     }
 }

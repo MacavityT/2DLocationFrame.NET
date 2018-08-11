@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,8 @@ namespace IntegrationTesting
             if(!ReferenceEquals(m_imageInput, null))
             {
                 aqDisplayCreateModel.Image = ImageInput;
+                m_Location.OriginImage = ImageInput;
+                m_Location.TemplatePath = "";
             }            
         }
 
@@ -45,6 +48,8 @@ namespace IntegrationTesting
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
                     aqDisplayCreateModel.Image = new Bitmap(openFileDialog.FileName);
+                    m_Location.TemplatePath = openFileDialog.FileName;
+                    m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
                     aqDisplayCreateModel.FitToScreen();
                 }
             }
@@ -84,6 +89,7 @@ namespace IntegrationTesting
                 {
                     m_Location.OriginImage = aqDisplayCreateModel.Image;
                     m_Location.RoiRegionTemplate = (AqRectangleAffine)(aqDisplayCreateModel.InteractiveGraphics[0]);
+                    m_Location.CreateTempateImage(@"D:\Bitmap.bmp");
                     m_Location.CreateModel();
                     aqDisplayCreateModel.InteractiveGraphics.Clear();
                     ShowGetResultsData(m_Location.ModeXldColsM, m_Location.ModeXldRowsM, m_Location.ModeXldPointCountsM, AqColorConstants.Blue);
@@ -140,15 +146,16 @@ namespace IntegrationTesting
 
         private void ShowGetResultsData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color)
         {
-            for (int iPointList = 0, countList = 0, countSegement = 0; iPointList < xPointList.Length; iPointList++, countSegement++)
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            int iPointList = 0;
+            for (int countList = 0, countSegement = 0; iPointList < xPointList.Length; iPointList++, countSegement++)
             {
+                //listBox1.Items.Add(string.Format("{0}, {1}", xPointList[iPointList], yPointList[iPointList]));
                 AqLineSegment lineSegment = new AqLineSegment();
-                if(countSegement+2 == countPointList[countList])
-                {
-                    lineSegment.Color = AqColorConstants.Red;
-                }
                 if ((countSegement + 1) == countPointList[countList])
                 {
+                    listBox1.Items.Add("----------------------------");
                     lineSegment.StartX = xPointList[iPointList];
                     lineSegment.StartY = yPointList[iPointList];
 
@@ -160,8 +167,8 @@ namespace IntegrationTesting
                         if ((Math.Abs(xPointList[0] - xPointList[iPointList]) < 0.0001) &&
                            (Math.Abs(yPointList[0] - yPointList[iPointList]) < 0.0001))
                         {
-                            lineSegment.EndX = xPointList[countPointList[countList - 1]];
-                            lineSegment.EndY = yPointList[countPointList[countList - 1]];
+                            lineSegment.EndX = xPointList[0];
+                            lineSegment.EndY = yPointList[0];
                             countList++;
                             countSegement = -1;
                         }
@@ -201,8 +208,10 @@ namespace IntegrationTesting
                 lineSegment.LineWidthInScreenPixels = 3;
                 aqDisplayCreateModel.InteractiveGraphics.Add(lineSegment, "AAA 11111", true);
             }
+            st.Stop();
             aqDisplayCreateModel.Update();
 
+            MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//
         }
     }
 }

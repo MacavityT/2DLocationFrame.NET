@@ -23,19 +23,32 @@ namespace IntegrationTesting.Aidi
 {
     public partial class AIDIManagementForm : Form
     {
-        #region aidi
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        public static extern void OutputDebugString(string sMsg);
         static string check_code = "7defbd49-99ef-11e8-b6b8-00163e06991b";
-
         AIDI dnn_factory_client = new AIDI(check_code);// 构造测试类，没有加密狗请传入check_code
         AIDI dnn_factory_client2 = new AIDI(check_code);// 构造测试类，没有加密狗请传入check_code
         AIDI dnn_factory_client3 = new AIDI(check_code);// 构造测试类，没有加密狗请传入check_code
-
         String root_path = "model_welding_slag";
         String root_path2 = "model_*****";
         String root_path3 = "model_*****";
-        #endregion
+
+        public class Contours
+        {
+            public string x { get; set; }
+            public string y { get; set; }
+        }
+
+        public class RootObject
+        {
+            public string area { get; set; }
+            public List<Contours> contours { get; set; }
+            public string cx { get; set; }
+            public string cy { get; set; }
+            public string height { get; set; }
+            public string score { get; set; }
+            public string type { get; set; }
+            public string type_name { get; set; }
+            public string width { get; set; }
+        }
 
         public AIDIManagementForm()
         {
@@ -61,7 +74,6 @@ namespace IntegrationTesting.Aidi
 
         private void buttonRead_Click(object sender, EventArgs e)
         {
-            //Bitmap bitmapTemp = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), bitmap.PixelFormat);//深拷贝
             label1.Text = "    ";
             List<Bitmap> bitmaps = GetBitmapsList("pics");
             BatchAidiImage batch_images = GetBatch_images(bitmaps);
@@ -76,24 +88,21 @@ namespace IntegrationTesting.Aidi
             {
                 AidiImage single_image = batch_images.at(i);
                 richTextBox1.Text += result[i];
-                //single_image.draw_result(result[i]);
-                //single_image.show_image(0);
                 richTextBox1.Text += result[i];
                 richTextBox1.Text += "-----------------------------------" + i;
                 richTextBox1.Refresh();
 
             }
-            List<RootObject> objList = GetobjList(result[0]);//result[0]代表第一张图，以此类推
-            // List<RootObject> objList1 = GetobjList(result[1]);
 
-            ShowGraph(aqDisplay1, bitmaps[0]);
+            List<RootObject> objList = GetobjList(result[0]);//result[0]代表第一张图，以此类推
+            aqDisplay1.Image = bitmaps[0];
+            aqDisplay1.FitToScreen();
 
             Stopwatch sp3 = new Stopwatch();
             sp3.Start();
-
             DrawContours(objList, AqVision.AqColorConstants.Green, 1, aqDisplay1);
-
             sp3.Stop();
+
             richTextBox2.Text += "绘制contour时间：" + sp3.ElapsedMilliseconds + "\r\n";
             aqDisplay1.Update();
 
@@ -106,14 +115,15 @@ namespace IntegrationTesting.Aidi
 
             label1.Text = "执行完毕" + batch_Capacity + "张";
             label1.ForeColor = Color.OrangeRed;
-            //OutputDebugString("AAAAAA" + objList[0].contours[0].x);
         }
 
-
-        /// <summary> Aidi模型初始化，添加所需要的Aidi模块
-        /// 
+        /// <summary>
+        /// Aidi模型初始化，添加所需要的Aidi模块
         /// </summary>
+        /// <param name="dnn_factory_client"></param>
         /// <param name="root_path"></param>
+        /// <param name="detectModel"></param>
+        /// <param name="batch_size"></param>
         public void InitAidiModel(AIDI dnn_factory_client, string root_path, string detectModel, int batch_size)
         {
             StringVector save_model_path_list = new StringVector();// 模型的加载路径，路径下应该有model.aqbin
@@ -165,12 +175,16 @@ namespace IntegrationTesting.Aidi
             dnn_factory_client.initial_test_model();
         }
 
-        //获得Bitmap的list集合
+        /// <summary>
+        /// 从路径读入Bitmap集合
+        /// </summary>
+        /// <param name="DirPath"></param>
+        /// <returns></returns>
         public List<Bitmap> GetBitmapsList(string DirPath)
         {
             List<string> imageList = ImageConvert.GetImageFiles(DirPath);
             List<Bitmap> bitmaps = new List<Bitmap>();
-            for (int i = 0; i < imageList.Count - 8; i++)// imageList.Count = 6,这个地方可以控制传几张
+            for (int i = 0; i < imageList.Count; i++)// imageList.Count = 6,这个地方可以控制传几张
             {
                 string imagePath = DirPath + "\\" + imageList[i];
                 Bitmap btmp = new Bitmap(imagePath);
@@ -180,11 +194,16 @@ namespace IntegrationTesting.Aidi
             return bitmaps;
         }
 
+        /// <summary>
+        /// 转换图片通道深度
+        /// </summary>
+        /// <param name="srcBmp"></param>
+        /// <param name="x"></param>
+        /// <param name="bitDeep"></param>
+        /// <returns></returns>
         public Bitmap ZoomTo24Bitmap(Bitmap srcBmp, double x, int bitDeep)
         {
             Bitmap decBmp = null;
-
-
             if (bitDeep == 24)
             {
                 decBmp = new Bitmap((int)(srcBmp.Width * x), (int)(srcBmp.Height * x), PixelFormat.Format24bppRgb);
@@ -199,8 +218,11 @@ namespace IntegrationTesting.Aidi
             return decBmp;
         }
 
-
-        //灌入多张
+        /// <summary>
+        /// 将批量图片灌入Aidi对象
+        /// </summary>
+        /// <param name="bitmaps"></param>
+        /// <returns></returns>
         public BatchAidiImage GetBatch_images(List<Bitmap> bitmaps)
         {
             BatchAidiImage batch_images = new BatchAidiImage();
@@ -221,7 +243,11 @@ namespace IntegrationTesting.Aidi
             return batch_images;
         }
 
-        //灌入单张
+        /// <summary>
+        /// 将单张图片灌入Aidi对象
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public BatchAidiImage GetBatch_images(Bitmap bitmap)
         {
             BatchAidiImage batch_images = new BatchAidiImage();
@@ -235,6 +261,16 @@ namespace IntegrationTesting.Aidi
             return batch_images;
         }
 
+        /// <summary>
+        /// 绘制直线
+        /// </summary>
+        /// <param name="sx"></param>
+        /// <param name="sy"></param>
+        /// <param name="ex"></param>
+        /// <param name="ey"></param>
+        /// <param name="color"></param>
+        /// <param name="lineWidth"></param>
+        /// <param name="aqDisplay"></param>
         void DrawLine(float sx, float sy, float ex, float ey, AqVision.AqColorConstants color, int lineWidth, AqVision.Controls.AqDisplay aqDisplay)
         {
             AqLineSegment lineSegment = new AqLineSegment();
@@ -248,13 +284,13 @@ namespace IntegrationTesting.Aidi
             aqDisplay.InteractiveGraphics.Add(lineSegment, "", true);
         }
 
-        public void ShowGraph(AqVision.Controls.AqDisplay aqDisplay, Bitmap bitmap)
-        {
-            aqDisplay.Image = bitmap;
-            aqDisplay.FitToScreen();
-        }
-
-        //绘制轮廓
+        /// <summary>
+        /// 绘制轮廓
+        /// </summary>
+        /// <param name="objList"></param>
+        /// <param name="color"></param>
+        /// <param name="lineWidth"></param>
+        /// <param name="aqDisplay"></param>
         public void DrawContours(List<RootObject> objList, AqVision.AqColorConstants color, int lineWidth, AqVision.Controls.AqDisplay aqDisplay)
         {
             for (int i = 0; i < objList.Count(); i++)
@@ -265,7 +301,6 @@ namespace IntegrationTesting.Aidi
                     int sy = Convert.ToInt32(objList[i].contours[j].y);
                     int ex = Convert.ToInt32(objList[i].contours[j + 1].x);
                     int ey = Convert.ToInt32(objList[i].contours[j + 1].y);
-
                     DrawLine(sx, sy, ex, ey, color, lineWidth, aqDisplay);
                 }
                 //再设计一个点，补全多边形
@@ -275,11 +310,14 @@ namespace IntegrationTesting.Aidi
                 int zero_x = Convert.ToInt32(objList[i].contours[0].x);
                 int zero_y = Convert.ToInt32(objList[i].contours[0].y);
                 DrawLine(nx, ny, zero_x, zero_y, color, lineWidth, aqDisplay);
-
             }
         }
 
-        //Json解析，生成方便抽取元素的objList
+        /// <summary>
+        /// Json解析，生成方便抽取元素的objList
+        /// </summary>
+        /// <param name="jsonText"></param>
+        /// <returns></returns>
         public List<RootObject> GetobjList(string jsonText)
         {
             List<RootObject> objList = new List<RootObject>();
@@ -294,65 +332,18 @@ namespace IntegrationTesting.Aidi
             else  //数据长度<20的肯定是无效数据
             {
                 objList = new List<RootObject>();
-            }
-
-
-            //richTextBox2.Text += aidiTime + "\r\n" + jsonTime + "\r\n" + arrayNum + "\r\n" +
-            //    objList[0].area + "\r\n" + objList[0].contours[0].x + "\r\n";         
+            }     
             return objList;
         }
 
-        //这个方法可能多余
-        public StringVector RunAidiTest(string defectModelPath, BatchAidiImage batch_images)
-        {
-            StringVector result = null;
-            switch (defectModelPath)
-            {
-                case "dgg":
-                    result = dnn_factory_client.start_test(batch_images); // 多图测试接口
-                    break;
-
-                case "ddgg ":
-                    result = dnn_factory_client.start_test(batch_images); // 多图测试接口
-                    break;
-
-                case "dgg566":
-                    //StringVector result = dnn_factory_client.start_test(batch_images); // 多图测试接口
-                    break;
-                default:
-                    result = dnn_factory_client.start_test(batch_images); // 多图测试接口
-                    break;
-            }
-            return result;
-        }
-
-        /// <summary> 将Bitmap转化为byte[]供Aidi使用
-        /// 
+        /// <summary>
+        /// 获取图片的RGB值
         /// </summary>
         /// <param name="bmp"></param>
         /// <param name="stride"></param>
         /// <returns></returns>
-
         public static byte[] GetBGRValues(Bitmap bmp, out int stride)
         {
-            //var rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            //var bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
-            //stride = bmpData.Stride;
-            ////int channel = bmpData.Stride / bmp.Width; 
-            //var rowBytes = Image.GetPixelFormatSize(bmp.PixelFormat) / 8;
-            //var rowBytes1 = Image.GetPixelFormatSize(bmp.PixelFormat) / 8 - 1;
-            //var imgBytes = bmp.Height * bmp.Width * rowBytes;
-            //byte[] rgbValues = new byte[imgBytes];
-            //IntPtr ptr = bmpData.Scan0;
-            //for (var i = 0; i < bmp.Height * bmp.Width; i++)
-            //{
-            //    Marshal.Copy(ptr, rgbValues, i * rowBytes1, rowBytes1);   //对齐
-            //    ptr += rowBytes; // next row
-            //}
-            //bmp.UnlockBits(bmpData);
-
-            //return rgbValues;
-
             var rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             var bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
             stride = bmpData.Stride;
@@ -367,117 +358,7 @@ namespace IntegrationTesting.Aidi
                 ptr += bmpData.Stride; // next row
             }
             bmp.UnlockBits(bmpData);
-
             return rgbValues;
         }
-
-        public class Contours
-        {
-            public string x { get; set; }
-            public string y { get; set; }
-        }
-
-        public class RootObject
-        {
-            public string area { get; set; }
-            public List<Contours> contours { get; set; }
-            public string cx { get; set; }
-            public string cy { get; set; }
-            public string height { get; set; }
-            public string score { get; set; }
-            public string type { get; set; }
-            public string type_name { get; set; }
-            public string width { get; set; }
-        }
-
-        //   ***************************** 后面这几个方法没用到 ***********************
-        /// <summary>  
-        /// 将一个字节数组转换为8bit灰度位图  
-        /// </summary>  
-        /// <param name="rawValues">显示字节数组</param>  
-        /// <param name="width">图像宽度</param>  
-        /// <param name="height">图像高度</param>  
-        /// <returns>位图</returns>  
-        public static Bitmap ToGrayBitmap(byte[] rawValues, int width, int height)
-        {
-            //// 申请目标位图的变量，并将其内存区域锁定  
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
-            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, width, height),
-             ImageLockMode.WriteOnly, PixelFormat.Format8bppIndexed);
-
-            //// 获取图像参数  
-            int stride = bmpData.Stride;  // 扫描线的宽度  
-            int offset = stride - width;  // 显示宽度与扫描线宽度的间隙  
-            IntPtr iptr = bmpData.Scan0;  // 获取bmpData的内存起始位置  
-            int scanBytes = stride * height;// 用stride宽度，表示这是内存区域的大小  
-
-            //// 下面把原始的显示大小字节数组转换为内存中实际存放的字节数组  
-            int posScan = 0, posReal = 0;// 分别设置两个位置指针，指向源数组和目标数组  
-            byte[] pixelValues = new byte[scanBytes];  //为目标数组分配内存  
-
-            for (int x = 0; x < height; x++)
-            {
-                //// 下面的循环节是模拟行扫描  
-                for (int y = 0; y < width; y++)
-                {
-                    pixelValues[posScan++] = rawValues[posReal++];
-                }
-                posScan += offset;  //行扫描结束，要将目标位置指针移过那段“间隙”  
-            }
-
-            //// 用Marshal的Copy方法，将刚才得到的内存字节数组复制到BitmapData中  
-            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, iptr, scanBytes);
-            bmp.UnlockBits(bmpData);  // 解锁内存区域  
-
-            //// 下面的代码是为了修改生成位图的索引表，从伪彩修改为灰度  
-            ColorPalette tempPalette;
-            using (Bitmap tempBmp = new Bitmap(1, 1, PixelFormat.Format8bppIndexed))
-            {
-                tempPalette = tempBmp.Palette;
-            }
-            for (int i = 0; i < 256; i++)
-            {
-                tempPalette.Entries[i] = Color.FromArgb(i, i, i);
-            }
-
-            bmp.Palette = tempPalette;
-
-            //// 算法到此结束，返回结果  
-            return bmp;
-        }
-
-        public static byte[] Bitmap2Byte(Bitmap bitmap)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                bitmap.Save(stream, ImageFormat.Bmp);
-                byte[] data = new byte[stream.Length];
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.Read(data, 0, Convert.ToInt32(stream.Length));
-                return data;
-            }
-        }
-
-        public static Bitmap ResizeImage(Bitmap bmp, int newW, int newH)
-        {
-            try
-            {
-                Bitmap b = new Bitmap(newW, newH);
-                Graphics g = Graphics.FromImage(b);
-
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                g.DrawImage(bmp, new Rectangle(0, 0, newW, newH), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
-                g.Dispose();
-
-                return b;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-
     }
 }

@@ -74,14 +74,14 @@ namespace AqVision.Location
           set { m_scaleMax = value; }
         }
 
-        int m_minContrast = 20;
+        int m_minContrast = 110;
         public int MinContrast
         {
           get { return m_minContrast; }
           set { m_minContrast = value; }
         }
 
-        int m_maxContrast = 40;
+        int m_maxContrast = 140;
         public int MaxContrast
         {
           get { return m_maxContrast; }
@@ -221,7 +221,7 @@ namespace AqVision.Location
         }
 
 
-        private string m_TemplatePath = @"D:\a.bmp";
+        private string m_TemplatePath = "";
         public string TemplatePath
         {
             get { return m_TemplatePath; }
@@ -287,12 +287,11 @@ namespace AqVision.Location
             }
         }
 
-        
-        public bool CreateTempateImage()
+        public bool CreateTempateImage(string createPath)
         {
-            if(File.Exists(m_TemplatePath))
+            if (File.Exists(createPath))
             {
-                File.Delete(m_TemplatePath);
+                File.Delete(createPath);
             }
             Image originImage = Image.FromHbitmap(m_OriginImage.GetHbitmap());
 
@@ -304,7 +303,7 @@ namespace AqVision.Location
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle((int)(m_RoiRegionTemplate.LeftTopPointX), (int)(m_RoiRegionTemplate.LeftTopPointY),
                                            ImageColumn, ImageRow),System.Drawing.GraphicsUnit.Pixel);
-            bitmap.Save(m_TemplatePath, System.Drawing.Imaging.ImageFormat.Bmp);
+            bitmap.Save(createPath, System.Drawing.Imaging.ImageFormat.Bmp);
             gTemplate.Dispose();
             bitmap.Dispose();
             return true;
@@ -332,25 +331,35 @@ namespace AqVision.Location
         public bool CreateModel()
         {
             HTuple rows = new HTuple();
-            rows[0] = (int)(m_RoiRegionTemplate.LeftTopPointX);
-            rows[1] = (int)(m_RoiRegionTemplate.RightBottomX);
-            rows[2] = (int)(m_RoiRegionTemplate.RightBottomX);
-            rows[3] = (int)(m_RoiRegionTemplate.LeftTopPointX);
-            rows[4] = (int)(m_RoiRegionTemplate.LeftTopPointX);
+            rows[0] = (int)(m_RoiRegionTemplate.LeftTopPointY);
+            rows[1] = (int)(m_RoiRegionTemplate.RightBottomY);
+            rows[2] = (int)(m_RoiRegionTemplate.RightBottomY);
+            rows[3] = (int)(m_RoiRegionTemplate.LeftTopPointY);
+            rows[4] = (int)(m_RoiRegionTemplate.LeftTopPointY);
 
             int[] cols = new int[5];
-            cols[0] = (int)(m_RoiRegionTemplate.LeftTopPointY);
-            cols[1] = (int)(m_RoiRegionTemplate.LeftTopPointY);
-            cols[2] = (int)(m_RoiRegionTemplate.RightBottomY);
-            cols[3] = (int)(m_RoiRegionTemplate.RightBottomY);
-            cols[4] = (int)(m_RoiRegionTemplate.LeftTopPointY);
+            cols[0] = (int)(m_RoiRegionTemplate.LeftTopPointX);
+            cols[1] = (int)(m_RoiRegionTemplate.LeftTopPointX);
+            cols[2] = (int)(m_RoiRegionTemplate.RightBottomX);
+            cols[3] = (int)(m_RoiRegionTemplate.RightBottomX);
+            cols[4] = (int)(m_RoiRegionTemplate.LeftTopPointX);
             HTuple rowSource = new HTuple();
             HTuple columnSource = new HTuple();
             HTuple angleSource = new HTuple();
             HTuple modeXldRows = new HTuple();
             HTuple modeXldCols = new HTuple();
             HTuple modeXldPointCounts = new HTuple();
-            ApplyHalcon.FindModel.CreateFeatureModel(new HImage(m_TemplatePath), new HTuple(rows), new HTuple(cols),
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_8(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            ApplyHalcon.FindModel.CreateFeatureModel(image, new HTuple(rows), new HTuple(cols),
                                                     new HTuple(NumLevels), new HTuple(AngleStart), new HTuple(AngleExtent), new HTuple(AngleStep),
                                                     new HTuple(ScaleMin), new HTuple(ScaleMax), new HTuple(MinContrast), new HTuple(MaxContrast),
                                                     new HTuple(MinLength), out m_modelID, out rowSource, out columnSource,
@@ -375,8 +384,18 @@ namespace AqVision.Location
             HTuple angle = new HTuple();
             HTuple scale = new HTuple();
             HTuple score = new HTuple();
+            HImage image = null;
+            if(m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_8(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
 
-            ApplyHalcon.FindModel.FindFeatureModel(new HImage(m_TemplatePath), new HTuple(AngleStart), new HTuple(AngleExtent),
+
+            ApplyHalcon.FindModel.FindFeatureModel(image, new HTuple(AngleStart), new HTuple(AngleExtent),
                                         new HTuple(AngleStep), new HTuple(ScaleMin), new HTuple(ScaleMax), new HTuple(MinScore),
                                         new HTuple(NumMatches), m_modelID, out xldRowsM, out xldColsM,
                                         out xldPointCountsM, out row, out column,

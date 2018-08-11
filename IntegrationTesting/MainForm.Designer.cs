@@ -54,7 +54,7 @@
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.buttonRun);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox2.Location = new System.Drawing.Point(992, 0);
+            this.groupBox2.Location = new System.Drawing.Point(731, 0);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(103, 801);
             this.groupBox2.TabIndex = 7;
@@ -117,6 +117,7 @@
             this.buttonTest.TabIndex = 4;
             this.buttonTest.Text = "AIDI测试";
             this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // buttonTemplateSet
             // 
@@ -202,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 801);
+            this.ClientSize = new System.Drawing.Size(834, 801);
             this.Controls.Add(this.listViewRecord);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.aqDisplay1);
