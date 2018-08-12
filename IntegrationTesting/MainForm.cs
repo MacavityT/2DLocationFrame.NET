@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IntegrationTesting.Aidi;
+using IntegrationTesting.Robot;
 
 namespace IntegrationTesting
 {
@@ -23,6 +24,7 @@ namespace IntegrationTesting
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
         TemplateSetForm m_templateSet = new TemplateSetForm();
         AIDIManagementForm m_aidiMangement = new AIDIManagementForm();
+        RobotManagementForm m_robotSeverForm = new RobotManagementForm();
 
         public MainForm()
         {
@@ -185,10 +187,6 @@ namespace IntegrationTesting
             m_templateSet.ShowDialog();
         }
 
-        private void buttonAddRectangleRegion_Click(object sender, EventArgs e)
-        {
-        }
-
         private void buttonTemplateManagement_Click(object sender, EventArgs e)
         {
         }
@@ -200,6 +198,11 @@ namespace IntegrationTesting
         private void buttonTest_Click(object sender, EventArgs e)
         {
             m_aidiMangement.ShowDialog();
+        }
+
+        private void buttonRobotSever_Click(object sender, EventArgs e)
+        {
+            m_robotSeverForm.ShowDialog();
         }
     }
 }

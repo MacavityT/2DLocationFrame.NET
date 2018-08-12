@@ -151,11 +151,9 @@ namespace IntegrationTesting
             int iPointList = 0;
             for (int countList = 0, countSegement = 0; iPointList < xPointList.Length; iPointList++, countSegement++)
             {
-                //listBox1.Items.Add(string.Format("{0}, {1}", xPointList[iPointList], yPointList[iPointList]));
                 AqLineSegment lineSegment = new AqLineSegment();
                 if ((countSegement + 1) == countPointList[countList])
                 {
-                    listBox1.Items.Add("----------------------------");
                     lineSegment.StartX = xPointList[iPointList];
                     lineSegment.StartY = yPointList[iPointList];
 
@@ -210,8 +208,7 @@ namespace IntegrationTesting
             }
             st.Stop();
             aqDisplayCreateModel.Update();
-
-            MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//
+            //MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//fortest
         }
     }
 }

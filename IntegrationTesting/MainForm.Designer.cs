@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonAddRectangleRegion = new System.Windows.Forms.Button();
             this.checkBoxCameraAcquisition = new System.Windows.Forms.CheckBox();
             this.buttonTemplateManagement = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonRobotSever = new System.Windows.Forms.Button();
             this.buttonTest = new System.Windows.Forms.Button();
             this.buttonTemplateSet = new System.Windows.Forms.Button();
             this.buttonCloseCamera = new System.Windows.Forms.Button();
@@ -48,7 +48,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.buttonAddRectangleRegion);
             this.groupBox2.Controls.Add(this.checkBoxCameraAcquisition);
             this.groupBox2.Controls.Add(this.buttonTemplateManagement);
             this.groupBox2.Controls.Add(this.groupBox1);
@@ -59,17 +58,6 @@
             this.groupBox2.Size = new System.Drawing.Size(103, 801);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            // 
-            // buttonAddRectangleRegion
-            // 
-            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(6, 158);
-            this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonAddRectangleRegion.Name = "buttonAddRectangleRegion";
-            this.buttonAddRectangleRegion.Size = new System.Drawing.Size(92, 34);
-            this.buttonAddRectangleRegion.TabIndex = 8;
-            this.buttonAddRectangleRegion.Text = "测试定位";
-            this.buttonAddRectangleRegion.UseVisualStyleBackColor = true;
-            this.buttonAddRectangleRegion.Click += new System.EventHandler(this.buttonAddRectangleRegion_Click);
             // 
             // checkBoxCameraAcquisition
             // 
@@ -96,6 +84,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonRobotSever);
             this.groupBox1.Controls.Add(this.buttonTest);
             this.groupBox1.Controls.Add(this.buttonTemplateSet);
             this.groupBox1.Controls.Add(this.buttonCloseCamera);
@@ -107,6 +96,17 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "测试";
+            // 
+            // buttonRobotSever
+            // 
+            this.buttonRobotSever.Location = new System.Drawing.Point(5, 209);
+            this.buttonRobotSever.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRobotSever.Name = "buttonRobotSever";
+            this.buttonRobotSever.Size = new System.Drawing.Size(92, 34);
+            this.buttonRobotSever.TabIndex = 4;
+            this.buttonRobotSever.Text = "Robot Sever";
+            this.buttonRobotSever.UseVisualStyleBackColor = true;
+            this.buttonRobotSever.Click += new System.EventHandler(this.buttonRobotSever_Click);
             // 
             // buttonTest
             // 
@@ -231,8 +231,8 @@
         private System.Windows.Forms.Button buttonCalibration;
         private System.Windows.Forms.Button buttonTemplateManagement;
         private System.Windows.Forms.Button buttonTemplateSet;
-        private System.Windows.Forms.Button buttonAddRectangleRegion;
         private System.Windows.Forms.Button buttonTest;
+        private System.Windows.Forms.Button buttonRobotSever;
     }
 }
 

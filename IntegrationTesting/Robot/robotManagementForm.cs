@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace IntegrationTesting.Robot
 {
-    public partial class robotManagementForm : Form
+    public partial class RobotManagementForm : Form
     {
-        public robotManagementForm()
+        public RobotManagementForm()
         {
             InitializeComponent();
         }
