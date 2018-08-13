@@ -31,8 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.buttonServerStart = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonServerStart = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -60,12 +60,21 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Location = new System.Drawing.Point(54, 72);
+            this.groupBox1.Location = new System.Drawing.Point(12, 72);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(249, 322);
+            this.groupBox1.Size = new System.Drawing.Size(303, 381);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "接受消息";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox2.Location = new System.Drawing.Point(3, 17);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(297, 361);
+            this.textBox2.TabIndex = 0;
             // 
             // buttonServerStart
             // 
@@ -75,15 +84,6 @@
             this.buttonServerStart.TabIndex = 3;
             this.buttonServerStart.Text = "启动服务器";
             this.buttonServerStart.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(3, 17);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(243, 302);
-            this.textBox2.TabIndex = 0;
             // 
             // label2
             // 
@@ -96,9 +96,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Location = new System.Drawing.Point(343, 72);
+            this.groupBox2.Location = new System.Drawing.Point(321, 72);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(249, 322);
+            this.groupBox2.Size = new System.Drawing.Size(322, 384);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "返回消息";
@@ -109,14 +109,14 @@
             this.textBox3.Location = new System.Drawing.Point(3, 17);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(243, 302);
+            this.textBox3.Size = new System.Drawing.Size(316, 364);
             this.textBox3.TabIndex = 0;
             // 
             // RobotManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(648, 406);
+            this.ClientSize = new System.Drawing.Size(655, 468);
             this.Controls.Add(this.buttonServerStart);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

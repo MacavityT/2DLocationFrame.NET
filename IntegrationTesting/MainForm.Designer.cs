@@ -55,7 +55,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox2.Location = new System.Drawing.Point(731, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(103, 801);
+            this.groupBox2.Size = new System.Drawing.Size(103, 686);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             // 
@@ -182,7 +182,7 @@
             this.listViewRecord.Location = new System.Drawing.Point(0, 609);
             this.listViewRecord.MultiSelect = false;
             this.listViewRecord.Name = "listViewRecord";
-            this.listViewRecord.Size = new System.Drawing.Size(726, 180);
+            this.listViewRecord.Size = new System.Drawing.Size(726, 72);
             this.listViewRecord.TabIndex = 8;
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
@@ -203,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(834, 801);
+            this.ClientSize = new System.Drawing.Size(834, 686);
             this.Controls.Add(this.listViewRecord);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.aqDisplay1);

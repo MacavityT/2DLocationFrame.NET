@@ -67,7 +67,7 @@ namespace IntegrationTesting.Aidi
             Stopwatch sp2 = new Stopwatch();
             sp2.Start();
 
-            InitAidiModel(dnn_factory_client, root_path, "LD", 1);
+            InitAidiModel(dnn_factory_client, root_path, "D", 1);
             sp2.Stop();
             MessageBox.Show("初始化完成，耗时" + sp2.ElapsedMilliseconds + " ms");
         }
@@ -188,7 +188,7 @@ namespace IntegrationTesting.Aidi
             {
                 string imagePath = DirPath + "\\" + imageList[i];
                 Bitmap btmp = new Bitmap(imagePath);
-                btmp = ZoomTo24Bitmap(btmp, 0.5, 24);
+               // btmp = ZoomTo24Bitmap(btmp, 0.5, 24);
                 bitmaps.Add(btmp);
             }
             return bitmaps;

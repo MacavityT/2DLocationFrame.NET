@@ -37,15 +37,15 @@
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_LoadBitmap
             // 
-            this.btn_LoadBitmap.Location = new System.Drawing.Point(43, 178);
+            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 185);
             this.btn_LoadBitmap.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadBitmap.Name = "btn_LoadBitmap";
             this.btn_LoadBitmap.Size = new System.Drawing.Size(92, 34);
@@ -56,7 +56,7 @@
             // 
             // buttonRemoveGraph
             // 
-            this.buttonRemoveGraph.Location = new System.Drawing.Point(43, 254);
+            this.buttonRemoveGraph.Location = new System.Drawing.Point(5, 261);
             this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRemoveGraph.Name = "buttonRemoveGraph";
             this.buttonRemoveGraph.Size = new System.Drawing.Size(92, 34);
@@ -67,7 +67,7 @@
             // 
             // buttonAddRectangleRegion
             // 
-            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(43, 11);
+            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(5, 18);
             this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddRectangleRegion.Name = "buttonAddRectangleRegion";
             this.buttonAddRectangleRegion.Size = new System.Drawing.Size(92, 34);
@@ -78,7 +78,7 @@
             // 
             // buttonTraining
             // 
-            this.buttonTraining.Location = new System.Drawing.Point(43, 49);
+            this.buttonTraining.Location = new System.Drawing.Point(5, 56);
             this.buttonTraining.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTraining.Name = "buttonTraining";
             this.buttonTraining.Size = new System.Drawing.Size(92, 34);
@@ -89,7 +89,7 @@
             // 
             // buttonAddCircle
             // 
-            this.buttonAddCircle.Location = new System.Drawing.Point(43, 216);
+            this.buttonAddCircle.Location = new System.Drawing.Point(5, 223);
             this.buttonAddCircle.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddCircle.Name = "buttonAddCircle";
             this.buttonAddCircle.Size = new System.Drawing.Size(92, 34);
@@ -100,7 +100,7 @@
             // 
             // buttonLocation
             // 
-            this.buttonLocation.Location = new System.Drawing.Point(43, 88);
+            this.buttonLocation.Location = new System.Drawing.Point(5, 95);
             this.buttonLocation.Name = "buttonLocation";
             this.buttonLocation.Size = new System.Drawing.Size(92, 34);
             this.buttonLocation.TabIndex = 11;
@@ -117,7 +117,7 @@
             this.aqDisplayCreateModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayCreateModel.Name = "aqDisplayCreateModel";
             this.aqDisplayCreateModel.ScrollBar = false;
-            this.aqDisplayCreateModel.Size = new System.Drawing.Size(853, 658);
+            this.aqDisplayCreateModel.Size = new System.Drawing.Size(923, 658);
             this.aqDisplayCreateModel.TabIndex = 0;
             // 
             // panel1
@@ -130,10 +130,19 @@
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(853, 0);
+            this.panel1.Location = new System.Drawing.Point(923, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(177, 658);
+            this.panel1.Size = new System.Drawing.Size(107, 658);
             this.panel1.TabIndex = 12;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(9, 306);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(88, 340);
+            this.listBox1.TabIndex = 12;
             // 
             // panel2
             // 
@@ -141,17 +150,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(853, 658);
+            this.panel2.Size = new System.Drawing.Size(923, 658);
             this.panel2.TabIndex = 13;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(33, 293);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 364);
-            this.listBox1.TabIndex = 12;
             // 
             // TemplateSetForm
             // 
