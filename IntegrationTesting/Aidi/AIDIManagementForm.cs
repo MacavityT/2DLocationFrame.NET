@@ -31,6 +31,9 @@ namespace IntegrationTesting.Aidi
         String root_path2 = "model_*****";
         String root_path3 = "model_*****";
 
+        List<RootObject>[] m_objList;
+        List<Bitmap> m_sourceBitmap;
+
         public class Contours
         {
             public string x { get; set; }
@@ -83,7 +86,15 @@ namespace IntegrationTesting.Aidi
             sp.Start();
             StringVector result = dnn_factory_client.start_test(batch_images);// 多图测试接口
             sp.Stop();
+            if(result.Count <= 0)
+            {
+                MessageBox.Show("未获取检测结果");
+                return;
+            }
 
+            comboBoxShowResultList.Items.Clear();
+            m_objList = new List<RootObject>[result.Count];
+            m_sourceBitmap = new List<Bitmap>();
             for (int i = 0; i < result.Count; i++)
             {
                 AidiImage single_image = batch_images.at(i);
@@ -91,16 +102,18 @@ namespace IntegrationTesting.Aidi
                 richTextBox1.Text += result[i];
                 richTextBox1.Text += "-----------------------------------" + i;
                 richTextBox1.Refresh();
-
+                m_objList[i] = GetobjList(result[i]);
+                comboBoxShowResultList.Items.Add(string.Format("{0}",i));
+                m_sourceBitmap.Add(new Bitmap(bitmaps[i]));
             }
 
-            List<RootObject> objList = GetobjList(result[0]);//result[0]代表第一张图，以此类推
+            //List<RootObject> objList = GetobjList(result[0]);//result[0]代表第一张图，以此类推
             aqDisplay1.Image = bitmaps[0];
             aqDisplay1.FitToScreen();
 
             Stopwatch sp3 = new Stopwatch();
             sp3.Start();
-            DrawContours(objList, AqVision.AqColorConstants.Green, 1, aqDisplay1);
+            DrawContours(m_objList[0], AqVision.AqColorConstants.Green, 1, aqDisplay1);
             sp3.Stop();
 
             richTextBox2.Text += "绘制contour时间：" + sp3.ElapsedMilliseconds + "\r\n";
@@ -359,6 +372,26 @@ namespace IntegrationTesting.Aidi
             }
             bmp.UnlockBits(bmpData);
             return rgbValues;
+        }
+
+        private void comboBoxShowResultList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                aqDisplay1.InteractiveGraphics.Clear();
+                aqDisplay1.Image = (Bitmap)m_sourceBitmap[comboBoxShowResultList.SelectedIndex].Clone();
+                aqDisplay1.FitToScreen();
+                DrawContours(m_objList[comboBoxShowResultList.SelectedIndex], AqVision.AqColorConstants.Green, 1, aqDisplay1);
+                aqDisplay1.Update();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
