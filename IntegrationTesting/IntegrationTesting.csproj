@@ -198,6 +198,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Location\TemplateSetForm.resx">
       <DependentUpon>TemplateSetForm.cs</DependentUpon>
@@ -217,6 +218,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CameraRun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CameraStop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tool\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

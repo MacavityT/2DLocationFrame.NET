@@ -149,6 +149,7 @@ namespace AqVision.Acquistion
         {
             try
             {
+                GC.Collect();
                 if (AcquisitionParamChanged)
                 {
                     Connect();

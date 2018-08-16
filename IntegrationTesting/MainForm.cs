@@ -17,9 +17,9 @@ namespace IntegrationTesting
     public partial class MainForm : Form
     {
         AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
-
         Thread showPic = null;
         bool m_endThread = false;
+
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
         TemplateSetForm m_templateSet = new TemplateSetForm();
@@ -37,7 +37,6 @@ namespace IntegrationTesting
         ~MainForm()
         {
         }
-
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -64,15 +63,15 @@ namespace IntegrationTesting
             {
                 try
                 {
-                    aqDisplay1.Invoke(new MethodInvoker(delegate
+                    aqDisplayLocation.Invoke(new MethodInvoker(delegate
                         {
-                            aqDisplay1.Image = m_Acquisition.Acquisition();
+                            aqDisplayLocation.Image = m_Acquisition.Acquisition();
                             if (firstFrame)
                             {
                                 firstFrame = false;
-                                aqDisplay1.FitToScreen();
+                                aqDisplayLocation.FitToScreen();
                             }
-                            aqDisplay1.Update();
+                            aqDisplayLocation.Update();
                         }));
                 }
                 catch (SEHException e)
@@ -89,7 +88,7 @@ namespace IntegrationTesting
             }
         }
         private void buttonRun_Click(object sender, EventArgs e)
-        {  
+        {
         }
 
         public void AddMessageToListView(string strMessage)
@@ -100,25 +99,20 @@ namespace IntegrationTesting
             listViewRecord.Items.Add(item);
         }
 
-        private void buttonCloseCamera_Click(object sender, EventArgs e)
-        {
-             m_Acquisition.DisConnect();
-        }
-
         private void checkBoxCameraAcquisition_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxCameraAcquisition.Checked)
+            if (checkBoxCameraAcquisition.Checked)
             {
                 try
                 {
-                    aqDisplay1.InteractiveGraphics.Clear();
-                    aqDisplay1.Update();
+                    aqDisplayLocation.InteractiveGraphics.Clear();
+                    aqDisplayLocation.Update();
 
                     if (ReferenceEquals(showPic, null))
                     {
                         m_Acquisition.Connect();
                         showPic = new Thread(new ThreadStart(RegisterVisionAPI));
-                        showPic.Start();                        
+                        showPic.Start();
                     }
                     if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
                     {
@@ -156,53 +150,54 @@ namespace IntegrationTesting
             }
         }
 
-        private void buttonCalibration_Click(object sender, EventArgs e)
-        {
-            m_calibrateShow.ShowDialog();
-        }
-
-        private void buttonAcquisitionModule_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemSetAcqusition_Click(object sender, EventArgs e)
         {
             m_acqusitionImageSet.ShowDialog();
             m_Acquisition.CameraExposure = m_acqusitionImageSet.ExposureTime;
             m_Acquisition.CameraName = m_acqusitionImageSet.CameraName;
-            if(m_acqusitionImageSet.CameraBrand == 0)
+            if (m_acqusitionImageSet.CameraBrand == 0)
             {
                 m_Acquisition.CameraBrand = AqCameraBrand.DaHeng;
             }
-            else if( m_acqusitionImageSet.CameraBrand == 1 )
+            else if (m_acqusitionImageSet.CameraBrand == 1)
             {
                 m_Acquisition.CameraBrand = AqCameraBrand.Basler;
             }
         }
 
-        private void buttonTemplateSet_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemSetCalibration_Click(object sender, EventArgs e)
+        {
+            m_calibrateShow.ShowDialog();
+        }
+
+        private void ToolStripMenuItemSetLocation_Click(object sender, EventArgs e)
         {
             if (checkBoxCameraAcquisition.Checked)
             {
                 checkBoxCameraAcquisition.Checked = false;
                 checkBoxCameraAcquisition_CheckedChanged(null, null);
-                m_templateSet.ImageInput = aqDisplay1.Image.Clone() as Bitmap;
+                m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
             }
             m_templateSet.ShowDialog();
         }
 
-        private void buttonTemplateManagement_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemSetDectection_Click(object sender, EventArgs e)
         {
+            m_aidiMangement.ShowDialog();
+        }
+
+        private void ToolStripMenuItemSetRobotConnect_Click(object sender, EventArgs e)
+        {
+            m_robotSeverForm.ShowDialog();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
         }
 
-        private void buttonTest_Click(object sender, EventArgs e)
+        private void buttonStop_Click(object sender, EventArgs e)
         {
-            m_aidiMangement.ShowDialog();
-        }
 
-        private void buttonRobotSever_Click(object sender, EventArgs e)
-        {
-            m_robotSeverForm.ShowDialog();
         }
     }
 }

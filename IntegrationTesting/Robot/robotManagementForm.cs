@@ -12,9 +12,15 @@ namespace IntegrationTesting.Robot
 {
     public partial class RobotManagementForm : Form
     {
+        GRpcServer m_connectToRobot = new GRpcServer();
         public RobotManagementForm()
         {
             InitializeComponent();
+        }
+
+        private void buttonServerStart_Click(object sender, EventArgs e)
+        {
+            m_connectToRobot.ServerStart();
         }
     }
 }

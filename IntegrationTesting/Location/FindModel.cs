@@ -166,13 +166,14 @@ namespace ApplyHalcon
         }
         public void SaveModel(HTuple hv_ModelId, string modelName)
         {
-            HOperatorSet.WriteShapeModel(hv_ModelId, "gou.shm");
+            HOperatorSet.WriteShapeModel(hv_ModelId, modelName);
         }
 
-        public void LoadModel()
+        public HTuple LoadModel(string modelName)
         {
             HTuple hv_ModelId;
-            HOperatorSet.ReadShapeModel("gou.shm", out hv_ModelId);
+            HOperatorSet.ReadShapeModel(modelName, out hv_ModelId);
+            return hv_ModelId;
         }
     }
 }

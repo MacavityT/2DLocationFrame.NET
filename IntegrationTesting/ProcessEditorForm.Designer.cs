@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // ProcessEditor
+            // ProcessEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 472);
-            this.Name = "ProcessEditor";
+            this.ClientSize = new System.Drawing.Size(607, 543);
+            this.Name = "ProcessEditorForm";
             this.Text = "ProcessEditor";
             this.ResumeLayout(false);
 

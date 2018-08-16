@@ -19,7 +19,6 @@ namespace IntegrationTesting
         public bool RunMatcher()
         {
             //AqVision.Interaction.UI2LibInterface.GetImageSpecificLocation1()
-
             return true;
         }
 

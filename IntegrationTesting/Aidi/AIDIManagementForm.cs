@@ -294,7 +294,7 @@ namespace IntegrationTesting.Aidi
 
             lineSegment.Color = color;
             lineSegment.LineWidthInScreenPixels = lineWidth;
-            aqDisplay.InteractiveGraphics.Add(lineSegment, "", true);
+            aqDisplay.InteractiveGraphics.Add(lineSegment, "", false);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace IntegrationTesting.Aidi
             try
             {
                 aqDisplay1.InteractiveGraphics.Clear();
-                aqDisplay1.Image = (Bitmap)m_sourceBitmap[comboBoxShowResultList.SelectedIndex].Clone();
+                aqDisplay1.Image = m_sourceBitmap[comboBoxShowResultList.SelectedIndex];
                 aqDisplay1.FitToScreen();
                 DrawContours(m_objList[comboBoxShowResultList.SelectedIndex], AqVision.AqColorConstants.Green, 1, aqDisplay1);
                 aqDisplay1.Update();

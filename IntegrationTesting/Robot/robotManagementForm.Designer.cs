@@ -84,6 +84,7 @@
             this.buttonServerStart.TabIndex = 3;
             this.buttonServerStart.Text = "启动服务器";
             this.buttonServerStart.UseVisualStyleBackColor = true;
+            this.buttonServerStart.Click += new System.EventHandler(this.buttonServerStart_Click);
             // 
             // label2
             // 
