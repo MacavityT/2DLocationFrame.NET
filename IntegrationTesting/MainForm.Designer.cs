@@ -71,13 +71,13 @@
             this.checkBoxCameraAcquisition.BackColor = System.Drawing.SystemColors.Control;
             this.checkBoxCameraAcquisition.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraAcquisition.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkBoxCameraAcquisition.Image = global::IntegrationTesting.Properties.Resources.CameraRun;
+            this.checkBoxCameraAcquisition.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraAcquisition.Image")));
             this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(0, 0);
             this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
             this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(123, 32);
             this.checkBoxCameraAcquisition.TabIndex = 6;
-            this.checkBoxCameraAcquisition.Text = "实时定位相机采集";
+            this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
             this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
@@ -86,7 +86,6 @@
             // 
             this.buttonRun.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonRun.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonRun.Image = ((System.Drawing.Image)(resources.GetObject("buttonRun.Image")));
             this.buttonRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonRun.Location = new System.Drawing.Point(0, 554);
             this.buttonRun.Margin = new System.Windows.Forms.Padding(2);
@@ -244,15 +243,16 @@
             this.checkBoxCameraDetection.BackColor = System.Drawing.SystemColors.Control;
             this.checkBoxCameraDetection.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraDetection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkBoxCameraDetection.Image = global::IntegrationTesting.Properties.Resources.CameraRun;
+            this.checkBoxCameraDetection.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraDetection.Image")));
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraDetection.Location = new System.Drawing.Point(0, 32);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
             this.checkBoxCameraDetection.Size = new System.Drawing.Size(123, 32);
             this.checkBoxCameraDetection.TabIndex = 10;
-            this.checkBoxCameraDetection.Text = "实时检测相机采集";
+            this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraDetection.UseVisualStyleBackColor = false;
+            this.checkBoxCameraDetection.CheckedChanged += new System.EventHandler(this.checkBoxCameraDetection_CheckedChanged);
             // 
             // listViewRecord
             // 
@@ -272,7 +272,6 @@
             // 
             this.buttonStop.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonStop.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
             this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonStop.Location = new System.Drawing.Point(0, 489);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(2);

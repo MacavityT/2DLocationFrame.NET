@@ -16,7 +16,8 @@ namespace IntegrationTesting
 {
     public partial class MainForm : Form
     {
-        AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
+        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionLocation = new AqVision.Acquistion.AqAcquisitionImage();
+        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionDetection = new AqVision.Acquistion.AqAcquisitionImage();
         Thread showPic = null;
         bool m_endThread = false;
 
@@ -41,7 +42,7 @@ namespace IntegrationTesting
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             m_endThread = true;
-            m_Acquisition.DisConnect();
+            m_AcquisitionLocation.DisConnect();
             if (!ReferenceEquals(showPic, null))
             {
                 if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
@@ -65,7 +66,7 @@ namespace IntegrationTesting
                 {
                     aqDisplayLocation.Invoke(new MethodInvoker(delegate
                         {
-                            aqDisplayLocation.Image = m_Acquisition.Acquisition();
+                            aqDisplayLocation.Image = m_AcquisitionLocation.Acquisition();
                             if (firstFrame)
                             {
                                 firstFrame = false;
@@ -110,7 +111,7 @@ namespace IntegrationTesting
 
                     if (ReferenceEquals(showPic, null))
                     {
-                        m_Acquisition.Connect();
+                        m_AcquisitionLocation.Connect();
                         showPic = new Thread(new ThreadStart(RegisterVisionAPI));
                         showPic.Start();
                     }
@@ -121,12 +122,12 @@ namespace IntegrationTesting
                 }
                 catch (Exception ex)
                 {
-                    m_Acquisition.DisConnect();
+                    m_AcquisitionLocation.DisConnect();
                     MessageBox.Show(ex.Message);
                 }
 
-                checkBoxCameraAcquisition.Text = "停止采集";
-                checkBoxCameraAcquisition.BackColor = Color.Red;
+                checkBoxCameraAcquisition.Text = "停止定位实时采集";
+                checkBoxCameraAcquisition.Image = Properties.Resources.CameraStop;
             }
             else
             {
@@ -142,26 +143,26 @@ namespace IntegrationTesting
                 }
                 catch (Exception ex)
                 {
-                    m_Acquisition.DisConnect();
+                    m_AcquisitionLocation.DisConnect();
                     MessageBox.Show(ex.Message);
                 }
-                checkBoxCameraAcquisition.Text = "连续采集";
-                checkBoxCameraAcquisition.BackColor = Color.Green;
+                checkBoxCameraAcquisition.Text = "开启定位实时采集";
+                checkBoxCameraAcquisition.Image = Properties.Resources.CameraRun;
             }
         }
 
         private void ToolStripMenuItemSetAcqusition_Click(object sender, EventArgs e)
         {
             m_acqusitionImageSet.ShowDialog();
-            m_Acquisition.CameraExposure = m_acqusitionImageSet.ExposureTime;
-            m_Acquisition.CameraName = m_acqusitionImageSet.CameraName;
+            m_AcquisitionLocation.CameraExposure = m_acqusitionImageSet.ExposureTime;
+            m_AcquisitionLocation.CameraName = m_acqusitionImageSet.CameraName;
             if (m_acqusitionImageSet.CameraBrand == 0)
             {
-                m_Acquisition.CameraBrand = AqCameraBrand.DaHeng;
+                m_AcquisitionLocation.CameraBrand = AqCameraBrand.DaHeng;
             }
             else if (m_acqusitionImageSet.CameraBrand == 1)
             {
-                m_Acquisition.CameraBrand = AqCameraBrand.Basler;
+                m_AcquisitionLocation.CameraBrand = AqCameraBrand.Basler;
             }
         }
 
@@ -196,6 +197,11 @@ namespace IntegrationTesting
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxCameraDetection_CheckedChanged(object sender, EventArgs e)
         {
 
         }
