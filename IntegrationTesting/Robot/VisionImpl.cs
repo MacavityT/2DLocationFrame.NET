@@ -31,13 +31,11 @@ namespace IntegrationTesting.Robot
 //             request.VisionMode;
 //             request.Flag;
 //             request.TaskId;
-
             LocalizeRep localizeRespone = new LocalizeRep();
             double posX = 0;
             double posY = 0;
             double delta = 0;
             getLocalizeResultHandler(ref posX, ref posY, ref delta);
-
 
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;

@@ -16,17 +16,44 @@ namespace IntegrationTesting
     public partial class TemplateSetForm : Form
     {
         AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
+        private double m_locationResultPosX = 0;
+        public double LocationResultPosX
+        {
+            get { return m_locationResultPosX; }
+            set { m_locationResultPosX = value; }
+        }
+
+        private double m_locationResultPosY = 0;
+        public double LocationResultPosY
+        {
+            get { return m_locationResultPosY; }
+            set { m_locationResultPosY = value; }
+        }
+
+        private double m_locationResultPosTheta = 0;
+        public double LocationResultPosTheta
+        {
+            get { return m_locationResultPosTheta; }
+            set { m_locationResultPosTheta = value; }
+        }
+
+
 
         Bitmap m_imageInput = null;
         public Bitmap ImageInput
         {
             get { return m_imageInput; }
-            set { m_imageInput = value; }
+            set 
+            { 
+                m_imageInput = value;
+                m_Location.OriginImage = ImageInput.Clone() as Bitmap;
+            }
         }
 
         public TemplateSetForm()
         {
             InitializeComponent();
+            m_Location.LoadModel(@"D:\Model.shm");
         }
 
         private void TemplateSet_Load(object sender, EventArgs e)
@@ -34,13 +61,9 @@ namespace IntegrationTesting
             if(!ReferenceEquals(m_imageInput, null))
             {
                 aqDisplayCreateModel.Image = ImageInput.Clone() as Bitmap;
-                m_Location.OriginImage = ImageInput.Clone() as Bitmap;
-                m_Location.TemplatePath = "";
                 aqDisplayCreateModel.FitToScreen();
                 aqDisplayCreateModel.Update();
-            }
-
-            m_Location.LoadModel(@"D:\Model.shm");
+            }           
         }
 
         private void btn_LoadBitmap_Click(object sender, EventArgs e)
@@ -124,13 +147,21 @@ namespace IntegrationTesting
             {
                 aqDisplayCreateModel.InteractiveGraphics.Clear();
                 aqDisplayCreateModel.Update();
-                m_Location.RunMatcherByHalcon();
+                RunMatcher();
                 ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void RunMatcher()
+        {
+            m_Location.RunMatcherByHalcon();
+            LocationResultPosX = m_Location.CenterX;
+            LocationResultPosY = m_Location.CenterY;
+            LocationResultPosTheta = m_Location.Angle;
         }
 
         private void ShowGetResultsData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color)

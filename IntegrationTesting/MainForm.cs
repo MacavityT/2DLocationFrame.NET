@@ -53,11 +53,25 @@ namespace IntegrationTesting
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
         {
+            if (checkBoxCameraAcquisition.Checked)
+            {
+                checkBoxCameraAcquisition.Checked = false;
+                checkBoxCameraAcquisition_CheckedChanged(null, null);
+                m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                m_templateSet.RunMatcher();
+            }
+            else
+            {
+                MessageBox.Show("please open live show");
+            }
             return 0;
         }
 
-        private bool GetLocalizeResult(ref double PosX, ref double PosY, ref double theta)
+        private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta)
         {
+            posX = m_templateSet.LocationResultPosX;
+            posY = m_templateSet.LocationResultPosY;
+            theta = m_templateSet.LocationResultPosTheta;
             return true;
         }
 
