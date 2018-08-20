@@ -136,6 +136,8 @@
     <Compile Include="Acquisition\AqAcquisitionImage.cs" />
     <Compile Include="Calibration\AqCalibration.cs" />
     <Compile Include="Acquisition\AqCameraBrand.cs" />
+    <Compile Include="Robot\DoCalibrateHandler.cs" />
+    <Compile Include="Robot\GetLocalizeResultHandler.cs" />
     <Compile Include="Location\AqLocationPattern.cs" />
     <Compile Include="Calibration\CalibrationSetForm.cs">
       <SubType>Form</SubType>
@@ -175,6 +177,7 @@
     </Compile>
     <Compile Include="Robot\VisionImpl.cs" />
     <Compile Include="Tool\IniFile.cs" />
+    <Compile Include="Robot\TriggerCamerHandler.cs" />
     <Compile Include="UI2LibInterface.cs" />
     <EmbeddedResource Include="Acquisition\AcqusitionImageSetForm.resx">
       <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>

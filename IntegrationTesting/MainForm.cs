@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IntegrationTesting.Aidi;
 using IntegrationTesting.Robot;
+using Grpc.Core;
+using App2D;
 
 namespace IntegrationTesting
 {
@@ -28,16 +30,35 @@ namespace IntegrationTesting
         AIDIManagementForm m_aidiMangement = new AIDIManagementForm();
         RobotManagementForm m_robotSeverForm = new RobotManagementForm();
 
+        static VisionImpl m_visionImpl = new VisionImpl();
+        Server m_server = new Server
+        {
+            Services = { Robot2dApp.BindService(m_visionImpl) },
+            Ports = { new ServerPort("127.0.0.1", 50051, ServerCredentials.Insecure) }
+        };
+
         public MainForm()
         {
             InitializeComponent();
             listViewRecord.Columns.Add("Serial NO", -2, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Time", -2, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Message", -2, HorizontalAlignment.Center);
+            m_visionImpl.triggerCamerHandler = new TriggerCamerHandler(TriggerCamera);
+            m_visionImpl.getLocalizeResultHandler = new GetLocalizeResultHandler(GetLocalizeResult);
         }
 
         ~MainForm()
         {
+        }
+
+        private int TriggerCamera(double robotX, double robotY, double robotRz)
+        {
+            return 0;
+        }
+
+        private bool GetLocalizeResult(ref double PosX, ref double PosY, ref double theta)
+        {
+            return true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -125,6 +146,7 @@ namespace IntegrationTesting
         }
         private void buttonRun_Click(object sender, EventArgs e)
         {
+            m_server.Start();
         }
 
         public void AddMessageToListView(string strMessage)

@@ -71,6 +71,16 @@ namespace AqVision.Interaction
         [DllImport("ProtoLayer.dll")]
         public static extern bool load_calibration(string loadCalibrationParam);
 
+
+        /// <summary>
+        ///     0-kCameraInHand, 1-kCameraOutHand
+        /// </summary>
+        /// <param name="calibMode"></param>
+        /// <param name="isPositive"></param>
+        /// <returns></returns>
+        [DllImport("ProtoLayer.dll")]
+        public static extern bool set_config_param(int calibMode, bool isPositive);
+
         #endregion
     }
 }

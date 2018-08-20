@@ -10,19 +10,41 @@ namespace IntegrationTesting.Robot
 {  
     class VisionImpl : Robot2dApp.Robot2dAppBase
     {
-      
+        public TriggerCamerHandler triggerCamerHandler = null;
+        public GetLocalizeResultHandler getLocalizeResultHandler = null;
         // Server side handler of the SayHello RPC
-        Pose2D result_2D_pos = new Pose2D { X = 1, Y = 2, Theta = 3 };
+        
         public override Task<SetFlag> triggerCamera(TriggerReq request, ServerCallContext context)
         {
-            Console.WriteLine("reve triggerCamera: " + request.ToString());
-            return Task.FromResult(new SetFlag { ErrorFlag = 1111 });
+            SetFlag resultFlag = new SetFlag();
+            int flag = 0;
+            if( triggerCamerHandler !=null )
+            {
+                flag = triggerCamerHandler(request.RobotPose.Position.X, request.RobotPose.Position.Y, request.RobotPose.Position.Z);
+            }
+            resultFlag.ErrorFlag = flag;
+            return Task.FromResult(resultFlag);
         }
 
         public override Task<LocalizeRep> getLocalizeResult(LocalizeReq request, ServerCallContext context)
         {
-            Console.WriteLine("reve getLocalizeResult: VisionMode " + request.VisionMode.ToString() + " TaskId " + request.TaskId.ToString() + " Flag " + request.Flag.ToString());
-            return Task.FromResult(new LocalizeRep { VisionStatus = 0, OffsetMethod = "P", Pose2D = result_2D_pos });// OffsetMethod, P/F
+//             request.VisionMode;
+//             request.Flag;
+//             request.TaskId;
+
+            LocalizeRep localizeRespone = new LocalizeRep();
+            double posX = 0;
+            double posY = 0;
+            double delta = 0;
+            getLocalizeResultHandler(ref posX, ref posY, ref delta);
+
+
+            Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
+            localizeRespone.Pose2D = result_2D_pos;
+            localizeRespone.VisionStatus = 0;
+            localizeRespone.OffsetMethod = "P";
+
+            return Task.FromResult(localizeRespone);
         }
 
         public override Task<SetFlag> doCalibrate(CalibReq request, ServerCallContext context)
@@ -31,6 +53,11 @@ namespace IntegrationTesting.Robot
                 " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
                 " Terminate " + request.Terminate.ToString());
 
+//             request.Position.X;
+//             request.Position.Y;
+//             request.Position.Z;
+//             request.Terminate;
+//             request.OffsetMethod;
             return Task.FromResult(new SetFlag { ErrorFlag = 5555 });
         }
 

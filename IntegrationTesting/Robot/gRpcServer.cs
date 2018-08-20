@@ -11,9 +11,10 @@ namespace IntegrationTesting.Robot
     class GRpcServer
     {
         const int Port = 50051;
+        static VisionImpl m_visionImpl = new VisionImpl();
         Server server = new Server
         {
-            Services = { Robot2dApp.BindService(new VisionImpl()) },
+            Services = { Robot2dApp.BindService(m_visionImpl) },
             Ports = { new ServerPort("127.0.0.1", Port, ServerCredentials.Insecure) }
         };
 

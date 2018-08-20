@@ -22,7 +22,7 @@ namespace IntegrationTesting
           set { m_resultPoint = value; }
         }
 
-        double m_resultRMS = 0;
+        double m_resultRMS = 1;
         public double ResultRMS
         {
             get { return m_resultRMS; }
@@ -35,16 +35,19 @@ namespace IntegrationTesting
             public double ImageX
             {
                 get { return m_ImageX; }
+                set { m_ImageX = value; }
             }
             double m_ImageY;
             public double ImageY
             {
                 get { return m_ImageY; }
+                set { m_ImageY = value; }
             }
             double m_ImageA;
             public double ImageA
             {
                 get { return m_ImageA; }
+                set { m_ImageA = value; }
             }
             public ImageCoordinateGroup(double imageX, double imageY, double imageA)
             {
@@ -60,37 +63,23 @@ namespace IntegrationTesting
                 return true;
             }
         }
-//         public struct ResultCoordinateGroup
-//         {
-//             double m_resultX;
-//             public double ResultX
-//             {
-//                 get { return m_resultX; }
-//             }
-//             double m_resultY;
-//             public double ResultY
-//             {
-//                 get { return m_resultY; }
-//             }
-//             double m_resultA;
-//             public double ResultA
-//             {
-//                 get { return m_resultA; }
-//             }
-//             public ResultCoordinateGroup(double resultX, double resultY, double resultA)
-//             {
-//                 m_resultX = resultX;
-//                 m_resultY = resultY;
-//                 m_resultA = resultA;
-//             }
-//             public bool SetValue(double resultX, double resultY, double resultA)
-//             {
-//                 m_resultX = resultX;
-//                 m_resultY = resultY;
-//                 m_resultA = resultA;
-//                 return true;
-//             }
-//         }
+
+        public class CalibrationDataGroup
+        {
+            private ImageCoordinateGroup cameraPosition = new ImageCoordinateGroup(0, 0, 0);
+            public ImageCoordinateGroup CameraPosition
+            {
+              get { return cameraPosition; }
+              set { cameraPosition = value; }
+            }
+
+            private RobotCoordinateGroup robotCoordinate = new RobotCoordinateGroup(0, 0, 0);
+            public RobotCoordinateGroup RobotCoordinate
+            {
+              get { return robotCoordinate; }
+              set { robotCoordinate = value; }
+            }
+        }
 
         public class RobotCoordinateGroup
         {
@@ -98,16 +87,19 @@ namespace IntegrationTesting
             public double RobotX
             {
                 get { return m_robotX; }
+                set { m_robotX = value; }
             }
             double m_robotY;
             public double RobotY
             {
                 get { return m_robotY; }
+                set { m_robotY = value; }
             }
             double m_robotRz;
             public double RobotRz
             {
                 get { return m_robotRz; }
+                set { m_robotRz = value; }
             }
             public RobotCoordinateGroup(double robotX, double robotY, double robotRz)
             {
@@ -165,20 +157,21 @@ namespace IntegrationTesting
         RobotCoordinateGroup m_RobotPoint = new RobotCoordinateGroup(2, 2, 2);
         internal RobotCoordinateGroup RobotPoint
         {
-            get { return m_RobotPoint; }        
+            get { return m_RobotPoint; }
         }
 
         CatchCoordinateGroup m_catchPoint = new CatchCoordinateGroup(3, 3, 3);
         public CatchCoordinateGroup CatchPoint
         {
-          get { return m_catchPoint; }
+            get { return m_catchPoint; }
         }
 
-//         ResultCoordinateGroup m_resultPoint = new ResultCoordinateGroup(0, 0, 0);
-//         public ResultCoordinateGroup ResultPoint
-//         {
-//             get { return m_resultPoint; }
-//         }
+        List<CalibrationDataGroup> m_allLineData = new List<CalibrationDataGroup>();
+        public List<CalibrationDataGroup> AllLineData
+        {
+            get { return m_allLineData; }
+            set { m_allLineData = value; }
+        }
 
         public AqCalibration()
         {
@@ -227,6 +220,10 @@ namespace IntegrationTesting
         public bool LoadCalibrationResult()
         {
             return AqVision.Interaction.UI2LibInterface.load_calibration(CalibrationResultSavePath);
+        }
+        public bool SetConfig(int calibMode, bool isPositive)
+        {
+            return AqVision.Interaction.UI2LibInterface.set_config_param(calibMode, isPositive);
         }
     }
 }

@@ -1,0 +1,16 @@
+服务器服务：
+
+触发相机取图定位：
+    rpc triggerCamera(TriggerReq) returns (SetFlag) {}
+获取相机定位结果
+    rpc getLocalizeResult(LocalizeReq) returns (LocalizeRep) {}
+标定过程以及标定结束
+    rpc doCalibrate(CalibReq) returns(SetFlag) {}
+设置模板好
+    rpc configSystem(ConfigReq) returns(SetFlag) {}
+预留(3D组应用)
+    rpc getWorkObjInfo(WorkObjReq) returns (WorkObjRep) {}
+
+
+用到的message 
+JointConf ： 3D组使用，2D不使用

@@ -99,6 +99,7 @@
             this.comboBoxModeList.Name = "comboBoxModeList";
             this.comboBoxModeList.Size = new System.Drawing.Size(519, 20);
             this.comboBoxModeList.TabIndex = 1;
+            this.comboBoxModeList.SelectedIndexChanged += new System.EventHandler(this.comboBoxModeList_SelectedIndexChanged);
             // 
             // labelResultImageX
             // 
@@ -541,7 +542,7 @@
             this.panel1.Size = new System.Drawing.Size(521, 256);
             this.panel1.TabIndex = 6;
             // 
-            // CalibrationSet
+            // CalibrationSetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -560,8 +561,9 @@
             this.Controls.Add(this.comboBoxModeList);
             this.Controls.Add(this.listViewParameterSet);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "CalibrationSet";
+            this.Name = "CalibrationSetForm";
             this.Text = "CalibrationSet";
+            this.Load += new System.EventHandler(this.CalibrationSetForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
