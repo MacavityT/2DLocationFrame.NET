@@ -33,16 +33,21 @@ namespace IntegrationTesting
         {
             if(!ReferenceEquals(m_imageInput, null))
             {
-                aqDisplayCreateModel.Image = ImageInput;
-                m_Location.OriginImage = ImageInput;
+                aqDisplayCreateModel.Image = ImageInput.Clone() as Bitmap;
+                m_Location.OriginImage = ImageInput.Clone() as Bitmap;
                 m_Location.TemplatePath = "";
-            }            
+                aqDisplayCreateModel.FitToScreen();
+                aqDisplayCreateModel.Update();
+            }
+
+            m_Location.LoadModel(@"D:\Model.shm");
         }
 
         private void btn_LoadBitmap_Click(object sender, EventArgs e)
         {
             try
             {
+                buttonRemoveGraph_Click(null, null);
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -52,22 +57,6 @@ namespace IntegrationTesting
                     m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
                     aqDisplayCreateModel.FitToScreen();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonAddCircle_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                AqGdiPointF LeftTopPoint = new AqGdiPointF(200, 200);
-                AqGdiPointF RightBottomPoint = new AqGdiPointF(500, 500);
-                AqCircularArc arc = new AqCircularArc(LeftTopPoint, RightBottomPoint, 0, 315);
-                aqDisplayCreateModel.InteractiveGraphics.Add(arc, "AAA 33333", true);
-                aqDisplayCreateModel.Update();
             }
             catch (Exception ex)
             {
@@ -209,6 +198,11 @@ namespace IntegrationTesting
             st.Stop();
             aqDisplayCreateModel.Update();
             //MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//fortest
+        }
+
+        private void buttonSaveModel_Click(object sender, EventArgs e)
+        {
+            m_Location.SaveModel(@"D:\Model.shm");
         }
     }
 }

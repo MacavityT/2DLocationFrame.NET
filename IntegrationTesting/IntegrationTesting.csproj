@@ -174,6 +174,7 @@
       <DependentUpon>TemplateSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Robot\VisionImpl.cs" />
+    <Compile Include="Tool\IniFile.cs" />
     <Compile Include="UI2LibInterface.cs" />
     <EmbeddedResource Include="Acquisition\AcqusitionImageSetForm.resx">
       <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>
@@ -234,8 +235,9 @@
   <ItemGroup>
     <None Include="Resources\CameraStop.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Tool\" />
+    <None Include="Resources\Stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

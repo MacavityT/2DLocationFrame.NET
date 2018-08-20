@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace IntegrationTesting
 {
@@ -29,13 +31,20 @@ namespace IntegrationTesting
                 comboBoxModeList.Items.Add(mode);
             }
 
-            m_calibrationCenter.CalibrationResultSavePath = Application.ExecutablePath;
+            m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath;
+
+            IntegrationTesting.Tool.IniFile.IniFillFullPath = Application.StartupPath + "\\Config.ini";
+
+            if (!File.Exists(IntegrationTesting.Tool.IniFile.IniFillFullPath))
+            {
+                File.Create(IntegrationTesting.Tool.IniFile.IniFillFullPath);
+            }
+
         }
 
 
         private void listViewParameterSet_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
+        {            
         }
 
         private void buttonNewLine_Click(object sender, EventArgs e)

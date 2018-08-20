@@ -27,7 +27,7 @@ namespace AqVision.Acquistion
         }
         
         System.Drawing.Bitmap m_RevBitmap = null;
-        string m_cameraName = "Aqrose_T";
+        string m_cameraName = "Aqrose_L";
         public string CameraName
         {
             get { return m_cameraName; }

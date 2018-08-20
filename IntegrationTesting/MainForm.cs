@@ -17,8 +17,9 @@ namespace IntegrationTesting
     public partial class MainForm : Form
     {
         AqVision.Acquistion.AqAcquisitionImage m_AcquisitionLocation = new AqVision.Acquistion.AqAcquisitionImage();
-        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionDetection = new AqVision.Acquistion.AqAcquisitionImage();
-        Thread showPic = null;
+//        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionDetection = new AqVision.Acquistion.AqAcquisitionImage();
+        Thread showPicLocation = null;
+        Thread showPicDetection = null;
         bool m_endThread = false;
 
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
@@ -43,14 +44,15 @@ namespace IntegrationTesting
         {
             m_endThread = true;
             m_AcquisitionLocation.DisConnect();
-            if (!ReferenceEquals(showPic, null))
+//            m_AcquisitionDetection.DisConnect();
+            if (!ReferenceEquals(showPicLocation, null))
             {
-                if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
+                if (showPicLocation.ThreadState == System.Threading.ThreadState.Suspended)
                 {
-                    showPic.Resume();
+                    showPicLocation.Resume();
                 }
-                showPic.Abort();
-                while (showPic.ThreadState != System.Threading.ThreadState.Aborted)
+                showPicLocation.Abort();
+                while (showPicLocation.ThreadState != System.Threading.ThreadState.Aborted)
                 {
                     Thread.Sleep(10);
                 }
@@ -67,6 +69,7 @@ namespace IntegrationTesting
                     aqDisplayLocation.Invoke(new MethodInvoker(delegate
                         {
                             aqDisplayLocation.Image = m_AcquisitionLocation.Acquisition();
+
                             if (firstFrame)
                             {
                                 firstFrame = false;
@@ -74,6 +77,38 @@ namespace IntegrationTesting
                             }
                             aqDisplayLocation.Update();
                         }));
+                }
+                catch (SEHException e)
+                {
+                    AqVision.Interaction.UI2LibInterface.OutputDebugString("SEH Exception: " + e.ToString());
+                    MessageBox.Show(e.Message);
+                }
+                finally
+                {
+                    AqVision.Interaction.UI2LibInterface.OutputDebugString("Thread Exception");
+                    //MessageBox.Show("Thread Exception");
+                }
+                Thread.Sleep(10);
+            }
+        }
+
+        public void RegisterVisionAPI2()
+        {
+            bool firstFrame = true;
+            while (!m_endThread)
+            {
+                try
+                {
+                    aqDisplayDectection.Invoke(new MethodInvoker(delegate
+                    {
+//                        aqDisplayDectection.Image = m_AcquisitionDetection.Acquisition();
+                        if (firstFrame)
+                        {
+                            firstFrame = false;
+                            aqDisplayDectection.FitToScreen();
+                        }
+                        aqDisplayDectection.Update();
+                    }));
                 }
                 catch (SEHException e)
                 {
@@ -109,15 +144,15 @@ namespace IntegrationTesting
                     aqDisplayLocation.InteractiveGraphics.Clear();
                     aqDisplayLocation.Update();
 
-                    if (ReferenceEquals(showPic, null))
+                    if (ReferenceEquals(showPicLocation, null))
                     {
                         m_AcquisitionLocation.Connect();
-                        showPic = new Thread(new ThreadStart(RegisterVisionAPI));
-                        showPic.Start();
+                        showPicLocation = new Thread(new ThreadStart(RegisterVisionAPI));
+                        showPicLocation.Start();
                     }
-                    if (showPic.ThreadState == System.Threading.ThreadState.Suspended)
+                    if (showPicLocation.ThreadState == System.Threading.ThreadState.Suspended)
                     {
-                        showPic.Resume();
+                        showPicLocation.Resume();
                     }
                 }
                 catch (Exception ex)
@@ -133,11 +168,11 @@ namespace IntegrationTesting
             {
                 try
                 {
-                    if (!ReferenceEquals(showPic, null))
+                    if (!ReferenceEquals(showPicLocation, null))
                     {
                         //if (showPic.ThreadState == ThreadState.Running)
                         {
-                            showPic.Suspend();
+                            showPicLocation.Suspend();
                         }
                     }
                 }
@@ -154,15 +189,26 @@ namespace IntegrationTesting
         private void ToolStripMenuItemSetAcqusition_Click(object sender, EventArgs e)
         {
             m_acqusitionImageSet.ShowDialog();
-            m_AcquisitionLocation.CameraExposure = m_acqusitionImageSet.ExposureTime;
-            m_AcquisitionLocation.CameraName = m_acqusitionImageSet.CameraName;
-            if (m_acqusitionImageSet.CameraBrand == 0)
+            m_AcquisitionLocation.CameraExposure = m_acqusitionImageSet.ExposureTimeLocation;
+            m_AcquisitionLocation.CameraName = m_acqusitionImageSet.CameraNameLocation;
+            if (m_acqusitionImageSet.CameraBrandLocation == 0)
             {
                 m_AcquisitionLocation.CameraBrand = AqCameraBrand.DaHeng;
             }
-            else if (m_acqusitionImageSet.CameraBrand == 1)
+            else if (m_acqusitionImageSet.CameraBrandLocation == 1)
             {
                 m_AcquisitionLocation.CameraBrand = AqCameraBrand.Basler;
+            }
+
+//            m_AcquisitionDetection.CameraExposure = m_acqusitionImageSet.ExposureTimeDetection;
+//            m_AcquisitionDetection.CameraName = m_acqusitionImageSet.CameraNameDetection;
+            if (m_acqusitionImageSet.CameraBrandLocation == 0)
+            {
+//                m_AcquisitionDetection.CameraBrand = AqCameraBrand.DaHeng;
+            }
+            else if (m_acqusitionImageSet.CameraBrandLocation == 1)
+            {
+//                m_AcquisitionDetection.CameraBrand = AqCameraBrand.Basler;
             }
         }
 
@@ -203,7 +249,53 @@ namespace IntegrationTesting
 
         private void checkBoxCameraDetection_CheckedChanged(object sender, EventArgs e)
         {
+            if (checkBoxCameraDetection.Checked)
+            {
+                try
+                {
+                    aqDisplayDectection.InteractiveGraphics.Clear();
+                    aqDisplayDectection.Update();
 
+                    if (ReferenceEquals(showPicDetection, null))
+                    {
+//                        m_AcquisitionDetection.Connect();
+                        showPicDetection = new Thread(new ThreadStart(RegisterVisionAPI2));
+                        showPicDetection.Start();
+                    }
+                    if (showPicDetection.ThreadState == System.Threading.ThreadState.Suspended)
+                    {
+                        showPicDetection.Resume();
+                    }
+                }
+                catch (Exception ex)
+                {
+//                    m_AcquisitionDetection.DisConnect();
+                    MessageBox.Show(ex.Message);
+                }
+
+                checkBoxCameraDetection.Text = "停止检测实时采集";
+                checkBoxCameraDetection.Image = Properties.Resources.CameraStop;
+            }
+            else
+            {
+                try
+                {
+//                    if (!ReferenceEquals(m_AcquisitionDetection, null))
+                    {
+                        //if (showPic.ThreadState == ThreadState.Running)
+                        {
+                            showPicDetection.Suspend();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+ //                   m_AcquisitionDetection.DisConnect();
+                    MessageBox.Show(ex.Message);
+                }
+                checkBoxCameraDetection.Text = "开启检测实时采集";
+                checkBoxCameraDetection.Image = Properties.Resources.CameraRun;
+            }
         }
     }
 }

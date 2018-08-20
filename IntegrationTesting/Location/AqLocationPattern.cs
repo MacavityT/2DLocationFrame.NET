@@ -113,6 +113,7 @@ namespace AqVision.Location
         public HTuple ModelID
         {
           get { return m_modelID; }
+          set { m_modelID = value; }
         }
 
         double[] m_xldRowsM;
@@ -352,7 +353,7 @@ namespace AqVision.Location
             HImage image = null;
             if (m_TemplatePath.Length == 0)
             {
-                image = ApplyHalcon.ImageConvert.Bitmap2HImage_8(OriginImage);
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
             }
             else
             {
@@ -387,7 +388,7 @@ namespace AqVision.Location
             HImage image = null;
             if(m_TemplatePath.Length == 0)
             {
-                image = ApplyHalcon.ImageConvert.Bitmap2HImage_8(OriginImage);
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
             }
             else
             {
@@ -408,6 +409,33 @@ namespace AqVision.Location
             XldPointCountsM = xldPointCountsM.LArr;
             XldColsM = xldColsM.DArr;
             XldRowsM = xldRowsM.DArr;
+        }
+
+        public bool SaveModel(string modelFullPath)
+        {
+            if (!ReferenceEquals(modelFullPath, null))
+            { 
+                ApplyHalcon.FindModel.SaveModel(ModelID, modelFullPath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool LoadModel(string modelFullPath)
+        {
+            if (File.Exists(modelFullPath)) 
+            {
+                ModelID = ApplyHalcon.FindModel.LoadModel(modelFullPath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

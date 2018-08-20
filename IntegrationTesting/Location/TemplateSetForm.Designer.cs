@@ -33,19 +33,19 @@
             this.buttonRemoveGraph = new System.Windows.Forms.Button();
             this.buttonAddRectangleRegion = new System.Windows.Forms.Button();
             this.buttonTraining = new System.Windows.Forms.Button();
-            this.buttonAddCircle = new System.Windows.Forms.Button();
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonSaveModel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_LoadBitmap
             // 
-            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 185);
+            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 223);
             this.btn_LoadBitmap.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadBitmap.Name = "btn_LoadBitmap";
             this.btn_LoadBitmap.Size = new System.Drawing.Size(92, 34);
@@ -87,17 +87,6 @@
             this.buttonTraining.UseVisualStyleBackColor = true;
             this.buttonTraining.Click += new System.EventHandler(this.buttonTraining_Click);
             // 
-            // buttonAddCircle
-            // 
-            this.buttonAddCircle.Location = new System.Drawing.Point(5, 223);
-            this.buttonAddCircle.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonAddCircle.Name = "buttonAddCircle";
-            this.buttonAddCircle.Size = new System.Drawing.Size(92, 34);
-            this.buttonAddCircle.TabIndex = 9;
-            this.buttonAddCircle.Text = "添加圆形";
-            this.buttonAddCircle.UseVisualStyleBackColor = true;
-            this.buttonAddCircle.Click += new System.EventHandler(this.buttonAddCircle_Click);
-            // 
             // buttonLocation
             // 
             this.buttonLocation.Location = new System.Drawing.Point(5, 95);
@@ -125,7 +114,7 @@
             this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
             this.panel1.Controls.Add(this.buttonLocation);
-            this.panel1.Controls.Add(this.buttonAddCircle);
+            this.panel1.Controls.Add(this.buttonSaveModel);
             this.panel1.Controls.Add(this.btn_LoadBitmap);
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
@@ -153,6 +142,17 @@
             this.panel2.Size = new System.Drawing.Size(923, 658);
             this.panel2.TabIndex = 13;
             // 
+            // buttonSaveModel
+            // 
+            this.buttonSaveModel.Location = new System.Drawing.Point(5, 134);
+            this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonSaveModel.Name = "buttonSaveModel";
+            this.buttonSaveModel.Size = new System.Drawing.Size(92, 34);
+            this.buttonSaveModel.TabIndex = 5;
+            this.buttonSaveModel.Text = "保存模板";
+            this.buttonSaveModel.UseVisualStyleBackColor = true;
+            this.buttonSaveModel.Click += new System.EventHandler(this.buttonSaveModel_Click);
+            // 
             // TemplateSetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -176,11 +176,11 @@
         private System.Windows.Forms.Button buttonRemoveGraph;
         private System.Windows.Forms.Button buttonAddRectangleRegion;
         private System.Windows.Forms.Button buttonTraining;
-        private System.Windows.Forms.Button buttonAddCircle;
         private System.Windows.Forms.Button buttonLocation;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button buttonSaveModel;
 
     }
 }
