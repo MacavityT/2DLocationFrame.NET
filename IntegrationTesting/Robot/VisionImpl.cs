@@ -50,7 +50,6 @@ namespace IntegrationTesting.Robot
             Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
                 " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
                 " Terminate " + request.Terminate.ToString());
-
 //             request.Position.X;
 //             request.Position.Y;
 //             request.Position.Z;

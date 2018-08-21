@@ -52,6 +52,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AqDevice, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Release\AqDevice.dll</HintPath>
+    </Reference>
     <Reference Include="AqVision, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Release\AqVision.dll</HintPath>
@@ -136,6 +140,12 @@
     <Compile Include="Acquisition\AqAcquisitionImage.cs" />
     <Compile Include="Calibration\AqCalibration.cs" />
     <Compile Include="Acquisition\AqCameraBrand.cs" />
+    <Compile Include="PositionSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PositionSet.Designer.cs">
+      <DependentUpon>PositionSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Robot\DoCalibrateHandler.cs" />
     <Compile Include="Robot\GetLocalizeResultHandler.cs" />
     <Compile Include="Location\AqLocationPattern.cs" />
@@ -190,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PositionSet.resx">
+      <DependentUpon>PositionSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProcessEditorForm.resx">
       <DependentUpon>ProcessEditorForm.cs</DependentUpon>

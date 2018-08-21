@@ -37,15 +37,18 @@
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonSaveModel = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_LoadBitmap
             // 
-            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 223);
+            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 296);
             this.btn_LoadBitmap.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadBitmap.Name = "btn_LoadBitmap";
             this.btn_LoadBitmap.Size = new System.Drawing.Size(92, 34);
@@ -56,7 +59,7 @@
             // 
             // buttonRemoveGraph
             // 
-            this.buttonRemoveGraph.Location = new System.Drawing.Point(5, 261);
+            this.buttonRemoveGraph.Location = new System.Drawing.Point(7, 334);
             this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRemoveGraph.Name = "buttonRemoveGraph";
             this.buttonRemoveGraph.Size = new System.Drawing.Size(92, 34);
@@ -106,11 +109,14 @@
             this.aqDisplayCreateModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayCreateModel.Name = "aqDisplayCreateModel";
             this.aqDisplayCreateModel.ScrollBar = false;
-            this.aqDisplayCreateModel.Size = new System.Drawing.Size(923, 658);
+            this.aqDisplayCreateModel.Size = new System.Drawing.Size(962, 725);
             this.aqDisplayCreateModel.TabIndex = 0;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
             this.panel1.Controls.Add(this.buttonLocation);
@@ -119,28 +125,19 @@
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(923, 0);
+            this.panel1.Location = new System.Drawing.Point(962, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(107, 658);
+            this.panel1.Size = new System.Drawing.Size(101, 725);
             this.panel1.TabIndex = 12;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(9, 306);
+            this.listBox1.Location = new System.Drawing.Point(9, 373);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(88, 340);
             this.listBox1.TabIndex = 12;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.aqDisplayCreateModel);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(923, 658);
-            this.panel2.TabIndex = 13;
             // 
             // buttonSaveModel
             // 
@@ -153,17 +150,48 @@
             this.buttonSaveModel.UseVisualStyleBackColor = true;
             this.buttonSaveModel.Click += new System.EventHandler(this.buttonSaveModel_Click);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.aqDisplayCreateModel);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(962, 725);
+            this.panel2.TabIndex = 13;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 188);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 13;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(3, 223);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 13;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(-1, 259);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
+            this.textBox3.TabIndex = 13;
+            // 
             // TemplateSetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1030, 658);
+            this.ClientSize = new System.Drawing.Size(1063, 725);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "TemplateSetForm";
             this.Text = "TemplateSet";
             this.Load += new System.EventHandler(this.TemplateSet_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -181,6 +209,9 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttonSaveModel;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox3;
 
     }
 }

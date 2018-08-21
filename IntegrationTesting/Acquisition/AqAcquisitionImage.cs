@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 using IntegrationTesting;
+using System.Drawing;
+using System.Reflection;
+using AqDevice;
 
 namespace AqVision.Acquistion
 {
@@ -16,8 +19,6 @@ namespace AqVision.Acquistion
         private event DelegateOnError m_EventOnError;
         private event DelegateOnBitmap m_EventOnBitmap;
         private bool m_GetBitmapSuc = false;
-        private GCHandle m_gcError;
-        private GCHandle m_gcBitmap;
 
         bool m_acquisitionParamChanged = false;
         public bool AcquisitionParamChanged
@@ -76,45 +77,64 @@ namespace AqVision.Acquistion
             set { m_RevBitmap = value; }
         }
 
+        ////////////////////////////////////////////////
+        AqDevice.IAqCameraManager cameramanager = null;
+        List<AqDevice.IAqCamera> cameras;
+        bool m_connected = false;
+        ////////////////////////////////////////////////
 
         public AqAcquisitionImage()
         {
-            m_EventOnError += new DelegateOnError(OnError);
-            m_gcError = GCHandle.Alloc(m_EventOnError);
-            IntPtr ptr = Marshal.GetFunctionPointerForDelegate(m_EventOnError);
-            AqVision.Interaction.UI2LibInterface.RegisterErrorFunction(ptr);
-
-            m_EventOnBitmap += new DelegateOnBitmap(OnReceiveBitmap);
-            m_gcBitmap = GCHandle.Alloc(m_EventOnBitmap);
-            IntPtr ptrBitmap = Marshal.GetFunctionPointerForDelegate(m_EventOnBitmap);
-            AqVision.Interaction.UI2LibInterface.RegisterBitmapFunction(ptrBitmap);
         }
 
-        ~AqAcquisitionImage()
+        public void RecCapture(object objUserparam, Bitmap bitmap)
         {
-            m_gcError.Free();
-            m_gcBitmap.Free();
-        }
-
-        void OnReceiveBitmap(string strBmpBase64)
-        {
-            int ibmpLen = strBmpBase64.Length;
-            m_RevBitmap = AqVision.Utility.Base64.Base64ToBitmap(strBmpBase64);
-            AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting OnReceiveBitmap end ");
+            RevBitmap = bitmap;
             m_GetBitmapSuc = true;
         }
 
-        void OnError(int id)
+        public void RecCapture1(object objUserparam, Bitmap bitmap)
         {
-            //System.Windows.Forms.MessageBox.Show(id.ToString());
+            RevBitmap = bitmap;
+            m_GetBitmapSuc = true;
         }
+        ~AqAcquisitionImage()
+        {
+        }
+
 
         public bool Connect()
         {
             try
             {
-                AqVision.Interaction.UI2LibInterface.Disconnect();
-                AqVision.Interaction.UI2LibInterface.Connect(Convert.ToInt32(CameraBrand), CameraName, CameraExposure);
+                if(!m_connected)
+                {
+                    string dllpath = System.IO.Directory.GetCurrentDirectory() + "\\DaHengCamera.dll";
+                    Assembly assem = Assembly.LoadFile(dllpath);
+                    Type type = assem.GetType("AqDevice.AqCameraFactory");
+                    MethodInfo mi = type.GetMethod("GetInstance");
+                    object obj = mi.Invoke(null, null);
+
+                    cameramanager = (IAqCameraManager)obj;
+                    cameramanager.Init();
+                    cameras = cameramanager.GetCameras();
+                    cameras[0].TriggerMode = AqDevice.TriggerModes.Unknow;
+                    cameras[0].ExposureTime = 2000;
+                    cameras[0].Name = "Aqrose_L";
+                    cameras[0].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
+                    cameras[0].OpenCamera();
+                    cameras[0].OpenStream();
+
+                    cameras[1].TriggerMode = AqDevice.TriggerModes.Unknow;
+                    cameras[1].ExposureTime = 2000;
+                    cameras[1].Name = "Aqrose_D";
+                    cameras[1].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
+                    cameras[1].OpenCamera();
+                    cameras[1].OpenStream();
+
+                    m_connected = true;
+                }
+
             }
             catch(FormatException ex)
             {
@@ -134,7 +154,12 @@ namespace AqVision.Acquistion
         {
             try
             {
-                AqVision.Interaction.UI2LibInterface.Disconnect();
+                if(m_connected)
+                {
+                    cameras[0].CloseCamera();
+                    cameras[1].CloseCamera();
+                }
+                m_connected = false;
             }
             catch (Exception ex)
             {
@@ -145,7 +170,7 @@ namespace AqVision.Acquistion
             return true;
         }
 
-        public System.Drawing.Bitmap Acquisition()
+        public bool Acquisition(ref System.Drawing.Bitmap cameraLocationBmp,ref System.Drawing.Bitmap cameraDetectionBmp)
         {
             try
             {
@@ -156,17 +181,25 @@ namespace AqVision.Acquistion
                     AcquisitionParamChanged = false;
                 }
                 m_GetBitmapSuc = false;
-                AqVision.Interaction.UI2LibInterface.GetBitmap(1, 0);
+                cameras[0].TriggerSoftware();
                 while (!m_GetBitmapSuc)
                 {
                     Thread.Sleep(10);
                 }
-                return RevBitmap;
+                cameraLocationBmp = RevBitmap;
+                m_GetBitmapSuc = false;
+                cameras[0].TriggerSoftware();
+                while (!m_GetBitmapSuc)
+                {
+                    Thread.Sleep(10);
+                }
+                cameraDetectionBmp = RevBitmap;
+                return true;
             }
             catch (Exception ex)
             {
                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting get bitmp error " + ex.Message);
-                return null;
+                return false;
             }
         }
     }

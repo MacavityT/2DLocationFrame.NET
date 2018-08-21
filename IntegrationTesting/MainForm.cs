@@ -19,7 +19,6 @@ namespace IntegrationTesting
     public partial class MainForm : Form
     {
         AqVision.Acquistion.AqAcquisitionImage m_AcquisitionLocation = new AqVision.Acquistion.AqAcquisitionImage();
-//        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionDetection = new AqVision.Acquistion.AqAcquisitionImage();
         Thread showPicLocation = null;
         Thread showPicDetection = null;
         bool m_endThread = false;
@@ -34,7 +33,7 @@ namespace IntegrationTesting
         Server m_server = new Server
         {
             Services = { Robot2dApp.BindService(m_visionImpl) },
-            Ports = { new ServerPort("127.0.0.1", 50051, ServerCredentials.Insecure) }
+            Ports = { new ServerPort("192.168.1.222", 50051, ServerCredentials.Insecure) }
         };
 
         public MainForm()
@@ -62,6 +61,8 @@ namespace IntegrationTesting
                     m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
                     m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+
+                    AddMessageToListView(string.Format("robot location position: {0} {1} {2}", robotX, robotY, robotRz));
                 }
                 else
                 {
@@ -105,17 +106,36 @@ namespace IntegrationTesting
             {
                 try
                 {
+                    Bitmap location = null;
+                    Bitmap detection = null;
+                    m_AcquisitionLocation.Acquisition(ref location, ref detection); 
+                    
                     aqDisplayLocation.Invoke(new MethodInvoker(delegate
+                    {
+                        if (firstFrame)
                         {
-                            aqDisplayLocation.Image = m_AcquisitionLocation.Acquisition();
-
-                            if (firstFrame)
+                            firstFrame = false;
+                            if (checkBoxCameraAcquisition.Checked)
                             {
-                                firstFrame = false;
                                 aqDisplayLocation.FitToScreen();
                             }
+                            if (checkBoxCameraDetection.Checked)
+                            {
+                                aqDisplayDectection.FitToScreen();
+                            }                            
+                        }
+                        if (checkBoxCameraAcquisition.Checked)
+                        {
+                            aqDisplayLocation.Image = location;
                             aqDisplayLocation.Update();
-                        }));
+                        }
+                        if (checkBoxCameraDetection.Checked)
+                        {
+                            aqDisplayDectection.Image = location;
+                            aqDisplayDectection.Update();
+                        }   
+                        
+                    }));
                 }
                 catch (SEHException e)
                 {
@@ -177,52 +197,61 @@ namespace IntegrationTesting
             listViewRecord.Items.Add(item);
         }
 
+        public void StartAcqusitionBmp()
+        {
+            try
+            {
+                aqDisplayLocation.InteractiveGraphics.Clear();
+                aqDisplayLocation.Update();
+
+                if (ReferenceEquals(showPicLocation, null))
+                {
+                    m_AcquisitionLocation.Connect();
+                    showPicLocation = new Thread(new ThreadStart(RegisterVisionAPI));
+                    showPicLocation.Start();
+                }
+                if (showPicLocation.ThreadState == System.Threading.ThreadState.Suspended)
+                {
+                    showPicLocation.Resume();
+                }
+            }
+            catch (Exception ex)
+            {
+                m_AcquisitionLocation.DisConnect();
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void StopAcquistionBmp()
+        {
+            try
+            {
+                if (!ReferenceEquals(showPicLocation, null))
+                {
+                    //if (showPic.ThreadState == ThreadState.Running)
+                    {
+                        showPicLocation.Suspend();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                m_AcquisitionLocation.DisConnect();
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void checkBoxCameraAcquisition_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxCameraAcquisition.Checked)
             {
-                try
-                {
-                    aqDisplayLocation.InteractiveGraphics.Clear();
-                    aqDisplayLocation.Update();
-
-                    if (ReferenceEquals(showPicLocation, null))
-                    {
-                        m_AcquisitionLocation.Connect();
-                        showPicLocation = new Thread(new ThreadStart(RegisterVisionAPI));
-                        showPicLocation.Start();
-                    }
-                    if (showPicLocation.ThreadState == System.Threading.ThreadState.Suspended)
-                    {
-                        showPicLocation.Resume();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    m_AcquisitionLocation.DisConnect();
-                    MessageBox.Show(ex.Message);
-                }
-
+                StartAcqusitionBmp();
                 checkBoxCameraAcquisition.Text = "停止定位实时采集";
                 checkBoxCameraAcquisition.Image = Properties.Resources.CameraStop;
             }
             else
             {
-                try
-                {
-                    if (!ReferenceEquals(showPicLocation, null))
-                    {
-                        //if (showPic.ThreadState == ThreadState.Running)
-                        {
-                            showPicLocation.Suspend();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    m_AcquisitionLocation.DisConnect();
-                    MessageBox.Show(ex.Message);
-                }
+                StopAcquistionBmp();
                 checkBoxCameraAcquisition.Text = "开启定位实时采集";
                 checkBoxCameraAcquisition.Image = Properties.Resources.CameraRun;
             }
@@ -295,48 +324,13 @@ namespace IntegrationTesting
         {
             if (checkBoxCameraDetection.Checked)
             {
-                try
-                {
-                    aqDisplayDectection.InteractiveGraphics.Clear();
-                    aqDisplayDectection.Update();
-
-                    if (ReferenceEquals(showPicDetection, null))
-                    {
-//                        m_AcquisitionDetection.Connect();
-                        showPicDetection = new Thread(new ThreadStart(RegisterVisionAPI2));
-                        showPicDetection.Start();
-                    }
-                    if (showPicDetection.ThreadState == System.Threading.ThreadState.Suspended)
-                    {
-                        showPicDetection.Resume();
-                    }
-                }
-                catch (Exception ex)
-                {
-//                    m_AcquisitionDetection.DisConnect();
-                    MessageBox.Show(ex.Message);
-                }
-
+                StartAcqusitionBmp();
                 checkBoxCameraDetection.Text = "停止检测实时采集";
                 checkBoxCameraDetection.Image = Properties.Resources.CameraStop;
             }
             else
             {
-                try
-                {
-//                    if (!ReferenceEquals(m_AcquisitionDetection, null))
-                    {
-                        //if (showPic.ThreadState == ThreadState.Running)
-                        {
-                            showPicDetection.Suspend();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
- //                   m_AcquisitionDetection.DisConnect();
-                    MessageBox.Show(ex.Message);
-                }
+                StopAcquistionBmp();
                 checkBoxCameraDetection.Text = "开启检测实时采集";
                 checkBoxCameraDetection.Image = Properties.Resources.CameraRun;
             }
