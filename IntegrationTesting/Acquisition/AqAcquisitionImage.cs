@@ -40,7 +40,7 @@ namespace AqVision.Acquistion
                 m_cameraName = value; 
             }
         }
-        UInt32 m_cameraExposure = 50000;
+        UInt32 m_cameraExposure = 5000;
         public UInt32 CameraExposure
         {
             get { return m_cameraExposure; }

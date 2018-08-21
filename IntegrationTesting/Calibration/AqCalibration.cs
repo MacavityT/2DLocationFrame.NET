@@ -197,9 +197,9 @@ namespace IntegrationTesting
 
         public bool GetRobotPoint()
         {
-            double catchX = CatchPoint.CatchX;
-            double catchY = CatchPoint.CatchY;
-            double catchRz = CatchPoint.CatchRz;
+            double catchX = 0;
+            double catchY = 0;
+            double catchRz = 0;
             if (!AqVision.Interaction.UI2LibInterface.get_robot_point(ImagePoint.ImageX, ImagePoint.ImageY, ImagePoint.ImageA, RobotPoint.RobotX, RobotPoint.RobotY, RobotPoint.RobotRz,
                                                                         ref catchX, ref catchY, ref catchRz))
            {
@@ -224,6 +224,11 @@ namespace IntegrationTesting
         public bool SetConfig(int calibMode, bool isPositive)
         {
             return AqVision.Interaction.UI2LibInterface.set_config_param(calibMode, isPositive);
+        }
+
+        public bool ClearPoint()
+        {
+            return AqVision.Interaction.UI2LibInterface.clear_points();
         }
     }
 }

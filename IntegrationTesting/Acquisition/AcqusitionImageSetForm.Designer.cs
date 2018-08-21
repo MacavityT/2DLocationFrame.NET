@@ -103,7 +103,7 @@
             this.textBoxExposureTimeLocation.Name = "textBoxExposureTimeLocation";
             this.textBoxExposureTimeLocation.Size = new System.Drawing.Size(157, 21);
             this.textBoxExposureTimeLocation.TabIndex = 3;
-            this.textBoxExposureTimeLocation.Text = "50000";
+            this.textBoxExposureTimeLocation.Text = "5000";
             // 
             // label4
             // 
@@ -220,7 +220,7 @@
             this.textBoxExposureTimeDetection.Name = "textBoxExposureTimeDetection";
             this.textBoxExposureTimeDetection.Size = new System.Drawing.Size(157, 21);
             this.textBoxExposureTimeDetection.TabIndex = 3;
-            this.textBoxExposureTimeDetection.Text = "50000";
+            this.textBoxExposureTimeDetection.Text = "5000";
             // 
             // textBoxCameraNameDetection
             // 

@@ -53,25 +53,29 @@ namespace IntegrationTesting
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
         {
-            if (checkBoxCameraAcquisition.Checked)
+            checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
             {
-                checkBoxCameraAcquisition.Checked = false;
-                checkBoxCameraAcquisition_CheckedChanged(null, null);
-                m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
-                m_templateSet.RunMatcher();
-            }
-            else
-            {
-                MessageBox.Show("please open live show");
-            }
+                if (checkBoxCameraAcquisition.Checked)
+                {
+                    checkBoxCameraAcquisition.Checked = false;
+                    checkBoxCameraAcquisition_CheckedChanged(null, null);
+                    m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                    m_templateSet.RunMatcher();
+                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                }
+                else
+                {
+                    MessageBox.Show("please open live show");
+                }
+            }));
+
             return 0;
         }
 
         private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta)
         {
-            posX = m_templateSet.LocationResultPosX;
-            posY = m_templateSet.LocationResultPosY;
-            theta = m_templateSet.LocationResultPosTheta;
+            m_calibrateShow.SetCurrentImagePosition(m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY,m_templateSet.LocationResultPosTheta);
+            m_calibrateShow.GetCurrentCatchPosition(ref posX,ref posY,ref theta);
             return true;
         }
 
@@ -161,6 +165,8 @@ namespace IntegrationTesting
         private void buttonRun_Click(object sender, EventArgs e)
         {
             m_server.Start();
+            buttonRun.Enabled = false;
+            buttonStop.Enabled = true;
         }
 
         public void AddMessageToListView(string strMessage)
@@ -280,7 +286,9 @@ namespace IntegrationTesting
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-
+            m_server.ShutdownAsync();
+            buttonRun.Enabled = true;
+            buttonStop.Enabled = false;
         }
 
         private void checkBoxCameraDetection_CheckedChanged(object sender, EventArgs e)

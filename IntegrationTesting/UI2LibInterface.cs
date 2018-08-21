@@ -71,6 +71,8 @@ namespace AqVision.Interaction
         [DllImport("ProtoLayer.dll")]
         public static extern bool load_calibration(string loadCalibrationParam);
 
+        [DllImport("ProtoLayer.dll")]
+        public static extern bool clear_points();
 
         /// <summary>
         ///     0-kCameraInHand, 1-kCameraOutHand

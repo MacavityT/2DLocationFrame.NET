@@ -44,12 +44,12 @@
             this.splitContainerhorizontal = new System.Windows.Forms.SplitContainer();
             this.splitContainerVertical = new System.Windows.Forms.SplitContainer();
             this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
-            this.listViewRecord = new System.Windows.Forms.ListView();
-            this.splitContainerMainStatus = new System.Windows.Forms.SplitContainer();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
+            this.listViewRecord = new System.Windows.Forms.ListView();
             this.buttonStop = new System.Windows.Forms.Button();
             this.checkBoxCameraAcquisition = new System.Windows.Forms.CheckBox();
+            this.splitContainerMainStatus = new System.Windows.Forms.SplitContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerhorizontal)).BeginInit();
             this.splitContainerhorizontal.Panel1.SuspendLayout();
@@ -91,7 +91,7 @@
             this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(730, 304);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(304, 612);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -195,7 +195,6 @@
             this.splitContainerVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerVertical.Location = new System.Drawing.Point(0, 0);
             this.splitContainerVertical.Name = "splitContainerVertical";
-            this.splitContainerVertical.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerVertical.Panel1
             // 
@@ -218,49 +217,8 @@
             this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayDectection.Name = "aqDisplayDectection";
             this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(730, 304);
+            this.aqDisplayDectection.Size = new System.Drawing.Size(422, 612);
             this.aqDisplayDectection.TabIndex = 1;
-            // 
-            // listViewRecord
-            // 
-            this.listViewRecord.FullRowSelect = true;
-            this.listViewRecord.GridLines = true;
-            this.listViewRecord.LabelEdit = true;
-            this.listViewRecord.Location = new System.Drawing.Point(38, 180);
-            this.listViewRecord.MultiSelect = false;
-            this.listViewRecord.Name = "listViewRecord";
-            this.listViewRecord.Size = new System.Drawing.Size(46, 70);
-            this.listViewRecord.TabIndex = 9;
-            this.listViewRecord.UseCompatibleStateImageBehavior = false;
-            this.listViewRecord.View = System.Windows.Forms.View.Details;
-            this.listViewRecord.Visible = false;
-            // 
-            // splitContainerMainStatus
-            // 
-            this.splitContainerMainStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMainStatus.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainerMainStatus.Location = new System.Drawing.Point(0, 25);
-            this.splitContainerMainStatus.Name = "splitContainerMainStatus";
-            this.splitContainerMainStatus.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerMainStatus.Panel1
-            // 
-            this.splitContainerMainStatus.Panel1.Controls.Add(this.splitContainerhorizontal);
-            // 
-            // splitContainerMainStatus.Panel2
-            // 
-            this.splitContainerMainStatus.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainerMainStatus.Size = new System.Drawing.Size(857, 641);
-            this.splitContainerMainStatus.SplitterDistance = 612;
-            this.splitContainerMainStatus.TabIndex = 12;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 3);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(857, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // checkBoxCameraDetection
             // 
@@ -279,9 +237,23 @@
             this.checkBoxCameraDetection.UseVisualStyleBackColor = false;
             this.checkBoxCameraDetection.CheckedChanged += new System.EventHandler(this.checkBoxCameraDetection_CheckedChanged);
             // 
+            // listViewRecord
+            // 
+            this.listViewRecord.FullRowSelect = true;
+            this.listViewRecord.GridLines = true;
+            this.listViewRecord.LabelEdit = true;
+            this.listViewRecord.Location = new System.Drawing.Point(0, 108);
+            this.listViewRecord.MultiSelect = false;
+            this.listViewRecord.Name = "listViewRecord";
+            this.listViewRecord.Size = new System.Drawing.Size(111, 364);
+            this.listViewRecord.TabIndex = 9;
+            this.listViewRecord.UseCompatibleStateImageBehavior = false;
+            this.listViewRecord.View = System.Windows.Forms.View.Details;
+            // 
             // buttonStop
             // 
             this.buttonStop.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonStop.Enabled = false;
             this.buttonStop.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonStop.Image = global::IntegrationTesting.Properties.Resources.Stop;
             this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -311,6 +283,33 @@
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
             this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
+            // 
+            // splitContainerMainStatus
+            // 
+            this.splitContainerMainStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMainStatus.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerMainStatus.Location = new System.Drawing.Point(0, 25);
+            this.splitContainerMainStatus.Name = "splitContainerMainStatus";
+            this.splitContainerMainStatus.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerMainStatus.Panel1
+            // 
+            this.splitContainerMainStatus.Panel1.Controls.Add(this.splitContainerhorizontal);
+            // 
+            // splitContainerMainStatus.Panel2
+            // 
+            this.splitContainerMainStatus.Panel2.Controls.Add(this.statusStrip1);
+            this.splitContainerMainStatus.Size = new System.Drawing.Size(857, 641);
+            this.splitContainerMainStatus.SplitterDistance = 612;
+            this.splitContainerMainStatus.TabIndex = 12;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 3);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(857, 22);
+            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // MainForm
             // 

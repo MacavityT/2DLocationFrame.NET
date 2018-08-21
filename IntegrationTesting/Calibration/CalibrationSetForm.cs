@@ -32,22 +32,54 @@ namespace IntegrationTesting
         public CalibrationSetForm()
         {
             InitializeComponent();
-            listViewParameterSet.Columns.Add("Camera X", 100, HorizontalAlignment.Center);
-            listViewParameterSet.Columns.Add("Camera Y", 100, HorizontalAlignment.Center);
-            listViewParameterSet.Columns.Add("Robot X", 100, HorizontalAlignment.Center);
-            listViewParameterSet.Columns.Add("Robot Y", 100, HorizontalAlignment.Center);
-            listViewParameterSet.Columns.Add("Robot Rz", 100, HorizontalAlignment.Center);
-
             string[] modeList = new string[]{"Camera in  Hand with Angle is Positive", "Camera in  Hand with Angle is Negative",
                                              "Camera out Hand with Angle is Positive", "Camera out Hand with Angle is Negative"};
             foreach (string mode in modeList)
             {
                 comboBoxModeList.Items.Add(mode);
             }
+            comboBoxModeList.SelectedIndex = 0;
 
             m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath + "\\Result.txt";
+            if(File.Exists(m_calibrationCenter.CalibrationResultSavePath))
+            {
+                if(!m_calibrationCenter.LoadCalibrationResult())
+                {
+                    MessageBox.Show("loadCalibrationResult Error");
+                }
+            }
 
             IniFile.IniFillFullPath = Application.StartupPath + "\\Config.ini";
+            if (!File.Exists(IniFile.IniFillFullPath))
+            {
+                File.Create(IniFile.IniFillFullPath);
+            }
+            else
+            {
+                ReadCalibrationDataFromFile();
+            }            
+        }
+
+        public void SetCurrentRobotPosition(double robotX, double robotY, double robotRz)
+        {
+            m_calibrationCenter.RobotPoint.RobotX = robotX;
+            m_calibrationCenter.RobotPoint.RobotY = robotY;
+            m_calibrationCenter.RobotPoint.RobotRz = robotRz;
+        }
+
+        public void SetCurrentImagePosition(double imageX, double imageY, double imageA)
+        {
+            m_calibrationCenter.ImagePoint.ImageX = imageX;
+            m_calibrationCenter.ImagePoint.ImageY = imageY;
+            m_calibrationCenter.ImagePoint.ImageA = imageA;
+        }
+
+        public void GetCurrentCatchPosition(ref double posX, ref double posY,ref double theta)
+        {
+            m_calibrationCenter.GetRobotPoint();
+            posX = m_calibrationCenter.CatchPoint.CatchX;
+            posY = m_calibrationCenter.CatchPoint.CatchY;
+            theta = m_calibrationCenter.CatchPoint.CatchRz;
         }
 
         private bool ReadCalibrationDataFromFile()
@@ -145,7 +177,6 @@ namespace IntegrationTesting
             {
                 ListViewItem line = new ListViewItem(singleLine.CameraPosition.ImageX.ToString(), 0);
                 line.SubItems.Add(singleLine.CameraPosition.ImageY.ToString());
-                line.SubItems.Add(singleLine.CameraPosition.ImageY.ToString());
                 line.SubItems.Add(singleLine.RobotCoordinate.RobotX.ToString());
                 line.SubItems.Add(singleLine.RobotCoordinate.RobotY.ToString());
                 line.SubItems.Add(singleLine.RobotCoordinate.RobotRz.ToString());
@@ -205,6 +236,7 @@ namespace IntegrationTesting
 
         private void buttonCalibration_Click(object sender, EventArgs e)
         {
+            m_calibrationCenter.ClearPoint();
             int rowCounts = listViewParameterSet.Items.Count;
             for(int i=0; i<rowCounts; i++)
             {
@@ -217,7 +249,7 @@ namespace IntegrationTesting
                     m_calibrationCenter.RobotPoint.SetValue(
                     Convert.ToDouble(listViewParameterSet.Items[i].SubItems[2].Text),
                     Convert.ToDouble(listViewParameterSet.Items[i].SubItems[3].Text),
-                    Convert.ToDouble(listViewParameterSet.Items[i].SubItems[4].Text));
+                    Convert.ToDouble(listViewParameterSet.Items[i].SubItems[4].Text)*Math.PI/180);
 
                     if(!m_calibrationCenter.AddMoveMatchPointPair())
                     {
@@ -243,19 +275,23 @@ namespace IntegrationTesting
             {
                 m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
                                         Convert.ToDouble(textBoxImageY.Text),
-                                        Convert.ToDouble(textBoxImageA.Text));
+                                        Convert.ToDouble(textBoxImageA.Text)*Math.PI/180);
 
                 m_calibrationCenter.RobotPoint.SetValue(Convert.ToDouble(textBoxRobotPosX.Text),
                                                         Convert.ToDouble(textBoxRobotPosY.Text),
-                                                        Convert.ToDouble(textBoxRobotPosRz.Text));
+                                                        Convert.ToDouble(textBoxRobotPosRz.Text)*Math.PI/180);
 
                 m_calibrationCenter.CatchPoint.SetValue(Convert.ToDouble(textBoxCatchRobotX.Text),
                                                         Convert.ToDouble(textBoxCatchRobotY.Text),
-                                                        Convert.ToDouble(textBoxCatchRobotRz.Text));
+                                                        Convert.ToDouble(textBoxCatchRobotRz.Text)*Math.PI/180);
 
                 if (!m_calibrationCenter.SetCatchPoint())
                 {
                     MessageBox.Show("Set Catch Point Error");
+                }
+                else
+                {
+                    MessageBox.Show("Set Catch Point Success");
                 }
             }
             catch (FormatException ex)
@@ -268,6 +304,7 @@ namespace IntegrationTesting
         {
             try
             {
+                m_calibrationCenter.SetConfig(CameraInOutHand, IsPositive);
                 m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
                                         Convert.ToDouble(textBoxImageY.Text),
                                         Convert.ToDouble(textBoxImageA.Text));
@@ -283,7 +320,7 @@ namespace IntegrationTesting
 
                 textBoxCatchRobotX.Text = Convert.ToString(m_calibrationCenter.CatchPoint.CatchX);
                 textBoxCatchRobotY.Text = Convert.ToString(m_calibrationCenter.CatchPoint.CatchY);
-                textBoxCatchRobotRz.Text = Convert.ToString(m_calibrationCenter.CatchPoint.CatchRz);
+                textBoxCatchRobotRz.Text = Convert.ToString(m_calibrationCenter.CatchPoint.CatchRz*180/Math.PI);
             }
             catch (FormatException ex)
             {
@@ -306,27 +343,34 @@ namespace IntegrationTesting
                 {
                     MessageBox.Show("Save calibration Result error");
                 }
+                else
+                {
+                    MessageBox.Show("Save calibration Result done");
+                }
             }
             
         }
 
         private void buttonLoadResult_Click(object sender, EventArgs e)
         {
-            m_calibrationCenter.LoadCalibrationResult();
+            if(!m_calibrationCenter.LoadCalibrationResult())
+            {
+                MessageBox.Show("Load Calibration Result error");
+            }
+            else
+            {
+                MessageBox.Show("Load Calibration Result done");
+            }
         }
 
         private void CalibrationSetForm_Load(object sender, EventArgs e)
         {
-            if (!File.Exists(IniFile.IniFillFullPath))
-            {
-                File.Create(IniFile.IniFillFullPath);
-            }
-            else
-            {
-                ReadCalibrationDataFromFile();
-                UpdataCalibrationDataShow();
-            }
-            comboBoxModeList.SelectedIndex = 0;
+            listViewParameterSet.Columns.Add("Camera X", 100, HorizontalAlignment.Center);
+            listViewParameterSet.Columns.Add("Camera Y", 100, HorizontalAlignment.Center);
+            listViewParameterSet.Columns.Add("Robot X", 100, HorizontalAlignment.Center);
+            listViewParameterSet.Columns.Add("Robot Y", 100, HorizontalAlignment.Center);
+            listViewParameterSet.Columns.Add("Robot Rz", 100, HorizontalAlignment.Center);
+            UpdataCalibrationDataShow();
         }
 
         private void comboBoxModeList_SelectedIndexChanged(object sender, EventArgs e)
