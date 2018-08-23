@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Robot\GetWorkObjInfoHandler.cs" />
     <Compile Include="Robot\GRpcServer.cs" />
     <Compile Include="Robot\RobotManagementForm.cs">
       <SubType>Form</SubType>

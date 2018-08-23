@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationTesting.Tool;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -58,9 +59,6 @@ namespace IntegrationTesting
         public AcqusitionImageSet()
         {
             InitializeComponent();
-            comboBoxCameraBrandLocation.SelectedIndex = 0;
-            comboBoxCameraBrandDetection.SelectedIndex = 0;
-
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -78,6 +76,18 @@ namespace IntegrationTesting
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AcqusitionImageSet_Load(object sender, EventArgs e)
+        {
+            comboBoxCameraBrandLocation.SelectedIndex = m_cameraBrandLocation;
+            comboBoxCameraBrandDetection.SelectedIndex = m_cameraBrandDetection;
+
+            textBoxCameraNameLocation.Text = CameraNameLocation;
+            textBoxCameraNameDetection.Text = CameraNameDetection;
+
+            textBoxExposureTimeLocation.Text = ExposureTimeLocation.ToString();
+            textBoxExposureTimeDetection.Text = ExposureTimeDetection.ToString();
         }
     }
 }

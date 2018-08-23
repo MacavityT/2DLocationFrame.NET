@@ -241,6 +241,7 @@
             this.Controls.Add(this.buttonOK);
             this.Name = "AcqusitionImageSet";
             this.Text = "AcqusitionImageSet";
+            this.Load += new System.EventHandler(this.AcqusitionImageSet_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

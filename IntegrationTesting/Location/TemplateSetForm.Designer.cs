@@ -36,12 +36,12 @@
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.buttonSaveModel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +109,7 @@
             this.aqDisplayCreateModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayCreateModel.Name = "aqDisplayCreateModel";
             this.aqDisplayCreateModel.ScrollBar = false;
-            this.aqDisplayCreateModel.Size = new System.Drawing.Size(962, 725);
+            this.aqDisplayCreateModel.Size = new System.Drawing.Size(833, 725);
             this.aqDisplayCreateModel.TabIndex = 0;
             // 
             // panel1
@@ -125,10 +125,31 @@
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(962, 0);
+            this.panel1.Location = new System.Drawing.Point(833, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(101, 725);
+            this.panel1.Size = new System.Drawing.Size(230, 725);
             this.panel1.TabIndex = 12;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(-1, 259);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
+            this.textBox3.TabIndex = 13;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(3, 223);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 13;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 188);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 13;
             // 
             // listBox1
             // 
@@ -136,7 +157,7 @@
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(9, 373);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(88, 340);
+            this.listBox1.Size = new System.Drawing.Size(209, 340);
             this.listBox1.TabIndex = 12;
             // 
             // buttonSaveModel
@@ -156,29 +177,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(962, 725);
+            this.panel2.Size = new System.Drawing.Size(833, 725);
             this.panel2.TabIndex = 13;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(3, 188);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 13;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(3, 223);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 13;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(-1, 259);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 21);
-            this.textBox3.TabIndex = 13;
             // 
             // TemplateSetForm
             // 

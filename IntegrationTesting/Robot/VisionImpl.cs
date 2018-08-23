@@ -12,6 +12,7 @@ namespace IntegrationTesting.Robot
     {
         public TriggerCamerHandler triggerCamerHandler = null;
         public GetLocalizeResultHandler getLocalizeResultHandler = null;
+        public GetWorkObjInfoHandler getWorkObjInfoHandler = null;
         // Server side handler of the SayHello RPC
         
         public override Task<SetFlag> triggerCamera(TriggerReq request, ServerCallContext context)
@@ -37,6 +38,16 @@ namespace IntegrationTesting.Robot
             double delta = 0;
             getLocalizeResultHandler(ref posX, ref posY, ref delta);
 
+            delta = delta * 180 / Math.PI;
+            while (delta > 180) 
+            {
+                delta -= 360;
+            }
+            while (delta < -180) 
+            {
+                delta += 360;
+            }
+            
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
             localizeRespone.VisionStatus = 0;
@@ -67,8 +78,17 @@ namespace IntegrationTesting.Robot
 
         public override Task<WorkObjRep> getWorkObjInfo(WorkObjReq request, ServerCallContext context)
         {
-            Console.WriteLine("reve getWorkObjInfo: " + request.ToString());
-            return Task.FromResult(new WorkObjRep { CurrentObjNum = 77777 });
+            int detectCount = 0;
+            WorkObjRep objRep = new WorkObjRep();
+            if (!getWorkObjInfoHandler(ref detectCount))
+            {
+                objRep.CurrentObjNum = 0;
+            }
+            else
+            {
+                objRep.CurrentObjNum = 1;
+            }
+            return Task.FromResult(objRep);
         }
     }
 }

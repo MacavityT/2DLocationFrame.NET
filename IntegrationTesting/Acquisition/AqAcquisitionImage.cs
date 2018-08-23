@@ -28,26 +28,28 @@ namespace AqVision.Acquistion
         }
         
         System.Drawing.Bitmap m_RevBitmap = null;
-        string m_cameraName = "Aqrose_L";
-        public string CameraName
+        string[] m_cameraName = new string[] { "Aqrose_L", "Aqrose_D" };
+
+        public string[] CameraName
         {
             get { return m_cameraName; }
             set 
             {
-                if(value != m_cameraName)
+                if ((value[0] != m_cameraName[0]) || (value[1] != m_cameraName[1]))
                 {
                     AcquisitionParamChanged = true;
                 }
                 m_cameraName = value; 
             }
         }
-        UInt32 m_cameraExposure = 5000;
-        public UInt32 CameraExposure
+
+        UInt32[] m_cameraExposure = new UInt32[] { 5000, 5000 };
+        public UInt32[] CameraExposure
         {
             get { return m_cameraExposure; }
-            set 
+            set
             {
-                if (value != m_cameraExposure)
+                if ((value[0] != m_cameraExposure[0]) || (value[1] != m_cameraExposure[1]))
                 {
                     AcquisitionParamChanged = true;
                 }
@@ -56,20 +58,19 @@ namespace AqVision.Acquistion
         }
 
 
-        AqCameraBrand m_cameraBrand = AqCameraBrand.DaHeng;
-        public AqCameraBrand CameraBrand
+        AqCameraBrand[] m_cameraBrand = new AqCameraBrand[] { AqCameraBrand.DaHeng, AqCameraBrand.DaHeng };
+        public AqCameraBrand[] CameraBrand
         {
             get { return m_cameraBrand; }
             set 
-            { 
-                if(m_cameraBrand != value)
+            {
+                if ((value[0] != m_cameraBrand[0]) || (value[1] != m_cameraBrand[1]))
                 {
                     AcquisitionParamChanged = true;
                 }
                 m_cameraBrand = value; 
             }
         }
-
 
         public System.Drawing.Bitmap RevBitmap
         {
@@ -119,15 +120,15 @@ namespace AqVision.Acquistion
                     cameramanager.Init();
                     cameras = cameramanager.GetCameras();
                     cameras[0].TriggerMode = AqDevice.TriggerModes.Unknow;
-                    cameras[0].ExposureTime = 2000;
-                    cameras[0].Name = "Aqrose_L";
+                    cameras[0].ExposureTime = CameraExposure[0];
+                    cameras[0].Name = CameraName[0];
                     cameras[0].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
                     cameras[0].OpenCamera();
                     cameras[0].OpenStream();
 
                     cameras[1].TriggerMode = AqDevice.TriggerModes.Unknow;
-                    cameras[1].ExposureTime = 2000;
-                    cameras[1].Name = "Aqrose_D";
+                    cameras[1].ExposureTime = CameraExposure[1];
+                    cameras[1].Name = CameraName[1];
                     cameras[1].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
                     cameras[1].OpenCamera();
                     cameras[1].OpenStream();
@@ -177,6 +178,7 @@ namespace AqVision.Acquistion
                 GC.Collect();
                 if (AcquisitionParamChanged)
                 {
+                    DisConnect();
                     Connect();
                     AcquisitionParamChanged = false;
                 }
@@ -188,7 +190,7 @@ namespace AqVision.Acquistion
                 }
                 cameraLocationBmp = RevBitmap;
                 m_GetBitmapSuc = false;
-                cameras[0].TriggerSoftware();
+                cameras[1].TriggerSoftware();
                 while (!m_GetBitmapSuc)
                 {
                     Thread.Sleep(10);

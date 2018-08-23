@@ -172,13 +172,26 @@ namespace IntegrationTesting
             Stopwatch st = new Stopwatch();
             st.Start();
             int iPointList = 0;
+//             double[] centerX = new double[countPointList.Length];
+//             double[] centerY = new double[countPointList.Length];
+//             double PlusX = 0;
+//             double PlusY = 0;
+
             for (int countList = 0, countSegement = 0; iPointList < xPointList.Length; iPointList++, countSegement++)
             {
+//                 PlusX += xPointList[iPointList];
+//                 PlusY += yPointList[iPointList];
                 AqLineSegment lineSegment = new AqLineSegment();
                 if ((countSegement + 1) == countPointList[countList])
                 {
                     lineSegment.StartX = xPointList[iPointList];
                     lineSegment.StartY = yPointList[iPointList];
+
+//                     //保存中心点
+//                     centerX[countList] = PlusX / countPointList[countList];
+//                     centerY[countList] = PlusY / countPointList[countList];
+//                     PlusX = 0;
+//                     PlusY = 0;
 
                     if (countList == 0)
                     {
@@ -197,7 +210,7 @@ namespace IntegrationTesting
                         {
                             countList++;
                             countSegement = -1;
-                            continue;
+                            continue;   //不连接
                         }
                     }
                     else
@@ -231,6 +244,10 @@ namespace IntegrationTesting
             }
             st.Stop();
             aqDisplayCreateModel.Update();
+//             for(int i = 0; i<countPointList.Length; i++)
+//             {
+//                 listBox1.Items.Add(string.Format("{0}, {1}", centerX[i], centerY[i]));
+//             }
             //MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//fortest
         }
 

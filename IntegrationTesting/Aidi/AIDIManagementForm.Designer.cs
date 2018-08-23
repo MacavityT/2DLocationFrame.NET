@@ -32,10 +32,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.aqDisplay1 = new AqVision.Controls.AqDisplay();
             this.buttonRead = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBoxShowResultList = new System.Windows.Forms.ComboBox();
+            this.aqDisplay1 = new AqVision.Controls.AqDisplay();
             this.SuspendLayout();
             // 
             // label1
@@ -62,17 +62,6 @@
             this.richTextBox1.Size = new System.Drawing.Size(99, 481);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
-            // 
-            // aqDisplay1
-            // 
-            this.aqDisplay1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.aqDisplay1.Image = null;
-            this.aqDisplay1.Location = new System.Drawing.Point(0, 1);
-            this.aqDisplay1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.aqDisplay1.Name = "aqDisplay1";
-            this.aqDisplay1.ScrollBar = true;
-            this.aqDisplay1.Size = new System.Drawing.Size(610, 481);
-            this.aqDisplay1.TabIndex = 18;
             // 
             // buttonRead
             // 
@@ -105,15 +94,27 @@
             this.comboBoxShowResultList.TabIndex = 21;
             this.comboBoxShowResultList.SelectedIndexChanged += new System.EventHandler(this.comboBoxShowResultList_SelectedIndexChanged);
             // 
+            // aqDisplay1
+            // 
+            this.aqDisplay1.AutoScroll = true;
+            this.aqDisplay1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.aqDisplay1.Image = null;
+            this.aqDisplay1.Location = new System.Drawing.Point(8, 8);
+            this.aqDisplay1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aqDisplay1.Name = "aqDisplay1";
+            this.aqDisplay1.ScrollBar = false;
+            this.aqDisplay1.Size = new System.Drawing.Size(602, 474);
+            this.aqDisplay1.TabIndex = 22;
+            // 
             // AIDIManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 554);
+            this.Controls.Add(this.aqDisplay1);
             this.Controls.Add(this.comboBoxShowResultList);
             this.Controls.Add(this.buttonRead);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.aqDisplay1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
@@ -130,9 +131,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private AqVision.Controls.AqDisplay aqDisplay1;
         private System.Windows.Forms.Button buttonRead;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBoxShowResultList;
+        private AqVision.Controls.AqDisplay aqDisplay1;
     }
 }

@@ -38,7 +38,7 @@ namespace IntegrationTesting
             {
                 comboBoxModeList.Items.Add(mode);
             }
-            comboBoxModeList.SelectedIndex = 0;
+            comboBoxModeList.SelectedIndex = 2;
 
             m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath + "\\Result.txt";
             if(File.Exists(m_calibrationCenter.CalibrationResultSavePath))
@@ -186,6 +186,12 @@ namespace IntegrationTesting
 
         private void listViewParameterSet_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //MessageBox.Show(listViewParameterSet.Items.IndexOf(listViewParameterSet.SelectedItems[0]).ToString());
+            textBoxCameraX.Text = listViewParameterSet.SelectedItems[0].SubItems[0].Text;
+            textBoxCameraY.Text = listViewParameterSet.SelectedItems[0].SubItems[1].Text;
+            textBoxRobotX.Text = listViewParameterSet.SelectedItems[0].SubItems[2].Text;
+            textBoxRobotY.Text = listViewParameterSet.SelectedItems[0].SubItems[3].Text;
+            textBoxRobotRz.Text = listViewParameterSet.SelectedItems[0].SubItems[4].Text;
         }
 
         private void buttonNewLine_Click(object sender, EventArgs e)
@@ -307,11 +313,11 @@ namespace IntegrationTesting
                 m_calibrationCenter.SetConfig(CameraInOutHand, IsPositive);
                 m_calibrationCenter.ImagePoint.SetValue(Convert.ToDouble(textBoxImageX.Text),
                                         Convert.ToDouble(textBoxImageY.Text),
-                                        Convert.ToDouble(textBoxImageA.Text));
+                                        Convert.ToDouble(textBoxImageA.Text)*Math.PI/180);
 
                 m_calibrationCenter.RobotPoint.SetValue(Convert.ToDouble(textBoxRobotPosX.Text),
                                                         Convert.ToDouble(textBoxRobotPosY.Text),
-                                                        Convert.ToDouble(textBoxRobotPosRz.Text));
+                                                        Convert.ToDouble(textBoxRobotPosRz.Text)*Math.PI/180);
 
                 if (!m_calibrationCenter.GetRobotPoint())
                 {
