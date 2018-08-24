@@ -187,11 +187,14 @@ namespace IntegrationTesting
         private void listViewParameterSet_SelectedIndexChanged(object sender, EventArgs e)
         {
             //MessageBox.Show(listViewParameterSet.Items.IndexOf(listViewParameterSet.SelectedItems[0]).ToString());
-            textBoxCameraX.Text = listViewParameterSet.SelectedItems[0].SubItems[0].Text;
-            textBoxCameraY.Text = listViewParameterSet.SelectedItems[0].SubItems[1].Text;
-            textBoxRobotX.Text = listViewParameterSet.SelectedItems[0].SubItems[2].Text;
-            textBoxRobotY.Text = listViewParameterSet.SelectedItems[0].SubItems[3].Text;
-            textBoxRobotRz.Text = listViewParameterSet.SelectedItems[0].SubItems[4].Text;
+            if(listViewParameterSet.SelectedItems.Count > 0 )
+            {
+                textBoxCameraX.Text = listViewParameterSet.SelectedItems[0].SubItems[0].Text;
+                textBoxCameraY.Text = listViewParameterSet.SelectedItems[0].SubItems[1].Text;
+                textBoxRobotX.Text = listViewParameterSet.SelectedItems[0].SubItems[2].Text;
+                textBoxRobotY.Text = listViewParameterSet.SelectedItems[0].SubItems[3].Text;
+                textBoxRobotRz.Text = listViewParameterSet.SelectedItems[0].SubItems[4].Text;
+            }
         }
 
         private void buttonNewLine_Click(object sender, EventArgs e)

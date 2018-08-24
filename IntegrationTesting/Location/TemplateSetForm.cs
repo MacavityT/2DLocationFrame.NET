@@ -79,6 +79,7 @@ namespace IntegrationTesting
                     m_Location.TemplatePath = openFileDialog.FileName;
                     m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
                     aqDisplayCreateModel.FitToScreen();
+                    aqDisplayCreateModel.Update();
                 }
             }
             catch (Exception ex)
@@ -149,9 +150,9 @@ namespace IntegrationTesting
                 aqDisplayCreateModel.Update();
                 RunMatcher();
                 ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green);
-                textBox1.Text = LocationResultPosX.ToString();
-                textBox2.Text = LocationResultPosY.ToString();
-                textBox3.Text = (LocationResultPosTheta/Math.PI*180).ToString();
+                textBox1.Text = LocationResultPosX.ToString("0.000");
+                textBox2.Text = LocationResultPosY.ToString("0.000");
+                textBox3.Text = (LocationResultPosTheta / Math.PI * 180).ToString("0.000");
             }
             catch (Exception ex)
             {

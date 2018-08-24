@@ -379,7 +379,7 @@ namespace IntegrationTesting
 
         private void ToolStripMenuItemSetCalibration_Click(object sender, EventArgs e)
         {
-            m_calibrateShow.ShowDialog();
+            m_calibrateShow.Show();
         }
 
         private void ToolStripMenuItemSetLocation_Click(object sender, EventArgs e)
@@ -390,7 +390,7 @@ namespace IntegrationTesting
                 checkBoxCameraAcquisition_CheckedChanged(null, null);
                 m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
             }
-            m_templateSet.ShowDialog();
+            m_templateSet.Show();
         }
 
         private void ToolStripMenuItemSetDectection_Click(object sender, EventArgs e)

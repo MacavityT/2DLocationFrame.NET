@@ -92,7 +92,7 @@
             this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(283, 612);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(344, 612);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -206,7 +206,7 @@
             // 
             this.splitContainerVertical.Panel2.Controls.Add(this.aqDisplayDectection);
             this.splitContainerVertical.Size = new System.Drawing.Size(680, 612);
-            this.splitContainerVertical.SplitterDistance = 283;
+            this.splitContainerVertical.SplitterDistance = 344;
             this.splitContainerVertical.TabIndex = 0;
             // 
             // aqDisplayDectection
@@ -219,7 +219,7 @@
             this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayDectection.Name = "aqDisplayDectection";
             this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(393, 612);
+            this.aqDisplayDectection.Size = new System.Drawing.Size(332, 612);
             this.aqDisplayDectection.TabIndex = 1;
             // 
             // button1
