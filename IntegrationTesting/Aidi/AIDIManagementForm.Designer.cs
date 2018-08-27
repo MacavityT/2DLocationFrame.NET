@@ -119,7 +119,7 @@
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
             this.Name = "AIDIManagementForm";
-            this.Text = "AIDIManagementForm";
+            this.Text = "AIDI检测设置";
             this.Load += new System.EventHandler(this.AIDIManagementForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

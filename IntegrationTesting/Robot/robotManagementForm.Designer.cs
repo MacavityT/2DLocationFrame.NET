@@ -125,7 +125,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "RobotManagementForm";
-            this.Text = "robotManagementForm";
+            this.Text = "机器人通讯测试";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

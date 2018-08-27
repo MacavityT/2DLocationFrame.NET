@@ -182,6 +182,11 @@ namespace AqVision.Acquistion
                     Connect();
                     AcquisitionParamChanged = false;
                 }
+
+                if (!m_connected)
+                {
+                    Connect();
+                }
                 m_GetBitmapSuc = false;
                 cameras[0].TriggerSoftware();
                 while (!m_GetBitmapSuc)

@@ -401,6 +401,11 @@ namespace AqVision.Location
                                         new HTuple(NumMatches), m_modelID, out xldRowsM, out xldColsM,
                                         out xldPointCountsM, out row, out column,
                                         out angle, out scale, out score);
+
+            if(score == null)
+            {
+//                return;
+            }
             Score = score.D;
             Scale = scale.D;
             Angle = angle.D;

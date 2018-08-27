@@ -14,14 +14,17 @@ using IntegrationTesting.Robot;
 using Grpc.Core;
 using App2D;
 using IntegrationTesting.Tool;
+using System.IO;
+using AqVision;
 
 namespace IntegrationTesting
 {
     public partial class MainForm : Form
     {
-        AqVision.Acquistion.AqAcquisitionImage m_AcquisitionLocation = new AqVision.Acquistion.AqAcquisitionImage();
+        AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
         Thread showPicLocation = null;
         bool m_endThread = false;
+        int m_savePicCount = 30;
 
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
@@ -41,7 +44,7 @@ namespace IntegrationTesting
             InitializeComponent();
             listViewRecord.Columns.Add("Serial NO", 10, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Time", 10, HorizontalAlignment.Center);
-            listViewRecord.Columns.Add("Message", 140, HorizontalAlignment.Center);
+            listViewRecord.Columns.Add("Message", 500, HorizontalAlignment.Center);
             m_visionImpl.triggerCamerHandler = new TriggerCamerHandler(TriggerCamera);
             m_visionImpl.getLocalizeResultHandler = new GetLocalizeResultHandler(GetLocalizeResult);
             m_visionImpl.getWorkObjInfoHandler = new GetWorkObjInfoHandler(GetWorkObjInfo);
@@ -55,62 +58,111 @@ namespace IntegrationTesting
 
         public void ReadConfigFromIniFile()
         {
-            m_AcquisitionLocation.CameraExposure[0] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeLocation", "5000"));
-            m_AcquisitionLocation.CameraExposure[1] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeDetection", "5000"));
-            IniFile.ReadValue("Acquistion", "CameraNameLocation", m_AcquisitionLocation.CameraName[0]);
-            IniFile.ReadValue("Acquistion", "CameraNameDetection", m_AcquisitionLocation.CameraName[1]);
+            m_Acquisition.CameraExposure[0] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeLocation", "5000"));
+            m_Acquisition.CameraExposure[1] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeDetection", "5000"));
+            IniFile.ReadValue("Acquistion", "CameraNameLocation", m_Acquisition.CameraName[0]);
+            IniFile.ReadValue("Acquistion", "CameraNameDetection", m_Acquisition.CameraName[1]);
             string strValue = IniFile.ReadValue("Acquistion", "CameraBrandLocation", "DaHeng");
             if (strValue == "DaHeng")
             {
-                m_AcquisitionLocation.CameraBrand[0] = AqCameraBrand.DaHeng;
+                m_Acquisition.CameraBrand[0] = AqCameraBrand.DaHeng;
             }
             else
             {
-                m_AcquisitionLocation.CameraBrand[0] = AqCameraBrand.Basler;
+                m_Acquisition.CameraBrand[0] = AqCameraBrand.Basler;
             }
 
             IniFile.ReadValue("Acquistion", "CameraBrandDetection", strValue);
             if (strValue == "DaHeng")
             {
-                m_AcquisitionLocation.CameraBrand[1] = AqCameraBrand.DaHeng;
+                m_Acquisition.CameraBrand[1] = AqCameraBrand.DaHeng;
             }
             else
             {
-                m_AcquisitionLocation.CameraBrand[1] = AqCameraBrand.Basler;
+                m_Acquisition.CameraBrand[1] = AqCameraBrand.Basler;
             }
         }
 
         public void WriteConfigToIniFile()
         {
-            IniFile.WriteValue("Acquistion", "ExposureTimeLocation", m_AcquisitionLocation.CameraExposure[0].ToString());
-            IniFile.WriteValue("Acquistion", "ExposureTimeDetection", m_AcquisitionLocation.CameraExposure[1].ToString());
-            IniFile.WriteValue("Acquistion", "CameraNameLocation", m_AcquisitionLocation.CameraName[0]);
-            IniFile.WriteValue("Acquistion", "CameraNameDetection", m_AcquisitionLocation.CameraName[1]);
-            IniFile.WriteValue("Acquistion", "CameraBrandLocation", m_AcquisitionLocation.CameraBrand[0].ToString());
-            IniFile.WriteValue("Acquistion", "CameraBrandDetection", m_AcquisitionLocation.CameraBrand[1].ToString());
+            IniFile.WriteValue("Acquistion", "ExposureTimeLocation", m_Acquisition.CameraExposure[0].ToString());
+            IniFile.WriteValue("Acquistion", "ExposureTimeDetection", m_Acquisition.CameraExposure[1].ToString());
+            IniFile.WriteValue("Acquistion", "CameraNameLocation", m_Acquisition.CameraName[0]);
+            IniFile.WriteValue("Acquistion", "CameraNameDetection", m_Acquisition.CameraName[1]);
+            IniFile.WriteValue("Acquistion", "CameraBrandLocation", m_Acquisition.CameraBrand[0].ToString());
+            IniFile.WriteValue("Acquistion", "CameraBrandDetection", m_Acquisition.CameraBrand[1].ToString());
         }
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
         {
-            checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
+            try
             {
-                if (checkBoxCameraAcquisition.Checked)
+                checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
-                    checkBoxCameraAcquisition.Checked = false;
-                    checkBoxCameraAcquisition_CheckedChanged(null, null);
-                    m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
-                }
-                else
-                {
-                    Bitmap detection = null;
-                    Bitmap location = null;
-                    m_AcquisitionLocation.Acquisition(ref location,ref detection);
-                    m_templateSet.ImageInput = location.Clone() as Bitmap;
-                }
-                m_templateSet.RunMatcher();
-                m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                AddMessageToListView(string.Format("robot location position: {0} {1} {2}", robotX, robotY, robotRz));
-            }));
+//                   aqDisplayLocation.InteractiveGraphics.Clear();
+//                    aqDisplayLocation.Update();
+                    if (checkBoxCameraAcquisition.Checked)
+                    {
+                        checkBoxCameraAcquisition.Checked = false;
+                        checkBoxCameraAcquisition_CheckedChanged(null, null);
+                        m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                    }
+                    else
+                    {
+                        Bitmap location = null;
+                        Bitmap detection = null;
+                        m_Acquisition.Acquisition(ref location, ref detection); 
+                        aqDisplayLocation.Invoke(new MethodInvoker(delegate
+                        {
+                            aqDisplayLocation.Image = location;
+                            aqDisplayLocation.FitToScreen();
+                            aqDisplayLocation.Update();
+                        }));
+                        m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                    }
+
+                    int locationResult = 1;
+                    locationResult = m_templateSet.RunMatcher();
+                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                    if(locationResult  == 1)
+                    {
+                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                    }
+                    else
+                    {
+                        AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                    }
+//                     int locationResult = 1;
+//                     int icount = 5;
+//                     do
+//                     {
+//                         locationResult = m_templateSet.RunMatcher();
+//                         icount --;
+//                         if(locationResult == 0)
+//                         {
+//                             break;
+//                         }
+//                     }while(icount > 0);
+//                     if (locationResult > 0)
+//                     {
+//                        m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+//                        m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+//                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+//                         MessageBox.Show(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+//                     }
+//                     else
+//                     { 
+//                         AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+//                         MessageBox.Show(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+//                     }
+
+
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("TriggerCamera " + ex.Message);
+            }
 
             return 0;
         }
@@ -126,40 +178,84 @@ namespace IntegrationTesting
 
         private bool GetWorkObjInfo(ref int detectCount)
         {
-            checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
+            try
             {
-                if (m_aidiMangement.SourceBitmap != null)
+                checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
                 {
-                    m_aidiMangement.SourceBitmap.Clear();
-                }
-                
-                if (checkBoxCameraDetection.Checked)
+                    if (m_aidiMangement.SourceBitmap != null)
+                    {
+                        m_aidiMangement.SourceBitmap.Clear();
+                    }
+                    else
+                    {
+                        m_aidiMangement.SourceBitmap = new List<Bitmap>();
+                    }
+
+                    if (checkBoxCameraDetection.Checked)
+                    {
+                        checkBoxCameraDetection.Checked = false;
+                        checkBoxCameraDetection_CheckedChanged(null, null);
+                        m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
+                    }
+                    else
+                    {
+                        Bitmap location = null;
+                        Bitmap detection = null;
+                        m_Acquisition.Acquisition(ref location, ref detection);
+                        aqDisplayDectection.Invoke(new MethodInvoker(delegate
+                        {
+                            aqDisplayDectection.Image = detection;
+                            aqDisplayDectection.FitToScreen();
+                            aqDisplayDectection.Update();
+                        }));
+                        m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
+                    }
+                    m_aidiMangement.DetectBmp();
+                    aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
+                    m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
+                    aqDisplayDectection.FitToScreen();
+                    aqDisplayDectection.Update();
+                    m_savePicCount++;
+                    SaveImageToFile(m_aidiMangement.SourceBitmap[0], m_savePicCount, @"D:\Detect\Source\");
+                }));
+                if (m_aidiMangement.DetectResult)
                 {
-                    checkBoxCameraDetection.Checked = false;
-                    checkBoxCameraDetection_CheckedChanged(null, null);
-                    m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);                
+                    AddMessageToListView("检测无错误");
                 }
-                m_aidiMangement.DetectBmp();
-                aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
-                m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
-                aqDisplayDectection.FitToScreen();
-                aqDisplayDectection.Update();
-            }));
-            if(m_aidiMangement.DetectResult)
-            {
-                AddMessageToListView("检测无错误");
+                else
+                {
+                    AddMessageToListView("检测有错误");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AddMessageToListView("检测有错误");
+                MessageBox.Show("GetWorkObjInfo " + ex.Message);
             }
             return m_aidiMangement.DetectResult;
+        }
+            
+        public bool SaveImageToFile(Bitmap originBitmap, int count, string strSavePath)
+        {
+            if(!Directory.Exists(strSavePath))
+            {
+                Directory.CreateDirectory(strSavePath);
+            }
+            Image originImage = Image.FromHbitmap(originBitmap.GetHbitmap());
+
+            Bitmap bitmap = new Bitmap(originImage.Width, originImage.Height);
+
+            Graphics gTemplate = Graphics.FromImage(bitmap);
+            gTemplate.DrawImage(originImage, 0, 0, new Rectangle(0, 0, originImage.Width, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
+            bitmap.Save(strSavePath + count.ToString() + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+            gTemplate.Dispose();
+            bitmap.Dispose();
+            return true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             m_endThread = true;
-            m_AcquisitionLocation.DisConnect();
+            m_Acquisition.DisConnect();
             WriteConfigToIniFile();
 //            m_AcquisitionDetection.DisConnect();
             if (!ReferenceEquals(showPicLocation, null))
@@ -176,6 +272,38 @@ namespace IntegrationTesting
             }
         }
 
+        public void AcquisitionBmpOnce(bool firstFrameLocation, bool firstFrameDetection)
+        {
+            Bitmap location = null;
+            Bitmap detection = null;
+            m_Acquisition.Acquisition(ref location, ref detection);
+
+            aqDisplayLocation.Invoke(new MethodInvoker(delegate
+            {
+                if (checkBoxCameraAcquisition.Checked)
+                {
+                    aqDisplayLocation.Image = location;
+                    aqDisplayLocation.Update();
+
+                    if (firstFrameLocation)
+                    {
+                        firstFrameLocation = false;
+                        aqDisplayLocation.FitToScreen();
+                    }
+                }
+                if (checkBoxCameraDetection.Checked)
+                {
+                    aqDisplayDectection.Image = detection;
+                    aqDisplayDectection.Update();
+
+                    if (firstFrameDetection)
+                    {
+                        firstFrameDetection = false;
+                        aqDisplayDectection.FitToScreen();
+                    }
+                }
+            }));
+        }
         public void RegisterVisionAPI()
         {
             bool firstFrameLocation = true;
@@ -184,36 +312,7 @@ namespace IntegrationTesting
             {
                 try
                 {
-                    Bitmap location = null;
-                    Bitmap detection = null;
-                    m_AcquisitionLocation.Acquisition(ref location, ref detection); 
-                    
-                    aqDisplayLocation.Invoke(new MethodInvoker(delegate
-                    {
-                        if (checkBoxCameraAcquisition.Checked)
-                        {
-                            aqDisplayLocation.Image = location;
-                            aqDisplayLocation.Update();
-
-                            if (firstFrameLocation)
-                            {
-                                firstFrameLocation = false;
-                                aqDisplayLocation.FitToScreen();
-                            }
-                        }
-                        if (checkBoxCameraDetection.Checked)
-                        {
-                            aqDisplayDectection.Image = detection;
-                            aqDisplayDectection.Update();
-
-                            if(firstFrameDetection)
-                            {
-                                firstFrameDetection = false;
-                                aqDisplayDectection.FitToScreen();
-                            }
-                        }   
-                        
-                    }));
+                    AcquisitionBmpOnce(firstFrameLocation, firstFrameLocation);
                 }
                 catch (SEHException e)
                 {
@@ -284,7 +383,7 @@ namespace IntegrationTesting
 
                 if (ReferenceEquals(showPicLocation, null))
                 {
-                    m_AcquisitionLocation.Connect();
+                    m_Acquisition.Connect();
                     showPicLocation = new Thread(new ThreadStart(RegisterVisionAPI));
                     showPicLocation.Start();
                 }
@@ -295,7 +394,7 @@ namespace IntegrationTesting
             }
             catch (Exception ex)
             {
-                m_AcquisitionLocation.DisConnect();
+                m_Acquisition.DisConnect();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -314,7 +413,7 @@ namespace IntegrationTesting
             }
             catch (Exception ex)
             {
-                m_AcquisitionLocation.DisConnect();
+                m_Acquisition.DisConnect();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -337,12 +436,12 @@ namespace IntegrationTesting
 
         private void ToolStripMenuItemSetAcqusition_Click(object sender, EventArgs e)
         {
-            m_acqusitionImageSet.ExposureTimeLocation = m_AcquisitionLocation.CameraExposure[0];
-            m_acqusitionImageSet.CameraNameLocation = m_AcquisitionLocation.CameraName[0];
-            m_acqusitionImageSet.CameraBrandLocation = (int)m_AcquisitionLocation.CameraBrand[0];
-            m_acqusitionImageSet.ExposureTimeDetection = m_AcquisitionLocation.CameraExposure[1];
-            m_acqusitionImageSet.CameraNameDetection = m_AcquisitionLocation.CameraName[1];
-            m_acqusitionImageSet.CameraBrandDetection = (int)m_AcquisitionLocation.CameraBrand[1];
+            m_acqusitionImageSet.ExposureTimeLocation = m_Acquisition.CameraExposure[0];
+            m_acqusitionImageSet.CameraNameLocation = m_Acquisition.CameraName[0];
+            m_acqusitionImageSet.CameraBrandLocation = (int)m_Acquisition.CameraBrand[0];
+            m_acqusitionImageSet.ExposureTimeDetection = m_Acquisition.CameraExposure[1];
+            m_acqusitionImageSet.CameraNameDetection = m_Acquisition.CameraName[1];
+            m_acqusitionImageSet.CameraBrandDetection = (int)m_Acquisition.CameraBrand[1];
 
             m_acqusitionImageSet.ShowDialog();
 
@@ -372,9 +471,9 @@ namespace IntegrationTesting
                 brand[1] = AqCameraBrand.Basler;
             }
 
-            m_AcquisitionLocation.CameraExposure = exposure;
-            m_AcquisitionLocation.CameraName = name;
-            m_AcquisitionLocation.CameraBrand = brand;
+            m_Acquisition.CameraExposure = exposure;
+            m_Acquisition.CameraName = name;
+            m_Acquisition.CameraBrand = brand;
         }
 
         private void ToolStripMenuItemSetCalibration_Click(object sender, EventArgs e)
@@ -433,7 +532,8 @@ namespace IntegrationTesting
         private void button1_Click(object sender, EventArgs e)
         {
             int abc = 0;
-            GetWorkObjInfo(ref abc);
+            //GetWorkObjInfo(ref abc);
+            TriggerCamera(0,0,0);
         }
     }
 }

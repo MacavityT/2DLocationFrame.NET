@@ -72,10 +72,10 @@
             this.buttonRun.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonRun.Image = global::IntegrationTesting.Properties.Resources.Run;
             this.buttonRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRun.Location = new System.Drawing.Point(0, 554);
+            this.buttonRun.Location = new System.Drawing.Point(0, 592);
             this.buttonRun.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(173, 58);
+            this.buttonRun.Size = new System.Drawing.Size(562, 58);
             this.buttonRun.TabIndex = 3;
             this.buttonRun.Text = "运行";
             this.buttonRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -92,7 +92,7 @@
             this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(344, 612);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(389, 650);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -102,7 +102,7 @@
             this.ToolStripMenuItemHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(857, 25);
+            this.menuStripMain.Size = new System.Drawing.Size(1338, 25);
             this.menuStripMain.TabIndex = 9;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -188,8 +188,8 @@
             this.splitContainerhorizontal.Panel2.Controls.Add(this.buttonRun);
             this.splitContainerhorizontal.Panel2.Controls.Add(this.checkBoxCameraAcquisition);
             this.splitContainerhorizontal.Panel2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.splitContainerhorizontal.Size = new System.Drawing.Size(857, 612);
-            this.splitContainerhorizontal.SplitterDistance = 680;
+            this.splitContainerhorizontal.Size = new System.Drawing.Size(1338, 650);
+            this.splitContainerhorizontal.SplitterDistance = 772;
             this.splitContainerhorizontal.TabIndex = 10;
             // 
             // splitContainerVertical
@@ -205,8 +205,8 @@
             // splitContainerVertical.Panel2
             // 
             this.splitContainerVertical.Panel2.Controls.Add(this.aqDisplayDectection);
-            this.splitContainerVertical.Size = new System.Drawing.Size(680, 612);
-            this.splitContainerVertical.SplitterDistance = 344;
+            this.splitContainerVertical.Size = new System.Drawing.Size(772, 650);
+            this.splitContainerVertical.SplitterDistance = 389;
             this.splitContainerVertical.TabIndex = 0;
             // 
             // aqDisplayDectection
@@ -219,7 +219,7 @@
             this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayDectection.Name = "aqDisplayDectection";
             this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(332, 612);
+            this.aqDisplayDectection.Size = new System.Drawing.Size(379, 650);
             this.aqDisplayDectection.TabIndex = 1;
             // 
             // button1
@@ -242,7 +242,7 @@
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraDetection.Location = new System.Drawing.Point(0, 32);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
-            this.checkBoxCameraDetection.Size = new System.Drawing.Size(173, 32);
+            this.checkBoxCameraDetection.Size = new System.Drawing.Size(562, 32);
             this.checkBoxCameraDetection.TabIndex = 10;
             this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -254,10 +254,10 @@
             this.listViewRecord.FullRowSelect = true;
             this.listViewRecord.GridLines = true;
             this.listViewRecord.LabelEdit = true;
-            this.listViewRecord.Location = new System.Drawing.Point(0, 108);
+            this.listViewRecord.Location = new System.Drawing.Point(1, 108);
             this.listViewRecord.MultiSelect = false;
             this.listViewRecord.Name = "listViewRecord";
-            this.listViewRecord.Size = new System.Drawing.Size(173, 364);
+            this.listViewRecord.Size = new System.Drawing.Size(558, 364);
             this.listViewRecord.TabIndex = 9;
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
@@ -269,10 +269,10 @@
             this.buttonStop.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonStop.Image = global::IntegrationTesting.Properties.Resources.Stop;
             this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonStop.Location = new System.Drawing.Point(0, 489);
+            this.buttonStop.Location = new System.Drawing.Point(0, 527);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(173, 65);
+            this.buttonStop.Size = new System.Drawing.Size(562, 65);
             this.buttonStop.TabIndex = 3;
             this.buttonStop.Text = "停止";
             this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -289,7 +289,7 @@
             this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(0, 0);
             this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
-            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(173, 32);
+            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(562, 32);
             this.checkBoxCameraAcquisition.TabIndex = 6;
             this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -311,15 +311,15 @@
             // splitContainerMainStatus.Panel2
             // 
             this.splitContainerMainStatus.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainerMainStatus.Size = new System.Drawing.Size(857, 641);
-            this.splitContainerMainStatus.SplitterDistance = 612;
+            this.splitContainerMainStatus.Size = new System.Drawing.Size(1338, 679);
+            this.splitContainerMainStatus.SplitterDistance = 650;
             this.splitContainerMainStatus.TabIndex = 12;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 3);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(857, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1338, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -327,12 +327,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 666);
+            this.ClientSize = new System.Drawing.Size(1338, 704);
             this.Controls.Add(this.splitContainerMainStatus);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
-            this.Text = "FormShow";
+            this.Text = "Aqrose-2D定位检测";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);

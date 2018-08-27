@@ -240,7 +240,7 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Name = "AcqusitionImageSet";
-            this.Text = "AcqusitionImageSet";
+            this.Text = "取像参数设置";
             this.Load += new System.EventHandler(this.AcqusitionImageSet_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

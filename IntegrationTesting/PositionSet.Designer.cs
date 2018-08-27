@@ -96,7 +96,7 @@
             this.Controls.Add(this.textBoxDataX);
             this.Controls.Add(this.labelDataTypeX);
             this.Name = "PositionSet";
-            this.Text = "PositionSet";
+            this.Text = "位置设置";
             this.ResumeLayout(false);
             this.PerformLayout();
 

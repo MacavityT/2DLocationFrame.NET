@@ -562,7 +562,7 @@
             this.Controls.Add(this.listViewParameterSet);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CalibrationSetForm";
-            this.Text = "CalibrationSet";
+            this.Text = "标定参数设置";
             this.Load += new System.EventHandler(this.CalibrationSetForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

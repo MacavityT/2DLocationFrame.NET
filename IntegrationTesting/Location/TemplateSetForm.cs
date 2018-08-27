@@ -1,4 +1,5 @@
 ﻿using AqVision;
+using AqVision.Controls;
 using AqVision.Shape;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace IntegrationTesting
     public partial class TemplateSetForm : Form
     {
         AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
+        string m_title = null;
         private double m_locationResultPosX = 0;
         public double LocationResultPosX
         {
@@ -54,6 +56,7 @@ namespace IntegrationTesting
         {
             InitializeComponent();
             m_Location.LoadModel(@"D:\Model.shm");
+            m_title = this.Text;
         }
 
         private void TemplateSet_Load(object sender, EventArgs e)
@@ -77,6 +80,7 @@ namespace IntegrationTesting
                 {
                     aqDisplayCreateModel.Image = new Bitmap(openFileDialog.FileName);
                     m_Location.TemplatePath = openFileDialog.FileName;
+                    this.Text = m_title + openFileDialog.FileName;
                     m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
                     aqDisplayCreateModel.FitToScreen();
                     aqDisplayCreateModel.Update();
@@ -105,7 +109,7 @@ namespace IntegrationTesting
                     m_Location.CreateTempateImage(@"D:\Bitmap.bmp");
                     m_Location.CreateModel();
                     aqDisplayCreateModel.InteractiveGraphics.Clear();
-                    ShowGetResultsData(m_Location.ModeXldColsM, m_Location.ModeXldRowsM, m_Location.ModeXldPointCountsM, AqColorConstants.Blue);
+                    ShowGetResultsData(m_Location.ModeXldColsM, m_Location.ModeXldRowsM, m_Location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
 //                     AddMessageToListView((new Rectangle((int)(m_Location.RoiRegionTemplate.LeftTopPointX), (int)(m_Location.RoiRegionTemplate.LeftTopPointY),
 //                                            (int)(m_Location.RoiRegionTemplate.RightBottomX - m_Location.RoiRegionTemplate.LeftTopPointX),
 //                                            (int)(m_Location.RoiRegionTemplate.RightBottomY - m_Location.RoiRegionTemplate.LeftTopPointY))).ToString());
@@ -149,7 +153,7 @@ namespace IntegrationTesting
                 aqDisplayCreateModel.InteractiveGraphics.Clear();
                 aqDisplayCreateModel.Update();
                 RunMatcher();
-                ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green);
+                ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green, aqDisplayCreateModel);
                 textBox1.Text = LocationResultPosX.ToString("0.000");
                 textBox2.Text = LocationResultPosY.ToString("0.000");
                 textBox3.Text = (LocationResultPosTheta / Math.PI * 180).ToString("0.000");
@@ -160,15 +164,51 @@ namespace IntegrationTesting
             }
         }
 
-        public void RunMatcher()
+        public int RunMatcher()
         {
-            m_Location.RunMatcherByHalcon();
-            LocationResultPosX = m_Location.CenterX;
-            LocationResultPosY = m_Location.CenterY;
-            LocationResultPosTheta = m_Location.Angle;
+            int iResult = -1;
+            int iCount = 1;
+            while(true)
+            {
+                try
+                {
+                    m_Location.RunMatcherByHalcon();
+                    LocationResultPosX = m_Location.CenterX;
+                    LocationResultPosY = m_Location.CenterY;
+                    LocationResultPosTheta = m_Location.Angle;
+                    if (m_Location.XldPointCountsM.Length > 0)
+                    {
+                        iResult = 1;
+                    }
+                    else
+                    {
+                        iResult = -2;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                    iResult = -1;
+                }    
+                if(iResult == 1)
+                {
+                    break;
+                }
+                iCount++;
+                if(iCount > 30)
+                {
+                    return -30;
+                }
+            }
+            return 1;
         }
 
-        private void ShowGetResultsData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color)
+        public void ShowGetResultsData(AqColorConstants color, AqDisplay aqDisplayShow)
+        {
+            ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, color, aqDisplayShow);
+        }
+
+        private void ShowGetResultsData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color, AqDisplay aqDisplayShow)
         {
             Stopwatch st = new Stopwatch();
             st.Start();
@@ -241,10 +281,10 @@ namespace IntegrationTesting
                 }
                 lineSegment.Color = color;
                 lineSegment.LineWidthInScreenPixels = 3;
-                aqDisplayCreateModel.InteractiveGraphics.Add(lineSegment, "AAA 11111", true);
+                aqDisplayShow.InteractiveGraphics.Add(lineSegment, "AAA 11111", true);
             }
             st.Stop();
-            aqDisplayCreateModel.Update();
+            aqDisplayShow.Update();
 //             for(int i = 0; i<countPointList.Length; i++)
 //             {
 //                 listBox1.Items.Add(string.Format("{0}, {1}", centerX[i], centerY[i]));

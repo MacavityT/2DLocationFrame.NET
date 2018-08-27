@@ -213,6 +213,11 @@ namespace IntegrationTesting
             calibrationlineData.RobotCoordinate.RobotY = Convert.ToDouble(textBoxRobotY.Text);
             calibrationlineData.RobotCoordinate.RobotRz = Convert.ToDouble(textBoxRobotRz.Text);
             m_calibrationCenter.AllLineData.Add(calibrationlineData);
+            textBoxCameraX.Text = "";
+            textBoxCameraY.Text = "";
+            textBoxRobotX.Text = "";
+            textBoxRobotY.Text = "";
+            textBoxRobotRz.Text = "";
         }
 
         private void buttonDeleteLine_Click(object sender, EventArgs e)

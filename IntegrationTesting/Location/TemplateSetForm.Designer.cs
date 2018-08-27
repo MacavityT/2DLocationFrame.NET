@@ -188,7 +188,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "TemplateSetForm";
-            this.Text = "TemplateSet";
+            this.Text = "定位参数设置";
             this.Load += new System.EventHandler(this.TemplateSet_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
