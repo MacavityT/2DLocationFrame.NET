@@ -71,25 +71,7 @@ namespace IntegrationTesting
 
         private void btn_LoadBitmap_Click(object sender, EventArgs e)
         {
-            try
-            {
-                buttonRemoveGraph_Click(null, null);
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
-                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    aqDisplayCreateModel.Image = new Bitmap(openFileDialog.FileName);
-                    m_Location.TemplatePath = openFileDialog.FileName;
-                    this.Text = m_title + openFileDialog.FileName;
-                    m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
-                    aqDisplayCreateModel.FitToScreen();
-                    aqDisplayCreateModel.Update();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
         }
 
         private void buttonRemoveGraph_Click(object sender, EventArgs e)

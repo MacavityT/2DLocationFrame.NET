@@ -46,14 +46,26 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxExposureTimeDetection = new System.Windows.Forms.TextBox();
             this.textBoxCameraNameDetection = new System.Windows.Forms.TextBox();
+            this.groupBox = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonCamera = new System.Windows.Forms.RadioButton();
+            this.textBoxLocationDirectory = new System.Windows.Forms.TextBox();
+            this.buttonLocationDirectory = new System.Windows.Forms.Button();
+            this.textBoxDetectionDirectory = new System.Windows.Forms.TextBox();
+            this.buttonDetectionDirectory = new System.Windows.Forms.Button();
+            this.panelCamera = new System.Windows.Forms.Panel();
+            this.panelLocal = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox.SuspendLayout();
+            this.panelCamera.SuspendLayout();
+            this.panelLocal.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 32);
+            this.label1.Location = new System.Drawing.Point(18, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 0;
@@ -68,13 +80,13 @@
             "Balser"});
             this.comboBoxCameraBrandLocation.Location = new System.Drawing.Point(113, 29);
             this.comboBoxCameraBrandLocation.Name = "comboBoxCameraBrandLocation";
-            this.comboBoxCameraBrandLocation.Size = new System.Drawing.Size(157, 20);
+            this.comboBoxCameraBrandLocation.Size = new System.Drawing.Size(74, 20);
             this.comboBoxCameraBrandLocation.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 73);
+            this.label2.Location = new System.Drawing.Point(18, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 0;
@@ -82,16 +94,16 @@
             // 
             // textBoxCameraNameLocation
             // 
-            this.textBoxCameraNameLocation.Location = new System.Drawing.Point(113, 69);
+            this.textBoxCameraNameLocation.Location = new System.Drawing.Point(113, 58);
             this.textBoxCameraNameLocation.Name = "textBoxCameraNameLocation";
-            this.textBoxCameraNameLocation.Size = new System.Drawing.Size(157, 21);
+            this.textBoxCameraNameLocation.Size = new System.Drawing.Size(74, 21);
             this.textBoxCameraNameLocation.TabIndex = 2;
             this.textBoxCameraNameLocation.Text = "Aqrose_L";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 117);
+            this.label3.Location = new System.Drawing.Point(18, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 12);
             this.label3.TabIndex = 0;
@@ -99,16 +111,16 @@
             // 
             // textBoxExposureTimeLocation
             // 
-            this.textBoxExposureTimeLocation.Location = new System.Drawing.Point(113, 112);
+            this.textBoxExposureTimeLocation.Location = new System.Drawing.Point(113, 82);
             this.textBoxExposureTimeLocation.Name = "textBoxExposureTimeLocation";
-            this.textBoxExposureTimeLocation.Size = new System.Drawing.Size(157, 21);
+            this.textBoxExposureTimeLocation.Size = new System.Drawing.Size(74, 21);
             this.textBoxExposureTimeLocation.TabIndex = 3;
             this.textBoxExposureTimeLocation.Text = "5000";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(277, 116);
+            this.label4.Location = new System.Drawing.Point(193, 86);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 3;
@@ -116,7 +128,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(354, 199);
+            this.buttonOK.Location = new System.Drawing.Point(347, 349);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 4;
@@ -126,7 +138,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(196, 199);
+            this.buttonCancel.Location = new System.Drawing.Point(189, 349);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 5;
@@ -143,12 +155,12 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBoxExposureTimeLocation);
             this.groupBox1.Controls.Add(this.textBoxCameraNameLocation);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(298, 146);
+            this.groupBox1.Size = new System.Drawing.Size(217, 117);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "定位相机";
+            this.groupBox1.Text = "定位";
             // 
             // groupBox2
             // 
@@ -159,9 +171,9 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBoxExposureTimeDetection);
             this.groupBox2.Controls.Add(this.textBoxCameraNameDetection);
-            this.groupBox2.Location = new System.Drawing.Point(325, 12);
+            this.groupBox2.Location = new System.Drawing.Point(226, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(298, 146);
+            this.groupBox2.Size = new System.Drawing.Size(220, 117);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "检测相机";
@@ -175,7 +187,7 @@
             "Balser"});
             this.comboBoxCameraBrandDetection.Location = new System.Drawing.Point(113, 29);
             this.comboBoxCameraBrandDetection.Name = "comboBoxCameraBrandDetection";
-            this.comboBoxCameraBrandDetection.Size = new System.Drawing.Size(157, 20);
+            this.comboBoxCameraBrandDetection.Size = new System.Drawing.Size(80, 20);
             this.comboBoxCameraBrandDetection.TabIndex = 1;
             // 
             // label5
@@ -190,7 +202,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 73);
+            this.label6.Location = new System.Drawing.Point(21, 62);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(71, 12);
             this.label6.TabIndex = 0;
@@ -199,7 +211,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(277, 116);
+            this.label7.Location = new System.Drawing.Point(199, 87);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 3;
@@ -208,7 +220,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(21, 117);
+            this.label8.Location = new System.Drawing.Point(21, 87);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 12);
             this.label8.TabIndex = 0;
@@ -216,27 +228,112 @@
             // 
             // textBoxExposureTimeDetection
             // 
-            this.textBoxExposureTimeDetection.Location = new System.Drawing.Point(113, 112);
+            this.textBoxExposureTimeDetection.Location = new System.Drawing.Point(113, 82);
             this.textBoxExposureTimeDetection.Name = "textBoxExposureTimeDetection";
-            this.textBoxExposureTimeDetection.Size = new System.Drawing.Size(157, 21);
+            this.textBoxExposureTimeDetection.Size = new System.Drawing.Size(80, 21);
             this.textBoxExposureTimeDetection.TabIndex = 3;
             this.textBoxExposureTimeDetection.Text = "5000";
             // 
             // textBoxCameraNameDetection
             // 
-            this.textBoxCameraNameDetection.Location = new System.Drawing.Point(113, 69);
+            this.textBoxCameraNameDetection.Location = new System.Drawing.Point(113, 58);
             this.textBoxCameraNameDetection.Name = "textBoxCameraNameDetection";
-            this.textBoxCameraNameDetection.Size = new System.Drawing.Size(157, 21);
+            this.textBoxCameraNameDetection.Size = new System.Drawing.Size(80, 21);
             this.textBoxCameraNameDetection.TabIndex = 2;
             this.textBoxCameraNameDetection.Text = "Aqrose_D";
+            // 
+            // groupBox
+            // 
+            this.groupBox.Controls.Add(this.panelLocal);
+            this.groupBox.Controls.Add(this.panelCamera);
+            this.groupBox.Controls.Add(this.radioButtonCamera);
+            this.groupBox.Controls.Add(this.radioButton1);
+            this.groupBox.Location = new System.Drawing.Point(12, 2);
+            this.groupBox.Name = "groupBox";
+            this.groupBox.Size = new System.Drawing.Size(521, 329);
+            this.groupBox.TabIndex = 7;
+            this.groupBox.TabStop = false;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(13, 191);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 16);
+            this.radioButton1.TabIndex = 8;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "文件";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCamera
+            // 
+            this.radioButtonCamera.AutoSize = true;
+            this.radioButtonCamera.Location = new System.Drawing.Point(13, 20);
+            this.radioButtonCamera.Name = "radioButtonCamera";
+            this.radioButtonCamera.Size = new System.Drawing.Size(47, 16);
+            this.radioButtonCamera.TabIndex = 8;
+            this.radioButtonCamera.TabStop = true;
+            this.radioButtonCamera.Text = "相机";
+            this.radioButtonCamera.UseVisualStyleBackColor = true;
+            // 
+            // textBoxLocationDirectory
+            // 
+            this.textBoxLocationDirectory.Location = new System.Drawing.Point(3, 18);
+            this.textBoxLocationDirectory.Name = "textBoxLocationDirectory";
+            this.textBoxLocationDirectory.Size = new System.Drawing.Size(370, 21);
+            this.textBoxLocationDirectory.TabIndex = 9;
+            // 
+            // buttonLocationDirectory
+            // 
+            this.buttonLocationDirectory.Location = new System.Drawing.Point(379, 11);
+            this.buttonLocationDirectory.Name = "buttonLocationDirectory";
+            this.buttonLocationDirectory.Size = new System.Drawing.Size(75, 34);
+            this.buttonLocationDirectory.TabIndex = 10;
+            this.buttonLocationDirectory.Text = "定位文件或目录";
+            this.buttonLocationDirectory.UseVisualStyleBackColor = true;
+            // 
+            // textBoxDetectionDirectory
+            // 
+            this.textBoxDetectionDirectory.Location = new System.Drawing.Point(2, 63);
+            this.textBoxDetectionDirectory.Name = "textBoxDetectionDirectory";
+            this.textBoxDetectionDirectory.Size = new System.Drawing.Size(370, 21);
+            this.textBoxDetectionDirectory.TabIndex = 9;
+            // 
+            // buttonDetectionDirectory
+            // 
+            this.buttonDetectionDirectory.Location = new System.Drawing.Point(378, 56);
+            this.buttonDetectionDirectory.Name = "buttonDetectionDirectory";
+            this.buttonDetectionDirectory.Size = new System.Drawing.Size(75, 34);
+            this.buttonDetectionDirectory.TabIndex = 10;
+            this.buttonDetectionDirectory.Text = "检测文件或目录";
+            this.buttonDetectionDirectory.UseVisualStyleBackColor = true;
+            // 
+            // panelCamera
+            // 
+            this.panelCamera.Controls.Add(this.groupBox1);
+            this.panelCamera.Controls.Add(this.groupBox2);
+            this.panelCamera.Location = new System.Drawing.Point(62, 42);
+            this.panelCamera.Name = "panelCamera";
+            this.panelCamera.Size = new System.Drawing.Size(452, 128);
+            this.panelCamera.TabIndex = 8;
+            // 
+            // panelLocal
+            // 
+            this.panelLocal.Controls.Add(this.textBoxLocationDirectory);
+            this.panelLocal.Controls.Add(this.buttonDetectionDirectory);
+            this.panelLocal.Controls.Add(this.textBoxDetectionDirectory);
+            this.panelLocal.Controls.Add(this.buttonLocationDirectory);
+            this.panelLocal.Location = new System.Drawing.Point(57, 213);
+            this.panelLocal.Name = "panelLocal";
+            this.panelLocal.Size = new System.Drawing.Size(458, 93);
+            this.panelLocal.TabIndex = 8;
             // 
             // AcqusitionImageSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 220);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(545, 385);
+            this.Controls.Add(this.groupBox);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Name = "AcqusitionImageSet";
@@ -246,6 +343,11 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox.ResumeLayout(false);
+            this.groupBox.PerformLayout();
+            this.panelCamera.ResumeLayout(false);
+            this.panelLocal.ResumeLayout(false);
+            this.panelLocal.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -270,5 +372,14 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxExposureTimeDetection;
         private System.Windows.Forms.TextBox textBoxCameraNameDetection;
+        private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButtonCamera;
+        private System.Windows.Forms.Button buttonLocationDirectory;
+        private System.Windows.Forms.TextBox textBoxLocationDirectory;
+        private System.Windows.Forms.Button buttonDetectionDirectory;
+        private System.Windows.Forms.TextBox textBoxDetectionDirectory;
+        private System.Windows.Forms.Panel panelLocal;
+        private System.Windows.Forms.Panel panelCamera;
     }
 }

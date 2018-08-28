@@ -16,6 +16,7 @@ using App2D;
 using IntegrationTesting.Tool;
 using System.IO;
 using AqVision;
+using System.Diagnostics;
 
 namespace IntegrationTesting
 {
@@ -24,7 +25,6 @@ namespace IntegrationTesting
         AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
         Thread showPicLocation = null;
         bool m_endThread = false;
-        int m_savePicCount = 30;
 
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
@@ -41,6 +41,12 @@ namespace IntegrationTesting
 
         public MainForm()
         {
+            Process[] app = Process.GetProcessesByName("IntegrationTesting");
+            if(app.Length > 0)
+            {
+                MessageBox.Show("软件已运行  "+app.Length.ToString() + "<>"  +app[0].ProcessName);
+                //System.Environment.Exit(0);
+            }
             InitializeComponent();
             listViewRecord.Columns.Add("Serial NO", 10, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Time", 10, HorizontalAlignment.Center);
@@ -99,8 +105,8 @@ namespace IntegrationTesting
             {
                 checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
-//                   aqDisplayLocation.InteractiveGraphics.Clear();
-//                    aqDisplayLocation.Update();
+                    aqDisplayLocation.InteractiveGraphics.Clear();
+                    aqDisplayLocation.Update();
                     if (checkBoxCameraAcquisition.Checked)
                     {
                         checkBoxCameraAcquisition.Checked = false;
@@ -120,43 +126,21 @@ namespace IntegrationTesting
                         }));
                         m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
                     }
-
-                    int locationResult = 1;
-                    locationResult = m_templateSet.RunMatcher();
+                    SaveImageToFile(m_templateSet.ImageInput, @"D:\Location\Source\");
+                    int locationResult = m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                    if(locationResult  == 1)
+                    if (locationResult == 1)
                     {
-                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                       m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                       m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+                       AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                        MessageBox.Show(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
                     }
                     else
-                    {
+                    { 
                         AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                        MessageBox.Show(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
                     }
-//                     int locationResult = 1;
-//                     int icount = 5;
-//                     do
-//                     {
-//                         locationResult = m_templateSet.RunMatcher();
-//                         icount --;
-//                         if(locationResult == 0)
-//                         {
-//                             break;
-//                         }
-//                     }while(icount > 0);
-//                     if (locationResult > 0)
-//                     {
-//                        m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-//                        m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
-//                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-//                         MessageBox.Show(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-//                     }
-//                     else
-//                     { 
-//                         AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-//                         MessageBox.Show(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-//                     }
-
-
                 }));
             }
             catch (Exception ex)
@@ -180,6 +164,8 @@ namespace IntegrationTesting
         {
             try
             {
+                aqDisplayDectection.InteractiveGraphics.Clear();
+                aqDisplayDectection.Update();
                 checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
                 {
                     if (m_aidiMangement.SourceBitmap != null)
@@ -215,8 +201,7 @@ namespace IntegrationTesting
                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
                     aqDisplayDectection.FitToScreen();
                     aqDisplayDectection.Update();
-                    m_savePicCount++;
-                    SaveImageToFile(m_aidiMangement.SourceBitmap[0], m_savePicCount, @"D:\Detect\Source\");
+                    SaveImageToFile(m_aidiMangement.SourceBitmap[0], @"D:\Detect\Source\");
                 }));
                 if (m_aidiMangement.DetectResult)
                 {
@@ -234,19 +219,20 @@ namespace IntegrationTesting
             return m_aidiMangement.DetectResult;
         }
             
-        public bool SaveImageToFile(Bitmap originBitmap, int count, string strSavePath)
+        public bool SaveImageToFile(Bitmap originBitmap, string strSavePath)
         {
             if(!Directory.Exists(strSavePath))
             {
                 Directory.CreateDirectory(strSavePath);
             }
+            int count = Directory.GetFiles(strSavePath).Length;
             Image originImage = Image.FromHbitmap(originBitmap.GetHbitmap());
 
             Bitmap bitmap = new Bitmap(originImage.Width, originImage.Height);
 
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle(0, 0, originImage.Width, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
-            bitmap.Save(strSavePath + count.ToString() + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+            bitmap.Save(strSavePath + count.ToString() + "_" +DateTime.Now.ToString("o") + "_" + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
             gTemplate.Dispose();
             bitmap.Dispose();
             return true;
@@ -277,7 +263,7 @@ namespace IntegrationTesting
             Bitmap location = null;
             Bitmap detection = null;
             m_Acquisition.Acquisition(ref location, ref detection);
-
+            
             aqDisplayLocation.Invoke(new MethodInvoker(delegate
             {
                 if (checkBoxCameraAcquisition.Checked)
@@ -303,6 +289,7 @@ namespace IntegrationTesting
                     }
                 }
             }));
+             
         }
         public void RegisterVisionAPI()
         {
@@ -529,11 +516,64 @@ namespace IntegrationTesting
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonTriggerLocationRPC_Click(object sender, EventArgs e)
+        {
+            TriggerCamera(0, 0, 0);
+        }
+
+        private void buttonTriggerDetectionRPC_Click(object sender, EventArgs e)
         {
             int abc = 0;
-            //GetWorkObjInfo(ref abc);
-            TriggerCamera(0,0,0);
+            GetWorkObjInfo(ref abc);
+        }
+
+        private void buttonLoadLocationPic_Click(object sender, EventArgs e)
+        {
+            aqDisplayLocation.InteractiveGraphics.Clear();
+            aqDisplayLocation.Update();
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    aqDisplayLocation.Image = new Bitmap(openFileDialog.FileName);
+                    //m_Location.TemplatePath = openFileDialog.FileName;
+                    //this.Text = m_title + openFileDialog.FileName;
+                    //m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
+                    aqDisplayLocation.FitToScreen();
+                    aqDisplayLocation.Update();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void buttonLoadDetectionPic_Click(object sender, EventArgs e)
+        {
+            aqDisplayDectection.InteractiveGraphics.Clear();
+            aqDisplayDectection.Update();
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    aqDisplayDectection.Image = new Bitmap(openFileDialog.FileName);
+                    //m_Location.TemplatePath = openFileDialog.FileName;
+                    //this.Text = m_title + openFileDialog.FileName;
+                    //m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
+                    aqDisplayDectection.FitToScreen();
+                    aqDisplayDectection.Update();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }
