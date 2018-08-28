@@ -359,7 +359,6 @@
             this.Text = "Aqrose-2D定位检测";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             this.splitContainerhorizontal.Panel1.ResumeLayout(false);

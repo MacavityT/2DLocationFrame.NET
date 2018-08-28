@@ -103,6 +103,14 @@ namespace IntegrationTesting
         {
             try
             {
+                if (m_templateSet.IsDisposed || m_templateSet == null)
+                {
+                    m_templateSet = new TemplateSetForm();
+                }
+                if (m_calibrateShow.IsDisposed || m_calibrateShow == null)
+                {
+                    m_calibrateShow = new CalibrationSetForm();
+                }
                 checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
                     aqDisplayLocation.InteractiveGraphics.Clear();
@@ -464,18 +472,41 @@ namespace IntegrationTesting
 
         private void ToolStripMenuItemSetCalibration_Click(object sender, EventArgs e)
         {
+            if (m_calibrateShow == null || m_calibrateShow.IsDisposed)
+            {
+                m_calibrateShow = new CalibrationSetForm();
+            }
             m_calibrateShow.Show();
+            m_calibrateShow.Focus();
         }
 
         private void ToolStripMenuItemSetLocation_Click(object sender, EventArgs e)
         {
-            if (checkBoxCameraAcquisition.Checked)
+            if(m_templateSet == null || m_templateSet.IsDisposed)
             {
-                checkBoxCameraAcquisition.Checked = false;
-                checkBoxCameraAcquisition_CheckedChanged(null, null);
-                m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                m_templateSet = new TemplateSetForm();
+                if (checkBoxCameraAcquisition.Checked)
+                {
+                    checkBoxCameraAcquisition.Checked = false;
+                    checkBoxCameraAcquisition_CheckedChanged(null, null);
+                    m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                }
+                else
+                {
+                    Bitmap location = null;
+                    Bitmap detection = null;
+                    m_Acquisition.Acquisition(ref location, ref detection);
+                    aqDisplayLocation.Invoke(new MethodInvoker(delegate
+                    {
+                        aqDisplayLocation.Image = location;
+                        aqDisplayLocation.FitToScreen();
+                        aqDisplayLocation.Update();
+                    }));
+                    m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                }
             }
             m_templateSet.Show();
+            m_templateSet.Focus();
         }
 
         private void ToolStripMenuItemSetDectection_Click(object sender, EventArgs e)
@@ -486,10 +517,6 @@ namespace IntegrationTesting
         private void ToolStripMenuItemSetRobotConnect_Click(object sender, EventArgs e)
         {
             m_robotSeverForm.ShowDialog();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
