@@ -17,6 +17,7 @@ using IntegrationTesting.Tool;
 using System.IO;
 using AqVision;
 using System.Diagnostics;
+using AqVision.Controls;
 
 namespace IntegrationTesting
 {
@@ -41,12 +42,6 @@ namespace IntegrationTesting
 
         public MainForm()
         {
-            Process[] app = Process.GetProcessesByName("IntegrationTesting");
-            if(app.Length > 0)
-            {
-                MessageBox.Show("软件已运行  "+app.Length.ToString() + "<>"  +app[0].ProcessName);
-                //System.Environment.Exit(0);
-            }
             InitializeComponent();
             listViewRecord.Columns.Add("Serial NO", 10, HorizontalAlignment.Center);
             listViewRecord.Columns.Add("Time", 10, HorizontalAlignment.Center);
@@ -134,7 +129,6 @@ namespace IntegrationTesting
                         }));
                         m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
                     }
-                    SaveImageToFile(m_templateSet.ImageInput, @"D:\Location\Source\");
                     int locationResult = m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                     if (locationResult == 1)
@@ -147,6 +141,7 @@ namespace IntegrationTesting
                     { 
                         AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
                     }
+                    SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
                 }));
             }
             catch (Exception ex)
@@ -205,7 +200,7 @@ namespace IntegrationTesting
                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
                     aqDisplayDectection.FitToScreen();
                     aqDisplayDectection.Update();
-                    SaveImageToFile(m_aidiMangement.SourceBitmap[0], @"D:\Detect\Source\");
+                    SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                 }));
                 if (m_aidiMangement.DetectResult)
                 {
@@ -223,12 +218,19 @@ namespace IntegrationTesting
             return m_aidiMangement.DetectResult;
         }
             
-        public bool SaveImageToFile(Bitmap originBitmap, string strSavePath)
+        public bool SaveImageToFile(AqDisplay aqDisplay, Bitmap originBitmap, string strSavePath)
         {
-            if(!Directory.Exists(strSavePath))
+            string sourcePath = strSavePath + @"Source\";
+            string resultPath = strSavePath + @"Result\";
+            if (!Directory.Exists(sourcePath))
             {
-                Directory.CreateDirectory(strSavePath);
+                Directory.CreateDirectory(sourcePath);
             }
+            if (!Directory.Exists(resultPath))
+            {
+                Directory.CreateDirectory(resultPath);
+            }
+            
             int count = Directory.GetFiles(strSavePath).Length;
             Image originImage = Image.FromHbitmap(originBitmap.GetHbitmap());
 
@@ -237,9 +239,13 @@ namespace IntegrationTesting
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle(0, 0, originImage.Width, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
 
-            string picName = string.Format("{0}{1}_{2}{3}{4}{5}{6}{7}{8}_.bmp", strSavePath, count.ToString(),DateTime.Now.Year, DateTime.Now.Month, 
+            string timeNowToString = string.Format("{0}{1}{2}{3}{4}{5}{6}", DateTime.Now.Year, DateTime.Now.Month,
                                DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
-            bitmap.Save(picName, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            string picSourceName = string.Format("{0}{1}_{2}_.bmp", sourcePath, count.ToString(), timeNowToString);
+            string picResultFullName = string.Format("{0}{1}_{2}_.bmp", resultPath, count.ToString(), timeNowToString);
+            bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Bmp);
+            aqDisplay.CreateContentBitmap().Save(picResultFullName);
             gTemplate.Dispose();
             bitmap.Dispose();
             return true;
