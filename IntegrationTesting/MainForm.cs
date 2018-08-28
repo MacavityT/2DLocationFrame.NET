@@ -134,12 +134,10 @@ namespace IntegrationTesting
                        m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                        m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                        MessageBox.Show(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
                     }
                     else
                     { 
                         AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-                        MessageBox.Show(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
                     }
                 }));
             }
@@ -191,8 +189,6 @@ namespace IntegrationTesting
                         aqDisplayDectection.Invoke(new MethodInvoker(delegate
                         {
                             aqDisplayDectection.Image = detection;
-                            aqDisplayDectection.FitToScreen();
-                            aqDisplayDectection.Update();
                         }));
                         m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
                     }
@@ -232,7 +228,10 @@ namespace IntegrationTesting
 
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle(0, 0, originImage.Width, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
-            bitmap.Save(strSavePath + count.ToString() + "_" +DateTime.Now.ToString("o") + "_" + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+
+            string picName = string.Format("{0}{1}_{2}{3}{4}{5}{6}{7}{8}_.bmp", strSavePath, count.ToString(),DateTime.Now.Year, DateTime.Now.Month, 
+                               DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+            bitmap.Save(picName, System.Drawing.Imaging.ImageFormat.Bmp);
             gTemplate.Dispose();
             bitmap.Dispose();
             return true;
@@ -525,55 +524,6 @@ namespace IntegrationTesting
         {
             int abc = 0;
             GetWorkObjInfo(ref abc);
-        }
-
-        private void buttonLoadLocationPic_Click(object sender, EventArgs e)
-        {
-            aqDisplayLocation.InteractiveGraphics.Clear();
-            aqDisplayLocation.Update();
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
-                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    aqDisplayLocation.Image = new Bitmap(openFileDialog.FileName);
-                    //m_Location.TemplatePath = openFileDialog.FileName;
-                    //this.Text = m_title + openFileDialog.FileName;
-                    //m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
-                    aqDisplayLocation.FitToScreen();
-                    aqDisplayLocation.Update();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void buttonLoadDetectionPic_Click(object sender, EventArgs e)
-        {
-            aqDisplayDectection.InteractiveGraphics.Clear();
-            aqDisplayDectection.Update();
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif;*.tiff;*.wmf;*.emf|JPEG Files (*.jpg)|*.jpg;*.jpeg|GIF Files (*.gif)|*.gif|BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png|TIF files (*.tif;*.tiff)|*.tif;*.tiff|EMF/WMF Files (*.wmf;*.emf)|*.wmf;*.emf|All files (*.*)|*.*";
-                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    aqDisplayDectection.Image = new Bitmap(openFileDialog.FileName);
-                    //m_Location.TemplatePath = openFileDialog.FileName;
-                    //this.Text = m_title + openFileDialog.FileName;
-                    //m_Location.OriginImage = new Bitmap(openFileDialog.FileName);
-                    aqDisplayDectection.FitToScreen();
-                    aqDisplayDectection.Update();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
         }
     }
 }

@@ -47,19 +47,26 @@
             this.textBoxExposureTimeDetection = new System.Windows.Forms.TextBox();
             this.textBoxCameraNameDetection = new System.Windows.Forms.TextBox();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButtonCamera = new System.Windows.Forms.RadioButton();
-            this.textBoxLocationDirectory = new System.Windows.Forms.TextBox();
-            this.buttonLocationDirectory = new System.Windows.Forms.Button();
-            this.textBoxDetectionDirectory = new System.Windows.Forms.TextBox();
-            this.buttonDetectionDirectory = new System.Windows.Forms.Button();
-            this.panelCamera = new System.Windows.Forms.Panel();
             this.panelLocal = new System.Windows.Forms.Panel();
+            this.textBoxLocationDirectory = new System.Windows.Forms.TextBox();
+            this.buttonDetectionDirectory = new System.Windows.Forms.Button();
+            this.textBoxDetectionDirectory = new System.Windows.Forms.TextBox();
+            this.buttonLocationDirectory = new System.Windows.Forms.Button();
+            this.panelCamera = new System.Windows.Forms.Panel();
+            this.radioButtonCamera = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox.SuspendLayout();
-            this.panelCamera.SuspendLayout();
             this.panelLocal.SuspendLayout();
+            this.panelCamera.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -128,7 +135,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(347, 349);
+            this.buttonOK.Location = new System.Drawing.Point(347, 462);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 4;
@@ -138,7 +145,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(189, 349);
+            this.buttonCancel.Location = new System.Drawing.Point(189, 462);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 5;
@@ -244,26 +251,69 @@
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.panel1);
             this.groupBox.Controls.Add(this.panelLocal);
             this.groupBox.Controls.Add(this.panelCamera);
             this.groupBox.Controls.Add(this.radioButtonCamera);
+            this.groupBox.Controls.Add(this.radioButton2);
             this.groupBox.Controls.Add(this.radioButton1);
             this.groupBox.Location = new System.Drawing.Point(12, 2);
             this.groupBox.Name = "groupBox";
-            this.groupBox.Size = new System.Drawing.Size(521, 329);
+            this.groupBox.Size = new System.Drawing.Size(521, 454);
             this.groupBox.TabIndex = 7;
             this.groupBox.TabStop = false;
             // 
-            // radioButton1
+            // panelLocal
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 191);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 16);
-            this.radioButton1.TabIndex = 8;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "文件";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.panelLocal.Controls.Add(this.textBoxLocationDirectory);
+            this.panelLocal.Controls.Add(this.buttonDetectionDirectory);
+            this.panelLocal.Controls.Add(this.textBoxDetectionDirectory);
+            this.panelLocal.Controls.Add(this.buttonLocationDirectory);
+            this.panelLocal.Location = new System.Drawing.Point(57, 211);
+            this.panelLocal.Name = "panelLocal";
+            this.panelLocal.Size = new System.Drawing.Size(458, 93);
+            this.panelLocal.TabIndex = 8;
+            // 
+            // textBoxLocationDirectory
+            // 
+            this.textBoxLocationDirectory.Location = new System.Drawing.Point(3, 18);
+            this.textBoxLocationDirectory.Name = "textBoxLocationDirectory";
+            this.textBoxLocationDirectory.Size = new System.Drawing.Size(370, 21);
+            this.textBoxLocationDirectory.TabIndex = 9;
+            // 
+            // buttonDetectionDirectory
+            // 
+            this.buttonDetectionDirectory.Location = new System.Drawing.Point(378, 56);
+            this.buttonDetectionDirectory.Name = "buttonDetectionDirectory";
+            this.buttonDetectionDirectory.Size = new System.Drawing.Size(75, 34);
+            this.buttonDetectionDirectory.TabIndex = 10;
+            this.buttonDetectionDirectory.Text = "检测文件";
+            this.buttonDetectionDirectory.UseVisualStyleBackColor = true;
+            // 
+            // textBoxDetectionDirectory
+            // 
+            this.textBoxDetectionDirectory.Location = new System.Drawing.Point(2, 63);
+            this.textBoxDetectionDirectory.Name = "textBoxDetectionDirectory";
+            this.textBoxDetectionDirectory.Size = new System.Drawing.Size(370, 21);
+            this.textBoxDetectionDirectory.TabIndex = 9;
+            // 
+            // buttonLocationDirectory
+            // 
+            this.buttonLocationDirectory.Location = new System.Drawing.Point(379, 11);
+            this.buttonLocationDirectory.Name = "buttonLocationDirectory";
+            this.buttonLocationDirectory.Size = new System.Drawing.Size(75, 34);
+            this.buttonLocationDirectory.TabIndex = 10;
+            this.buttonLocationDirectory.Text = "定位文件";
+            this.buttonLocationDirectory.UseVisualStyleBackColor = true;
+            // 
+            // panelCamera
+            // 
+            this.panelCamera.Controls.Add(this.groupBox1);
+            this.panelCamera.Controls.Add(this.groupBox2);
+            this.panelCamera.Location = new System.Drawing.Point(62, 40);
+            this.panelCamera.Name = "panelCamera";
+            this.panelCamera.Size = new System.Drawing.Size(452, 128);
+            this.panelCamera.TabIndex = 8;
             // 
             // radioButtonCamera
             // 
@@ -276,63 +326,76 @@
             this.radioButtonCamera.Text = "相机";
             this.radioButtonCamera.UseVisualStyleBackColor = true;
             // 
-            // textBoxLocationDirectory
+            // radioButton1
             // 
-            this.textBoxLocationDirectory.Location = new System.Drawing.Point(3, 18);
-            this.textBoxLocationDirectory.Name = "textBoxLocationDirectory";
-            this.textBoxLocationDirectory.Size = new System.Drawing.Size(370, 21);
-            this.textBoxLocationDirectory.TabIndex = 9;
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(13, 191);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 16);
+            this.radioButton1.TabIndex = 8;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "文件";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // buttonLocationDirectory
+            // radioButton2
             // 
-            this.buttonLocationDirectory.Location = new System.Drawing.Point(379, 11);
-            this.buttonLocationDirectory.Name = "buttonLocationDirectory";
-            this.buttonLocationDirectory.Size = new System.Drawing.Size(75, 34);
-            this.buttonLocationDirectory.TabIndex = 10;
-            this.buttonLocationDirectory.Text = "定位文件或目录";
-            this.buttonLocationDirectory.UseVisualStyleBackColor = true;
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(13, 321);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(59, 16);
+            this.radioButton2.TabIndex = 8;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "文件夹";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
-            // textBoxDetectionDirectory
+            // panel1
             // 
-            this.textBoxDetectionDirectory.Location = new System.Drawing.Point(2, 63);
-            this.textBoxDetectionDirectory.Name = "textBoxDetectionDirectory";
-            this.textBoxDetectionDirectory.Size = new System.Drawing.Size(370, 21);
-            this.textBoxDetectionDirectory.TabIndex = 9;
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Location = new System.Drawing.Point(57, 343);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(458, 93);
+            this.panel1.TabIndex = 8;
             // 
-            // buttonDetectionDirectory
+            // textBox1
             // 
-            this.buttonDetectionDirectory.Location = new System.Drawing.Point(378, 56);
-            this.buttonDetectionDirectory.Name = "buttonDetectionDirectory";
-            this.buttonDetectionDirectory.Size = new System.Drawing.Size(75, 34);
-            this.buttonDetectionDirectory.TabIndex = 10;
-            this.buttonDetectionDirectory.Text = "检测文件或目录";
-            this.buttonDetectionDirectory.UseVisualStyleBackColor = true;
+            this.textBox1.Location = new System.Drawing.Point(3, 18);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(370, 21);
+            this.textBox1.TabIndex = 9;
             // 
-            // panelCamera
+            // button1
             // 
-            this.panelCamera.Controls.Add(this.groupBox1);
-            this.panelCamera.Controls.Add(this.groupBox2);
-            this.panelCamera.Location = new System.Drawing.Point(62, 42);
-            this.panelCamera.Name = "panelCamera";
-            this.panelCamera.Size = new System.Drawing.Size(452, 128);
-            this.panelCamera.TabIndex = 8;
+            this.button1.Location = new System.Drawing.Point(378, 56);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 34);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "检测文件夹";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // panelLocal
+            // textBox2
             // 
-            this.panelLocal.Controls.Add(this.textBoxLocationDirectory);
-            this.panelLocal.Controls.Add(this.buttonDetectionDirectory);
-            this.panelLocal.Controls.Add(this.textBoxDetectionDirectory);
-            this.panelLocal.Controls.Add(this.buttonLocationDirectory);
-            this.panelLocal.Location = new System.Drawing.Point(57, 213);
-            this.panelLocal.Name = "panelLocal";
-            this.panelLocal.Size = new System.Drawing.Size(458, 93);
-            this.panelLocal.TabIndex = 8;
+            this.textBox2.Location = new System.Drawing.Point(2, 63);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(370, 21);
+            this.textBox2.TabIndex = 9;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(379, 11);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 34);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "定位文件夹";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // AcqusitionImageSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 385);
+            this.ClientSize = new System.Drawing.Size(540, 484);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -345,9 +408,11 @@
             this.groupBox2.PerformLayout();
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
-            this.panelCamera.ResumeLayout(false);
             this.panelLocal.ResumeLayout(false);
             this.panelLocal.PerformLayout();
+            this.panelCamera.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -381,5 +446,11 @@
         private System.Windows.Forms.TextBox textBoxDetectionDirectory;
         private System.Windows.Forms.Panel panelLocal;
         private System.Windows.Forms.Panel panelCamera;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }

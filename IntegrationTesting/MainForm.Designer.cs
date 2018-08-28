@@ -46,8 +46,6 @@
             this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
             this.groupBoxTest = new System.Windows.Forms.GroupBox();
             this.listViewRecord = new System.Windows.Forms.ListView();
-            this.buttonLoadDetectionPic = new System.Windows.Forms.Button();
-            this.buttonLoadLocationPic = new System.Windows.Forms.Button();
             this.buttonTriggerDetectionRPC = new System.Windows.Forms.Button();
             this.buttonTriggerLocationRPC = new System.Windows.Forms.Button();
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
@@ -229,8 +227,6 @@
             // groupBoxTest
             // 
             this.groupBoxTest.Controls.Add(this.listViewRecord);
-            this.groupBoxTest.Controls.Add(this.buttonLoadDetectionPic);
-            this.groupBoxTest.Controls.Add(this.buttonLoadLocationPic);
             this.groupBoxTest.Controls.Add(this.buttonTriggerDetectionRPC);
             this.groupBoxTest.Controls.Add(this.buttonTriggerLocationRPC);
             this.groupBoxTest.Location = new System.Drawing.Point(3, 121);
@@ -252,26 +248,6 @@
             this.listViewRecord.TabIndex = 9;
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
-            // 
-            // buttonLoadDetectionPic
-            // 
-            this.buttonLoadDetectionPic.Location = new System.Drawing.Point(284, 298);
-            this.buttonLoadDetectionPic.Name = "buttonLoadDetectionPic";
-            this.buttonLoadDetectionPic.Size = new System.Drawing.Size(86, 32);
-            this.buttonLoadDetectionPic.TabIndex = 11;
-            this.buttonLoadDetectionPic.Text = "加载检测图片";
-            this.buttonLoadDetectionPic.UseVisualStyleBackColor = true;
-            this.buttonLoadDetectionPic.Click += new System.EventHandler(this.buttonLoadDetectionPic_Click);
-            // 
-            // buttonLoadLocationPic
-            // 
-            this.buttonLoadLocationPic.Location = new System.Drawing.Point(189, 298);
-            this.buttonLoadLocationPic.Name = "buttonLoadLocationPic";
-            this.buttonLoadLocationPic.Size = new System.Drawing.Size(89, 32);
-            this.buttonLoadLocationPic.TabIndex = 11;
-            this.buttonLoadLocationPic.Text = "加载定位图片";
-            this.buttonLoadLocationPic.UseVisualStyleBackColor = true;
-            this.buttonLoadLocationPic.Click += new System.EventHandler(this.buttonLoadLocationPic_Click);
             // 
             // buttonTriggerDetectionRPC
             // 
@@ -430,8 +406,6 @@
         private System.Windows.Forms.Button buttonTriggerLocationRPC;
         private System.Windows.Forms.GroupBox groupBoxTest;
         private System.Windows.Forms.Button buttonTriggerDetectionRPC;
-        private System.Windows.Forms.Button buttonLoadDetectionPic;
-        private System.Windows.Forms.Button buttonLoadLocationPic;
     }
 }
 
