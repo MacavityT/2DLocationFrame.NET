@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btn_LoadBitmap = new System.Windows.Forms.Button();
             this.buttonRemoveGraph = new System.Windows.Forms.Button();
             this.buttonAddRectangleRegion = new System.Windows.Forms.Button();
             this.buttonTraining = new System.Windows.Forms.Button();
@@ -45,17 +44,6 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btn_LoadBitmap
-            // 
-            this.btn_LoadBitmap.Location = new System.Drawing.Point(5, 296);
-            this.btn_LoadBitmap.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_LoadBitmap.Name = "btn_LoadBitmap";
-            this.btn_LoadBitmap.Size = new System.Drawing.Size(92, 34);
-            this.btn_LoadBitmap.TabIndex = 5;
-            this.btn_LoadBitmap.Text = "加载图片";
-            this.btn_LoadBitmap.UseVisualStyleBackColor = true;
-            this.btn_LoadBitmap.Click += new System.EventHandler(this.btn_LoadBitmap_Click);
             // 
             // buttonRemoveGraph
             // 
@@ -121,7 +109,6 @@
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
             this.panel1.Controls.Add(this.buttonLocation);
             this.panel1.Controls.Add(this.buttonSaveModel);
-            this.panel1.Controls.Add(this.btn_LoadBitmap);
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -200,7 +187,6 @@
         #endregion
 
         private AqVision.Controls.AqDisplay aqDisplayCreateModel;
-        private System.Windows.Forms.Button btn_LoadBitmap;
         private System.Windows.Forms.Button buttonRemoveGraph;
         private System.Windows.Forms.Button buttonAddRectangleRegion;
         private System.Windows.Forms.Button buttonTraining;

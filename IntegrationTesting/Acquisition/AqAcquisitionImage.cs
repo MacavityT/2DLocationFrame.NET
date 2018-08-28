@@ -9,8 +9,10 @@ using IntegrationTesting;
 using System.Drawing;
 using System.Reflection;
 using AqDevice;
+using IntegrationTesting.Acquisition;
+using System.IO;
 
-namespace AqVision.Acquistion
+namespace AqVision.Acquisition
 {
     public delegate void DelegateOnError(int id);
     public delegate void DelegateOnBitmap(string strBmpBase64);
@@ -26,20 +28,20 @@ namespace AqVision.Acquistion
             get { return m_acquisitionParamChanged; }
             set { m_acquisitionParamChanged = value; }
         }
-        
+
         System.Drawing.Bitmap m_RevBitmap = null;
         string[] m_cameraName = new string[] { "Aqrose_L", "Aqrose_D" };
 
         public string[] CameraName
         {
             get { return m_cameraName; }
-            set 
+            set
             {
                 if ((value[0] != m_cameraName[0]) || (value[1] != m_cameraName[1]))
                 {
                     AcquisitionParamChanged = true;
                 }
-                m_cameraName = value; 
+                m_cameraName = value;
             }
         }
 
@@ -53,7 +55,7 @@ namespace AqVision.Acquistion
                 {
                     AcquisitionParamChanged = true;
                 }
-                m_cameraExposure = value; 
+                m_cameraExposure = value;
             }
         }
 
@@ -62,13 +64,13 @@ namespace AqVision.Acquistion
         public AqCameraBrand[] CameraBrand
         {
             get { return m_cameraBrand; }
-            set 
+            set
             {
                 if ((value[0] != m_cameraBrand[0]) || (value[1] != m_cameraBrand[1]))
                 {
                     AcquisitionParamChanged = true;
                 }
-                m_cameraBrand = value; 
+                m_cameraBrand = value;
             }
         }
 
@@ -78,11 +80,81 @@ namespace AqVision.Acquistion
             set { m_RevBitmap = value; }
         }
 
-        ////////////////////////////////////////////////
+        string m_inputImageFileLocation = null;
+        public string InputImageFileLocation
+        {
+            get { return m_inputImageFileLocation; }
+            set { m_inputImageFileLocation = value; }
+        }
+
+        string m_inputImageFileDetection = null;
+        public string InputImageFileDetection
+        {
+            get { return m_inputImageFileDetection; }
+            set { m_inputImageFileDetection = value; }
+        }
+
+        string m_inputImageFolderLocation = null;
+        public string InputImageFolderLocation
+        {
+            get { return m_inputImageFolderLocation; }
+            set 
+            { 
+                m_inputImageFolderLocation = value;
+                if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
+                {
+                    m_imageListLocation = null;
+                }
+                else
+                {
+                    m_imageListLocation = new string[Directory.GetFiles(m_inputImageFolderLocation).Length];
+                }
+            }
+        }
+
+        string m_inputImageFolderDetecgtion = null;
+        public string InputImageFolderDetecgtion
+        {
+            get { return m_inputImageFolderDetecgtion; }
+            set 
+            { 
+                m_inputImageFolderDetecgtion = value;
+                if (Directory.GetFiles(m_inputImageFolderDetecgtion).Length == 0)
+                {
+                    m_imageListDetection = null;
+                }
+                else
+                {
+                    m_imageListDetection = new string[Directory.GetFiles(m_inputImageFolderDetecgtion).Length];
+                }
+                
+            }
+        }
+        string[] m_imageListLocation = null;
+        public string[] ImageListLocation
+        {
+            get { return m_imageListLocation; }
+        }
+
+        string[] m_imageListDetection = null;
+        public string[] ImageListDetection
+        {
+            get { return m_imageListDetection; }
+        }
+
+
+        AcquisitionMode m_acquisitionStyle;
+        public AcquisitionMode AcquisitionStyle
+        {
+            get { return m_acquisitionStyle; }
+            set { m_acquisitionStyle = value; }
+        }
+
+        UInt16 m_indexPicInFolderLocation = 0;
+        UInt16 m_indexPicInFolderDetection = 0;
         AqDevice.IAqCameraManager cameramanager = null;
         List<AqDevice.IAqCamera> cameras;
         bool m_connected = false;
-        ////////////////////////////////////////////////
 
         public AqAcquisitionImage()
         {
@@ -108,7 +180,7 @@ namespace AqVision.Acquistion
         {
             try
             {
-                if(!m_connected)
+                if (!m_connected)
                 {
                     string dllpath = System.IO.Directory.GetCurrentDirectory() + "\\DaHengCamera.dll";
                     Assembly assem = Assembly.LoadFile(dllpath);
@@ -137,7 +209,7 @@ namespace AqVision.Acquistion
                 }
 
             }
-            catch(FormatException ex)
+            catch (FormatException ex)
             {
                 System.Windows.Forms.MessageBox.Show("IntegrationTesting Connect Format error " + ex.Message);
                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect Format error " + ex.Message);
@@ -147,7 +219,7 @@ namespace AqVision.Acquistion
                 System.Windows.Forms.MessageBox.Show("IntegrationTesting Connect error " + ex.Message);
                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting Connect error " + ex.Message);
             }
-            
+
             return true;
         }
 
@@ -155,7 +227,7 @@ namespace AqVision.Acquistion
         {
             try
             {
-                if(m_connected)
+                if (m_connected)
                 {
                     cameras[0].CloseCamera();
                     cameras[1].CloseCamera();
@@ -167,11 +239,11 @@ namespace AqVision.Acquistion
                 System.Windows.Forms.MessageBox.Show("IntegrationTesting DisConnect error " + ex.Message);
                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting DisConnect error " + ex.Message);
             }
-            
+
             return true;
         }
 
-        public bool Acquisition(ref System.Drawing.Bitmap cameraLocationBmp,ref System.Drawing.Bitmap cameraDetectionBmp)
+        public bool Acquisition(ref System.Drawing.Bitmap cameraLocationBmp, ref System.Drawing.Bitmap cameraDetectionBmp)
         {
             try
             {
@@ -187,20 +259,43 @@ namespace AqVision.Acquistion
                 {
                     Connect();
                 }
-                m_GetBitmapSuc = false;
-                cameras[0].TriggerSoftware();
-                while (!m_GetBitmapSuc)
+                if (AcquisitionStyle == AcquisitionMode.FromCamera)
                 {
-                    Thread.Sleep(10);
+                    m_GetBitmapSuc = false;
+                    cameras[0].TriggerSoftware();
+                    while (!m_GetBitmapSuc)
+                    {
+                        Thread.Sleep(10);
+                    }
+                    cameraLocationBmp = RevBitmap;
+                    m_GetBitmapSuc = false;
+                    cameras[1].TriggerSoftware();
+                    while (!m_GetBitmapSuc)
+                    {
+                        Thread.Sleep(10);
+                    }
+                    cameraDetectionBmp = RevBitmap;
                 }
-                cameraLocationBmp = RevBitmap;
-                m_GetBitmapSuc = false;
-                cameras[1].TriggerSoftware();
-                while (!m_GetBitmapSuc)
+                else if (AcquisitionStyle == AcquisitionMode.FromFile)
                 {
-                    Thread.Sleep(10);
+                    cameraLocationBmp = Image.FromFile(InputImageFileLocation) as Bitmap;
+                    cameraDetectionBmp = Image.FromFile(InputImageFileDetection) as Bitmap;
                 }
-                cameraDetectionBmp = RevBitmap;
+                else if (AcquisitionStyle == AcquisitionMode.FromFolder)
+                {
+                    cameraLocationBmp = Image.FromFile( m_imageListLocation[m_indexPicInFolderLocation]) as Bitmap;
+                    if(m_indexPicInFolderLocation == m_imageListLocation.Length-1)
+                    {
+                        m_indexPicInFolderLocation = 0;
+                    }
+
+                    cameraDetectionBmp = Image.FromFile(m_imageListDetection[m_indexPicInFolderDetection]) as Bitmap;
+                    if(m_indexPicInFolderDetection == m_imageListDetection.Length-1)
+                    {
+                        m_indexPicInFolderDetection = 0;
+                    }
+                }
+
                 return true;
             }
             catch (Exception ex)

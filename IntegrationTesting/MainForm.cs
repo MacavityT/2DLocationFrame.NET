@@ -23,7 +23,7 @@ namespace IntegrationTesting
 {
     public partial class MainForm : Form
     {
-        AqVision.Acquistion.AqAcquisitionImage m_Acquisition = new AqVision.Acquistion.AqAcquisitionImage();
+        AqVision.Acquisition.AqAcquisitionImage m_Acquisition = new AqVision.Acquisition.AqAcquisitionImage();
         Thread showPicLocation = null;
         bool m_endThread = false;
 
@@ -443,6 +443,12 @@ namespace IntegrationTesting
             m_acqusitionImageSet.CameraNameDetection = m_Acquisition.CameraName[1];
             m_acqusitionImageSet.CameraBrandDetection = (int)m_Acquisition.CameraBrand[1];
 
+            m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileLocation;
+            m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileDetection;
+            m_acqusitionImageSet.InputImageFolderLocationPath = m_Acquisition.InputImageFolderLocation;
+            m_acqusitionImageSet.InputImageFolderDetectionPath = m_Acquisition.InputImageFolderDetecgtion;
+            m_acqusitionImageSet.Mode = m_Acquisition.AcquisitionStyle;
+
             m_acqusitionImageSet.ShowDialog();
 
             UInt32[] exposure = new UInt32[2];
@@ -474,6 +480,11 @@ namespace IntegrationTesting
             m_Acquisition.CameraExposure = exposure;
             m_Acquisition.CameraName = name;
             m_Acquisition.CameraBrand = brand;
+            m_Acquisition.InputImageFileLocation = m_acqusitionImageSet.InputImageFileDetectionPath;
+            m_Acquisition.InputImageFileDetection = m_acqusitionImageSet.InputImageFileDetectionPath;
+            m_Acquisition.InputImageFolderLocation = m_acqusitionImageSet.InputImageFolderLocationPath;
+            m_Acquisition.InputImageFolderDetecgtion = m_acqusitionImageSet.InputImageFolderDetectionPath;
+            m_Acquisition.AcquisitionStyle = m_acqusitionImageSet.Mode;
         }
 
         private void ToolStripMenuItemSetCalibration_Click(object sender, EventArgs e)

@@ -99,12 +99,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acquisition\AcqusitionImageSetForm.cs">
+    <Compile Include="Acquisition\AcquisitionImageSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Acquisition\AcqusitionImageSetForm.Designer.cs">
-      <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>
+    <Compile Include="Acquisition\AcquisitionImageSetForm.Designer.cs">
+      <DependentUpon>AcquisitionImageSetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Acquisition\AcquisitionMode.cs" />
     <Compile Include="Aidi\AIDI.cs" />
     <Compile Include="Aidi\AidiCalculation.cs" />
     <Compile Include="Aidi\AidiClassify.cs" />
@@ -190,8 +191,8 @@
     <Compile Include="Tool\IniFile.cs" />
     <Compile Include="Robot\TriggerCamerHandler.cs" />
     <Compile Include="UI2LibInterface.cs" />
-    <EmbeddedResource Include="Acquisition\AcqusitionImageSetForm.resx">
-      <DependentUpon>AcqusitionImageSetForm.cs</DependentUpon>
+    <EmbeddedResource Include="Acquisition\AcquisitionImageSetForm.resx">
+      <DependentUpon>AcquisitionImageSetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Aidi\AIDIManagementForm.resx">
       <DependentUpon>AIDIManagementForm.cs</DependentUpon>

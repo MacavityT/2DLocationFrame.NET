@@ -69,11 +69,6 @@ namespace IntegrationTesting
             }           
         }
 
-        private void btn_LoadBitmap_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonRemoveGraph_Click(object sender, EventArgs e)
         {
             aqDisplayCreateModel.InteractiveGraphics.Clear();
