@@ -78,7 +78,7 @@
             this.buttonRun.Location = new System.Drawing.Point(0, 592);
             this.buttonRun.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(498, 58);
+            this.buttonRun.Size = new System.Drawing.Size(126, 58);
             this.buttonRun.TabIndex = 3;
             this.buttonRun.Text = "运行";
             this.buttonRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -95,7 +95,7 @@
             this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(421, 650);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(608, 650);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -185,13 +185,15 @@
             // 
             this.splitContainerhorizontal.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainerhorizontal.Panel2.Controls.Add(this.groupBoxTest);
+            this.splitContainerhorizontal.Panel2.Controls.Add(this.buttonTriggerLocationRPC);
+            this.splitContainerhorizontal.Panel2.Controls.Add(this.buttonTriggerDetectionRPC);
             this.splitContainerhorizontal.Panel2.Controls.Add(this.checkBoxCameraDetection);
             this.splitContainerhorizontal.Panel2.Controls.Add(this.buttonStop);
             this.splitContainerhorizontal.Panel2.Controls.Add(this.buttonRun);
             this.splitContainerhorizontal.Panel2.Controls.Add(this.checkBoxCameraAcquisition);
             this.splitContainerhorizontal.Panel2.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainerhorizontal.Size = new System.Drawing.Size(1338, 650);
-            this.splitContainerhorizontal.SplitterDistance = 836;
+            this.splitContainerhorizontal.SplitterDistance = 1208;
             this.splitContainerhorizontal.TabIndex = 10;
             // 
             // splitContainerVertical
@@ -207,8 +209,8 @@
             // splitContainerVertical.Panel2
             // 
             this.splitContainerVertical.Panel2.Controls.Add(this.aqDisplayDectection);
-            this.splitContainerVertical.Size = new System.Drawing.Size(836, 650);
-            this.splitContainerVertical.SplitterDistance = 421;
+            this.splitContainerVertical.Size = new System.Drawing.Size(1208, 650);
+            this.splitContainerVertical.SplitterDistance = 608;
             this.splitContainerVertical.TabIndex = 0;
             // 
             // aqDisplayDectection
@@ -221,20 +223,19 @@
             this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayDectection.Name = "aqDisplayDectection";
             this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(411, 650);
+            this.aqDisplayDectection.Size = new System.Drawing.Size(596, 650);
             this.aqDisplayDectection.TabIndex = 1;
             // 
             // groupBoxTest
             // 
             this.groupBoxTest.Controls.Add(this.listViewRecord);
-            this.groupBoxTest.Controls.Add(this.buttonTriggerDetectionRPC);
-            this.groupBoxTest.Controls.Add(this.buttonTriggerLocationRPC);
-            this.groupBoxTest.Location = new System.Drawing.Point(3, 121);
+            this.groupBoxTest.Location = new System.Drawing.Point(37, 181);
             this.groupBoxTest.Name = "groupBoxTest";
-            this.groupBoxTest.Size = new System.Drawing.Size(488, 338);
+            this.groupBoxTest.Size = new System.Drawing.Size(58, 108);
             this.groupBoxTest.TabIndex = 12;
             this.groupBoxTest.TabStop = false;
             this.groupBoxTest.Text = "测试模式";
+            this.groupBoxTest.Visible = false;
             // 
             // listViewRecord
             // 
@@ -244,16 +245,16 @@
             this.listViewRecord.Location = new System.Drawing.Point(6, 20);
             this.listViewRecord.MultiSelect = false;
             this.listViewRecord.Name = "listViewRecord";
-            this.listViewRecord.Size = new System.Drawing.Size(476, 272);
+            this.listViewRecord.Size = new System.Drawing.Size(98, 272);
             this.listViewRecord.TabIndex = 9;
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
             // 
             // buttonTriggerDetectionRPC
             // 
-            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(91, 298);
+            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(9, 396);
             this.buttonTriggerDetectionRPC.Name = "buttonTriggerDetectionRPC";
-            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(79, 32);
+            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(98, 32);
             this.buttonTriggerDetectionRPC.TabIndex = 11;
             this.buttonTriggerDetectionRPC.Text = "触发检测RPC";
             this.buttonTriggerDetectionRPC.UseVisualStyleBackColor = true;
@@ -261,9 +262,9 @@
             // 
             // buttonTriggerLocationRPC
             // 
-            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(6, 298);
+            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(9, 358);
             this.buttonTriggerLocationRPC.Name = "buttonTriggerLocationRPC";
-            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(79, 32);
+            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(98, 32);
             this.buttonTriggerLocationRPC.TabIndex = 11;
             this.buttonTriggerLocationRPC.Text = "触发定位RPC";
             this.buttonTriggerLocationRPC.UseVisualStyleBackColor = true;
@@ -279,7 +280,7 @@
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraDetection.Location = new System.Drawing.Point(0, 32);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
-            this.checkBoxCameraDetection.Size = new System.Drawing.Size(498, 32);
+            this.checkBoxCameraDetection.Size = new System.Drawing.Size(126, 32);
             this.checkBoxCameraDetection.TabIndex = 10;
             this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -296,7 +297,7 @@
             this.buttonStop.Location = new System.Drawing.Point(0, 527);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(498, 65);
+            this.buttonStop.Size = new System.Drawing.Size(126, 65);
             this.buttonStop.TabIndex = 3;
             this.buttonStop.Text = "停止";
             this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -313,7 +314,7 @@
             this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(0, 0);
             this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
-            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(498, 32);
+            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(126, 32);
             this.checkBoxCameraAcquisition.TabIndex = 6;
             this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
