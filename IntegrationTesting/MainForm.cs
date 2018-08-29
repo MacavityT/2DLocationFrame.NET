@@ -18,6 +18,7 @@ using System.IO;
 using AqVision;
 using System.Diagnostics;
 using AqVision.Controls;
+using IntegrationTesting.Acquisition;
 
 namespace IntegrationTesting
 {
@@ -59,11 +60,11 @@ namespace IntegrationTesting
 
         public void ReadConfigFromIniFile()
         {
-            m_Acquisition.CameraExposure[0] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeLocation", "5000"));
-            m_Acquisition.CameraExposure[1] = Convert.ToUInt32(IniFile.ReadValue("Acquistion", "ExposureTimeDetection", "5000"));
-            IniFile.ReadValue("Acquistion", "CameraNameLocation", m_Acquisition.CameraName[0]);
-            IniFile.ReadValue("Acquistion", "CameraNameDetection", m_Acquisition.CameraName[1]);
-            string strValue = IniFile.ReadValue("Acquistion", "CameraBrandLocation", "DaHeng");
+            m_Acquisition.CameraExposure[0] = Convert.ToUInt32(IniFile.ReadValue("Acquisition", "ExposureTimeLocation", "5000"));
+            m_Acquisition.CameraExposure[1] = Convert.ToUInt32(IniFile.ReadValue("Acquisition", "ExposureTimeDetection", "5000"));
+            IniFile.ReadValue("Acquisition", "CameraNameLocation", m_Acquisition.CameraName[0]);
+            IniFile.ReadValue("Acquisition", "CameraNameDetection", m_Acquisition.CameraName[1]);
+            string strValue = IniFile.ReadValue("Acquisition", "CameraBrandLocation", "DaHeng");
             if (strValue == "DaHeng")
             {
                 m_Acquisition.CameraBrand[0] = AqCameraBrand.DaHeng;
@@ -73,7 +74,7 @@ namespace IntegrationTesting
                 m_Acquisition.CameraBrand[0] = AqCameraBrand.Basler;
             }
 
-            IniFile.ReadValue("Acquistion", "CameraBrandDetection", strValue);
+            IniFile.ReadValue("Acquisition", "CameraBrandDetection", strValue);
             if (strValue == "DaHeng")
             {
                 m_Acquisition.CameraBrand[1] = AqCameraBrand.DaHeng;
@@ -82,16 +83,39 @@ namespace IntegrationTesting
             {
                 m_Acquisition.CameraBrand[1] = AqCameraBrand.Basler;
             }
+            m_Acquisition.InputImageFileLocation = IniFile.ReadValue("Acquisition", "InputImageFileLocation", "None");
+            m_Acquisition.InputImageFileDetection = IniFile.ReadValue("Acquisition", "InputImageFileDetection", "None");
+            m_Acquisition.InputImageFolderLocation = IniFile.ReadValue("Acquisition", "InputImageFolderLocation", "None");
+            m_Acquisition.InputImageFolderDetection = IniFile.ReadValue("Acquisition", "InputImageFolderDetection", "None");
+            strValue = IniFile.ReadValue("Acquisition", "AcquisitionStyle", "FromCamera");
+            if(strValue == "FromCamera")
+            {
+               m_Acquisition.AcquisitionStyle = AcquisitionMode.FromCamera;
+            }
+            else if(strValue == "FromFile")
+            {
+                m_Acquisition.AcquisitionStyle = AcquisitionMode.FromFile;
+            }
+            else if(strValue == "FromFolder")
+            {
+                m_Acquisition.AcquisitionStyle = AcquisitionMode.FromFolder;
+            }
         }
 
         public void WriteConfigToIniFile()
         {
-            IniFile.WriteValue("Acquistion", "ExposureTimeLocation", m_Acquisition.CameraExposure[0].ToString());
-            IniFile.WriteValue("Acquistion", "ExposureTimeDetection", m_Acquisition.CameraExposure[1].ToString());
-            IniFile.WriteValue("Acquistion", "CameraNameLocation", m_Acquisition.CameraName[0]);
-            IniFile.WriteValue("Acquistion", "CameraNameDetection", m_Acquisition.CameraName[1]);
-            IniFile.WriteValue("Acquistion", "CameraBrandLocation", m_Acquisition.CameraBrand[0].ToString());
-            IniFile.WriteValue("Acquistion", "CameraBrandDetection", m_Acquisition.CameraBrand[1].ToString());
+            IniFile.WriteValue("Acquisition", "ExposureTimeLocation", m_Acquisition.CameraExposure[0].ToString());
+            IniFile.WriteValue("Acquisition", "ExposureTimeDetection", m_Acquisition.CameraExposure[1].ToString());
+            IniFile.WriteValue("Acquisition", "CameraNameLocation", m_Acquisition.CameraName[0]);
+            IniFile.WriteValue("Acquisition", "CameraNameDetection", m_Acquisition.CameraName[1]);
+            IniFile.WriteValue("Acquisition", "CameraBrandLocation", m_Acquisition.CameraBrand[0].ToString());
+            IniFile.WriteValue("Acquisition", "CameraBrandDetection", m_Acquisition.CameraBrand[1].ToString());
+
+            IniFile.WriteValue("Acquisition", "InputImageFileLocation", m_Acquisition.InputImageFileLocation);
+            IniFile.WriteValue("Acquisition", "InputImageFileDetection", m_Acquisition.InputImageFileDetection);
+            IniFile.WriteValue("Acquisition", "InputImageFolderLocation", m_Acquisition.InputImageFolderLocation);
+            IniFile.WriteValue("Acquisition", "InputImageFolderDetection", m_Acquisition.InputImageFolderDetection);
+            IniFile.WriteValue("Acquisition", "AcquisitionStyle", m_Acquisition.AcquisitionStyle.ToString());
         }
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
@@ -443,7 +467,7 @@ namespace IntegrationTesting
             m_acqusitionImageSet.CameraNameDetection = m_Acquisition.CameraName[1];
             m_acqusitionImageSet.CameraBrandDetection = (int)m_Acquisition.CameraBrand[1];
 
-            m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileLocation;
+            m_acqusitionImageSet.InputImageFileLocationPath = m_Acquisition.InputImageFileLocation;
             m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileDetection;
             m_acqusitionImageSet.InputImageFolderLocationPath = m_Acquisition.InputImageFolderLocation;
             m_acqusitionImageSet.InputImageFolderDetectionPath = m_Acquisition.InputImageFolderDetection;
