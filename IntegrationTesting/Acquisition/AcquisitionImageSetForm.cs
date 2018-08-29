@@ -138,15 +138,15 @@ namespace IntegrationTesting
 
             if (mode == AcquisitionMode.FromCamera)
             {
-                radioButtonCamera_CheckedChanged(null, null);
+                radioButtonCamera.Checked = true;
             }
             else if (mode == AcquisitionMode.FromFile)
             {
-                radioButtonLocalFile_CheckedChanged(null, null);
+                radioButtonLocalFile.Checked = true;
             }
             else if (mode == AcquisitionMode.FromFolder)
             {
-                radioButtonLocalFolder_CheckedChanged(null, null);
+                radioButtonLocalFolder.Checked = true;
             }
         }
 
