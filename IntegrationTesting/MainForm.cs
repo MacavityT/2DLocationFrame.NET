@@ -130,6 +130,7 @@ namespace IntegrationTesting
                 {
                     m_calibrateShow = new CalibrationSetForm();
                 }
+                int locationResult = -1;
                 checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
                     aqDisplayLocation.InteractiveGraphics.Clear();
@@ -153,24 +154,27 @@ namespace IntegrationTesting
                         }));
                         m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
                     }
-                    int locationResult = m_templateSet.RunMatcher();
+                    locationResult = m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                    if (locationResult == 1)
-                    {
-                       m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                       m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
-                       AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                    }
-                    else
-                    { 
-                        AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-                    }
-                    SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
                 }));
+                if (locationResult == 1)
+                {
+                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                    m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+                    AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                    return 0;
+                }
+                else
+                {
+                    AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                    return -1;
+                }
+                SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("TriggerCamera " + ex.Message);
+                return -2;
             }
 
             return 0;
