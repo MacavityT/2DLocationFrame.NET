@@ -446,7 +446,7 @@ namespace IntegrationTesting
             m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileLocation;
             m_acqusitionImageSet.InputImageFileDetectionPath = m_Acquisition.InputImageFileDetection;
             m_acqusitionImageSet.InputImageFolderLocationPath = m_Acquisition.InputImageFolderLocation;
-            m_acqusitionImageSet.InputImageFolderDetectionPath = m_Acquisition.InputImageFolderDetecgtion;
+            m_acqusitionImageSet.InputImageFolderDetectionPath = m_Acquisition.InputImageFolderDetection;
             m_acqusitionImageSet.Mode = m_Acquisition.AcquisitionStyle;
 
             m_acqusitionImageSet.ShowDialog();
@@ -480,10 +480,10 @@ namespace IntegrationTesting
             m_Acquisition.CameraExposure = exposure;
             m_Acquisition.CameraName = name;
             m_Acquisition.CameraBrand = brand;
-            m_Acquisition.InputImageFileLocation = m_acqusitionImageSet.InputImageFileDetectionPath;
+            m_Acquisition.InputImageFileLocation = m_acqusitionImageSet.InputImageFileLocationPath;
             m_Acquisition.InputImageFileDetection = m_acqusitionImageSet.InputImageFileDetectionPath;
             m_Acquisition.InputImageFolderLocation = m_acqusitionImageSet.InputImageFolderLocationPath;
-            m_Acquisition.InputImageFolderDetecgtion = m_acqusitionImageSet.InputImageFolderDetectionPath;
+            m_Acquisition.InputImageFolderDetection = m_acqusitionImageSet.InputImageFolderDetectionPath;
             m_Acquisition.AcquisitionStyle = m_acqusitionImageSet.Mode;
         }
 

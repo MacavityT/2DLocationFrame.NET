@@ -110,8 +110,8 @@ namespace IntegrationTesting
             m_cameraBrandDetection = comboBoxCameraBrandDetection.SelectedIndex;
             m_inputImageFileLocationPath = textBoxLocationFile.Text;
             m_inputImageFileDetectionPath = textBoxDetectionFile.Text;
-            m_inputImageFolderLocationPath = textBoxLocationFile.Text;
-            m_inputImageFolderDetectionPath = textBoxDetectionFile.Text;            
+            m_inputImageFolderLocationPath = textBoxLocationDirectory.Text;
+            m_inputImageFolderDetectionPath = textBoxDetectionDirectory.Text;            
             Close();
         }
 
@@ -133,8 +133,8 @@ namespace IntegrationTesting
 
             textBoxLocationFile.Text = m_inputImageFileLocationPath;
             textBoxDetectionFile.Text = m_inputImageFileDetectionPath;
-            textBoxLocationFile.Text = m_inputImageFolderLocationPath;
-            textBoxDetectionFile.Text = m_inputImageFolderDetectionPath;  
+            textBoxLocationDirectory.Text = m_inputImageFolderLocationPath;
+            textBoxDetectionDirectory.Text = m_inputImageFolderDetectionPath;  
 
             if (mode == AcquisitionMode.FromCamera)
             {

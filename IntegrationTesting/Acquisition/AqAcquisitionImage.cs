@@ -101,33 +101,38 @@ namespace AqVision.Acquisition
             set 
             { 
                 m_inputImageFolderLocation = value;
-                if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
+                if(m_inputImageFolderLocation != "")
                 {
-                    m_imageListLocation = null;
-                }
-                else
-                {
-                    m_imageListLocation = new string[Directory.GetFiles(m_inputImageFolderLocation).Length];
+                    if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
+                    {
+                        m_imageListLocation = null;
+                    }
+                    else
+                    {
+                        m_imageListLocation = Directory.GetFiles(m_inputImageFolderLocation);
+                    }
                 }
             }
         }
 
-        string m_inputImageFolderDetecgtion = null;
-        public string InputImageFolderDetecgtion
+        string m_inputImageFolderDetection = null;
+        public string InputImageFolderDetection
         {
-            get { return m_inputImageFolderDetecgtion; }
+            get { return m_inputImageFolderDetection; }
             set 
             { 
-                m_inputImageFolderDetecgtion = value;
-                if (Directory.GetFiles(m_inputImageFolderDetecgtion).Length == 0)
+                m_inputImageFolderDetection = value;
+                if (m_inputImageFolderDetection != "")
                 {
-                    m_imageListDetection = null;
+                    if (Directory.GetFiles(m_inputImageFolderDetection).Length == 0)
+                    {
+                        m_imageListDetection = null;
+                    }
+                    else
+                    {
+                        m_imageListDetection = Directory.GetFiles(m_inputImageFolderDetection);
+                    }
                 }
-                else
-                {
-                    m_imageListDetection = new string[Directory.GetFiles(m_inputImageFolderDetecgtion).Length];
-                }
-                
             }
         }
         string[] m_imageListLocation = null;
@@ -248,19 +253,19 @@ namespace AqVision.Acquisition
             try
             {
                 GC.Collect();
-                if (AcquisitionParamChanged)
-                {
-                    DisConnect();
-                    Connect();
-                    AcquisitionParamChanged = false;
-                }
-
-                if (!m_connected)
-                {
-                    Connect();
-                }
                 if (AcquisitionStyle == AcquisitionMode.FromCamera)
                 {
+                    if (AcquisitionParamChanged)
+                    {
+                        DisConnect();
+                        Connect();
+                        AcquisitionParamChanged = false;
+                    }
+
+                    if (!m_connected)
+                    {
+                        Connect();
+                    }
                     m_GetBitmapSuc = false;
                     cameras[0].TriggerSoftware();
                     while (!m_GetBitmapSuc)
@@ -288,11 +293,19 @@ namespace AqVision.Acquisition
                     {
                         m_indexPicInFolderLocation = 0;
                     }
+                    else
+                    {
+                        m_indexPicInFolderLocation++;
+                    }
 
                     cameraDetectionBmp = Image.FromFile(m_imageListDetection[m_indexPicInFolderDetection]) as Bitmap;
                     if(m_indexPicInFolderDetection == m_imageListDetection.Length-1)
                     {
                         m_indexPicInFolderDetection = 0;
+                    }
+                    else
+                    {
+                        m_indexPicInFolderDetection++;
                     }
                 }
 
