@@ -273,5 +273,24 @@ namespace IntegrationTesting
         {
             m_Location.SaveModel(@"D:\Model.shm");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AqLineSegment line = new AqLineSegment();
+            line.StartX = 2092 - 20;
+            line.StartY = 1151;
+            line.EndX = 2092 + 20;
+            line.EndY = 1151;
+
+            AqLineSegment line2 = new AqLineSegment();
+            line2.StartX = 2092;
+            line2.StartY = 1151 - 20;
+            line2.EndX = 2092;
+            line2.EndY = 1151 + 20;
+
+            aqDisplayCreateModel.InteractiveGraphics.Add(line,"a",false);
+            aqDisplayCreateModel.InteractiveGraphics.Add(line2,"b",false);
+            aqDisplayCreateModel.Update();
+        }
     }
 }

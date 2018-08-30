@@ -38,7 +38,7 @@ namespace IntegrationTesting
         Server m_server = new Server
         {
             Services = { Robot2dApp.BindService(m_visionImpl) },
-            Ports = { new ServerPort("192.168.1.222", 50051, ServerCredentials.Insecure) }
+            Ports = { new ServerPort("127.0.0.1", 50051, ServerCredentials.Insecure) }
         };        
 
         public MainForm()

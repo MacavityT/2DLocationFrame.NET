@@ -103,13 +103,16 @@ namespace AqVision.Acquisition
                 m_inputImageFolderLocation = value;
                 if(m_inputImageFolderLocation != "")
                 {
-                    if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
+                    if (Directory.Exists(m_inputImageFolderLocation))
                     {
-                        m_imageListLocation = null;
-                    }
-                    else
-                    {
-                        m_imageListLocation = Directory.GetFiles(m_inputImageFolderLocation);
+                        if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
+                        {
+                            m_imageListLocation = null;
+                        }
+                        else
+                        {
+                            m_imageListLocation = Directory.GetFiles(m_inputImageFolderLocation);
+                        }
                     }
                 }
             }
@@ -124,13 +127,16 @@ namespace AqVision.Acquisition
                 m_inputImageFolderDetection = value;
                 if (m_inputImageFolderDetection != "")
                 {
-                    if (Directory.GetFiles(m_inputImageFolderDetection).Length == 0)
+                    if (Directory.Exists(m_inputImageFolderDetection))
                     {
-                        m_imageListDetection = null;
-                    }
-                    else
-                    {
-                        m_imageListDetection = Directory.GetFiles(m_inputImageFolderDetection);
+                        if (Directory.GetFiles(m_inputImageFolderDetection).Length == 0)
+                        {
+                            m_imageListDetection = null;
+                        }
+                        else
+                        {
+                            m_imageListDetection = Directory.GetFiles(m_inputImageFolderDetection);
+                        }
                     }
                 }
             }
@@ -185,7 +191,7 @@ namespace AqVision.Acquisition
         {
             try
             {
-                if (!m_connected)
+                if (!m_connected && AcquisitionStyle == AcquisitionMode.FromCamera)
                 {
                     string dllpath = System.IO.Directory.GetCurrentDirectory() + "\\DaHengCamera.dll";
                     Assembly assem = Assembly.LoadFile(dllpath);
