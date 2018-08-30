@@ -35,11 +35,8 @@ namespace IntegrationTesting
         RobotManagementForm m_robotSeverForm = new RobotManagementForm();
 
         static VisionImpl m_visionImpl = new VisionImpl();
-        Server m_server = new Server
-        {
-            Services = { Robot2dApp.BindService(m_visionImpl) },
-            Ports = { new ServerPort("127.0.0.1", 50051, ServerCredentials.Insecure) }
-        };        
+        Server m_server = null;
+        string m_localIP = null;
 
         public MainForm()
         {
@@ -100,6 +97,8 @@ namespace IntegrationTesting
             {
                 m_Acquisition.AcquisitionStyle = AcquisitionMode.FromFolder;
             }
+
+            m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "127.0.0.1");
         }
 
         public void WriteConfigToIniFile()
@@ -116,10 +115,12 @@ namespace IntegrationTesting
             IniFile.WriteValue("Acquisition", "InputImageFolderLocation", m_Acquisition.InputImageFolderLocation);
             IniFile.WriteValue("Acquisition", "InputImageFolderDetection", m_Acquisition.InputImageFolderDetection);
             IniFile.WriteValue("Acquisition", "AcquisitionStyle", m_Acquisition.AcquisitionStyle.ToString());
+            IniFile.WriteValue("Acquisition", "LocalIP", m_localIP);
         }
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
         {
+            int locationResult = -1;
             try
             {
                 if (m_templateSet.IsDisposed || m_templateSet == null)
@@ -130,7 +131,6 @@ namespace IntegrationTesting
                 {
                     m_calibrateShow = new CalibrationSetForm();
                 }
-                int locationResult = -1;
                 checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
                     aqDisplayLocation.InteractiveGraphics.Clear();
@@ -156,19 +156,17 @@ namespace IntegrationTesting
                     }
                     locationResult = m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                    if (locationResult == 1)
+                    {
+                        m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                        m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                    }
+                    else
+                    {
+                        AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                    }
                 }));
-                if (locationResult == 1)
-                {
-                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                    m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
-                    AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                    return 0;
-                }
-                else
-                {
-                    AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-                    return -1;
-                }
                 SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
             }
             catch (Exception ex)
@@ -177,7 +175,7 @@ namespace IntegrationTesting
                 return -2;
             }
 
-            return 0;
+            return locationResult;
         }
 
         private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta)
@@ -389,6 +387,11 @@ namespace IntegrationTesting
         }
         private void buttonRun_Click(object sender, EventArgs e)
         {
+            m_server = new Server
+            {
+                Services = { Robot2dApp.BindService(m_visionImpl) },
+                Ports = { new ServerPort(m_localIP, 50051, ServerCredentials.Insecure) }
+            };  
             m_server.Start();
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
@@ -567,6 +570,7 @@ namespace IntegrationTesting
         private void buttonStop_Click(object sender, EventArgs e)
         {
             m_server.ShutdownAsync();
+            m_server.KillAsync();
             buttonRun.Enabled = true;
             buttonStop.Enabled = false;
         }
