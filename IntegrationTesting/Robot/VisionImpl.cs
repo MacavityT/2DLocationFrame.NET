@@ -61,14 +61,15 @@ namespace IntegrationTesting.Robot
             Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
                 " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
                 " Terminate " + request.Terminate.ToString());
-//             request.Position.X;
-//             request.Position.Y;
-//             request.Position.Z;
-//             request.Terminate;
-//             request.OffsetMethod;
-            return Task.FromResult(new SetFlag { ErrorFlag = 5555 });
+//             request.Position.X;      //double
+//             request.Position.Y;      //double
+//             request.Position.Z;      //double
+//             request.Terminate;       //bool
+//             request.OffsetMethod;    //string
+            SetFlag resultFlag = new SetFlag();
+            return Task.FromResult(resultFlag);
         }
-
+         
         //收获X,Y,Z坐标不准确
         public override Task<SetFlag> configSystem(ConfigReq request, ServerCallContext context)
         {

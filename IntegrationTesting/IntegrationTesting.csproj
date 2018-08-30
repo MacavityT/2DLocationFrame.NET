@@ -147,7 +147,6 @@
     <Compile Include="PositionSet.Designer.cs">
       <DependentUpon>PositionSet.cs</DependentUpon>
     </Compile>
-    <Compile Include="Robot\DoCalibrateHandler.cs" />
     <Compile Include="Robot\GetLocalizeResultHandler.cs" />
     <Compile Include="Location\AqLocationPattern.cs" />
     <Compile Include="Calibration\CalibrationSetForm.cs">
