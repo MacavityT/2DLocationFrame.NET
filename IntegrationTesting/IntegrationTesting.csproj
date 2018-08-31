@@ -141,6 +141,7 @@
     <Compile Include="Acquisition\AqAcquisitionImage.cs" />
     <Compile Include="Calibration\AqCalibration.cs" />
     <Compile Include="Acquisition\AqCameraBrand.cs" />
+    <Compile Include="Calibration\GetCalibrationBoardPt.cs" />
     <Compile Include="PositionSet.cs">
       <SubType>Form</SubType>
     </Compile>

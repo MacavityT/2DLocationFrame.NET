@@ -15,7 +15,6 @@ namespace IntegrationTesting
     public partial class CalibrationSetForm : Form
     {
         AqCalibration m_calibrationCenter = new AqCalibration();
-
         int m_cameraInOutHand = 0; //0-kCameraInHand, 1-kCameraOutHand
         public int CameraInOutHand
         {
@@ -57,7 +56,9 @@ namespace IntegrationTesting
             else
             {
                 ReadCalibrationDataFromFile();
-            }            
+            }
+            panelSingleInput.Enabled = false;
+            panelBatchInput.Enabled = true;
         }
 
         public void SetCurrentRobotPosition(double robotX, double robotY, double robotRz)
@@ -421,6 +422,103 @@ namespace IntegrationTesting
                 textBoxRobotPosY.Enabled = false;
                 textBoxRobotPosRz.Enabled = false;
             }
+        }
+
+        private void buttonSelectCalPic_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;//该值确定是否可以选择多个文件
+            dialog.Title = "选择输入文件";
+            dialog.Filter = "所有文件(*.*)|*.*";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {   
+                textBoxCalibrateImagPath.Text = dialog.FileName;
+                double[] cols = new double[11];
+                double[] rows = new double[11];
+                if (!m_calibrationCenter.Get11PointFromCalibrationBoard(dialog.FileName, ref rows, ref cols))
+                {
+                    MessageBox.Show("找11圆失败");
+                    return;
+                }
+                for (int i = 0; i < m_calibrationCenter.AllLineData.Count; i++ )
+                {
+                    int robotIndexAtCalibrationList = Convert.ToInt32(m_calibrationCenter.AllLineData[i].CameraPosition.ImageA);
+                    listViewParameterSet.Items[i].SubItems[0].Text = cols[robotIndexAtCalibrationList].ToString();
+                    listViewParameterSet.Items[i].SubItems[1].Text = rows[robotIndexAtCalibrationList].ToString();
+
+                    m_calibrationCenter.AllLineData[i].CameraPosition.ImageX = cols[robotIndexAtCalibrationList];
+                    m_calibrationCenter.AllLineData[i].CameraPosition.ImageY = rows[robotIndexAtCalibrationList];
+                }
+                buttonSelectCalPic.Enabled = false;
+            }
+        }
+
+        private void buttonSelectWorldPos_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;//该值确定是否可以选择多个文件
+            dialog.Title = "选择输入文件";
+            dialog.Filter = "所有文件(*.*)|*.*";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBoxWorldCoordianteFilePath.Text = dialog.FileName;
+                string filePath = dialog.FileName;
+
+                listViewParameterSet.Items.Clear();
+                m_calibrationCenter.AllLineData.Clear();
+
+                StreamReader sr = new StreamReader(filePath, Encoding.Default);
+                String sourceMessage;
+                while ((sourceMessage = sr.ReadLine()) != null) 
+                {
+//                     sourceMessage = "02, 240.45, -321.864, -341.843, -179.9956, 0.0033, -0.0098";
+                    AqCalibration.CalibrationDataGroup calibrationlineData = new AqCalibration.CalibrationDataGroup();
+                    int startIndex = 0;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        int endIndex = sourceMessage.IndexOf(",", startIndex);
+                        if (i == 0)
+                        {
+                            //ImageA，暂时用作用来标记世界坐标系下对应图像中圆点的索引
+                            calibrationlineData.CameraPosition.ImageA = Convert.ToUInt16(sourceMessage.Substring(startIndex, endIndex - startIndex));
+                        }
+                        else if (i == 1)
+                        {
+                            calibrationlineData.RobotCoordinate.RobotX = Convert.ToDouble(sourceMessage.Substring(startIndex, endIndex - startIndex));
+                        }
+                        else if (i == 2)
+                        {
+                            calibrationlineData.RobotCoordinate.RobotY = Convert.ToDouble(sourceMessage.Substring(startIndex, endIndex - startIndex));
+                        }
+                        else if (i == 5)
+                        {
+                            calibrationlineData.RobotCoordinate.RobotRz = Convert.ToDouble(sourceMessage.Substring(endIndex + 1, sourceMessage.Length - endIndex-1));
+                        }
+                        startIndex = endIndex + 1;
+                    }
+                    m_calibrationCenter.AllLineData.Add(calibrationlineData);
+                    ListViewItem line = new ListViewItem("", 0);
+                    line.SubItems.Add("");
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotX.ToString());
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotY.ToString());
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotRz.ToString());
+                    listViewParameterSet.Items.Add(line);
+                }
+
+                buttonSelectCalPic.Enabled = true;
+            }
+        }
+
+        private void radioButtonSingleInput_CheckedChanged(object sender, EventArgs e)
+        {
+            panelSingleInput.Enabled = true;
+            panelBatchInput.Enabled = false;
+        }
+
+        private void radioButtonBatchInput_CheckedChanged(object sender, EventArgs e)
+        {
+            panelSingleInput.Enabled = false;
+            panelBatchInput.Enabled = true;
         }
     }
 }

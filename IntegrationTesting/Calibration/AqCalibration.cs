@@ -1,8 +1,12 @@
-﻿using System;
+﻿using HalconDotNet;
+using IntegrationTesting.Calibration;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace IntegrationTesting
 {
@@ -229,6 +233,41 @@ namespace IntegrationTesting
         public bool ClearPoint()
         {
             return AqVision.Interaction.UI2LibInterface.clear_points();
+        }
+
+        public bool Get11PointFromCalibrationBoard(string boardPicPath, ref double[] rows, ref double[] cols)
+        {
+            try
+            {
+                HTuple hv_Diameter = new HTuple();
+                hv_Diameter = 0;
+                HTuple hv_Threshold = new HTuple();
+                hv_Threshold = 150;
+                HTuple hv_isFind = new HTuple();
+                HTuple hv_Rows_cc = new HTuple();
+                HTuple hv_Cols_cc = new HTuple();
+
+                Bitmap originImage = Image.FromFile(boardPicPath).Clone() as Bitmap;
+                HImage image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(originImage);
+                GetCalibrationBoardPt.Get_11_Point_Coordinates(image, hv_Diameter, hv_Threshold,
+                out hv_isFind, out hv_Rows_cc, out hv_Cols_cc);
+                //return hv_isFind.ToString;
+                rows = hv_Rows_cc.DArr;
+                cols = hv_Cols_cc.DArr;
+                if (rows.Length == 11)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
     }
 }
