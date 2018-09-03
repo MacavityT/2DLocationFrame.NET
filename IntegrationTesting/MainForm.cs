@@ -601,5 +601,10 @@ namespace IntegrationTesting
             int abc = 0;
             GetWorkObjInfo(ref abc);
         }
+
+        private void splitUpContainerTitle_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

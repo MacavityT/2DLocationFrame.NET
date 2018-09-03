@@ -276,6 +276,7 @@ namespace AqVision.Acquisition
                     cameras[0].TriggerSoftware();
                     while (!m_GetBitmapSuc)
                     {
+                        //使用事件的等待
                         Thread.Sleep(10);
                     }
                     cameraLocationBmp = RevBitmap;
