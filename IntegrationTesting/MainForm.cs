@@ -606,5 +606,25 @@ namespace IntegrationTesting
         {
 
         }
+
+        private void splitUpContainerTitle_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainerAqDisplayControls_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            //splitContainerAqDisplayControls.SplitterDistance = 620;
+        }
     }
 }

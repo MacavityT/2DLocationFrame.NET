@@ -118,27 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="menuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>161, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="checkBoxCameraAcquisition.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAAAB3RJ
-        TUUH2gQaAAAAtVWE0gAAAnVJREFUOE99k11IU3EYxl/FTMVskVEeDFayPmg4S4WlRrdH3Fzb2XCK5prH
-        DJVADXFLojKlEEGM6MJYUAzXirbpwqUkBBndOLfp/AjyQsvK6LbL/TvP3I2R+8MD73mf3++cc3EO/XsG
-        JtOSZtfT50+jLjfR0HQu/f4ToPYx2nfjFR1BMGOHDgzYHeeWZw91uogmwma660+TO2aLOsYjusnp5YZV
-        BDN26MCAhRM/Nnc6XXdCNtLQ27xyX0jzaX6jM7bys5t93uqKBzN26MCAhQOXbC+JhqeO0x1fTsl4SBuK
-        bnawpR/XWPS7uCPxndSBAQsHLnW7MqjuEWU9eX/ONbfewhY2m1nkmzWRpkS2r9GBAQsHLt3zcNQztv+8
-        N1j5K/y1WXpVCwttXPlv0IEBCwcuDfoV1PvicNtUVB8LSsDcemPSgAELBy7d952kHid3M7CoYx/X6tjs
-        Wm3SgAELBy7ddiuo42le2+s5PjazKrB3K4akAQMWDlxqH+XIMnJAPTpTsTW9rGeBaDULLO0SqQMDFg5c
-        0g9kUWEbZdqdp5yeoIa9WdQy/0JVIppEtq/RgbE7TzvhwKWiFiLxYT4Z+mXFDzyl876Qlk1Eqpg3zDNv
-        KBFpxg4dGLDiSD6dbZW+gxq+lZSPiS7kOFJNvQWVvc9KFp/PQpQESLiZNGMndVGTXaFRFzRJP0MOKU8U
-        S08XReobtJPVIqabhNqj1dbyS5a+wmGbo/RDv7vsC4IZO521QjAJ5gKjYMrMPXQwRa1WE6lUqvg/0dh4
-        OcUoGPfWC1ezNbxZVlGjlJc1yM9IUV6sVR3TVJpl9UJztkFvyOB5PhUOx3H0F0MG9LNCkCZ0AAAAAElF
-        TkSuQmCC
-</value>
-  </data>
   <data name="checkBoxCameraDetection.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -157,7 +139,28 @@
         TkSuQmCC
 </value>
   </data>
+  <data name="checkBoxCameraAcquisition.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAAAB3RJ
+        TUUH2gQaAAAAtVWE0gAAAnVJREFUOE99k11IU3EYxl/FTMVskVEeDFayPmg4S4WlRrdH3Fzb2XCK5prH
+        DJVADXFLojKlEEGM6MJYUAzXirbpwqUkBBndOLfp/AjyQsvK6LbL/TvP3I2R+8MD73mf3++cc3EO/XsG
+        JtOSZtfT50+jLjfR0HQu/f4ToPYx2nfjFR1BMGOHDgzYHeeWZw91uogmwma660+TO2aLOsYjusnp5YZV
+        BDN26MCAhRM/Nnc6XXdCNtLQ27xyX0jzaX6jM7bys5t93uqKBzN26MCAhQOXbC+JhqeO0x1fTsl4SBuK
+        bnawpR/XWPS7uCPxndSBAQsHLnW7MqjuEWU9eX/ONbfewhY2m1nkmzWRpkS2r9GBAQsHLt3zcNQztv+8
+        N1j5K/y1WXpVCwttXPlv0IEBCwcuDfoV1PvicNtUVB8LSsDcemPSgAELBy7d952kHid3M7CoYx/X6tjs
+        Wm3SgAELBy7ddiuo42le2+s5PjazKrB3K4akAQMWDlxqH+XIMnJAPTpTsTW9rGeBaDULLO0SqQMDFg5c
+        0g9kUWEbZdqdp5yeoIa9WdQy/0JVIppEtq/RgbE7TzvhwKWiFiLxYT4Z+mXFDzyl876Qlk1Eqpg3zDNv
+        KBFpxg4dGLDiSD6dbZW+gxq+lZSPiS7kOFJNvQWVvc9KFp/PQpQESLiZNGMndVGTXaFRFzRJP0MOKU8U
+        S08XReobtJPVIqabhNqj1dbyS5a+wmGbo/RDv7vsC4IZO521QjAJ5gKjYMrMPXQwRa1WE6lUqvg/0dh4
+        OcUoGPfWC1ezNbxZVlGjlJc1yM9IUV6sVR3TVJpl9UJztkFvyOB5PhUOx3H0F0MG9LNCkCZ0AAAAAElF
+        TkSuQmCC
+</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>160, 17</value>
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>82</value>
   </metadata>
 </root>

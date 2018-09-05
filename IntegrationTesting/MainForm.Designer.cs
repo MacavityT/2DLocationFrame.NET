@@ -41,55 +41,69 @@
             this.ToolStripMenuItemSetRobotConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitDownResultShow = new System.Windows.Forms.SplitContainer();
             this.splitUpContainerTitle = new System.Windows.Forms.SplitContainer();
+            this.splitContainerStatusShow = new System.Windows.Forms.SplitContainer();
             this.label2 = new System.Windows.Forms.Label();
-            this.splitContainerAqDisplayControls = new System.Windows.Forms.SplitContainer();
-            this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
-            this.splitContainerDisplayShow = new System.Windows.Forms.SplitContainer();
-            this.buttonStop = new System.Windows.Forms.Button();
+            this.buttonTriggerLocationRPC = new System.Windows.Forms.Button();
             this.groupBoxTest = new System.Windows.Forms.GroupBox();
             this.listViewRecord = new System.Windows.Forms.ListView();
-            this.checkBoxCameraAcquisition = new System.Windows.Forms.CheckBox();
-            this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
             this.buttonTriggerDetectionRPC = new System.Windows.Forms.Button();
-            this.buttonTriggerLocationRPC = new System.Windows.Forms.Button();
-            this.splitContainerMainStatus = new System.Windows.Forms.SplitContainer();
+            this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
+            this.checkBoxCameraAcquisition = new System.Windows.Forms.CheckBox();
+            this.splitContainerAqDisplayControls = new System.Windows.Forms.SplitContainer();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
+            this.tableLayoutPanelShowPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonStop = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.menuStripMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitDownResultShow)).BeginInit();
-            this.splitDownResultShow.Panel1.SuspendLayout();
-            this.splitDownResultShow.Panel2.SuspendLayout();
-            this.splitDownResultShow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitUpContainerTitle)).BeginInit();
             this.splitUpContainerTitle.Panel1.SuspendLayout();
             this.splitUpContainerTitle.Panel2.SuspendLayout();
             this.splitUpContainerTitle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusShow)).BeginInit();
+            this.splitContainerStatusShow.Panel1.SuspendLayout();
+            this.splitContainerStatusShow.Panel2.SuspendLayout();
+            this.splitContainerStatusShow.SuspendLayout();
+            this.groupBoxTest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAqDisplayControls)).BeginInit();
             this.splitContainerAqDisplayControls.Panel1.SuspendLayout();
             this.splitContainerAqDisplayControls.Panel2.SuspendLayout();
             this.splitContainerAqDisplayControls.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDisplayShow)).BeginInit();
-            this.splitContainerDisplayShow.Panel1.SuspendLayout();
-            this.splitContainerDisplayShow.Panel2.SuspendLayout();
-            this.splitContainerDisplayShow.SuspendLayout();
-            this.groupBoxTest.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMainStatus)).BeginInit();
-            this.splitContainerMainStatus.Panel1.SuspendLayout();
-            this.splitContainerMainStatus.Panel2.SuspendLayout();
-            this.splitContainerMainStatus.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tableLayoutPanelShowPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonRun
             // 
-            this.buttonRun.Dock = System.Windows.Forms.DockStyle.Left;
-            this.buttonRun.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonRun.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonRun.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonRun.Image = global::IntegrationTesting.Properties.Resources.Run;
             this.buttonRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRun.Location = new System.Drawing.Point(0, 0);
+            this.buttonRun.Location = new System.Drawing.Point(0, 356);
             this.buttonRun.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(113, 53);
+            this.buttonRun.Size = new System.Drawing.Size(164, 74);
             this.buttonRun.TabIndex = 3;
             this.buttonRun.Text = "运行";
             this.buttonRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -106,7 +120,7 @@
             this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(955, 824);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(326, 550);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -118,7 +132,7 @@
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStripMain.Size = new System.Drawing.Size(1902, 28);
+            this.menuStripMain.Size = new System.Drawing.Size(1344, 28);
             this.menuStripMain.TabIndex = 9;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -183,153 +197,96 @@
             this.ToolStripMenuItemLog.Size = new System.Drawing.Size(144, 26);
             this.ToolStripMenuItemLog.Text = "日志信息";
             // 
-            // splitDownResultShow
-            // 
-            this.splitDownResultShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitDownResultShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitDownResultShow.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitDownResultShow.Location = new System.Drawing.Point(0, 0);
-            this.splitDownResultShow.Margin = new System.Windows.Forms.Padding(4);
-            this.splitDownResultShow.Name = "splitDownResultShow";
-            this.splitDownResultShow.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitDownResultShow.Panel1
-            // 
-            this.splitDownResultShow.Panel1.Controls.Add(this.splitUpContainerTitle);
-            // 
-            // splitDownResultShow.Panel2
-            // 
-            this.splitDownResultShow.Panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.splitDownResultShow.Panel2.Controls.Add(this.splitContainerDisplayShow);
-            this.splitDownResultShow.Panel2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.splitDownResultShow.Size = new System.Drawing.Size(1902, 970);
-            this.splitDownResultShow.SplitterDistance = 910;
-            this.splitDownResultShow.SplitterWidth = 5;
-            this.splitDownResultShow.TabIndex = 10;
-            // 
             // splitUpContainerTitle
             // 
             this.splitUpContainerTitle.BackColor = System.Drawing.SystemColors.Control;
             this.splitUpContainerTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitUpContainerTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitUpContainerTitle.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitUpContainerTitle.Location = new System.Drawing.Point(0, 0);
             this.splitUpContainerTitle.Name = "splitUpContainerTitle";
-            this.splitUpContainerTitle.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitUpContainerTitle.Panel1
             // 
-            this.splitUpContainerTitle.Panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.splitUpContainerTitle.Panel1.BackColor = System.Drawing.SystemColors.Control;
             this.splitUpContainerTitle.Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.splitUpContainerTitle.Panel1.Controls.Add(this.label2);
+            this.splitUpContainerTitle.Panel1.Controls.Add(this.splitContainerStatusShow);
             this.splitUpContainerTitle.Panel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             // 
             // splitUpContainerTitle.Panel2
             // 
-            this.splitUpContainerTitle.Panel2.Controls.Add(this.splitContainerAqDisplayControls);
+            this.splitUpContainerTitle.Panel2.Controls.Add(this.tableLayoutPanelShowPanel);
             this.splitUpContainerTitle.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitUpContainerTitle_Panel2_Paint);
-            this.splitUpContainerTitle.Size = new System.Drawing.Size(1902, 910);
-            this.splitUpContainerTitle.SplitterDistance = 80;
+            this.splitUpContainerTitle.Size = new System.Drawing.Size(1344, 661);
+            this.splitUpContainerTitle.SplitterDistance = 1166;
             this.splitUpContainerTitle.TabIndex = 13;
+            this.splitUpContainerTitle.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitUpContainerTitle_SplitterMoved);
+            // 
+            // splitContainerStatusShow
+            // 
+            this.splitContainerStatusShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainerStatusShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerStatusShow.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainerStatusShow.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerStatusShow.Name = "splitContainerStatusShow";
+            this.splitContainerStatusShow.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerStatusShow.Panel1
+            // 
+            this.splitContainerStatusShow.Panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.label2);
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.buttonTriggerLocationRPC);
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.groupBoxTest);
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.buttonTriggerDetectionRPC);
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.checkBoxCameraDetection);
+            this.splitContainerStatusShow.Panel1.Controls.Add(this.checkBoxCameraAcquisition);
+            this.splitContainerStatusShow.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            // 
+            // splitContainerStatusShow.Panel2
+            // 
+            this.splitContainerStatusShow.Panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainerStatusShow.Panel2.Controls.Add(this.splitContainerAqDisplayControls);
+            this.splitContainerStatusShow.Panel2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.splitContainerStatusShow.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainerStatusShow.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainerStatusShow.Size = new System.Drawing.Size(1166, 661);
+            this.splitContainerStatusShow.SplitterDistance = 105;
+            this.splitContainerStatusShow.TabIndex = 13;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(580, 18);
+            this.label2.Location = new System.Drawing.Point(536, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(625, 60);
             this.label2.TabIndex = 0;
             this.label2.Text = "三通管定位及缺陷检测";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // splitContainerAqDisplayControls
+            // buttonTriggerLocationRPC
             // 
-            this.splitContainerAqDisplayControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerAqDisplayControls.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerAqDisplayControls.Margin = new System.Windows.Forms.Padding(4);
-            this.splitContainerAqDisplayControls.Name = "splitContainerAqDisplayControls";
-            // 
-            // splitContainerAqDisplayControls.Panel1
-            // 
-            this.splitContainerAqDisplayControls.Panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainerAqDisplayControls.Panel1.Controls.Add(this.aqDisplayLocation);
-            // 
-            // splitContainerAqDisplayControls.Panel2
-            // 
-            this.splitContainerAqDisplayControls.Panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainerAqDisplayControls.Panel2.Controls.Add(this.aqDisplayDectection);
-            this.splitContainerAqDisplayControls.Size = new System.Drawing.Size(1900, 824);
-            this.splitContainerAqDisplayControls.SplitterDistance = 955;
-            this.splitContainerAqDisplayControls.SplitterWidth = 5;
-            this.splitContainerAqDisplayControls.TabIndex = 0;
-            // 
-            // aqDisplayDectection
-            // 
-            this.aqDisplayDectection.AutoScroll = true;
-            this.aqDisplayDectection.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.aqDisplayDectection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aqDisplayDectection.Image = null;
-            this.aqDisplayDectection.Location = new System.Drawing.Point(0, 0);
-            this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.aqDisplayDectection.Name = "aqDisplayDectection";
-            this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(940, 824);
-            this.aqDisplayDectection.TabIndex = 1;
-            // 
-            // splitContainerDisplayShow
-            // 
-            this.splitContainerDisplayShow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainerDisplayShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerDisplayShow.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerDisplayShow.Name = "splitContainerDisplayShow";
-            // 
-            // splitContainerDisplayShow.Panel1
-            // 
-            this.splitContainerDisplayShow.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.splitContainerDisplayShow.Panel1.Controls.Add(this.buttonStop);
-            this.splitContainerDisplayShow.Panel1.Controls.Add(this.groupBoxTest);
-            this.splitContainerDisplayShow.Panel1.Controls.Add(this.checkBoxCameraAcquisition);
-            this.splitContainerDisplayShow.Panel1.Controls.Add(this.checkBoxCameraDetection);
-            // 
-            // splitContainerDisplayShow.Panel2
-            // 
-            this.splitContainerDisplayShow.Panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.splitContainerDisplayShow.Panel2.Controls.Add(this.buttonRun);
-            this.splitContainerDisplayShow.Panel2.Controls.Add(this.buttonTriggerDetectionRPC);
-            this.splitContainerDisplayShow.Panel2.Controls.Add(this.buttonTriggerLocationRPC);
-            this.splitContainerDisplayShow.Panel2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.splitContainerDisplayShow.Size = new System.Drawing.Size(1902, 55);
-            this.splitContainerDisplayShow.SplitterDistance = 957;
-            this.splitContainerDisplayShow.TabIndex = 13;
-            // 
-            // buttonStop
-            // 
-            this.buttonStop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonStop.Enabled = false;
-            this.buttonStop.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Image = global::IntegrationTesting.Properties.Resources.Stop;
-            this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonStop.Location = new System.Drawing.Point(840, 0);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(115, 53);
-            this.buttonStop.TabIndex = 3;
-            this.buttonStop.Text = "停止";
-            this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonStop.UseVisualStyleBackColor = true;
-            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(296, 61);
+            this.buttonTriggerLocationRPC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTriggerLocationRPC.Name = "buttonTriggerLocationRPC";
+            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(156, 31);
+            this.buttonTriggerLocationRPC.TabIndex = 11;
+            this.buttonTriggerLocationRPC.Text = "触发定位RPC";
+            this.buttonTriggerLocationRPC.UseVisualStyleBackColor = true;
+            this.buttonTriggerLocationRPC.Click += new System.EventHandler(this.buttonTriggerLocationRPC_Click);
             // 
             // groupBoxTest
             // 
             this.groupBoxTest.Controls.Add(this.listViewRecord);
-            this.groupBoxTest.Location = new System.Drawing.Point(427, 2);
+            this.groupBoxTest.Location = new System.Drawing.Point(3, 45);
             this.groupBoxTest.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxTest.Name = "groupBoxTest";
             this.groupBoxTest.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBoxTest.Size = new System.Drawing.Size(162, 47);
+            this.groupBoxTest.Size = new System.Drawing.Size(95, 41);
             this.groupBoxTest.TabIndex = 12;
             this.groupBoxTest.TabStop = false;
             this.groupBoxTest.Text = "测试模式";
+            this.groupBoxTest.Visible = false;
             // 
             // listViewRecord
             // 
@@ -345,22 +302,16 @@
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
             // 
-            // checkBoxCameraAcquisition
+            // buttonTriggerDetectionRPC
             // 
-            this.checkBoxCameraAcquisition.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxCameraAcquisition.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBoxCameraAcquisition.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxCameraAcquisition.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraAcquisition.Image")));
-            this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(30, 2);
-            this.checkBoxCameraAcquisition.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
-            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(156, 43);
-            this.checkBoxCameraAcquisition.TabIndex = 6;
-            this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
-            this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
-            this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
+            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(296, 19);
+            this.buttonTriggerDetectionRPC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTriggerDetectionRPC.Name = "buttonTriggerDetectionRPC";
+            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(156, 31);
+            this.buttonTriggerDetectionRPC.TabIndex = 11;
+            this.buttonTriggerDetectionRPC.Text = "触发检测RPC";
+            this.buttonTriggerDetectionRPC.UseVisualStyleBackColor = true;
+            this.buttonTriggerDetectionRPC.Click += new System.EventHandler(this.buttonTriggerDetectionRPC_Click);
             // 
             // checkBoxCameraDetection
             // 
@@ -369,107 +320,307 @@
             this.checkBoxCameraDetection.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraDetection.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraDetection.Image")));
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraDetection.Location = new System.Drawing.Point(194, 3);
+            this.checkBoxCameraDetection.Location = new System.Drawing.Point(82, 61);
             this.checkBoxCameraDetection.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
-            this.checkBoxCameraDetection.Size = new System.Drawing.Size(156, 43);
+            this.checkBoxCameraDetection.Size = new System.Drawing.Size(180, 31);
             this.checkBoxCameraDetection.TabIndex = 10;
             this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraDetection.UseVisualStyleBackColor = false;
             this.checkBoxCameraDetection.CheckedChanged += new System.EventHandler(this.checkBoxCameraDetection_CheckedChanged);
             // 
-            // buttonTriggerDetectionRPC
+            // checkBoxCameraAcquisition
             // 
-            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(268, 3);
-            this.buttonTriggerDetectionRPC.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonTriggerDetectionRPC.Name = "buttonTriggerDetectionRPC";
-            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(131, 31);
-            this.buttonTriggerDetectionRPC.TabIndex = 11;
-            this.buttonTriggerDetectionRPC.Text = "触发检测RPC";
-            this.buttonTriggerDetectionRPC.UseVisualStyleBackColor = true;
-            this.buttonTriggerDetectionRPC.Click += new System.EventHandler(this.buttonTriggerDetectionRPC_Click);
+            this.checkBoxCameraAcquisition.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxCameraAcquisition.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBoxCameraAcquisition.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxCameraAcquisition.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraAcquisition.Image")));
+            this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(82, 19);
+            this.checkBoxCameraAcquisition.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
+            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(180, 31);
+            this.checkBoxCameraAcquisition.TabIndex = 6;
+            this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
+            this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
+            this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
             // 
-            // buttonTriggerLocationRPC
+            // splitContainerAqDisplayControls
             // 
-            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(129, 4);
-            this.buttonTriggerLocationRPC.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonTriggerLocationRPC.Name = "buttonTriggerLocationRPC";
-            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(131, 31);
-            this.buttonTriggerLocationRPC.TabIndex = 11;
-            this.buttonTriggerLocationRPC.Text = "触发定位RPC";
-            this.buttonTriggerLocationRPC.UseVisualStyleBackColor = true;
-            this.buttonTriggerLocationRPC.Click += new System.EventHandler(this.buttonTriggerLocationRPC_Click);
+            this.splitContainerAqDisplayControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerAqDisplayControls.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerAqDisplayControls.Margin = new System.Windows.Forms.Padding(4);
+            this.splitContainerAqDisplayControls.Name = "splitContainerAqDisplayControls";
             // 
-            // splitContainerMainStatus
+            // splitContainerAqDisplayControls.Panel1
             // 
-            this.splitContainerMainStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMainStatus.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainerMainStatus.Location = new System.Drawing.Point(0, 28);
-            this.splitContainerMainStatus.Margin = new System.Windows.Forms.Padding(4);
-            this.splitContainerMainStatus.Name = "splitContainerMainStatus";
-            this.splitContainerMainStatus.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitContainerAqDisplayControls.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainerAqDisplayControls.Panel1.Controls.Add(this.panel5);
             // 
-            // splitContainerMainStatus.Panel1
+            // splitContainerAqDisplayControls.Panel2
             // 
-            this.splitContainerMainStatus.Panel1.Controls.Add(this.splitDownResultShow);
+            this.splitContainerAqDisplayControls.Panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainerAqDisplayControls.Panel2.Controls.Add(this.panel4);
+            this.splitContainerAqDisplayControls.Size = new System.Drawing.Size(1164, 550);
+            this.splitContainerAqDisplayControls.SplitterDistance = 326;
+            this.splitContainerAqDisplayControls.SplitterWidth = 5;
+            this.splitContainerAqDisplayControls.TabIndex = 0;
+            this.splitContainerAqDisplayControls.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerAqDisplayControls_SplitterMoved);
             // 
-            // splitContainerMainStatus.Panel2
+            // panel5
             // 
-            this.splitContainerMainStatus.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainerMainStatus.Size = new System.Drawing.Size(1902, 1005);
-            this.splitContainerMainStatus.SplitterDistance = 970;
-            this.splitContainerMainStatus.SplitterWidth = 5;
-            this.splitContainerMainStatus.TabIndex = 12;
+            this.panel5.Controls.Add(this.aqDisplayLocation);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(326, 550);
+            this.panel5.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.aqDisplayDectection);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(833, 550);
+            this.panel4.TabIndex = 0;
+            // 
+            // aqDisplayDectection
+            // 
+            this.aqDisplayDectection.AutoScroll = true;
+            this.aqDisplayDectection.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.aqDisplayDectection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aqDisplayDectection.Image = null;
+            this.aqDisplayDectection.Location = new System.Drawing.Point(0, 0);
+            this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.aqDisplayDectection.Name = "aqDisplayDectection";
+            this.aqDisplayDectection.ScrollBar = false;
+            this.aqDisplayDectection.Size = new System.Drawing.Size(833, 550);
+            this.aqDisplayDectection.TabIndex = 1;
+            // 
+            // tableLayoutPanelShowPanel
+            // 
+            this.tableLayoutPanelShowPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelShowPanel.ColumnCount = 1;
+            this.tableLayoutPanelShowPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelShowPanel.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanelShowPanel.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanelShowPanel.Controls.Add(this.panel3, 0, 2);
+            this.tableLayoutPanelShowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelShowPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelShowPanel.Name = "tableLayoutPanelShowPanel";
+            this.tableLayoutPanelShowPanel.RowCount = 3;
+            this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.07899F));
+            this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.48942F));
+            this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.43159F));
+            this.tableLayoutPanelShowPanel.Size = new System.Drawing.Size(172, 659);
+            this.tableLayoutPanelShowPanel.TabIndex = 12;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(4, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(164, 99);
+            this.panel1.TabIndex = 0;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label9.Location = new System.Drawing.Point(111, 63);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(45, 30);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "95";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label8.Location = new System.Drawing.Point(111, 17);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 30);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "极好";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(4, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 24);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "定位得分";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(4, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 24);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "定位结果";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(4, 110);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(164, 108);
+            this.panel2.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(4, 78);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 24);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "不良个数";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(111, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 30);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "不良";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(4, 27);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(106, 24);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "检测结果";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(111, 72);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 30);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "10";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.buttonStop);
+            this.panel3.Controls.Add(this.buttonRun);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(4, 225);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(164, 430);
+            this.panel3.TabIndex = 2;
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonStop.Enabled = false;
+            this.buttonStop.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonStop.Image = global::IntegrationTesting.Properties.Resources.Stop;
+            this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonStop.Location = new System.Drawing.Point(0, 282);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(164, 74);
+            this.buttonStop.TabIndex = 3;
+            this.buttonStop.Text = "停止";
+            this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 8);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 718);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1902, 22);
-            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Size = new System.Drawing.Size(1344, 22);
+            this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 28);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitUpContainerTitle);
+            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            this.splitContainer1.Panel2MinSize = 2;
+            this.splitContainer1.Size = new System.Drawing.Size(1344, 690);
+            this.splitContainer1.SplitterDistance = 661;
+            this.splitContainer1.TabIndex = 15;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1902, 1033);
-            this.Controls.Add(this.splitContainerMainStatus);
+            this.ClientSize = new System.Drawing.Size(1344, 740);
+            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "Aqrose-2D定位检测";
+            this.Text = "三通管定位及缺陷检测";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            this.splitDownResultShow.Panel1.ResumeLayout(false);
-            this.splitDownResultShow.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitDownResultShow)).EndInit();
-            this.splitDownResultShow.ResumeLayout(false);
             this.splitUpContainerTitle.Panel1.ResumeLayout(false);
-            this.splitUpContainerTitle.Panel1.PerformLayout();
             this.splitUpContainerTitle.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitUpContainerTitle)).EndInit();
             this.splitUpContainerTitle.ResumeLayout(false);
+            this.splitContainerStatusShow.Panel1.ResumeLayout(false);
+            this.splitContainerStatusShow.Panel1.PerformLayout();
+            this.splitContainerStatusShow.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusShow)).EndInit();
+            this.splitContainerStatusShow.ResumeLayout(false);
+            this.groupBoxTest.ResumeLayout(false);
             this.splitContainerAqDisplayControls.Panel1.ResumeLayout(false);
             this.splitContainerAqDisplayControls.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAqDisplayControls)).EndInit();
             this.splitContainerAqDisplayControls.ResumeLayout(false);
-            this.splitContainerDisplayShow.Panel1.ResumeLayout(false);
-            this.splitContainerDisplayShow.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDisplayShow)).EndInit();
-            this.splitContainerDisplayShow.ResumeLayout(false);
-            this.groupBoxTest.ResumeLayout(false);
-            this.splitContainerMainStatus.Panel1.ResumeLayout(false);
-            this.splitContainerMainStatus.Panel2.ResumeLayout(false);
-            this.splitContainerMainStatus.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMainStatus)).EndInit();
-            this.splitContainerMainStatus.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.tableLayoutPanelShowPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -487,7 +638,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetLocation;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetDectection;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetRobotConnect;
-        private System.Windows.Forms.SplitContainer splitDownResultShow;
         private System.Windows.Forms.SplitContainer splitContainerAqDisplayControls;
         private AqVision.Controls.AqDisplay aqDisplayDectection;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemHelp;
@@ -495,14 +645,28 @@
         private System.Windows.Forms.CheckBox checkBoxCameraDetection;
         private System.Windows.Forms.ListView listViewRecord;
         private System.Windows.Forms.Button buttonStop;
-        private System.Windows.Forms.SplitContainer splitContainerMainStatus;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button buttonTriggerLocationRPC;
         private System.Windows.Forms.GroupBox groupBoxTest;
         private System.Windows.Forms.Button buttonTriggerDetectionRPC;
         private System.Windows.Forms.SplitContainer splitUpContainerTitle;
-        private System.Windows.Forms.SplitContainer splitContainerDisplayShow;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.SplitContainer splitContainerStatusShow;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelShowPanel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 
