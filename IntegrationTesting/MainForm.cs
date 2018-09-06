@@ -161,6 +161,7 @@ namespace IntegrationTesting
                         m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                         m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
                         AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                        labelLocationScore.Text = (m_templateSet.Score*100).ToString();
                     }
                     else
                     {
@@ -624,7 +625,11 @@ namespace IntegrationTesting
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            //splitContainerAqDisplayControls.SplitterDistance = 620;
+             label_Title.Location = new Point(Convert.ToInt32(splitContainerStatusShow.Panel1.ClientSize.Width / 2 - label_Title.Size.Width / 2),
+                                             Convert.ToInt32(splitContainerStatusShow.Panel1.Height/2));
+
+             //splitContainerAqDisplayControls.Panel1.Width = Convert.ToInt32(splitContainerAqDisplayControls.ClientSize.Width/2);
+            
         }
     }
 }

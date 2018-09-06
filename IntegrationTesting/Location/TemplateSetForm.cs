@@ -19,6 +19,11 @@ namespace IntegrationTesting
         AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
         string m_title = null;
         private double m_locationResultPosX = 0;
+
+        public double Score
+        {
+            get { return m_Location.Score; }
+        }
         public double LocationResultPosX
         {
             get { return m_locationResultPosX; }
@@ -38,8 +43,6 @@ namespace IntegrationTesting
             get { return m_locationResultPosTheta; }
             set { m_locationResultPosTheta = value; }
         }
-
-
 
         Bitmap m_imageInput = null;
         public Bitmap ImageInput
