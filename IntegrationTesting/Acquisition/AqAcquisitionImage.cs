@@ -316,6 +316,14 @@ namespace AqVision.Acquisition
                     }
                 }
 
+                Image originImage = Image.FromHbitmap(cameraLocationBmp.GetHbitmap());
+                Bitmap bitmap = new Bitmap(originImage.Width-156, originImage.Height);
+                Graphics gTemplate = Graphics.FromImage(bitmap);
+                gTemplate.DrawImage(originImage, 0, 0, new Rectangle(78, 0, originImage.Width-78, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
+                cameraLocationBmp = bitmap.Clone() as Bitmap;
+                gTemplate.Dispose();
+                bitmap.Dispose();
+
                 return true;
             }
             catch (Exception ex)

@@ -161,7 +161,7 @@ namespace IntegrationTesting
                         m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                         m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
                         AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                        labelLocationScore.Text = (m_templateSet.Score*100).ToString();
+                        labelLocationScore.Text = (m_templateSet.Score*100).ToString("f3");
                     }
                     else
                     {
@@ -222,10 +222,11 @@ namespace IntegrationTesting
                         }));
                         m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
                     }
+                    aqDisplayDectection.FitToScreen();
+                    aqDisplayDectection.Update();
                     m_aidiMangement.DetectBmp();
                     aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
-                    aqDisplayDectection.FitToScreen();
                     aqDisplayDectection.Update();
                     SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                 }));
@@ -625,11 +626,58 @@ namespace IntegrationTesting
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-             label_Title.Location = new Point(Convert.ToInt32(splitContainerStatusShow.Panel1.ClientSize.Width / 2 - label_Title.Size.Width / 2),
-                                             Convert.ToInt32(splitContainerStatusShow.Panel1.Height/2));
+            label_Title.Location = new Point(Convert.ToInt32(panelTitle.ClientSize.Width / 2 - label_Title.Size.Width / 2),
+                                              Convert.ToInt32(label_Title.Location.Y/*panelTitle.Height / 2*/));
 
              //splitContainerAqDisplayControls.Panel1.Width = Convert.ToInt32(splitContainerAqDisplayControls.ClientSize.Width/2);
             
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void 开启检测实时采集ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            checkBoxCameraDetection.Checked = true;
+            checkBoxCameraDetection_CheckedChanged(null, null);
+            ClosedetectAcquistionToolStripMenuItem.Checked = false;
+            OpendetectAcquistionToolStripMenuItem.Checked = true;
+        }
+
+        private void 关闭检测实时采集ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            checkBoxCameraDetection.Checked = false;
+            checkBoxCameraDetection_CheckedChanged(null, null);
+            ClosedetectAcquistionToolStripMenuItem.Checked = true;
+            OpendetectAcquistionToolStripMenuItem.Checked = false;
+        }
+
+        private void 开启定位实时采集ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            checkBoxCameraAcquisition.Checked = true;
+            checkBoxCameraAcquisition_CheckedChanged(null, null);
+            CloseLocationAcquistionToolStripMenuItem.Checked = false;
+            OpenLocationAcquistionToolStripMenuItem.Checked = true;
+        }
+
+        private void 关闭定位实时采集ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            checkBoxCameraAcquisition.Checked = false;
+            checkBoxCameraAcquisition_CheckedChanged(null, null);
+            CloseLocationAcquistionToolStripMenuItem.Checked = true;
+            OpenLocationAcquistionToolStripMenuItem.Checked = false;
+        }
+
+        private void 触发定位RPCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TriggerCamera(0, 0, 0);
+        }
+
+        private void 触发检测RPCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int abc = 0;
+            GetWorkObjInfo(ref abc);
         }
     }
 }
