@@ -47,7 +47,8 @@ namespace IntegrationTesting.Robot
             {
                 delta += 360;
             }
-            
+
+            delta -= 180;
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
             localizeRespone.VisionStatus = 0;

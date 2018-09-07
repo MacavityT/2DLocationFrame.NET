@@ -158,7 +158,7 @@ namespace IntegrationTesting
                     LocationResultPosTheta = m_Location.Angle;
                     if (m_Location.XldPointCountsM.Length > 0)
                     {
-                        iResult = 1;
+                        iResult = 0;
                     }
                     else
                     {
@@ -170,7 +170,7 @@ namespace IntegrationTesting
                     //MessageBox.Show(ex.Message);
                     iResult = -1;
                 }    
-                if(iResult == 1)
+                if(iResult == 0)
                 {
                     break;
                 }
@@ -180,7 +180,7 @@ namespace IntegrationTesting
                     return -30;
                 }
             }
-            return 1;
+            return 0;
         }
 
         public void ShowGetResultsData(AqColorConstants color, AqDisplay aqDisplayShow)

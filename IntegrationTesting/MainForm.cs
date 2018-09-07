@@ -156,7 +156,7 @@ namespace IntegrationTesting
                     }
                     locationResult = m_templateSet.RunMatcher();
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                    if (locationResult == 1)
+                    if (locationResult == 0)
                     {
                         m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                         m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
