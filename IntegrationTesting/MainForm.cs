@@ -41,9 +41,7 @@ namespace IntegrationTesting
         public MainForm()
         {
             InitializeComponent();
-            listViewRecord.Columns.Add("Serial NO", 10, HorizontalAlignment.Center);
-            listViewRecord.Columns.Add("Time", 10, HorizontalAlignment.Center);
-            listViewRecord.Columns.Add("Message", 500, HorizontalAlignment.Center);
+            listViewRecord.Columns.Add("Message", 1000, HorizontalAlignment.Center);
             m_visionImpl.triggerCamerHandler = new TriggerCamerHandler(TriggerCamera);
             m_visionImpl.getLocalizeResultHandler = new GetLocalizeResultHandler(GetLocalizeResult);
             m_visionImpl.getWorkObjInfoHandler = new GetWorkObjInfoHandler(GetWorkObjInfo);
@@ -145,30 +143,42 @@ namespace IntegrationTesting
                     {
                         Bitmap location = null;
                         Bitmap detection = null;
-                        m_Acquisition.Acquisition(ref location, ref detection); 
+                        m_Acquisition.Acquisition(ref location, ref detection); //853
                         aqDisplayLocation.Invoke(new MethodInvoker(delegate
                         {
                             aqDisplayLocation.Image = location;
                             aqDisplayLocation.FitToScreen();
                             aqDisplayLocation.Update();
                         }));
-                        m_templateSet.ImageInput = aqDisplayLocation.Image.Clone() as Bitmap;
+                        if (m_templateSet.ImageInput != null)//936.9
+                        {
+                            m_templateSet.ImageInput.Dispose();
+                        }
+                        m_templateSet.ImageInput = location.Clone() as Bitmap;
+                        //location.Dispose();
+                        //detection.Dispose();//932.5
                     }
+                    
                     locationResult = m_templateSet.RunMatcher();
-                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);//1061.5
                     if (locationResult == 0)
                     {
                         m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                         m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
-                        AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                        labelLocationScore.Text = (m_templateSet.Score*100).ToString("f3");
+                        //AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                        AddMessageToListView("Suc");
+                        labelLocationScore.Text = (m_templateSet.Score*100).ToString("f3");//1062.9
                     }
                     else
                     {
-                        AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                        //AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
+                        AddMessageToListView("Failed");
                     }
+                     
                 }));
-                SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
+                //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
+                GC.Collect();
+                AddMessageToListView("TriggerDone");
             }
             catch (Exception ex)
             {
@@ -182,9 +192,9 @@ namespace IntegrationTesting
         private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta)
         {
             m_calibrateShow.SetCurrentImagePosition(m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta);
-            AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
+            //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
             m_calibrateShow.GetCurrentCatchPosition(ref posX, ref posY, ref theta);
-            AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
+            //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
             return true;
         }
 
@@ -220,30 +230,39 @@ namespace IntegrationTesting
                         {
                             aqDisplayDectection.Image = detection;
                         }));
+
+                        if (m_aidiMangement.SourceBitmap != null)
+                        {
+                            for(int i=0; i<m_aidiMangement.SourceBitmap.Count; i++)
+                            {
+                                m_aidiMangement.SourceBitmap[i].Dispose();
+                            }
+                            m_aidiMangement.SourceBitmap.Clear();
+                        }
                         m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
                     }
                     aqDisplayDectection.FitToScreen();
                     aqDisplayDectection.Update();
-                    m_aidiMangement.DetectBmp();
+                    //m_aidiMangement.DetectBmp();
                     aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
-                    m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
+                    //m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
                     aqDisplayDectection.Update();
-                    SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
+                    //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                 }));
-                if (m_aidiMangement.DetectResult)
-                {
-                    AddMessageToListView("检测无错误");
-                }
-                else
-                {
-                    AddMessageToListView("检测有错误");
-                }
+//                 if (m_aidiMangement.DetectResult)
+//                 {
+//                     AddMessageToListView("检测无错误");
+//                 }
+//                 else
+//                 {
+//                     AddMessageToListView("检测有错误");
+//                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("GetWorkObjInfo " + ex.Message);
             }
-            return m_aidiMangement.DetectResult;
+            return true;// m_aidiMangement.DetectResult;
         }
             
         public bool SaveImageToFile(AqDisplay aqDisplay, Bitmap originBitmap, string strSavePath)
@@ -259,10 +278,10 @@ namespace IntegrationTesting
                 Directory.CreateDirectory(resultPath);
             }
             
-            int count = Directory.GetFiles(strSavePath).Length;
-            Image originImage = Image.FromHbitmap(originBitmap.GetHbitmap());
+            int count = Directory.GetFiles(strSavePath).Length;//1063.216
+            Image originImage = Image.FromHbitmap(originBitmap.GetHbitmap());//1221.3
 
-            Bitmap bitmap = new Bitmap(originImage.Width, originImage.Height);
+            Bitmap bitmap = new Bitmap(originImage.Width, originImage.Height);//1299.576
 
             Graphics gTemplate = Graphics.FromImage(bitmap);
             gTemplate.DrawImage(originImage, 0, 0, new Rectangle(0, 0, originImage.Width, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
@@ -273,9 +292,11 @@ namespace IntegrationTesting
             string picSourceName = string.Format("{0}{1}_{2}_.bmp", sourcePath, count.ToString(), timeNowToString);
             string picResultFullName = string.Format("{0}{1}_{2}_.bmp", resultPath, count.ToString(), timeNowToString);
             bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Bmp);
-            aqDisplay.CreateContentBitmap().Save(picResultFullName);
+            aqDisplay.CreateContentBitmap().Save(picResultFullName); // 1304.456
+
             gTemplate.Dispose();
-            bitmap.Dispose();
+            bitmap.Dispose();//1225.496
+            originImage.Dispose();//1146.756
             return true;
         }
 
@@ -401,9 +422,8 @@ namespace IntegrationTesting
 
         public void AddMessageToListView(string strMessage)
         {
-            ListViewItem item = new ListViewItem(listViewRecord.Items.Count.ToString(), 0);
-            item.SubItems.Add(new DateTime().ToString());
-            item.SubItems.Add(strMessage);
+            ListViewItem item = new ListViewItem(strMessage, 0);
+//            ListViewItem item = new ListViewItem(listViewRecord.Items.Count.ToString(), 0);
             listViewRecord.Items.Add(item);
         }
 
@@ -671,13 +691,21 @@ namespace IntegrationTesting
 
         private void 触发定位RPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Stopwatch stw = new Stopwatch();
+            stw.Start();
             TriggerCamera(0, 0, 0);
+            stw.Stop();
+            //MessageBox.Show(stw.ElapsedMilliseconds.ToString());
         }
 
         private void 触发检测RPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Stopwatch stw = new Stopwatch();
+            stw.Start();
             int abc = 0;
             GetWorkObjInfo(ref abc);
+            stw.Stop();
+            MessageBox.Show(stw.ElapsedMilliseconds.ToString());
         }
     }
 }

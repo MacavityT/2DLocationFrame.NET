@@ -126,7 +126,7 @@ namespace ApplyHalcon
             HOperatorSet.FindScaledShapeModel(ho_Image, hv_ModelId, hv_AngleStartOut, hv_AngleExtentOut,
                                             hv_ScaleMin, hv_ScaleMax, hv_MinScore, hv_NumMatches, 0.5, "least_squares",
                                             (new HTuple(5)).TupleConcat(1), 0.75, out hv_ModelRow, out hv_ModelColumn,
-                                            out hv_ModelAngle, out hv_ModelScale, out hv_ModelScore);
+                                            out hv_ModelAngle, out hv_ModelScale, out hv_ModelScore);//1120.632
             ho_ModelContours.Dispose();
             HOperatorSet.GetShapeModelContours(out ho_ModelContours, hv_ModelId, 1);
             for (hv_MatchingObjIdx = 0; (int)hv_MatchingObjIdx <= (int)((new HTuple(hv_ModelScore.TupleLength()
@@ -160,8 +160,7 @@ namespace ApplyHalcon
             }
             ho_ModelContours.Dispose();
             ho_TransContours.Dispose();
-            ho_ObjectSelected.Dispose();
-
+            ho_ObjectSelected.Dispose();//1120.224
             return;
         }
         public static void SaveModel(HTuple hv_ModelId, string modelName)

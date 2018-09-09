@@ -147,40 +147,27 @@ namespace IntegrationTesting
         public int RunMatcher()
         {
             int iResult = -1;
-            int iCount = 1;
-            while(true)
+            try
             {
-                try
+                m_Location.RunMatcherByHalcon();
+                LocationResultPosX = m_Location.CenterX;
+                LocationResultPosY = m_Location.CenterY;
+                LocationResultPosTheta = m_Location.Angle;
+                if (m_Location.XldPointCountsM.Length > 0)
                 {
-                    m_Location.RunMatcherByHalcon();
-                    LocationResultPosX = m_Location.CenterX;
-                    LocationResultPosY = m_Location.CenterY;
-                    LocationResultPosTheta = m_Location.Angle;
-                    if (m_Location.XldPointCountsM.Length > 0)
-                    {
-                        iResult = 0;
-                    }
-                    else
-                    {
-                        iResult = -2;
-                    }
+                    iResult = 0;
                 }
-                catch (Exception ex)
+                else
                 {
-                    //MessageBox.Show(ex.Message);
-                    iResult = -1;
-                }    
-                if(iResult == 0)
-                {
-                    break;
-                }
-                iCount++;
-                if(iCount > 30)
-                {
-                    return -30;
+                    iResult = -2;
                 }
             }
-            return 0;
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                iResult = -1;
+            }
+            return iResult;
         }
 
         public void ShowGetResultsData(AqColorConstants color, AqDisplay aqDisplayShow)

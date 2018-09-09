@@ -20,15 +20,17 @@ namespace ApplyHalcon
             IntPtr pPixels;
             HImage hImage = new HImage();
             rect = new Rectangle(0, 0, bImage.Width, bImage.Height);
-            bImage24 = new Bitmap(bImage.Width, bImage.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            bImage24 = new Bitmap(bImage.Width, bImage.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);//990.812
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bImage24);
             g.DrawImage(bImage, rect);
             g.Dispose();
             bmData = bImage24.LockBits(rect, ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             pBitmap = bmData.Scan0;
             pPixels = pBitmap;
-            hImage.GenImageInterleaved(pPixels, "bgr", bImage.Width, bImage.Height, -1, "byte", 0, 0, 0, 0, -1, 0);
+            hImage.GenImageInterleaved(pPixels, "bgr", bImage.Width, bImage.Height, -1, "byte", 0, 0, 0, 0, -1, 0);//1050.512
             bImage24.UnlockBits(bmData);
+
+            bImage24.Dispose();//991.444
 
             return hImage;
         }

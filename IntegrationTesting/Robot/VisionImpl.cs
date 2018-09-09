@@ -13,18 +13,24 @@ namespace IntegrationTesting.Robot
         public TriggerCamerHandler triggerCamerHandler = null;
         public GetLocalizeResultHandler getLocalizeResultHandler = null;
         public GetWorkObjInfoHandler getWorkObjInfoHandler = null;
+        //static bool m_triggering = false;
         // Server side handler of the SayHello RPC
         
         public override Task<SetFlag> triggerCamera(TriggerReq request, ServerCallContext context)
         {
-            SetFlag resultFlag = new SetFlag();
-            int flag = 0;
-            if( triggerCamerHandler !=null )
+            //if(!m_triggering)
             {
-                flag = triggerCamerHandler(request.RobotPose.Position.X, request.RobotPose.Position.Y, request.RobotPose.Position.Z);
+               // m_triggering = true;
+                SetFlag resultFlag = new SetFlag();
+                int flag = 0;
+                if (triggerCamerHandler != null)
+                {
+                    flag = triggerCamerHandler(request.RobotPose.Position.X, request.RobotPose.Position.Y, request.RobotPose.Position.Z);
+                }
+                resultFlag.ErrorFlag = flag;
+                //m_triggering = false;
+                return Task.FromResult(resultFlag);
             }
-            resultFlag.ErrorFlag = flag;
-            return Task.FromResult(resultFlag);
         }
 
         public override Task<LocalizeRep> getLocalizeResult(LocalizeReq request, ServerCallContext context)
@@ -48,7 +54,7 @@ namespace IntegrationTesting.Robot
                 delta += 360;
             }
 
-            delta -= 180;
+            //delta -= 180;  //修改数据
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
             localizeRespone.VisionStatus = 0;

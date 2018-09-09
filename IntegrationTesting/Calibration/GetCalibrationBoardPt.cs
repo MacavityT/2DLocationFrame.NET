@@ -19,8 +19,8 @@ namespace IntegrationTesting.Calibration
             // Local iconic variables 
 
             HObject ho_ImageOut = null, ho_Region, ho_RegionOpening;
-            HObject ho_ConnectedRegions, ho_Regions_11_Circles, ho_RegionClosing;
-            HObject ho_Regions_9_Circles, ho_Regions_2_Circles;
+            HObject ho_ConnectedRegions, ho_Regions_11_Circles, ho_RegionUnion100;
+            HObject ho_RegionClosing, ho_Regions_9_Circles, ho_Regions_2_Circles;
 
             // Local control variables 
 
@@ -44,6 +44,7 @@ namespace IntegrationTesting.Calibration
             HOperatorSet.GenEmptyObj(out ho_RegionOpening);
             HOperatorSet.GenEmptyObj(out ho_ConnectedRegions);
             HOperatorSet.GenEmptyObj(out ho_Regions_11_Circles);
+            HOperatorSet.GenEmptyObj(out ho_RegionUnion100);
             HOperatorSet.GenEmptyObj(out ho_RegionClosing);
             HOperatorSet.GenEmptyObj(out ho_Regions_9_Circles);
             HOperatorSet.GenEmptyObj(out ho_Regions_2_Circles);
@@ -105,6 +106,8 @@ namespace IntegrationTesting.Calibration
 
                 HOperatorSet.AreaCenter(ho_Regions_11_Circles, out hv_Areas11, out hv_Rows11,
                     out hv_Columns11);
+                ho_RegionUnion100.Dispose();
+                HOperatorSet.Union1(ho_Regions_11_Circles, out ho_RegionUnion100);
 
                 if ((int)(new HTuple((new HTuple(hv_Areas11.TupleLength())).TupleNotEqual(11))) != 0)
                 {
@@ -114,6 +117,7 @@ namespace IntegrationTesting.Calibration
                     ho_RegionOpening.Dispose();
                     ho_ConnectedRegions.Dispose();
                     ho_Regions_11_Circles.Dispose();
+                    ho_RegionUnion100.Dispose();
                     ho_RegionClosing.Dispose();
                     ho_Regions_9_Circles.Dispose();
                     ho_Regions_2_Circles.Dispose();
@@ -134,7 +138,7 @@ namespace IntegrationTesting.Calibration
 
                 HOperatorSet.DistancePp(hv_x1, hv_y1, hv_x3, hv_y3, out hv_Dist1_3);
                 ho_RegionClosing.Dispose();
-                HOperatorSet.ClosingCircle(ho_RegionOpening, out ho_RegionClosing, 5 + (hv_Dist1_3 / 4));
+                HOperatorSet.ClosingCircle(ho_RegionUnion100, out ho_RegionClosing, 5 + (hv_Dist1_3 / 4));
                 {
                     HObject ExpTmpOutVar_0;
                     HOperatorSet.FillUp(ho_RegionClosing, out ExpTmpOutVar_0);
@@ -168,6 +172,7 @@ namespace IntegrationTesting.Calibration
                     ho_RegionOpening.Dispose();
                     ho_ConnectedRegions.Dispose();
                     ho_Regions_11_Circles.Dispose();
+                    ho_RegionUnion100.Dispose();
                     ho_RegionClosing.Dispose();
                     ho_Regions_9_Circles.Dispose();
                     ho_Regions_2_Circles.Dispose();
@@ -307,6 +312,7 @@ namespace IntegrationTesting.Calibration
                     ho_RegionOpening.Dispose();
                     ho_ConnectedRegions.Dispose();
                     ho_Regions_11_Circles.Dispose();
+                    ho_RegionUnion100.Dispose();
                     ho_RegionClosing.Dispose();
                     ho_Regions_9_Circles.Dispose();
                     ho_Regions_2_Circles.Dispose();
@@ -362,6 +368,7 @@ namespace IntegrationTesting.Calibration
                 ho_RegionOpening.Dispose();
                 ho_ConnectedRegions.Dispose();
                 ho_Regions_11_Circles.Dispose();
+                ho_RegionUnion100.Dispose();
                 ho_RegionClosing.Dispose();
                 ho_Regions_9_Circles.Dispose();
                 ho_Regions_2_Circles.Dispose();
@@ -375,6 +382,7 @@ namespace IntegrationTesting.Calibration
                 ho_RegionOpening.Dispose();
                 ho_ConnectedRegions.Dispose();
                 ho_Regions_11_Circles.Dispose();
+                ho_RegionUnion100.Dispose();
                 ho_RegionClosing.Dispose();
                 ho_Regions_9_Circles.Dispose();
                 ho_Regions_2_Circles.Dispose();

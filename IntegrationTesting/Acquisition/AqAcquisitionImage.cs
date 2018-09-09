@@ -295,7 +295,7 @@ namespace AqVision.Acquisition
                 }
                 else if (AcquisitionStyle == AcquisitionMode.FromFolder)
                 {
-                    cameraLocationBmp = Image.FromFile( m_imageListLocation[m_indexPicInFolderLocation]) as Bitmap;
+                    cameraLocationBmp = Image.FromFile( m_imageListLocation[m_indexPicInFolderLocation]) as Bitmap; //931.548
                     if(m_indexPicInFolderLocation == m_imageListLocation.Length-1)
                     {
                         m_indexPicInFolderLocation = 0;
@@ -305,7 +305,7 @@ namespace AqVision.Acquisition
                         m_indexPicInFolderLocation++;
                     }
 
-                    cameraDetectionBmp = Image.FromFile(m_imageListDetection[m_indexPicInFolderDetection]) as Bitmap;
+                    cameraDetectionBmp = Image.FromFile(m_imageListDetection[m_indexPicInFolderDetection]) as Bitmap; //937.22
                     if(m_indexPicInFolderDetection == m_imageListDetection.Length-1)
                     {
                         m_indexPicInFolderDetection = 0;
@@ -316,13 +316,13 @@ namespace AqVision.Acquisition
                     }
                 }
 
-                Image originImage = Image.FromHbitmap(cameraLocationBmp.GetHbitmap());
-                Bitmap bitmap = new Bitmap(originImage.Width-156, originImage.Height);
-                Graphics gTemplate = Graphics.FromImage(bitmap);
-                gTemplate.DrawImage(originImage, 0, 0, new Rectangle(78, 0, originImage.Width-78, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
-                cameraLocationBmp = bitmap.Clone() as Bitmap;
-                gTemplate.Dispose();
-                bitmap.Dispose();
+//                 Image originImage = Image.FromHbitmap(cameraLocationBmp.GetHbitmap());
+//                 Bitmap bitmap = new Bitmap(originImage.Width-156, originImage.Height);
+//                 Graphics gTemplate = Graphics.FromImage(bitmap);
+//                 gTemplate.DrawImage(originImage, 0, 0, new Rectangle(78, 0, originImage.Width-78, originImage.Height), System.Drawing.GraphicsUnit.Pixel);
+//                 cameraLocationBmp = bitmap.Clone() as Bitmap;
+//                 gTemplate.Dispose();
+//                 bitmap.Dispose();
 
                 return true;
             }

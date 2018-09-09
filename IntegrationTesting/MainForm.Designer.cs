@@ -54,7 +54,6 @@
             this.label_Title = new System.Windows.Forms.Label();
             this.buttonTriggerLocationRPC = new System.Windows.Forms.Button();
             this.groupBoxTest = new System.Windows.Forms.GroupBox();
-            this.listViewRecord = new System.Windows.Forms.ListView();
             this.buttonTriggerDetectionRPC = new System.Windows.Forms.Button();
             this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
             this.tableLayoutPanelShowPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -71,6 +70,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.listViewRecord = new System.Windows.Forms.ListView();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -81,7 +81,6 @@
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelAqDisplayControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStripMain.SuspendLayout();
-            this.groupBoxTest.SuspendLayout();
             this.tableLayoutPanelShowPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -100,11 +99,11 @@
             this.aqDisplayLocation.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.aqDisplayLocation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aqDisplayLocation.Image = null;
-            this.aqDisplayLocation.Location = new System.Drawing.Point(3, 2);
-            this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.aqDisplayLocation.Location = new System.Drawing.Point(2, 2);
+            this.aqDisplayLocation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayLocation.Name = "aqDisplayLocation";
             this.aqDisplayLocation.ScrollBar = false;
-            this.aqDisplayLocation.Size = new System.Drawing.Size(580, 574);
+            this.aqDisplayLocation.Size = new System.Drawing.Size(567, 922);
             this.aqDisplayLocation.TabIndex = 0;
             // 
             // menuStripMain
@@ -116,8 +115,7 @@
             this.ToolStripMenuItemHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStripMain.Size = new System.Drawing.Size(1344, 28);
+            this.menuStripMain.Size = new System.Drawing.Size(1271, 25);
             this.menuStripMain.TabIndex = 9;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -130,41 +128,41 @@
             this.ToolStripMenuItemSetDectection,
             this.ToolStripMenuItemSetRobotConnect});
             this.ToolStripMenuItemSetParameter.Name = "ToolStripMenuItemSetParameter";
-            this.ToolStripMenuItemSetParameter.Size = new System.Drawing.Size(81, 24);
+            this.ToolStripMenuItemSetParameter.Size = new System.Drawing.Size(68, 21);
             this.ToolStripMenuItemSetParameter.Text = "参数设置";
             // 
             // ToolStripMenuItemSetAcqusition
             // 
             this.ToolStripMenuItemSetAcqusition.Name = "ToolStripMenuItemSetAcqusition";
-            this.ToolStripMenuItemSetAcqusition.Size = new System.Drawing.Size(189, 26);
+            this.ToolStripMenuItemSetAcqusition.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItemSetAcqusition.Text = "取像设置";
             this.ToolStripMenuItemSetAcqusition.Click += new System.EventHandler(this.ToolStripMenuItemSetAcqusition_Click);
             // 
             // ToolStripMenuItemSetCalibration
             // 
             this.ToolStripMenuItemSetCalibration.Name = "ToolStripMenuItemSetCalibration";
-            this.ToolStripMenuItemSetCalibration.Size = new System.Drawing.Size(189, 26);
+            this.ToolStripMenuItemSetCalibration.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItemSetCalibration.Text = "标定设置";
             this.ToolStripMenuItemSetCalibration.Click += new System.EventHandler(this.ToolStripMenuItemSetCalibration_Click);
             // 
             // ToolStripMenuItemSetLocation
             // 
             this.ToolStripMenuItemSetLocation.Name = "ToolStripMenuItemSetLocation";
-            this.ToolStripMenuItemSetLocation.Size = new System.Drawing.Size(189, 26);
+            this.ToolStripMenuItemSetLocation.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItemSetLocation.Text = "定位设置";
             this.ToolStripMenuItemSetLocation.Click += new System.EventHandler(this.ToolStripMenuItemSetLocation_Click);
             // 
             // ToolStripMenuItemSetDectection
             // 
             this.ToolStripMenuItemSetDectection.Name = "ToolStripMenuItemSetDectection";
-            this.ToolStripMenuItemSetDectection.Size = new System.Drawing.Size(189, 26);
+            this.ToolStripMenuItemSetDectection.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItemSetDectection.Text = "检测设置";
             this.ToolStripMenuItemSetDectection.Click += new System.EventHandler(this.ToolStripMenuItemSetDectection_Click);
             // 
             // ToolStripMenuItemSetRobotConnect
             // 
             this.ToolStripMenuItemSetRobotConnect.Name = "ToolStripMenuItemSetRobotConnect";
-            this.ToolStripMenuItemSetRobotConnect.Size = new System.Drawing.Size(189, 26);
+            this.ToolStripMenuItemSetRobotConnect.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItemSetRobotConnect.Text = "机器人通讯设置";
             this.ToolStripMenuItemSetRobotConnect.Click += new System.EventHandler(this.ToolStripMenuItemSetRobotConnect_Click);
             // 
@@ -182,18 +180,18 @@
             this.触发检测RPCToolStripMenuItem,
             this.toolStripSeparator4});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
-            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.工具ToolStripMenuItem.Text = "工具";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
             // 
             // OpendetectAcquistionToolStripMenuItem
             // 
             this.OpendetectAcquistionToolStripMenuItem.Name = "OpendetectAcquistionToolStripMenuItem";
-            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.OpendetectAcquistionToolStripMenuItem.Text = "开启检测实时采集";
             this.OpendetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启检测实时采集ToolStripMenuItem_Click);
             // 
@@ -202,19 +200,19 @@
             this.ClosedetectAcquistionToolStripMenuItem.Checked = true;
             this.ClosedetectAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ClosedetectAcquistionToolStripMenuItem.Name = "ClosedetectAcquistionToolStripMenuItem";
-            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.ClosedetectAcquistionToolStripMenuItem.Text = "关闭检测实时采集";
             this.ClosedetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭检测实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // OpenLocationAcquistionToolStripMenuItem
             // 
             this.OpenLocationAcquistionToolStripMenuItem.Name = "OpenLocationAcquistionToolStripMenuItem";
-            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.OpenLocationAcquistionToolStripMenuItem.Text = "开启定位实时采集";
             this.OpenLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启定位实时采集ToolStripMenuItem_Click);
             // 
@@ -223,46 +221,46 @@
             this.CloseLocationAcquistionToolStripMenuItem.Checked = true;
             this.CloseLocationAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CloseLocationAcquistionToolStripMenuItem.Name = "CloseLocationAcquistionToolStripMenuItem";
-            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.CloseLocationAcquistionToolStripMenuItem.Text = "关闭定位实时采集";
             this.CloseLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭定位实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(169, 6);
             // 
             // 触发定位RPCToolStripMenuItem
             // 
             this.触发定位RPCToolStripMenuItem.Name = "触发定位RPCToolStripMenuItem";
-            this.触发定位RPCToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.触发定位RPCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.触发定位RPCToolStripMenuItem.Text = "触发定位RPC";
             this.触发定位RPCToolStripMenuItem.Click += new System.EventHandler(this.触发定位RPCToolStripMenuItem_Click);
             // 
             // 触发检测RPCToolStripMenuItem
             // 
             this.触发检测RPCToolStripMenuItem.Name = "触发检测RPCToolStripMenuItem";
-            this.触发检测RPCToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.触发检测RPCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.触发检测RPCToolStripMenuItem.Text = "触发检测RPC";
             this.触发检测RPCToolStripMenuItem.Click += new System.EventHandler(this.触发检测RPCToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(169, 6);
             // 
             // ToolStripMenuItemHelp
             // 
             this.ToolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemLog});
             this.ToolStripMenuItemHelp.Name = "ToolStripMenuItemHelp";
-            this.ToolStripMenuItemHelp.Size = new System.Drawing.Size(51, 24);
+            this.ToolStripMenuItemHelp.Size = new System.Drawing.Size(44, 21);
             this.ToolStripMenuItemHelp.Text = "帮助";
             // 
             // ToolStripMenuItemLog
             // 
             this.ToolStripMenuItemLog.Name = "ToolStripMenuItemLog";
-            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(144, 26);
+            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(124, 22);
             this.ToolStripMenuItemLog.Text = "日志信息";
             // 
             // label_Title
@@ -270,62 +268,42 @@
             this.label_Title.AutoSize = true;
             this.label_Title.Font = new System.Drawing.Font("SimSun", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_Title.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label_Title.Location = new System.Drawing.Point(307, 19);
+            this.label_Title.Location = new System.Drawing.Point(230, 15);
+            this.label_Title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_Title.Name = "label_Title";
-            this.label_Title.Size = new System.Drawing.Size(745, 60);
+            this.label_Title.Size = new System.Drawing.Size(596, 48);
             this.label_Title.TabIndex = 0;
             this.label_Title.Text = "三通管定位及缺陷检测软件";
             this.label_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonTriggerLocationRPC
             // 
-            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(180, 10);
-            this.buttonTriggerLocationRPC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(135, 8);
             this.buttonTriggerLocationRPC.Name = "buttonTriggerLocationRPC";
-            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(120, 31);
+            this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(90, 25);
             this.buttonTriggerLocationRPC.TabIndex = 11;
             this.buttonTriggerLocationRPC.Text = "触发定位RPC";
             this.buttonTriggerLocationRPC.UseVisualStyleBackColor = true;
-            this.buttonTriggerLocationRPC.Visible = false;
             this.buttonTriggerLocationRPC.Click += new System.EventHandler(this.buttonTriggerLocationRPC_Click);
             // 
             // groupBoxTest
             // 
-            this.groupBoxTest.Controls.Add(this.listViewRecord);
-            this.groupBoxTest.Location = new System.Drawing.Point(981, 38);
-            this.groupBoxTest.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxTest.Location = new System.Drawing.Point(736, 30);
             this.groupBoxTest.Name = "groupBoxTest";
-            this.groupBoxTest.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBoxTest.Size = new System.Drawing.Size(95, 41);
+            this.groupBoxTest.Size = new System.Drawing.Size(71, 33);
             this.groupBoxTest.TabIndex = 12;
             this.groupBoxTest.TabStop = false;
             this.groupBoxTest.Text = "测试模式";
             this.groupBoxTest.Visible = false;
             // 
-            // listViewRecord
-            // 
-            this.listViewRecord.FullRowSelect = true;
-            this.listViewRecord.GridLines = true;
-            this.listViewRecord.LabelEdit = true;
-            this.listViewRecord.Location = new System.Drawing.Point(35, 16);
-            this.listViewRecord.Margin = new System.Windows.Forms.Padding(4);
-            this.listViewRecord.MultiSelect = false;
-            this.listViewRecord.Name = "listViewRecord";
-            this.listViewRecord.Size = new System.Drawing.Size(52, 23);
-            this.listViewRecord.TabIndex = 9;
-            this.listViewRecord.UseCompatibleStateImageBehavior = false;
-            this.listViewRecord.View = System.Windows.Forms.View.Details;
-            // 
             // buttonTriggerDetectionRPC
             // 
-            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(180, 49);
-            this.buttonTriggerDetectionRPC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(135, 39);
             this.buttonTriggerDetectionRPC.Name = "buttonTriggerDetectionRPC";
-            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(120, 31);
+            this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(90, 25);
             this.buttonTriggerDetectionRPC.TabIndex = 11;
             this.buttonTriggerDetectionRPC.Text = "触发检测RPC";
             this.buttonTriggerDetectionRPC.UseVisualStyleBackColor = true;
-            this.buttonTriggerDetectionRPC.Visible = false;
             this.buttonTriggerDetectionRPC.Click += new System.EventHandler(this.buttonTriggerDetectionRPC_Click);
             // 
             // aqDisplayDectection
@@ -334,11 +312,11 @@
             this.aqDisplayDectection.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.aqDisplayDectection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aqDisplayDectection.Image = null;
-            this.aqDisplayDectection.Location = new System.Drawing.Point(589, 2);
-            this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.aqDisplayDectection.Location = new System.Drawing.Point(573, 2);
+            this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayDectection.Name = "aqDisplayDectection";
             this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(580, 574);
+            this.aqDisplayDectection.Size = new System.Drawing.Size(568, 922);
             this.aqDisplayDectection.TabIndex = 1;
             // 
             // tableLayoutPanelShowPanel
@@ -352,7 +330,8 @@
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel6, 0, 3);
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel7, 0, 4);
             this.tableLayoutPanelShowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelShowPanel.Location = new System.Drawing.Point(1187, 3);
+            this.tableLayoutPanelShowPanel.Location = new System.Drawing.Point(1153, 2);
+            this.tableLayoutPanelShowPanel.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelShowPanel.Name = "tableLayoutPanelShowPanel";
             this.tableLayoutPanelShowPanel.RowCount = 5;
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.60972F));
@@ -360,7 +339,7 @@
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.60972F));
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.31156F));
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.15745F));
-            this.tableLayoutPanelShowPanel.Size = new System.Drawing.Size(154, 684);
+            this.tableLayoutPanelShowPanel.Size = new System.Drawing.Size(116, 1010);
             this.tableLayoutPanelShowPanel.TabIndex = 12;
             // 
             // panel1
@@ -369,18 +348,20 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(4, 4);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(146, 86);
+            this.panel1.Size = new System.Drawing.Size(110, 132);
             this.panel1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(17, 9);
+            this.label1.Location = new System.Drawing.Point(13, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 24);
+            this.label1.Size = new System.Drawing.Size(85, 19);
             this.label1.TabIndex = 4;
             this.label1.Text = "定位结果";
             // 
@@ -389,9 +370,10 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.label8.Location = new System.Drawing.Point(33, 50);
+            this.label8.Location = new System.Drawing.Point(25, 40);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(75, 30);
+            this.label8.Size = new System.Drawing.Size(60, 24);
             this.label8.TabIndex = 4;
             this.label8.Text = "极好";
             // 
@@ -401,18 +383,20 @@
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.labelLocationScore);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(4, 97);
+            this.panel2.Location = new System.Drawing.Point(3, 140);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(146, 77);
+            this.panel2.Size = new System.Drawing.Size(110, 119);
             this.panel2.TabIndex = 1;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(17, 7);
+            this.label7.Location = new System.Drawing.Point(13, 6);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 24);
+            this.label7.Size = new System.Drawing.Size(85, 19);
             this.label7.TabIndex = 4;
             this.label7.Text = "定位得分";
             // 
@@ -421,9 +405,10 @@
             this.labelLocationScore.AutoSize = true;
             this.labelLocationScore.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelLocationScore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.labelLocationScore.Location = new System.Drawing.Point(16, 43);
+            this.labelLocationScore.Location = new System.Drawing.Point(12, 34);
+            this.labelLocationScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelLocationScore.Name = "labelLocationScore";
-            this.labelLocationScore.Size = new System.Drawing.Size(109, 30);
+            this.labelLocationScore.Size = new System.Drawing.Size(88, 24);
             this.labelLocationScore.TabIndex = 4;
             this.labelLocationScore.Text = "95.321";
             // 
@@ -432,18 +417,20 @@
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(4, 181);
+            this.panel3.Location = new System.Drawing.Point(3, 264);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(146, 86);
+            this.panel3.Size = new System.Drawing.Size(110, 132);
             this.panel3.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(17, 15);
+            this.label4.Location = new System.Drawing.Point(13, 12);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(106, 24);
+            this.label4.Size = new System.Drawing.Size(85, 19);
             this.label4.TabIndex = 4;
             this.label4.Text = "检测结果";
             // 
@@ -452,9 +439,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(33, 50);
+            this.label3.Location = new System.Drawing.Point(25, 40);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 30);
+            this.label3.Size = new System.Drawing.Size(60, 24);
             this.label3.TabIndex = 4;
             this.label3.Text = "不良";
             // 
@@ -463,9 +451,10 @@
             this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.label5);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(4, 274);
+            this.panel6.Location = new System.Drawing.Point(3, 401);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(146, 77);
+            this.panel6.Size = new System.Drawing.Size(110, 119);
             this.panel6.TabIndex = 3;
             // 
             // label6
@@ -473,9 +462,10 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(48, 49);
+            this.label6.Location = new System.Drawing.Point(36, 39);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 30);
+            this.label6.Size = new System.Drawing.Size(36, 24);
             this.label6.TabIndex = 4;
             this.label6.Text = "10";
             // 
@@ -483,21 +473,35 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(17, 7);
+            this.label5.Location = new System.Drawing.Point(13, 6);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(106, 24);
+            this.label5.Size = new System.Drawing.Size(85, 19);
             this.label5.TabIndex = 4;
             this.label5.Text = "不良个数";
             // 
             // panel7
             // 
+            this.panel7.Controls.Add(this.listViewRecord);
             this.panel7.Controls.Add(this.buttonRun);
             this.panel7.Controls.Add(this.buttonStop);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(4, 358);
+            this.panel7.Location = new System.Drawing.Point(3, 525);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(146, 322);
+            this.panel7.Size = new System.Drawing.Size(110, 482);
             this.panel7.TabIndex = 4;
+            // 
+            // listViewRecord
+            // 
+            this.listViewRecord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listViewRecord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewRecord.Location = new System.Drawing.Point(0, 0);
+            this.listViewRecord.Name = "listViewRecord";
+            this.listViewRecord.Size = new System.Drawing.Size(110, 360);
+            this.listViewRecord.TabIndex = 4;
+            this.listViewRecord.UseCompatibleStateImageBehavior = false;
+            this.listViewRecord.View = System.Windows.Forms.View.Details;
             // 
             // buttonRun
             // 
@@ -505,10 +509,10 @@
             this.buttonRun.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonRun.Image = global::IntegrationTesting.Properties.Resources.Run;
             this.buttonRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRun.Location = new System.Drawing.Point(0, 170);
-            this.buttonRun.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonRun.Location = new System.Drawing.Point(0, 360);
+            this.buttonRun.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(146, 76);
+            this.buttonRun.Size = new System.Drawing.Size(110, 61);
             this.buttonRun.TabIndex = 3;
             this.buttonRun.Text = "运行";
             this.buttonRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -522,10 +526,10 @@
             this.buttonStop.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonStop.Image = global::IntegrationTesting.Properties.Resources.Stop;
             this.buttonStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonStop.Location = new System.Drawing.Point(0, 246);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonStop.Location = new System.Drawing.Point(0, 421);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(146, 76);
+            this.buttonStop.Size = new System.Drawing.Size(110, 61);
             this.buttonStop.TabIndex = 3;
             this.buttonStop.Text = "停止";
             this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -535,9 +539,10 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 718);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1344, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1271, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -545,15 +550,16 @@
             // 
             this.tableLayoutPanelTitle.ColumnCount = 2;
             this.tableLayoutPanelTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tableLayoutPanelTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanelTitle.Controls.Add(this.tableLayoutPanelShowPanel, 1, 0);
             this.tableLayoutPanelTitle.Controls.Add(this.tableLayoutPanelLeft, 0, 0);
             this.tableLayoutPanelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTitle.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanelTitle.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanelTitle.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelTitle.Name = "tableLayoutPanelTitle";
             this.tableLayoutPanelTitle.RowCount = 1;
             this.tableLayoutPanelTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(1344, 690);
+            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(1271, 1014);
             this.tableLayoutPanelTitle.TabIndex = 14;
             // 
             // tableLayoutPanelLeft
@@ -563,12 +569,13 @@
             this.tableLayoutPanelLeft.Controls.Add(this.panelTitle, 0, 0);
             this.tableLayoutPanelLeft.Controls.Add(this.tableLayoutPanelAqDisplayControls, 0, 1);
             this.tableLayoutPanelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelLeft.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanelLeft.Location = new System.Drawing.Point(2, 2);
+            this.tableLayoutPanelLeft.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelLeft.Name = "tableLayoutPanelLeft";
             this.tableLayoutPanelLeft.RowCount = 2;
-            this.tableLayoutPanelLeft.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelLeft.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanelLeft.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelLeft.Size = new System.Drawing.Size(1178, 684);
+            this.tableLayoutPanelLeft.Size = new System.Drawing.Size(1147, 1010);
             this.tableLayoutPanelLeft.TabIndex = 14;
             // 
             // panelTitle
@@ -583,9 +590,10 @@
             this.panelTitle.Controls.Add(this.checkBoxCameraDetection);
             this.panelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panelTitle.Location = new System.Drawing.Point(3, 3);
+            this.panelTitle.Location = new System.Drawing.Point(2, 2);
+            this.panelTitle.Margin = new System.Windows.Forms.Padding(2);
             this.panelTitle.Name = "panelTitle";
-            this.panelTitle.Size = new System.Drawing.Size(1172, 94);
+            this.panelTitle.Size = new System.Drawing.Size(1143, 76);
             this.panelTitle.TabIndex = 0;
             this.panelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
@@ -596,15 +604,13 @@
             this.checkBoxCameraAcquisition.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraAcquisition.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraAcquisition.Image")));
             this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(7, 48);
-            this.checkBoxCameraAcquisition.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(7, 8);
             this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
-            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(152, 31);
+            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(114, 25);
             this.checkBoxCameraAcquisition.TabIndex = 6;
             this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
-            this.checkBoxCameraAcquisition.Visible = false;
             this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
             // 
             // checkBoxCameraDetection
@@ -614,15 +620,13 @@
             this.checkBoxCameraDetection.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraDetection.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraDetection.Image")));
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraDetection.Location = new System.Drawing.Point(7, 9);
-            this.checkBoxCameraDetection.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxCameraDetection.Location = new System.Drawing.Point(7, 38);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
-            this.checkBoxCameraDetection.Size = new System.Drawing.Size(152, 31);
+            this.checkBoxCameraDetection.Size = new System.Drawing.Size(114, 25);
             this.checkBoxCameraDetection.TabIndex = 10;
             this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraDetection.UseVisualStyleBackColor = false;
-            this.checkBoxCameraDetection.Visible = false;
             this.checkBoxCameraDetection.CheckedChanged += new System.EventHandler(this.checkBoxCameraDetection_CheckedChanged);
             // 
             // tableLayoutPanelAqDisplayControls
@@ -633,24 +637,24 @@
             this.tableLayoutPanelAqDisplayControls.Controls.Add(this.aqDisplayLocation, 0, 0);
             this.tableLayoutPanelAqDisplayControls.Controls.Add(this.aqDisplayDectection, 1, 0);
             this.tableLayoutPanelAqDisplayControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelAqDisplayControls.Location = new System.Drawing.Point(3, 103);
+            this.tableLayoutPanelAqDisplayControls.Location = new System.Drawing.Point(2, 82);
+            this.tableLayoutPanelAqDisplayControls.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelAqDisplayControls.Name = "tableLayoutPanelAqDisplayControls";
             this.tableLayoutPanelAqDisplayControls.RowCount = 1;
             this.tableLayoutPanelAqDisplayControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAqDisplayControls.Size = new System.Drawing.Size(1172, 578);
+            this.tableLayoutPanelAqDisplayControls.Size = new System.Drawing.Size(1143, 926);
             this.tableLayoutPanelAqDisplayControls.TabIndex = 1;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1344, 740);
+            this.ClientSize = new System.Drawing.Size(1271, 1061);
             this.Controls.Add(this.tableLayoutPanelTitle);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "三通管定位及缺陷检测软件";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -658,7 +662,6 @@
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            this.groupBoxTest.ResumeLayout(false);
             this.tableLayoutPanelShowPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -694,7 +697,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemLog;
         private System.Windows.Forms.CheckBox checkBoxCameraDetection;
-        private System.Windows.Forms.ListView listViewRecord;
         private System.Windows.Forms.Button buttonTriggerLocationRPC;
         private System.Windows.Forms.GroupBox groupBoxTest;
         private System.Windows.Forms.Button buttonTriggerDetectionRPC;
@@ -731,6 +733,7 @@
         private System.Windows.Forms.ToolStripMenuItem CloseLocationAcquistionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ListView listViewRecord;
     }
 }
 

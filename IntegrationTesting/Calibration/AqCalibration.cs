@@ -242,7 +242,7 @@ namespace IntegrationTesting
                 HTuple hv_Diameter = new HTuple();
                 hv_Diameter = 0;
                 HTuple hv_Threshold = new HTuple();
-                hv_Threshold = 150;
+                hv_Threshold = 100;
                 HTuple hv_isFind = new HTuple();
                 HTuple hv_Rows_cc = new HTuple();
                 HTuple hv_Cols_cc = new HTuple();

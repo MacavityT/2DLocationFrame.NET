@@ -414,6 +414,8 @@ namespace AqVision.Location
             XldPointCountsM = xldPointCountsM.LArr;
             XldColsM = xldColsM.DArr;
             XldRowsM = xldRowsM.DArr;
+
+            image.Dispose();//1061.388
         }
 
         public bool SaveModel(string modelFullPath)
