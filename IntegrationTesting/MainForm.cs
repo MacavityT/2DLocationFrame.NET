@@ -176,7 +176,7 @@ namespace IntegrationTesting
                     }
                      
                 }));
-                //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
+                SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 GC.Collect();
                 AddMessageToListView("TriggerDone");
             }
@@ -247,7 +247,7 @@ namespace IntegrationTesting
                     aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
                     //m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
                     aqDisplayDectection.Update();
-                    //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
+                    SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                 }));
 //                 if (m_aidiMangement.DetectResult)
 //                 {
@@ -289,9 +289,11 @@ namespace IntegrationTesting
             string timeNowToString = string.Format("{0}{1}{2}{3}{4}{5}{6}", DateTime.Now.Year, DateTime.Now.Month,
                                DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
-            string picSourceName = string.Format("{0}{1}_{2}_.bmp", sourcePath, count.ToString(), timeNowToString);
-            string picResultFullName = string.Format("{0}{1}_{2}_.bmp", resultPath, count.ToString(), timeNowToString);
-            bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Bmp);
+            string picSourceName = string.Format("{0}{1}_{2}_.jpg", sourcePath, count.ToString(), timeNowToString);
+            string picResultFullName = string.Format("{0}{1}_{2}_.jpg", resultPath, count.ToString(), timeNowToString);
+
+            //ApplyHalcon.ImageConvert.Bitmap2HImage_8(bitmap);
+            bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Jpeg);
             aqDisplay.CreateContentBitmap().Save(picResultFullName); // 1304.456
 
             gTemplate.Dispose();
