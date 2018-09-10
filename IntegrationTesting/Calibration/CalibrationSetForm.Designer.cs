@@ -97,10 +97,9 @@
             // 
             this.listViewParameterSet.FullRowSelect = true;
             this.listViewParameterSet.GridLines = true;
-            this.listViewParameterSet.Location = new System.Drawing.Point(9, 239);
-            this.listViewParameterSet.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewParameterSet.Location = new System.Drawing.Point(7, 191);
             this.listViewParameterSet.Name = "listViewParameterSet";
-            this.listViewParameterSet.Size = new System.Drawing.Size(694, 251);
+            this.listViewParameterSet.Size = new System.Drawing.Size(522, 202);
             this.listViewParameterSet.TabIndex = 0;
             this.listViewParameterSet.UseCompatibleStateImageBehavior = false;
             this.listViewParameterSet.View = System.Windows.Forms.View.Details;
@@ -110,280 +109,251 @@
             // 
             this.comboBoxModeList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxModeList.FormattingEnabled = true;
-            this.comboBoxModeList.Location = new System.Drawing.Point(9, 498);
-            this.comboBoxModeList.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxModeList.Location = new System.Drawing.Point(7, 398);
             this.comboBoxModeList.Name = "comboBoxModeList";
-            this.comboBoxModeList.Size = new System.Drawing.Size(691, 23);
+            this.comboBoxModeList.Size = new System.Drawing.Size(519, 20);
             this.comboBoxModeList.TabIndex = 1;
             this.comboBoxModeList.SelectedIndexChanged += new System.EventHandler(this.comboBoxModeList_SelectedIndexChanged);
             // 
             // labelResultImageX
             // 
             this.labelResultImageX.AutoSize = true;
-            this.labelResultImageX.Location = new System.Drawing.Point(3, 19);
-            this.labelResultImageX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelResultImageX.Location = new System.Drawing.Point(2, 15);
             this.labelResultImageX.Name = "labelResultImageX";
-            this.labelResultImageX.Size = new System.Drawing.Size(127, 15);
+            this.labelResultImageX.Size = new System.Drawing.Size(95, 12);
             this.labelResultImageX.TabIndex = 2;
             this.labelResultImageX.Text = "Result Image X:";
             // 
             // textBoxImageX
             // 
-            this.textBoxImageX.Location = new System.Drawing.Point(132, 12);
-            this.textBoxImageX.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxImageX.Location = new System.Drawing.Point(99, 10);
             this.textBoxImageX.Name = "textBoxImageX";
-            this.textBoxImageX.Size = new System.Drawing.Size(271, 25);
+            this.textBoxImageX.Size = new System.Drawing.Size(204, 21);
             this.textBoxImageX.TabIndex = 3;
             this.textBoxImageX.Text = "100";
             // 
             // labelResultImageY
             // 
             this.labelResultImageY.AutoSize = true;
-            this.labelResultImageY.Location = new System.Drawing.Point(3, 52);
-            this.labelResultImageY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelResultImageY.Location = new System.Drawing.Point(2, 42);
             this.labelResultImageY.Name = "labelResultImageY";
-            this.labelResultImageY.Size = new System.Drawing.Size(127, 15);
+            this.labelResultImageY.Size = new System.Drawing.Size(95, 12);
             this.labelResultImageY.TabIndex = 2;
             this.labelResultImageY.Text = "Result Image Y:";
             // 
             // textBoxImageY
             // 
-            this.textBoxImageY.Location = new System.Drawing.Point(132, 46);
-            this.textBoxImageY.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxImageY.Location = new System.Drawing.Point(99, 37);
             this.textBoxImageY.Name = "textBoxImageY";
-            this.textBoxImageY.Size = new System.Drawing.Size(271, 25);
+            this.textBoxImageY.Size = new System.Drawing.Size(204, 21);
             this.textBoxImageY.TabIndex = 3;
             this.textBoxImageY.Text = "100";
             // 
             // labelRobotPosX
             // 
             this.labelRobotPosX.AutoSize = true;
-            this.labelRobotPosX.Location = new System.Drawing.Point(3, 120);
-            this.labelRobotPosX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelRobotPosX.Location = new System.Drawing.Point(2, 96);
             this.labelRobotPosX.Name = "labelRobotPosX";
-            this.labelRobotPosX.Size = new System.Drawing.Size(103, 15);
+            this.labelRobotPosX.Size = new System.Drawing.Size(77, 12);
             this.labelRobotPosX.TabIndex = 2;
             this.labelRobotPosX.Text = "Robot Pos X:";
             // 
             // textBoxRobotPosX
             // 
-            this.textBoxRobotPosX.Location = new System.Drawing.Point(132, 114);
-            this.textBoxRobotPosX.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotPosX.Location = new System.Drawing.Point(99, 91);
             this.textBoxRobotPosX.Name = "textBoxRobotPosX";
-            this.textBoxRobotPosX.Size = new System.Drawing.Size(271, 25);
+            this.textBoxRobotPosX.Size = new System.Drawing.Size(204, 21);
             this.textBoxRobotPosX.TabIndex = 3;
             this.textBoxRobotPosX.Text = "100";
             // 
             // labelRobotPosY
             // 
             this.labelRobotPosY.AutoSize = true;
-            this.labelRobotPosY.Location = new System.Drawing.Point(3, 154);
-            this.labelRobotPosY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelRobotPosY.Location = new System.Drawing.Point(2, 123);
             this.labelRobotPosY.Name = "labelRobotPosY";
-            this.labelRobotPosY.Size = new System.Drawing.Size(103, 15);
+            this.labelRobotPosY.Size = new System.Drawing.Size(77, 12);
             this.labelRobotPosY.TabIndex = 2;
             this.labelRobotPosY.Text = "Robot Pos Y:";
             // 
             // textBoxRobotPosY
             // 
-            this.textBoxRobotPosY.Location = new System.Drawing.Point(132, 148);
-            this.textBoxRobotPosY.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotPosY.Location = new System.Drawing.Point(99, 118);
             this.textBoxRobotPosY.Name = "textBoxRobotPosY";
-            this.textBoxRobotPosY.Size = new System.Drawing.Size(271, 25);
+            this.textBoxRobotPosY.Size = new System.Drawing.Size(204, 21);
             this.textBoxRobotPosY.TabIndex = 3;
             this.textBoxRobotPosY.Text = "100";
             // 
             // labelRobotPosRz
             // 
             this.labelRobotPosRz.AutoSize = true;
-            this.labelRobotPosRz.Location = new System.Drawing.Point(3, 188);
-            this.labelRobotPosRz.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelRobotPosRz.Location = new System.Drawing.Point(2, 150);
             this.labelRobotPosRz.Name = "labelRobotPosRz";
-            this.labelRobotPosRz.Size = new System.Drawing.Size(111, 15);
+            this.labelRobotPosRz.Size = new System.Drawing.Size(83, 12);
             this.labelRobotPosRz.TabIndex = 2;
             this.labelRobotPosRz.Text = "Robot Pos Rz:";
             // 
             // textBoxRobotPosRz
             // 
-            this.textBoxRobotPosRz.Location = new System.Drawing.Point(132, 181);
-            this.textBoxRobotPosRz.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotPosRz.Location = new System.Drawing.Point(99, 145);
             this.textBoxRobotPosRz.Name = "textBoxRobotPosRz";
-            this.textBoxRobotPosRz.Size = new System.Drawing.Size(271, 25);
+            this.textBoxRobotPosRz.Size = new System.Drawing.Size(204, 21);
             this.textBoxRobotPosRz.TabIndex = 3;
             this.textBoxRobotPosRz.Text = "100";
             // 
             // labelResultImageA
             // 
             this.labelResultImageA.AutoSize = true;
-            this.labelResultImageA.Location = new System.Drawing.Point(3, 85);
-            this.labelResultImageA.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelResultImageA.Location = new System.Drawing.Point(2, 68);
             this.labelResultImageA.Name = "labelResultImageA";
-            this.labelResultImageA.Size = new System.Drawing.Size(127, 15);
+            this.labelResultImageA.Size = new System.Drawing.Size(95, 12);
             this.labelResultImageA.TabIndex = 2;
             this.labelResultImageA.Text = "Result Image A:";
             // 
             // textBoxImageA
             // 
-            this.textBoxImageA.Location = new System.Drawing.Point(132, 79);
-            this.textBoxImageA.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxImageA.Location = new System.Drawing.Point(99, 63);
             this.textBoxImageA.Name = "textBoxImageA";
-            this.textBoxImageA.Size = new System.Drawing.Size(271, 25);
+            this.textBoxImageA.Size = new System.Drawing.Size(204, 21);
             this.textBoxImageA.TabIndex = 3;
             this.textBoxImageA.Text = "100";
             // 
             // labelCatchRobotX
             // 
             this.labelCatchRobotX.AutoSize = true;
-            this.labelCatchRobotX.Location = new System.Drawing.Point(3, 221);
-            this.labelCatchRobotX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCatchRobotX.Location = new System.Drawing.Point(2, 177);
             this.labelCatchRobotX.Name = "labelCatchRobotX";
-            this.labelCatchRobotX.Size = new System.Drawing.Size(119, 15);
+            this.labelCatchRobotX.Size = new System.Drawing.Size(89, 12);
             this.labelCatchRobotX.TabIndex = 2;
             this.labelCatchRobotX.Text = "Catch Robot X:";
             // 
             // textBoxCatchRobotX
             // 
-            this.textBoxCatchRobotX.Location = new System.Drawing.Point(132, 215);
-            this.textBoxCatchRobotX.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxCatchRobotX.Location = new System.Drawing.Point(99, 172);
             this.textBoxCatchRobotX.Name = "textBoxCatchRobotX";
-            this.textBoxCatchRobotX.Size = new System.Drawing.Size(271, 25);
+            this.textBoxCatchRobotX.Size = new System.Drawing.Size(204, 21);
             this.textBoxCatchRobotX.TabIndex = 3;
             this.textBoxCatchRobotX.Text = "100";
             // 
             // labelCatchRobotY
             // 
             this.labelCatchRobotY.AutoSize = true;
-            this.labelCatchRobotY.Location = new System.Drawing.Point(3, 255);
-            this.labelCatchRobotY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCatchRobotY.Location = new System.Drawing.Point(2, 204);
             this.labelCatchRobotY.Name = "labelCatchRobotY";
-            this.labelCatchRobotY.Size = new System.Drawing.Size(119, 15);
+            this.labelCatchRobotY.Size = new System.Drawing.Size(89, 12);
             this.labelCatchRobotY.TabIndex = 2;
             this.labelCatchRobotY.Text = "Catch Robot Y:";
             // 
             // textBoxCatchRobotY
             // 
-            this.textBoxCatchRobotY.Location = new System.Drawing.Point(132, 249);
-            this.textBoxCatchRobotY.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxCatchRobotY.Location = new System.Drawing.Point(99, 199);
             this.textBoxCatchRobotY.Name = "textBoxCatchRobotY";
-            this.textBoxCatchRobotY.Size = new System.Drawing.Size(271, 25);
+            this.textBoxCatchRobotY.Size = new System.Drawing.Size(204, 21);
             this.textBoxCatchRobotY.TabIndex = 3;
             this.textBoxCatchRobotY.Text = "100";
             // 
             // labelCatchRobotRz
             // 
             this.labelCatchRobotRz.AutoSize = true;
-            this.labelCatchRobotRz.Location = new System.Drawing.Point(5, 289);
-            this.labelCatchRobotRz.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCatchRobotRz.Location = new System.Drawing.Point(4, 231);
             this.labelCatchRobotRz.Name = "labelCatchRobotRz";
-            this.labelCatchRobotRz.Size = new System.Drawing.Size(127, 15);
+            this.labelCatchRobotRz.Size = new System.Drawing.Size(95, 12);
             this.labelCatchRobotRz.TabIndex = 2;
             this.labelCatchRobotRz.Text = "Catch Robot Rz:";
             // 
             // textBoxCatchRobotRz
             // 
-            this.textBoxCatchRobotRz.Location = new System.Drawing.Point(132, 282);
-            this.textBoxCatchRobotRz.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxCatchRobotRz.Location = new System.Drawing.Point(99, 226);
             this.textBoxCatchRobotRz.Name = "textBoxCatchRobotRz";
-            this.textBoxCatchRobotRz.Size = new System.Drawing.Size(271, 25);
+            this.textBoxCatchRobotRz.Size = new System.Drawing.Size(204, 21);
             this.textBoxCatchRobotRz.TabIndex = 3;
             this.textBoxCatchRobotRz.Text = "100";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(412, 19);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(309, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 15);
+            this.label1.Size = new System.Drawing.Size(35, 12);
             this.label1.TabIndex = 2;
             this.label1.Text = "Pixel";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(412, 52);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(309, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 15);
+            this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "Pixel";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(412, 120);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(309, 96);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 15);
+            this.label3.Size = new System.Drawing.Size(17, 12);
             this.label3.TabIndex = 2;
             this.label3.Text = "mm";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(412, 154);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(309, 123);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 15);
+            this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 2;
             this.label4.Text = "mm";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(412, 188);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(309, 150);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 15);
+            this.label5.Size = new System.Drawing.Size(23, 12);
             this.label5.TabIndex = 2;
             this.label5.Text = "deg";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(412, 85);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(309, 68);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 15);
+            this.label6.Size = new System.Drawing.Size(23, 12);
             this.label6.TabIndex = 2;
             this.label6.Text = "deg";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(412, 221);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(309, 177);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(23, 15);
+            this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 2;
             this.label7.Text = "mm";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(412, 255);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(309, 204);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 15);
+            this.label8.Size = new System.Drawing.Size(17, 12);
             this.label8.TabIndex = 2;
             this.label8.Text = "mm";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(412, 289);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(309, 231);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(31, 15);
+            this.label9.Size = new System.Drawing.Size(23, 12);
             this.label9.TabIndex = 2;
             this.label9.Text = "deg";
             // 
             // buttonNewLine
             // 
-            this.buttonNewLine.Location = new System.Drawing.Point(524, 33);
-            this.buttonNewLine.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonNewLine.Location = new System.Drawing.Point(393, 26);
             this.buttonNewLine.Name = "buttonNewLine";
-            this.buttonNewLine.Size = new System.Drawing.Size(123, 32);
+            this.buttonNewLine.Size = new System.Drawing.Size(92, 26);
             this.buttonNewLine.TabIndex = 4;
             this.buttonNewLine.Text = "新建行";
             this.buttonNewLine.UseVisualStyleBackColor = true;
@@ -391,10 +361,9 @@
             // 
             // buttonDeleteLine
             // 
-            this.buttonDeleteLine.Location = new System.Drawing.Point(464, 48);
-            this.buttonDeleteLine.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDeleteLine.Location = new System.Drawing.Point(348, 38);
             this.buttonDeleteLine.Name = "buttonDeleteLine";
-            this.buttonDeleteLine.Size = new System.Drawing.Size(231, 32);
+            this.buttonDeleteLine.Size = new System.Drawing.Size(173, 26);
             this.buttonDeleteLine.TabIndex = 4;
             this.buttonDeleteLine.Text = "删除行";
             this.buttonDeleteLine.UseVisualStyleBackColor = true;
@@ -402,10 +371,9 @@
             // 
             // buttonCalibration
             // 
-            this.buttonCalibration.Location = new System.Drawing.Point(464, 122);
-            this.buttonCalibration.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonCalibration.Location = new System.Drawing.Point(348, 98);
             this.buttonCalibration.Name = "buttonCalibration";
-            this.buttonCalibration.Size = new System.Drawing.Size(231, 32);
+            this.buttonCalibration.Size = new System.Drawing.Size(173, 26);
             this.buttonCalibration.TabIndex = 4;
             this.buttonCalibration.Text = "计算标定结果";
             this.buttonCalibration.UseVisualStyleBackColor = true;
@@ -413,10 +381,9 @@
             // 
             // buttonSetCatchSet
             // 
-            this.buttonSetCatchSet.Location = new System.Drawing.Point(464, 160);
-            this.buttonSetCatchSet.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSetCatchSet.Location = new System.Drawing.Point(348, 128);
             this.buttonSetCatchSet.Name = "buttonSetCatchSet";
-            this.buttonSetCatchSet.Size = new System.Drawing.Size(231, 32);
+            this.buttonSetCatchSet.Size = new System.Drawing.Size(173, 26);
             this.buttonSetCatchSet.TabIndex = 4;
             this.buttonSetCatchSet.Text = "设置抓取点";
             this.buttonSetCatchSet.UseVisualStyleBackColor = true;
@@ -424,10 +391,9 @@
             // 
             // buttonGetResult
             // 
-            this.buttonGetResult.Location = new System.Drawing.Point(464, 198);
-            this.buttonGetResult.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonGetResult.Location = new System.Drawing.Point(348, 158);
             this.buttonGetResult.Name = "buttonGetResult";
-            this.buttonGetResult.Size = new System.Drawing.Size(231, 32);
+            this.buttonGetResult.Size = new System.Drawing.Size(173, 26);
             this.buttonGetResult.TabIndex = 4;
             this.buttonGetResult.Text = "获取坐标";
             this.buttonGetResult.UseVisualStyleBackColor = true;
@@ -435,10 +401,9 @@
             // 
             // buttonSaveResult
             // 
-            this.buttonSaveResult.Location = new System.Drawing.Point(464, 235);
-            this.buttonSaveResult.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveResult.Location = new System.Drawing.Point(348, 188);
             this.buttonSaveResult.Name = "buttonSaveResult";
-            this.buttonSaveResult.Size = new System.Drawing.Size(231, 32);
+            this.buttonSaveResult.Size = new System.Drawing.Size(173, 26);
             this.buttonSaveResult.TabIndex = 4;
             this.buttonSaveResult.Text = "保存标定结果";
             this.buttonSaveResult.UseVisualStyleBackColor = true;
@@ -446,10 +411,9 @@
             // 
             // buttonLoadResult
             // 
-            this.buttonLoadResult.Location = new System.Drawing.Point(464, 272);
-            this.buttonLoadResult.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLoadResult.Location = new System.Drawing.Point(348, 218);
             this.buttonLoadResult.Name = "buttonLoadResult";
-            this.buttonLoadResult.Size = new System.Drawing.Size(231, 32);
+            this.buttonLoadResult.Size = new System.Drawing.Size(173, 26);
             this.buttonLoadResult.TabIndex = 4;
             this.buttonLoadResult.Text = "加载标定结果";
             this.buttonLoadResult.UseVisualStyleBackColor = true;
@@ -458,104 +422,93 @@
             // labelCameraX
             // 
             this.labelCameraX.AutoSize = true;
-            this.labelCameraX.Location = new System.Drawing.Point(17, 8);
-            this.labelCameraX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCameraX.Location = new System.Drawing.Point(13, 6);
             this.labelCameraX.Name = "labelCameraX";
-            this.labelCameraX.Size = new System.Drawing.Size(71, 15);
+            this.labelCameraX.Size = new System.Drawing.Size(53, 12);
             this.labelCameraX.TabIndex = 2;
             this.labelCameraX.Text = "Camera X";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(126, 8);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(94, 6);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(71, 15);
+            this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 2;
             this.label10.Text = "Camera Y";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(235, 8);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(176, 6);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 15);
+            this.label12.Size = new System.Drawing.Size(47, 12);
             this.label12.TabIndex = 2;
             this.label12.Text = "Robot X";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(336, 8);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(252, 6);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(63, 15);
+            this.label11.Size = new System.Drawing.Size(47, 12);
             this.label11.TabIndex = 2;
             this.label11.Text = "Robot Y";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(437, 8);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(328, 6);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(71, 15);
+            this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 2;
             this.label13.Text = "Robot Rz";
             // 
             // textBoxCameraX
             // 
-            this.textBoxCameraX.Location = new System.Drawing.Point(10, 37);
-            this.textBoxCameraX.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxCameraX.Location = new System.Drawing.Point(8, 30);
             this.textBoxCameraX.Name = "textBoxCameraX";
-            this.textBoxCameraX.Size = new System.Drawing.Size(85, 25);
+            this.textBoxCameraX.Size = new System.Drawing.Size(65, 21);
             this.textBoxCameraX.TabIndex = 5;
             this.textBoxCameraX.Text = "0";
             // 
             // textBoxCameraY
             // 
-            this.textBoxCameraY.Location = new System.Drawing.Point(115, 37);
-            this.textBoxCameraY.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxCameraY.Location = new System.Drawing.Point(86, 30);
             this.textBoxCameraY.Name = "textBoxCameraY";
-            this.textBoxCameraY.Size = new System.Drawing.Size(85, 25);
+            this.textBoxCameraY.Size = new System.Drawing.Size(65, 21);
             this.textBoxCameraY.TabIndex = 5;
             this.textBoxCameraY.Text = "0";
             // 
             // textBoxRobotX
             // 
-            this.textBoxRobotX.Location = new System.Drawing.Point(220, 37);
-            this.textBoxRobotX.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotX.Location = new System.Drawing.Point(165, 30);
             this.textBoxRobotX.Name = "textBoxRobotX";
-            this.textBoxRobotX.Size = new System.Drawing.Size(85, 25);
+            this.textBoxRobotX.Size = new System.Drawing.Size(65, 21);
             this.textBoxRobotX.TabIndex = 5;
             this.textBoxRobotX.Text = "0";
             // 
             // textBoxRobotY
             // 
-            this.textBoxRobotY.Location = new System.Drawing.Point(325, 37);
-            this.textBoxRobotY.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotY.Location = new System.Drawing.Point(244, 30);
             this.textBoxRobotY.Name = "textBoxRobotY";
-            this.textBoxRobotY.Size = new System.Drawing.Size(85, 25);
+            this.textBoxRobotY.Size = new System.Drawing.Size(65, 21);
             this.textBoxRobotY.TabIndex = 5;
             this.textBoxRobotY.Text = "0";
             // 
             // textBoxRobotRz
             // 
-            this.textBoxRobotRz.Location = new System.Drawing.Point(430, 37);
-            this.textBoxRobotRz.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRobotRz.Location = new System.Drawing.Point(322, 30);
             this.textBoxRobotRz.Name = "textBoxRobotRz";
-            this.textBoxRobotRz.Size = new System.Drawing.Size(85, 25);
+            this.textBoxRobotRz.Size = new System.Drawing.Size(65, 21);
             this.textBoxRobotRz.TabIndex = 5;
             this.textBoxRobotRz.Text = "0";
             // 
             // buttonUpdateLine
             // 
-            this.buttonUpdateLine.Location = new System.Drawing.Point(464, 85);
-            this.buttonUpdateLine.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonUpdateLine.Location = new System.Drawing.Point(348, 68);
             this.buttonUpdateLine.Name = "buttonUpdateLine";
-            this.buttonUpdateLine.Size = new System.Drawing.Size(231, 32);
+            this.buttonUpdateLine.Size = new System.Drawing.Size(173, 26);
             this.buttonUpdateLine.TabIndex = 4;
             this.buttonUpdateLine.Text = "更新行";
             this.buttonUpdateLine.UseVisualStyleBackColor = true;
@@ -597,10 +550,9 @@
             this.panel1.Controls.Add(this.labelCatchRobotY);
             this.panel1.Controls.Add(this.textBoxCatchRobotX);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Location = new System.Drawing.Point(6, 530);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Location = new System.Drawing.Point(4, 424);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(695, 320);
+            this.panel1.Size = new System.Drawing.Size(521, 256);
             this.panel1.TabIndex = 6;
             // 
             // panelSingleInput
@@ -617,9 +569,10 @@
             this.panelSingleInput.Controls.Add(this.label12);
             this.panelSingleInput.Controls.Add(this.label11);
             this.panelSingleInput.Controls.Add(this.label13);
-            this.panelSingleInput.Location = new System.Drawing.Point(40, 51);
+            this.panelSingleInput.Location = new System.Drawing.Point(30, 41);
+            this.panelSingleInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelSingleInput.Name = "panelSingleInput";
-            this.panelSingleInput.Size = new System.Drawing.Size(651, 68);
+            this.panelSingleInput.Size = new System.Drawing.Size(489, 55);
             this.panelSingleInput.TabIndex = 7;
             // 
             // panelBatchInput
@@ -631,51 +584,55 @@
             this.panelBatchInput.Controls.Add(this.label14);
             this.panelBatchInput.Controls.Add(this.buttonSelectWorldPos);
             this.panelBatchInput.Controls.Add(this.buttonSelectCalPic);
-            this.panelBatchInput.Location = new System.Drawing.Point(40, 153);
+            this.panelBatchInput.Location = new System.Drawing.Point(30, 122);
+            this.panelBatchInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelBatchInput.Name = "panelBatchInput";
-            this.panelBatchInput.Size = new System.Drawing.Size(651, 74);
+            this.panelBatchInput.Size = new System.Drawing.Size(489, 60);
             this.panelBatchInput.TabIndex = 8;
             // 
             // textBoxWorldCoordianteFilePath
             // 
             this.textBoxWorldCoordianteFilePath.Enabled = false;
-            this.textBoxWorldCoordianteFilePath.Location = new System.Drawing.Point(159, 42);
+            this.textBoxWorldCoordianteFilePath.Location = new System.Drawing.Point(119, 34);
+            this.textBoxWorldCoordianteFilePath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxWorldCoordianteFilePath.Name = "textBoxWorldCoordianteFilePath";
-            this.textBoxWorldCoordianteFilePath.Size = new System.Drawing.Size(358, 25);
+            this.textBoxWorldCoordianteFilePath.Size = new System.Drawing.Size(270, 21);
             this.textBoxWorldCoordianteFilePath.TabIndex = 1;
             // 
             // textBoxCalibrateImagPath
             // 
             this.textBoxCalibrateImagPath.Enabled = false;
-            this.textBoxCalibrateImagPath.Location = new System.Drawing.Point(159, 7);
+            this.textBoxCalibrateImagPath.Location = new System.Drawing.Point(119, 6);
+            this.textBoxCalibrateImagPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxCalibrateImagPath.Name = "textBoxCalibrateImagPath";
-            this.textBoxCalibrateImagPath.Size = new System.Drawing.Size(358, 25);
+            this.textBoxCalibrateImagPath.Size = new System.Drawing.Size(270, 21);
             this.textBoxCalibrateImagPath.TabIndex = 1;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(4, 48);
+            this.label15.Location = new System.Drawing.Point(3, 38);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(157, 15);
+            this.label15.Size = new System.Drawing.Size(125, 12);
             this.label15.TabIndex = 0;
             this.label15.Text = "选择世界坐标文件路径";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(5, 13);
+            this.label14.Location = new System.Drawing.Point(4, 10);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(127, 15);
+            this.label14.Size = new System.Drawing.Size(101, 12);
             this.label14.TabIndex = 0;
             this.label14.Text = "选择标定图片路径";
             // 
             // buttonSelectWorldPos
             // 
-            this.buttonSelectWorldPos.Location = new System.Drawing.Point(524, 38);
-            this.buttonSelectWorldPos.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSelectWorldPos.Location = new System.Drawing.Point(393, 30);
             this.buttonSelectWorldPos.Name = "buttonSelectWorldPos";
-            this.buttonSelectWorldPos.Size = new System.Drawing.Size(123, 32);
+            this.buttonSelectWorldPos.Size = new System.Drawing.Size(92, 26);
             this.buttonSelectWorldPos.TabIndex = 4;
             this.buttonSelectWorldPos.Text = "选择";
             this.buttonSelectWorldPos.UseVisualStyleBackColor = true;
@@ -684,10 +641,9 @@
             // buttonSelectCalPic
             // 
             this.buttonSelectCalPic.Enabled = false;
-            this.buttonSelectCalPic.Location = new System.Drawing.Point(524, 4);
-            this.buttonSelectCalPic.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSelectCalPic.Location = new System.Drawing.Point(393, 3);
             this.buttonSelectCalPic.Name = "buttonSelectCalPic";
-            this.buttonSelectCalPic.Size = new System.Drawing.Size(123, 32);
+            this.buttonSelectCalPic.Size = new System.Drawing.Size(92, 26);
             this.buttonSelectCalPic.TabIndex = 4;
             this.buttonSelectCalPic.Text = "选择";
             this.buttonSelectCalPic.UseVisualStyleBackColor = true;
@@ -699,19 +655,22 @@
             this.groupBox1.Controls.Add(this.radioButtonBatchInput);
             this.groupBox1.Controls.Add(this.panelSingleInput);
             this.groupBox1.Controls.Add(this.panelBatchInput);
-            this.groupBox1.Location = new System.Drawing.Point(9, 3);
+            this.groupBox1.Location = new System.Drawing.Point(7, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(695, 235);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(521, 188);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "数据输入";
+            this.groupBox1.Text = "数据录入";
             // 
             // radioButtonSingleInput
             // 
             this.radioButtonSingleInput.AutoSize = true;
-            this.radioButtonSingleInput.Location = new System.Drawing.Point(3, 30);
+            this.radioButtonSingleInput.Location = new System.Drawing.Point(2, 24);
+            this.radioButtonSingleInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonSingleInput.Name = "radioButtonSingleInput";
-            this.radioButtonSingleInput.Size = new System.Drawing.Size(88, 19);
+            this.radioButtonSingleInput.Size = new System.Drawing.Size(71, 16);
             this.radioButtonSingleInput.TabIndex = 9;
             this.radioButtonSingleInput.Text = "单行输入";
             this.radioButtonSingleInput.UseVisualStyleBackColor = true;
@@ -721,9 +680,10 @@
             // 
             this.radioButtonBatchInput.AutoSize = true;
             this.radioButtonBatchInput.Checked = true;
-            this.radioButtonBatchInput.Location = new System.Drawing.Point(3, 132);
+            this.radioButtonBatchInput.Location = new System.Drawing.Point(2, 106);
+            this.radioButtonBatchInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonBatchInput.Name = "radioButtonBatchInput";
-            this.radioButtonBatchInput.Size = new System.Drawing.Size(88, 19);
+            this.radioButtonBatchInput.Size = new System.Drawing.Size(71, 16);
             this.radioButtonBatchInput.TabIndex = 9;
             this.radioButtonBatchInput.TabStop = true;
             this.radioButtonBatchInput.Text = "批量输入";
@@ -732,15 +692,14 @@
             // 
             // CalibrationSetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 903);
+            this.ClientSize = new System.Drawing.Size(539, 722);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.comboBoxModeList);
             this.Controls.Add(this.listViewParameterSet);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CalibrationSetForm";
             this.Text = "标定参数设置";
             this.Load += new System.EventHandler(this.CalibrationSetForm_Load);

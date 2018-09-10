@@ -95,7 +95,7 @@ namespace AqVision.Location
           set { m_minLength = value; }
         }
 
-        double m_minScore = 0.57;
+        double m_minScore = 0.67;
         public double MinScore
         {
           get { return m_minScore; }
@@ -165,8 +165,8 @@ namespace AqVision.Location
             set { m_modelCenterX = value; }
         }
 
-        double m_centerX = 0;
-        public double CenterX
+        double[] m_centerX = null;
+        public double[] CenterX
         {
             get { return m_centerX; }
             set { m_centerX = value; }
@@ -179,8 +179,8 @@ namespace AqVision.Location
             set { m_modelCenterY = value; }
         }
 
-        double m_centerY = 0;
-        public double CenterY
+        double[] m_centerY = null;
+        public double[] CenterY
         {
             get { return m_centerY; }
             set { m_centerY = value; }
@@ -193,8 +193,8 @@ namespace AqVision.Location
             set { m_modelAngle = value; }
         }
 
-        double m_angle = 0;
-        public double Angle
+        double[] m_angle = null;
+        public double[] Angle
         {
             get { return m_angle; }
             set { m_angle = value; }
@@ -207,18 +207,23 @@ namespace AqVision.Location
             set { m_modelScale = value; }
         }
 
-        double m_scale = 1;
-        public double Scale
+        double[] m_scale = null;
+        public double[] Scale
         {
             get { return m_scale; }
             set { m_scale = value; }
         }
 
-        double m_score = 1;
-        public double Score
+        double[] m_score = null;
+        public double[] Score
         {
             get { return m_score; }
             set { m_score = value; }
+        }
+
+        public int FindObjectCount
+        {
+            get { return Angle.Length; }
         }
 
 
@@ -406,11 +411,11 @@ namespace AqVision.Location
             {
 //                return;
             }
-            Score = score.D;
-            Scale = scale.D;
-            Angle = angle.D;
-            CenterX = column.D;
-            CenterY = row.D;
+            Score = score.DArr;
+            Scale = scale.DArr;
+            Angle = angle.DArr;
+            CenterX = column.DArr;
+            CenterY = row.DArr;
             XldPointCountsM = xldPointCountsM.LArr;
             XldColsM = xldColsM.DArr;
             XldRowsM = xldRowsM.DArr;

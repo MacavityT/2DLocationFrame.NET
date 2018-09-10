@@ -42,7 +42,8 @@ namespace IntegrationTesting.Robot
             double posX = 0;
             double posY = 0;
             double delta = 0;
-            getLocalizeResultHandler(ref posX, ref posY, ref delta);
+            int posture = 0;
+            getLocalizeResultHandler(ref posX, ref posY, ref delta, ref posture);
 
             delta = delta * 180 / Math.PI;
             while (delta > 180) 
@@ -57,7 +58,7 @@ namespace IntegrationTesting.Robot
             //delta -= 180;  //修改数据
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
-            localizeRespone.VisionStatus = 0;
+            localizeRespone.VisionStatus = posture;     //1-工件平放状态 2-工件竖立状态
             localizeRespone.OffsetMethod = "P";
 
             return Task.FromResult(localizeRespone);

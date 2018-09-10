@@ -38,6 +38,7 @@ namespace IntegrationTesting
         Server m_server = null;
         string m_localIP = null;
 
+        List<LocationResultSet> triggerLocationResult = new List<LocationResultSet>();
         public MainForm()
         {
             InitializeComponent();
@@ -158,27 +159,70 @@ namespace IntegrationTesting
                         //location.Dispose();
                         //detection.Dispose();//932.5
                     }
-                    
-                    locationResult = m_templateSet.RunMatcher();
-                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);//1061.5
-                    if (locationResult == 0)
+
+                    triggerLocationResult.Clear();
+                    locationResult = m_templateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm");
+                    if(locationResult == 0)
                     {
-                        m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
-                        m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
-                        //AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
-                        AddMessageToListView("Suc");
-                        labelLocationScore.Text = (m_templateSet.Score*100).ToString("f3");//1062.9
+                        for(int i=0; i<m_templateSet.LocationResultPosTheta.Length; i++ )
+                        {
+                            LocationResultSet result = new LocationResultSet();
+                            result.CenterX = m_templateSet.LocationResultPosX[i];
+                            result.CenterY = m_templateSet.LocationResultPosY[i];
+                            result.Posture = ProductPosture.Normal;
+                            result.Angle = m_templateSet.LocationResultPosTheta[i];
+                            result.Transmited = false;
+                            result.Score = m_templateSet.Score[i];
+                            triggerLocationResult.Add(result);
+                            m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+                        }
                     }
-                    else
+                    if(triggerLocationResult.Count < 2)
                     {
-                        //AddMessageToListView(string.Format("robot location failed position: {0} {1} {2}, {3}", robotX, robotY, robotRz, locationResult));
-                        AddMessageToListView("Failed");
+                        locationResult = m_templateSet.RunMatcher(Application.StartupPath + @"\location\ModelVertical.shm");
+                        if (locationResult == 0)
+                        {
+                            for (int i = 0; i < m_templateSet.LocationResultPosTheta.Length; i++)
+                            {
+                                LocationResultSet result = new LocationResultSet();
+                                result.CenterX = m_templateSet.LocationResultPosX[i];
+                                result.CenterY = m_templateSet.LocationResultPosY[i];
+                                result.Posture = ProductPosture.Vertical;
+                                result.Angle = m_templateSet.LocationResultPosTheta[i];
+                                result.Transmited = false;
+                                result.Score = m_templateSet.Score[i];
+                                triggerLocationResult.Add(result);
+                                m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
+                            }
+                        }
                     }
-                     
+
+                    m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
+                    //AddMessageToListView(string.Format("robot location suc position: {0} {1} {2}", robotX, robotY, robotRz));
+                    //AddMessageToListView("Suc");
+                    string showScoreAll = null;
+                    for (int i = 0; i < triggerLocationResult.Count; i++ )
+                    {
+                        showScoreAll += (triggerLocationResult[i].Score * 100).ToString("f3") + "\n";
+                    }
+                    labelLocationScore.Text = showScoreAll;
+
+                    if (triggerLocationResult.Count == 1)
+                    {
+                        locationResult = 1; //定位到1个产品
+                    }
+                    else if(triggerLocationResult.Count == 2)
+                    {
+                        locationResult = 2; //定位到1个产品
+                    }
+                    else if(triggerLocationResult.Count > 2)
+                    {
+                        locationResult = triggerLocationResult.Count;
+                    }
                 }));
                 //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 GC.Collect();
-                AddMessageToListView("TriggerDone");
+                //AddMessageToListView("TriggerDone");
             }
             catch (Exception ex)
             {
@@ -189,12 +233,31 @@ namespace IntegrationTesting
             return locationResult;
         }
 
-        private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta)
+        private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta, ref int posture)
         {
-            m_calibrateShow.SetCurrentImagePosition(m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta);
-            //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
-            m_calibrateShow.GetCurrentCatchPosition(ref posX, ref posY, ref theta);
-            //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
+            if (triggerLocationResult.Count > 0)
+            {
+                m_calibrateShow.SetCurrentImagePosition(triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle);
+
+                //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
+
+                string calibrationPath  = null;
+                if(triggerLocationResult[0].Posture == ProductPosture.Normal)
+                {
+                    calibrationPath = Application.StartupPath + @"\location\ResultNormal.txt";
+                    posture = 1;
+                }
+                else if(triggerLocationResult[0].Posture == ProductPosture.Vertical)
+                {
+                    calibrationPath = Application.StartupPath + @"\location\ResultVertical.txt";
+                    posture = 2;
+                }
+                m_calibrateShow.GetCurrentCatchPosition(ref posX, ref posY, ref theta, calibrationPath);
+
+                triggerLocationResult.RemoveAt(0);
+
+                //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
+            }
             return true;
         }
 

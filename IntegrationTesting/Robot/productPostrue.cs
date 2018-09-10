@@ -6,5 +6,9 @@ using System.Threading.Tasks;
 
 namespace IntegrationTesting.Robot
 {
-    public delegate bool GetLocalizeResultHandler(ref double PosX, ref double PosY, ref double theta, ref int posture);
+    public enum ProductPosture
+    {
+        Normal,
+        Vertical
+    }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using IntegrationTesting.Tool;
+using IntegrationTesting.Robot;
 
 namespace IntegrationTesting
 {
@@ -39,7 +40,7 @@ namespace IntegrationTesting
             }
             comboBoxModeList.SelectedIndex = 2;
 
-            m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath + "\\Result.txt";
+            m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath + @"\location\\ResultNormal.txt";
             if(File.Exists(m_calibrationCenter.CalibrationResultSavePath))
             {
                 if(!m_calibrationCenter.LoadCalibrationResult())
@@ -75,8 +76,10 @@ namespace IntegrationTesting
             m_calibrationCenter.ImagePoint.ImageA = imageA;
         }
 
-        public void GetCurrentCatchPosition(ref double posX, ref double posY,ref double theta)
+        public void GetCurrentCatchPosition(ref double posX, ref double posY,ref double theta, string resultPath)
         {
+            m_calibrationCenter.CalibrationResultSavePath = resultPath;
+            m_calibrationCenter.LoadCalibrationResult();
             m_calibrationCenter.GetRobotPoint();
             posX = m_calibrationCenter.CatchPoint.CatchX;
             posY = m_calibrationCenter.CatchPoint.CatchY;
@@ -354,13 +357,19 @@ namespace IntegrationTesting
             }
             else
             {
-                if(!m_calibrationCenter.SaveCalibrationResult())
+                SaveFileDialog fileDialog = new SaveFileDialog();
+                fileDialog.Filter = "txt files (*.txt)|*.txt";
+                if(fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    MessageBox.Show("Save calibration Result error");
-                }
-                else
-                {
-                    MessageBox.Show("Save calibration Result done");
+                    m_calibrationCenter.CalibrationResultSavePath = fileDialog.FileName;
+                    if (!m_calibrationCenter.SaveCalibrationResult())
+                    {
+                        MessageBox.Show("Save calibration Result error");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Save calibration Result done");
+                    }
                 }
             }
             

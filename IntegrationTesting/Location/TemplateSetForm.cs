@@ -18,27 +18,27 @@ namespace IntegrationTesting
     {
         AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
         string m_title = null;
-        private double m_locationResultPosX = 0;
-
-        public double Score
-        {
-            get { return m_Location.Score; }
-        }
-        public double LocationResultPosX
+        private double[] m_locationResultPosX = null;
+        public double[] LocationResultPosX
         {
             get { return m_locationResultPosX; }
             set { m_locationResultPosX = value; }
         }
 
-        private double m_locationResultPosY = 0;
-        public double LocationResultPosY
+        public double[] Score
+        {
+            get { return m_Location.Score; }
+        }
+
+        private double[] m_locationResultPosY = null;
+        public double[] LocationResultPosY
         {
             get { return m_locationResultPosY; }
             set { m_locationResultPosY = value; }
         }
 
-        private double m_locationResultPosTheta = 0;
-        public double LocationResultPosTheta
+        private double[] m_locationResultPosTheta = null;
+        public double[] LocationResultPosTheta
         {
             get { return m_locationResultPosTheta; }
             set { m_locationResultPosTheta = value; }
@@ -55,10 +55,17 @@ namespace IntegrationTesting
             }
         }
 
+        string m_modelFilePath = null;
+        public string ModelFilePath
+        {
+            get { return m_modelFilePath; }
+            set { m_modelFilePath = value; }
+        }
+
+
         public TemplateSetForm()
         {
             InitializeComponent();
-            m_Location.LoadModel(@"D:\Model.shm");
             m_title = this.Text;
         }
 
@@ -132,11 +139,11 @@ namespace IntegrationTesting
             {
                 aqDisplayCreateModel.InteractiveGraphics.Clear();
                 aqDisplayCreateModel.Update();
-                RunMatcher();
+                RunMatcher(ModelFilePath);
                 ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green, aqDisplayCreateModel);
-                textBox1.Text = LocationResultPosX.ToString("0.000");
-                textBox2.Text = LocationResultPosY.ToString("0.000");
-                textBox3.Text = (LocationResultPosTheta / Math.PI * 180).ToString("0.000");
+                //textBox1.Text = LocationResultPosX.ToString("0.000");
+                //textBox2.Text = LocationResultPosY.ToString("0.000");
+                //textBox3.Text = (LocationResultPosTheta / Math.PI * 180).ToString("0.000");
             }
             catch (Exception ex)
             {
@@ -144,11 +151,12 @@ namespace IntegrationTesting
             }
         }
 
-        public int RunMatcher()
+        public int RunMatcher(string modeFilePath)
         {
             int iResult = -1;
             try
             {
+                m_Location.LoadModel(modeFilePath);
                 m_Location.RunMatcherByHalcon();
                 LocationResultPosX = m_Location.CenterX;
                 LocationResultPosY = m_Location.CenterY;
@@ -261,7 +269,13 @@ namespace IntegrationTesting
 
         private void buttonSaveModel_Click(object sender, EventArgs e)
         {
-            m_Location.SaveModel(@"D:\Model.shm");
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "shm file(*.shm)|*.shm";
+            if(fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ModelFilePath = fileDialog.FileName;
+                m_Location.SaveModel(fileDialog.FileName);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -281,6 +295,16 @@ namespace IntegrationTesting
             aqDisplayCreateModel.InteractiveGraphics.Add(line,"a",false);
             aqDisplayCreateModel.InteractiveGraphics.Add(line2,"b",false);
             aqDisplayCreateModel.Update();
+        }
+
+        private void buttonLoadModel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if(fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ModelFilePath = fileDialog.FileName;
+                m_Location.LoadModel(ModelFilePath);
+            }
         }
     }
 }

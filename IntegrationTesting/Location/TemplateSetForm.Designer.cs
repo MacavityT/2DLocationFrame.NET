@@ -35,23 +35,24 @@
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.buttonSaveModel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonLoadModel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonRemoveGraph
             // 
-            this.buttonRemoveGraph.Location = new System.Drawing.Point(9, 418);
-            this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonRemoveGraph.Location = new System.Drawing.Point(7, 334);
+            this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonRemoveGraph.Name = "buttonRemoveGraph";
-            this.buttonRemoveGraph.Size = new System.Drawing.Size(123, 42);
+            this.buttonRemoveGraph.Size = new System.Drawing.Size(92, 34);
             this.buttonRemoveGraph.TabIndex = 10;
             this.buttonRemoveGraph.Text = "移除所有图形";
             this.buttonRemoveGraph.UseVisualStyleBackColor = true;
@@ -59,10 +60,10 @@
             // 
             // buttonAddRectangleRegion
             // 
-            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(7, 22);
-            this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(5, 18);
+            this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonAddRectangleRegion.Name = "buttonAddRectangleRegion";
-            this.buttonAddRectangleRegion.Size = new System.Drawing.Size(123, 42);
+            this.buttonAddRectangleRegion.Size = new System.Drawing.Size(92, 34);
             this.buttonAddRectangleRegion.TabIndex = 7;
             this.buttonAddRectangleRegion.Text = "添加示教区";
             this.buttonAddRectangleRegion.UseVisualStyleBackColor = true;
@@ -70,10 +71,10 @@
             // 
             // buttonTraining
             // 
-            this.buttonTraining.Location = new System.Drawing.Point(7, 70);
-            this.buttonTraining.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonTraining.Location = new System.Drawing.Point(5, 56);
+            this.buttonTraining.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonTraining.Name = "buttonTraining";
-            this.buttonTraining.Size = new System.Drawing.Size(123, 42);
+            this.buttonTraining.Size = new System.Drawing.Size(92, 34);
             this.buttonTraining.TabIndex = 8;
             this.buttonTraining.Text = "训练";
             this.buttonTraining.UseVisualStyleBackColor = true;
@@ -81,10 +82,9 @@
             // 
             // buttonLocation
             // 
-            this.buttonLocation.Location = new System.Drawing.Point(7, 119);
-            this.buttonLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonLocation.Location = new System.Drawing.Point(5, 95);
             this.buttonLocation.Name = "buttonLocation";
-            this.buttonLocation.Size = new System.Drawing.Size(123, 42);
+            this.buttonLocation.Size = new System.Drawing.Size(92, 34);
             this.buttonLocation.TabIndex = 11;
             this.buttonLocation.Text = "定位";
             this.buttonLocation.UseVisualStyleBackColor = true;
@@ -96,10 +96,10 @@
             this.aqDisplayCreateModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aqDisplayCreateModel.Image = null;
             this.aqDisplayCreateModel.Location = new System.Drawing.Point(0, 0);
-            this.aqDisplayCreateModel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.aqDisplayCreateModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aqDisplayCreateModel.Name = "aqDisplayCreateModel";
             this.aqDisplayCreateModel.ScrollBar = false;
-            this.aqDisplayCreateModel.Size = new System.Drawing.Size(1110, 906);
+            this.aqDisplayCreateModel.Size = new System.Drawing.Size(833, 725);
             this.aqDisplayCreateModel.TabIndex = 0;
             // 
             // panel1
@@ -111,56 +111,63 @@
             this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
             this.panel1.Controls.Add(this.buttonLocation);
+            this.panel1.Controls.Add(this.buttonLoadModel);
             this.panel1.Controls.Add(this.buttonSaveModel);
             this.panel1.Controls.Add(this.buttonTraining);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1110, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Location = new System.Drawing.Point(833, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(307, 906);
+            this.panel1.Size = new System.Drawing.Size(230, 725);
             this.panel1.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(31, 300);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 18);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(-1, 324);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Location = new System.Drawing.Point(3, 274);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(132, 25);
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
             this.textBox3.TabIndex = 13;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(4, 279);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Location = new System.Drawing.Point(3, 247);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(132, 25);
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(4, 235);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Location = new System.Drawing.Point(3, 220);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 25);
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
             this.textBox1.TabIndex = 13;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(12, 466);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(9, 373);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(277, 424);
+            this.listBox1.Size = new System.Drawing.Size(209, 340);
             this.listBox1.TabIndex = 12;
             // 
             // buttonSaveModel
             // 
-            this.buttonSaveModel.Location = new System.Drawing.Point(7, 168);
-            this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonSaveModel.Location = new System.Drawing.Point(7, 172);
+            this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSaveModel.Name = "buttonSaveModel";
-            this.buttonSaveModel.Size = new System.Drawing.Size(123, 42);
+            this.buttonSaveModel.Size = new System.Drawing.Size(92, 34);
             this.buttonSaveModel.TabIndex = 5;
             this.buttonSaveModel.Text = "保存模板";
             this.buttonSaveModel.UseVisualStyleBackColor = true;
@@ -171,29 +178,28 @@
             this.panel2.Controls.Add(this.aqDisplayCreateModel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1110, 906);
+            this.panel2.Size = new System.Drawing.Size(833, 725);
             this.panel2.TabIndex = 13;
             // 
-            // button1
+            // buttonLoadModel
             // 
-            this.button1.Location = new System.Drawing.Point(41, 375);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonLoadModel.Location = new System.Drawing.Point(5, 134);
+            this.buttonLoadModel.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLoadModel.Name = "buttonLoadModel";
+            this.buttonLoadModel.Size = new System.Drawing.Size(92, 34);
+            this.buttonLoadModel.TabIndex = 5;
+            this.buttonLoadModel.Text = "加载模板";
+            this.buttonLoadModel.UseVisualStyleBackColor = true;
+            this.buttonLoadModel.Click += new System.EventHandler(this.buttonLoadModel_Click);
             // 
             // TemplateSetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1417, 906);
+            this.ClientSize = new System.Drawing.Size(1063, 725);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TemplateSetForm";
             this.Text = "定位参数设置";
             this.Load += new System.EventHandler(this.TemplateSet_Load);
@@ -219,6 +225,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonLoadModel;
 
     }
 }
