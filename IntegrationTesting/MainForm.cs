@@ -208,6 +208,10 @@ namespace IntegrationTesting
                 {
                     if (m_aidiMangement.SourceBitmap != null)
                     {
+                        for (int i = 0; i < m_aidiMangement.SourceBitmap.Count; i++)
+                        {
+                            m_aidiMangement.SourceBitmap[i].Dispose();
+                        }
                         m_aidiMangement.SourceBitmap.Clear();
                     }
                     else
@@ -231,23 +235,15 @@ namespace IntegrationTesting
                             aqDisplayDectection.Image = detection;
                         }));
 
-                        if (m_aidiMangement.SourceBitmap != null)
-                        {
-                            for(int i=0; i<m_aidiMangement.SourceBitmap.Count; i++)
-                            {
-                                m_aidiMangement.SourceBitmap[i].Dispose();
-                            }
-                            m_aidiMangement.SourceBitmap.Clear();
-                        }
                         m_aidiMangement.SourceBitmap.Add(aqDisplayDectection.Image.Clone() as Bitmap);
                     }
                     aqDisplayDectection.FitToScreen();
                     aqDisplayDectection.Update();
-                    //m_aidiMangement.DetectBmp();
+                    m_aidiMangement.DetectPic();
                     aqDisplayDectection.Image = m_aidiMangement.SourceBitmap[0];
-                    //m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
+                    m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 1, aqDisplayDectection);
                     aqDisplayDectection.Update();
-                    SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
+                    //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                 }));
 //                 if (m_aidiMangement.DetectResult)
 //                 {

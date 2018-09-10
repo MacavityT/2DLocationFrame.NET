@@ -34,8 +34,8 @@ namespace IntegrationTesting.Aidi
         String root_path2 = "model_*****";
         String root_path3 = "model_*****";
         //Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(@"******"));//转成utf-8
-        string model_path = @"C:\Users\SHUAN\Desktop\model";//转成utf-8
-        string pics_path = @"C:\Users\SHUAN\Desktop\Detect";
+        string model_path =  Application.StartupPath + @"\model";//转成utf-8
+        string pics_path = Application.StartupPath + @"\Detect";
         AidiRuner runer = new AidiRuner(check_code);
         IntVector batch_size = new IntVector();
 
@@ -76,19 +76,6 @@ namespace IntegrationTesting.Aidi
             }
         }
 
-//         public class RootObject
-//         {
-//             public string area { get; set; }
-//             public List<Contours> contours { get; set; }
-//             public string cx { get; set; }
-//             public string cy { get; set; }
-//             public string height { get; set; }
-//             public string score { get; set; }
-//             public string type { get; set; }
-//             public string type_name { get; set; }
-//             public string width { get; set; }
-//         }
-
         public AIDIManagementForm()
         {
             InitializeComponent();
@@ -98,83 +85,70 @@ namespace IntegrationTesting.Aidi
 
         public void brightspot()
         {
-            AidiProcess(pics_path, runer, aqDisplay1, richTextBox1);
+            AidiProcess();
         }
 
-        private void AidiProcess(string pics_path, AidiRuner runer, AqVision.Controls.AqDisplay  aqDisplay1,RichTextBox richTextBox1)
+        public void DetectPic()
         {
-            List<Bitmap> bitmaps = GetBitmapsList(pics_path);
-            int batch_Capacity = bitmaps.Count;//获得batch_images一共有几张图片(容量)
-
-            ////深拷贝一份
-            //List<Bitmap> Temp_bitmaps = new List<Bitmap>();
-            //for (int k = 0; k < batch_Capacity; k++)
-            //{
-            //    Bitmap bt = bitmaps[k].Clone(new Rectangle(0, 0, bitmaps[k].Width, bitmaps[k].Height), bitmaps[k].PixelFormat);
-            //    Temp_bitmaps.Add(bt);
-
-            //}
-
-
-            //int width = bitmaps[0].Width;
-            //int kk = width;
-
-            int count = 1;
-            for (int k = 0; k < batch_Capacity - count + 1; k = k + count)
+            if (m_sourceBitmap == null || m_sourceBitmap.Count == 0)
             {
+                SourceBitmap = GetBitmapsList(pics_path);
+            }
 
-                Stopwatch sp = new Stopwatch();
-                sp.Start();
+            int batch_Capacity = SourceBitmap.Count;//获得batch_images一共有几张图片(容量)
+            m_objList = new List<RootObject>[SourceBitmap.Count];
 
+            for (int k = 0; k < batch_Capacity; k++)
+            {
                 List<Bitmap> bit = new List<Bitmap>();
-                for (int i = 0; i < count; i++)
-                {
-                    bit.Add(bitmaps[k + i]);
-                }
-                
-                //bit.Add(bitmaps[k+1]);
+                bit.Add(SourceBitmap[k]);
                 runer.set_detect_images(bit);
-
-                string name = @"D:\" + k.ToString() + ".bmp";
-                bitmaps[k].Save(name, System.Drawing.Imaging.ImageFormat.Bmp);
-
-
-                
-
                 List<string> results = new List<string>();
                 results = runer.get_detect_result();
 
-                sp.Stop();
-
                 int index = 0;
                 List<RootObject> objList = TypeC_Aidi.ResultStructure.GetobjList(results[index], 0); //results[0]代表第一张图，以此类推,这里可以设置筛选条件
+                m_objList[k] = objList;
+                if (batch_Capacity > 1)
+                {
+                    Thread.Sleep(500);
+                }
+            }
+        }
+        public void AidiProcess()
+        {            
+            Stopwatch sp = new Stopwatch();
+            DetectPic();
 
-                // List<RootObject> objList1 = GetobjList(result[1]);
+            for (int k = 0; k < SourceBitmap.Count; k++)
+            {
+                new TypeC_Aidi.ResultStructure().ShowAllGraph(aqDisplay1, SourceBitmap[k], m_objList[k], AqVision.AqColorConstants.Red, 1);
 
-
-                new TypeC_Aidi.ResultStructure().ShowAllGraph(aqDisplay1, bitmaps[k], objList, AqVision.AqColorConstants.Red, 1);
-              
-
-                //string aidiTime = "AIDI_Time：" + sp.ElapsedMilliseconds + " ms";
+                comboBoxShowResultList.Invoke(new MethodInvoker(delegate
+                {
+                    comboBoxShowResultList.Items.Add(string.Format("{0}", k));
+                }));
+                
                 string aidiTime = sp.ElapsedMilliseconds + "";
-
+                sp.Stop();
                 if (richTextBox1.InvokeRequired)
                 {
                     richTextBox1.BeginInvoke(new Action(() =>
                     {
                         richTextBox1.Text += aidiTime + "\r\n";
-                        richTextBox1.Refresh(); }));
+                        richTextBox1.Refresh(); 
+                    }));
                 }
                 else
                 {
                     richTextBox1.Text += aidiTime + "\r\n";
                     richTextBox1.Refresh();
                 }
-
-                Thread.Sleep(500);
+                if (SourceBitmap.Count > 1)
+                {
+                    Thread.Sleep(500);
+                }                
             }
-
-
         }
         private void AIDIManagementForm_Load(object sender, EventArgs e)
         {
@@ -187,69 +161,17 @@ namespace IntegrationTesting.Aidi
         {
             Stopwatch sp2 = new Stopwatch();
             sp2.Start();
-
             InitAidiModel();
-
             sp2.Stop();
             MessageBox.Show("AIDI初始化完成，耗时" + sp2.ElapsedMilliseconds + " ms");
-        }
-
-        public void DetectBmp()
-        {
-            if (m_sourceBitmap == null || m_sourceBitmap.Count == 0)
-            {
-                m_sourceBitmap = GetBitmapsList("pics");
-            }
-            BatchAidiImage batch_images = GetBatch_images(m_sourceBitmap);
-            int batch_Capacity = batch_images.get_images_size();//获得batch_images一共有几张图片(容量)
-
-            Stopwatch sp = new Stopwatch();
-            sp.Start();
-            StringVector result = dnn_factory_client.start_test(batch_images);// 多图测试接口
-            sp.Stop();
-            if (result.Count <= 0)
-            {
-                MessageBox.Show("未获取检测结果");
-                return;
-            }
-
-            comboBoxShowResultList.Items.Clear();
-            m_objList = new List<RootObject>[result.Count];
-            for (int i = 0; i < result.Count; i++)
-            {
-                AidiImage single_image = batch_images.at(i);
-                richTextBox1.Text += result[i];
-                richTextBox1.Text += result[i];
-                richTextBox1.Text += "-----------------------------------" + i;
-                richTextBox1.Refresh();
-                m_objList[i] = GetobjList(result[i]);
-                comboBoxShowResultList.Items.Add(string.Format("{0}", i));
-            }
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
         {
             try
             {
-
+                comboBoxShowResultList.Items.Clear();
                 brightspotThread.Start();
-                /*
-                label1.Text = "    ";
-
-                DetectBmp();
-
-                //List<RootObject> objList = GetobjList(result[0]);//result[0]代表第一张图，以此类推
-                aqDisplay1.Image = m_sourceBitmap[0];
-                aqDisplay1.FitToScreen();
-
-                Stopwatch sp3 = new Stopwatch();
-                sp3.Start();
-                DrawContours(m_objList[0], AqVision.AqColorConstants.Green, 1, aqDisplay1);
-                sp3.Stop();
-
-                richTextBox2.Text += "绘制contour时间：" + sp3.ElapsedMilliseconds + "\r\n";
-                aqDisplay1.Update();
-                */
             }
             catch( Exception ex)
             {
@@ -276,57 +198,6 @@ namespace IntegrationTesting.Aidi
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
-            /*
-            StringVector save_model_path_list = new StringVector();// 模型的加载路径，路径下应该有model.aqbin
-            StringVector operator_type_list = new StringVector();
-            IntVector batch_sizes = new IntVector(); // 一次测试几张图
-            
-            switch (detectModel)
-            {
-                case "L":
-                    save_model_path_list.Add(root_path + "/Location_0");
-                    operator_type_list.Add("Location");
-                    batch_sizes.Add(batch_size);
-                    break;
-
-                case "D":
-                    save_model_path_list.Add(root_path + "/Detect_0");
-                    operator_type_list.Add("Detect");
-                    batch_sizes.Add(batch_size);
-                    break;
-
-                case "LD":
-                    save_model_path_list.Add(root_path + "/Location_0");
-                    save_model_path_list.Add(root_path + "/Detect_1");
-                    //save_model_path_list.Add(root_path + "/Classify_2/");
-
-                    operator_type_list.Add("Location");
-                    operator_type_list.Add("Detect");
-                    //operator_type_list.Add("Classify");
-
-                    batch_sizes.Add(batch_size);
-                    batch_sizes.Add(batch_size);
-                    //batch_sizes.Add(4);
-                    break;
-
-                default:
-                    throw new Exception("detectModel只能填L、D、LD其中之一");
-
-            }
-            FactoryClientParamWrapper param = new FactoryClientParamWrapper();// 测试参数配置
-            param.save_model_path_list = save_model_path_list;
-            param.operator_type_list = operator_type_list;
-            param.device_number = 0;
-            param.use_gpu = true;
-
-
-            dnn_factory_client.set_param(param);
-            dnn_factory_client.set_detect_use_filter(false);// 检测模块是否开启过滤
-            dnn_factory_client.set_batch_size(batch_sizes);
-            dnn_factory_client.initial_test_model();
-            */
-
         }
 
         /// <summary>
@@ -452,18 +323,18 @@ namespace IntegrationTesting.Aidi
             {
                 for (int j = 0; j < objList[i].contours.Count - 1; j++)
                 {
-                    int sx = Convert.ToInt32(objList[i].contours[j].x);
-                    int sy = Convert.ToInt32(objList[i].contours[j].y);
-                    int ex = Convert.ToInt32(objList[i].contours[j + 1].x);
-                    int ey = Convert.ToInt32(objList[i].contours[j + 1].y);
+                    int sx = (int)Convert.ToDouble(objList[i].contours[j].x);
+                    int sy = (int)Convert.ToDouble(objList[i].contours[j].y);
+                    int ex = (int)Convert.ToDouble(objList[i].contours[j + 1].x);
+                    int ey = (int)Convert.ToDouble(objList[i].contours[j + 1].y);
                     DrawLine(sx, sy, ex, ey, color, lineWidth, aqDisplay);
                 }
                 //再设计一个点，补全多边形
                 int n = objList[i].contours.Count;
-                int nx = Convert.ToInt32(objList[i].contours[n - 1].x);
-                int ny = Convert.ToInt32(objList[i].contours[n - 1].y);
-                int zero_x = Convert.ToInt32(objList[i].contours[0].x);
-                int zero_y = Convert.ToInt32(objList[i].contours[0].y);
+                int nx = (int)Convert.ToDouble(objList[i].contours[n - 1].x);
+                int ny = (int)Convert.ToDouble(objList[i].contours[n - 1].y);
+                int zero_x = (int)Convert.ToDouble(objList[i].contours[0].x);
+                int zero_y = (int)Convert.ToDouble(objList[i].contours[0].y);
                 DrawLine(nx, ny, zero_x, zero_y, color, lineWidth, aqDisplay);
             }
         }
@@ -523,7 +394,7 @@ namespace IntegrationTesting.Aidi
                 aqDisplay1.InteractiveGraphics.Clear();
                 aqDisplay1.Image = m_sourceBitmap[comboBoxShowResultList.SelectedIndex];
                 aqDisplay1.FitToScreen();
-                DrawContours(m_objList[comboBoxShowResultList.SelectedIndex], AqVision.AqColorConstants.Green, 1, aqDisplay1);
+                DrawContours(m_objList[comboBoxShowResultList.SelectedIndex], AqVision.AqColorConstants.Red, 1, aqDisplay1);
                 aqDisplay1.Update();
             }
             catch (ArgumentException ex)

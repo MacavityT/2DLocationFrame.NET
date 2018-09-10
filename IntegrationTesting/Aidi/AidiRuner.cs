@@ -96,8 +96,6 @@ namespace aidi_client
 
                 Bitmap current_bitmap = bitmap_list[i];
 
-
-
                 AidiImage image = new AidiImage();
                 string bit_number = current_bitmap.PixelFormat.ToString();
                 int channel_number = 1;
