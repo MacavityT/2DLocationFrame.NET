@@ -176,7 +176,7 @@ namespace IntegrationTesting
                     }
                      
                 }));
-                SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
+                //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 GC.Collect();
                 AddMessageToListView("TriggerDone");
             }
