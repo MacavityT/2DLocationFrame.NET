@@ -10,20 +10,20 @@
 
 namespace Aqrose.Aidi {
 
-public class AIDI : global::System.IDisposable {
+public class AidiFactoryRunner : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal AIDI(global::System.IntPtr cPtr, bool cMemoryOwn) {
+  internal AidiFactoryRunner(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(AIDI obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(AidiFactoryRunner obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~AIDI() {
+  ~AidiFactoryRunner() {
     Dispose();
   }
 
@@ -32,7 +32,7 @@ public class AIDI : global::System.IDisposable {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          csharpaidiclientPINVOKE.delete_AIDI(swigCPtr);
+          csharpaidiclientPINVOKE.delete_AidiFactoryRunner(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -40,41 +40,38 @@ public class AIDI : global::System.IDisposable {
     }
   }
 
-  public AIDI(string check_code) : this(csharpaidiclientPINVOKE.new_AIDI__SWIG_0(check_code), true) {
+  public AidiFactoryRunner(string check_code) : this(csharpaidiclientPINVOKE.new_AidiFactoryRunner__SWIG_0(check_code), true) {
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public AIDI() : this(csharpaidiclientPINVOKE.new_AIDI__SWIG_1(), true) {
+  public AidiFactoryRunner() : this(csharpaidiclientPINVOKE.new_AidiFactoryRunner__SWIG_1(), true) {
   }
 
-  public void set_param(FactoryClientParamWrapper arg0) {
-    csharpaidiclientPINVOKE.AIDI_set_param(swigCPtr, FactoryClientParamWrapper.getCPtr(arg0));
+  public void set_param(FactoryClientParamWrapper param) {
+    csharpaidiclientPINVOKE.AidiFactoryRunner_set_param(swigCPtr, FactoryClientParamWrapper.getCPtr(param));
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void initial_test_model() {
-    csharpaidiclientPINVOKE.AIDI_initial_test_model(swigCPtr);
+  public void start() {
+    csharpaidiclientPINVOKE.AidiFactoryRunner_start(swigCPtr);
+  }
+
+  public void release() {
+    csharpaidiclientPINVOKE.AidiFactoryRunner_release(swigCPtr);
   }
 
   public void set_batch_size(IntVector batch_size) {
-    csharpaidiclientPINVOKE.AIDI_set_batch_size(swigCPtr, IntVector.getCPtr(batch_size));
+    csharpaidiclientPINVOKE.AidiFactoryRunner_set_batch_size(swigCPtr, IntVector.getCPtr(batch_size));
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public string start_test(AidiImage image) {
-    string ret = csharpaidiclientPINVOKE.AIDI_start_test__SWIG_0(swigCPtr, AidiImage.getCPtr(image));
+  public void set_test_batch_image(BatchAidiImage batch) {
+    csharpaidiclientPINVOKE.AidiFactoryRunner_set_test_batch_image(swigCPtr, BatchAidiImage.getCPtr(batch));
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
   }
 
-  public StringVector start_test(BatchAidiImage batch_images) {
-    StringVector ret = new StringVector(csharpaidiclientPINVOKE.AIDI_start_test__SWIG_1(swigCPtr, BatchAidiImage.getCPtr(batch_images)), true);
-    if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public string start_test(SWIGTYPE_p_uchar data, int width, int height) {
-    string ret = csharpaidiclientPINVOKE.AIDI_start_test__SWIG_2(swigCPtr, SWIGTYPE_p_uchar.getCPtr(data), width, height);
+  public StringVector get_detect_result() {
+    StringVector ret = new StringVector(csharpaidiclientPINVOKE.AidiFactoryRunner_get_detect_result(swigCPtr), true);
     return ret;
   }
 

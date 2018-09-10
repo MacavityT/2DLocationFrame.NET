@@ -73,7 +73,13 @@ public class AidiSegment : global::System.IDisposable {
   }
 
   public AidiImage start_test(AidiImage source_image) {
-    AidiImage ret = new AidiImage(csharpaidiclientPINVOKE.AidiSegment_start_test(swigCPtr, AidiImage.getCPtr(source_image)), true);
+    AidiImage ret = new AidiImage(csharpaidiclientPINVOKE.AidiSegment_start_test__SWIG_0(swigCPtr, AidiImage.getCPtr(source_image)), true);
+    if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public BatchAidiImage start_test(BatchAidiImage source_images) {
+    BatchAidiImage ret = new BatchAidiImage(csharpaidiclientPINVOKE.AidiSegment_start_test__SWIG_1(swigCPtr, BatchAidiImage.getCPtr(source_images)), true);
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

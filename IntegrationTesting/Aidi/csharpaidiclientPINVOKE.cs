@@ -495,10 +495,10 @@ class csharpaidiclientPINVOKE {
   public static extern int AidiImage_channel(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiImage_char_ptr_to_mat___")]
-  public static extern void AidiImage_char_ptr_to_mat(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.In, global::System.Runtime.InteropServices.Out, global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPArray)]byte[] jarg2, int jarg3, int jarg4, int jarg5);
+  public static extern void AidiImage_char_ptr_to_mat(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.In, global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPArray)]byte[] jarg2, int jarg3, int jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiImage_mat_to_char_ptr___")]
-  public static extern void AidiImage_mat_to_char_ptr(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.In, global::System.Runtime.InteropServices.Out, global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPArray)]byte[] jarg2, uint jarg3);
+  public static extern void AidiImage_mat_to_char_ptr(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.In, global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPArray)]byte[] jarg2, uint jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiImage_vector_int_to_mat___")]
   public static extern void AidiImage_vector_int_to_mat(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, int jarg4);
@@ -547,6 +547,9 @@ class csharpaidiclientPINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_BatchAidiImage_get_all_images___")]
   public static extern void BatchAidiImage_get_all_images(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_BatchAidiImage_set_image_list___")]
+  public static extern void BatchAidiImage_set_image_list(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_BatchAidiImage_at___")]
   public static extern global::System.IntPtr BatchAidiImage_at(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -989,9 +992,6 @@ class csharpaidiclientPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AIDI_set_batch_size___")]
   public static extern void AIDI_set_batch_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AIDI_set_detect_use_filter___")]
-  public static extern void AIDI_set_detect_use_filter(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
-
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AIDI_start_test__SWIG_0___")]
   public static extern string AIDI_start_test__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -1097,8 +1097,11 @@ class csharpaidiclientPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegment_set_filter_height___")]
   public static extern void AidiSegment_set_filter_height(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
 
-  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegment_start_test___")]
-  public static extern global::System.IntPtr AidiSegment_start_test(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegment_start_test__SWIG_0___")]
+  public static extern global::System.IntPtr AidiSegment_start_test__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegment_start_test__SWIG_1___")]
+  public static extern global::System.IntPtr AidiSegment_start_test__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiCalculation___")]
   public static extern global::System.IntPtr new_AidiCalculation();
@@ -1126,6 +1129,57 @@ class csharpaidiclientPINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiCalculation_get_feature_location_result___")]
   public static extern global::System.IntPtr AidiCalculation_get_feature_location_result(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, string jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiSegmentRunner__SWIG_0___")]
+  public static extern global::System.IntPtr new_AidiSegmentRunner__SWIG_0(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiSegmentRunner__SWIG_1___")]
+  public static extern global::System.IntPtr new_AidiSegmentRunner__SWIG_1();
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegmentRunner_set_param___")]
+  public static extern void AidiSegmentRunner_set_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegmentRunner_start___")]
+  public static extern void AidiSegmentRunner_start(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegmentRunner_release___")]
+  public static extern void AidiSegmentRunner_release(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegmentRunner_set_test_batch_image___")]
+  public static extern void AidiSegmentRunner_set_test_batch_image(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiSegmentRunner_get_detect_result___")]
+  public static extern global::System.IntPtr AidiSegmentRunner_get_detect_result(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_delete_AidiSegmentRunner___")]
+  public static extern void delete_AidiSegmentRunner(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiFactoryRunner__SWIG_0___")]
+  public static extern global::System.IntPtr new_AidiFactoryRunner__SWIG_0(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiFactoryRunner__SWIG_1___")]
+  public static extern global::System.IntPtr new_AidiFactoryRunner__SWIG_1();
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_set_param___")]
+  public static extern void AidiFactoryRunner_set_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_start___")]
+  public static extern void AidiFactoryRunner_start(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_release___")]
+  public static extern void AidiFactoryRunner_release(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_set_batch_size___")]
+  public static extern void AidiFactoryRunner_set_batch_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_set_test_batch_image___")]
+  public static extern void AidiFactoryRunner_set_test_batch_image(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_AidiFactoryRunner_get_detect_result___")]
+  public static extern global::System.IntPtr AidiFactoryRunner_get_detect_result(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_delete_AidiFactoryRunner___")]
+  public static extern void delete_AidiFactoryRunner(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("csharpaidiclient", EntryPoint="CSharp_AqrosefAidi_new_AidiTools___")]
   public static extern global::System.IntPtr new_AidiTools();

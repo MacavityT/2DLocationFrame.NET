@@ -66,6 +66,11 @@ public class BatchAidiImage : global::System.IDisposable {
     if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public void set_image_list(SWIGTYPE_p_std__vectorT_cv__Mat_t images) {
+    csharpaidiclientPINVOKE.BatchAidiImage_set_image_list(swigCPtr, SWIGTYPE_p_std__vectorT_cv__Mat_t.getCPtr(images));
+    if (csharpaidiclientPINVOKE.SWIGPendingException.Pending) throw csharpaidiclientPINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public AidiImage at(int index) {
     AidiImage ret = new AidiImage(csharpaidiclientPINVOKE.BatchAidiImage_at(swigCPtr, index), true);
     return ret;

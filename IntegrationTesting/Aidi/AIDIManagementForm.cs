@@ -10,13 +10,16 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using System.Runtime.InteropServices;
-using AqVision.Shape;
-using Newtonsoft.Json;
-using Aqrose.Aidi;
-using ApplyHalcon;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using ApplyHalcon;
+using aidi_client;
+using Aqrose.Aidi;
+using HalconDotNet;
+using AqVision.Shape;
+using Newtonsoft.Json;
+using TypeC_Aidi;
 
 
 namespace IntegrationTesting.Aidi
@@ -30,6 +33,13 @@ namespace IntegrationTesting.Aidi
         String root_path = "model_welding_slag";
         String root_path2 = "model_*****";
         String root_path3 = "model_*****";
+        //Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(@"******"));//转成utf-8
+        string model_path = @"C:\Users\SHUAN\Desktop\model";//转成utf-8
+        string pics_path = @"C:\Users\SHUAN\Desktop\Detect";
+        AidiRuner runer = new AidiRuner(check_code);
+        IntVector batch_size = new IntVector();
+
+        private Thread brightspotThread;
 
         List<RootObject>[] m_objList = null;
         public List<RootObject>[] ObjList
@@ -66,25 +76,106 @@ namespace IntegrationTesting.Aidi
             }
         }
 
-        public class RootObject
-        {
-            public string area { get; set; }
-            public List<Contours> contours { get; set; }
-            public string cx { get; set; }
-            public string cy { get; set; }
-            public string height { get; set; }
-            public string score { get; set; }
-            public string type { get; set; }
-            public string type_name { get; set; }
-            public string width { get; set; }
-        }
+//         public class RootObject
+//         {
+//             public string area { get; set; }
+//             public List<Contours> contours { get; set; }
+//             public string cx { get; set; }
+//             public string cy { get; set; }
+//             public string height { get; set; }
+//             public string score { get; set; }
+//             public string type { get; set; }
+//             public string type_name { get; set; }
+//             public string width { get; set; }
+//         }
 
         public AIDIManagementForm()
         {
             InitializeComponent();
             button1_Click(null, null);
+            brightspotThread = new Thread(brightspot);
         }
 
+        public void brightspot()
+        {
+            AidiProcess(pics_path, runer, aqDisplay1, richTextBox1);
+        }
+
+        private void AidiProcess(string pics_path, AidiRuner runer, AqVision.Controls.AqDisplay  aqDisplay1,RichTextBox richTextBox1)
+        {
+            List<Bitmap> bitmaps = GetBitmapsList(pics_path);
+            int batch_Capacity = bitmaps.Count;//获得batch_images一共有几张图片(容量)
+
+            ////深拷贝一份
+            //List<Bitmap> Temp_bitmaps = new List<Bitmap>();
+            //for (int k = 0; k < batch_Capacity; k++)
+            //{
+            //    Bitmap bt = bitmaps[k].Clone(new Rectangle(0, 0, bitmaps[k].Width, bitmaps[k].Height), bitmaps[k].PixelFormat);
+            //    Temp_bitmaps.Add(bt);
+
+            //}
+
+
+            //int width = bitmaps[0].Width;
+            //int kk = width;
+
+            int count = 1;
+            for (int k = 0; k < batch_Capacity - count + 1; k = k + count)
+            {
+
+                Stopwatch sp = new Stopwatch();
+                sp.Start();
+
+                List<Bitmap> bit = new List<Bitmap>();
+                for (int i = 0; i < count; i++)
+                {
+                    bit.Add(bitmaps[k + i]);
+                }
+                
+                //bit.Add(bitmaps[k+1]);
+                runer.set_detect_images(bit);
+
+                string name = @"D:\" + k.ToString() + ".bmp";
+                bitmaps[k].Save(name, System.Drawing.Imaging.ImageFormat.Bmp);
+
+
+                
+
+                List<string> results = new List<string>();
+                results = runer.get_detect_result();
+
+                sp.Stop();
+
+                int index = 0;
+                List<RootObject> objList = TypeC_Aidi.ResultStructure.GetobjList(results[index], 0); //results[0]代表第一张图，以此类推,这里可以设置筛选条件
+
+                // List<RootObject> objList1 = GetobjList(result[1]);
+
+
+                new TypeC_Aidi.ResultStructure().ShowAllGraph(aqDisplay1, bitmaps[k], objList, AqVision.AqColorConstants.Red, 1);
+              
+
+                //string aidiTime = "AIDI_Time：" + sp.ElapsedMilliseconds + " ms";
+                string aidiTime = sp.ElapsedMilliseconds + "";
+
+                if (richTextBox1.InvokeRequired)
+                {
+                    richTextBox1.BeginInvoke(new Action(() =>
+                    {
+                        richTextBox1.Text += aidiTime + "\r\n";
+                        richTextBox1.Refresh(); }));
+                }
+                else
+                {
+                    richTextBox1.Text += aidiTime + "\r\n";
+                    richTextBox1.Refresh();
+                }
+
+                Thread.Sleep(500);
+            }
+
+
+        }
         private void AIDIManagementForm_Load(object sender, EventArgs e)
         {
             //先执行一次数据结构相同的json解析，这样下次json解析的时候时间就非常短了
@@ -97,7 +188,7 @@ namespace IntegrationTesting.Aidi
             Stopwatch sp2 = new Stopwatch();
             sp2.Start();
 
-            InitAidiModel(dnn_factory_client, root_path, "D", 1);
+            InitAidiModel();
 
             sp2.Stop();
             MessageBox.Show("AIDI初始化完成，耗时" + sp2.ElapsedMilliseconds + " ms");
@@ -140,6 +231,9 @@ namespace IntegrationTesting.Aidi
         {
             try
             {
+
+                brightspotThread.Start();
+                /*
                 label1.Text = "    ";
 
                 DetectBmp();
@@ -155,14 +249,7 @@ namespace IntegrationTesting.Aidi
 
                 richTextBox2.Text += "绘制contour时间：" + sp3.ElapsedMilliseconds + "\r\n";
                 aqDisplay1.Update();
-
-//                 string aidiTime = "AIDI检测时间：" + sp.ElapsedMilliseconds;
-//                 richTextBox2.Text += aidiTime + "\r\n";
-//                 richTextBox2.Refresh();
-//                 richTextBox2.Text += batch_Capacity + "张" + "\r\n";
-//                 richTextBox2.Refresh();
-//                 label1.Text = "执行完毕" + batch_Capacity + "张";
-//                 label1.ForeColor = Color.OrangeRed;
+                */
             }
             catch( Exception ex)
             {
@@ -177,12 +264,24 @@ namespace IntegrationTesting.Aidi
         /// <param name="root_path"></param>
         /// <param name="detectModel"></param>
         /// <param name="batch_size"></param>
-        public void InitAidiModel(AIDI dnn_factory_client, string root_path, string detectModel, int batch_size)
+        public void InitAidiModel()
         {
+            try
+            {
+                batch_size.Add(1);
+                runer.Init(model_path, 0, batch_size);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            
+            /*
             StringVector save_model_path_list = new StringVector();// 模型的加载路径，路径下应该有model.aqbin
             StringVector operator_type_list = new StringVector();
             IntVector batch_sizes = new IntVector(); // 一次测试几张图
-
+            
             switch (detectModel)
             {
                 case "L":
@@ -226,6 +325,8 @@ namespace IntegrationTesting.Aidi
             dnn_factory_client.set_detect_use_filter(false);// 检测模块是否开启过滤
             dnn_factory_client.set_batch_size(batch_sizes);
             dnn_factory_client.initial_test_model();
+            */
+
         }
 
         /// <summary>

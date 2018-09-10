@@ -292,7 +292,6 @@ namespace IntegrationTesting
             string picSourceName = string.Format("{0}{1}_{2}_.jpg", sourcePath, count.ToString(), timeNowToString);
             string picResultFullName = string.Format("{0}{1}_{2}_.jpg", resultPath, count.ToString(), timeNowToString);
 
-            //ApplyHalcon.ImageConvert.Bitmap2HImage_8(bitmap);
             bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Jpeg);
             aqDisplay.CreateContentBitmap().Save(picResultFullName); // 1304.456
 

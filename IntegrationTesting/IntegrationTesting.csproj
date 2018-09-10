@@ -110,6 +110,7 @@
     <Compile Include="Aidi\AidiCalculation.cs" />
     <Compile Include="Aidi\AidiClassify.cs" />
     <Compile Include="Aidi\AIDIEntrance.cs" />
+    <Compile Include="Aidi\AidiFactoryRunner.cs" />
     <Compile Include="Aidi\AidiImage.cs" />
     <Compile Include="Aidi\AidiLocation.cs" />
     <Compile Include="Aidi\AIDIManagementForm.cs">
@@ -118,7 +119,9 @@
     <Compile Include="Aidi\AIDIManagementForm.Designer.cs">
       <DependentUpon>AIDIManagementForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Aidi\AidiRuner.cs" />
     <Compile Include="Aidi\AidiSegment.cs" />
+    <Compile Include="Aidi\AidiSegmentRunner.cs" />
     <Compile Include="Aidi\AidiTools.cs" />
     <Compile Include="Aidi\BatchAidiImage.cs" />
     <Compile Include="Aidi\ClassifyClientParamWrapper.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="PositionSet.Designer.cs">
       <DependentUpon>PositionSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="ResultStructure.cs" />
     <Compile Include="Robot\GetLocalizeResultHandler.cs" />
     <Compile Include="Location\AqLocationPattern.cs" />
     <Compile Include="Calibration\CalibrationSetForm.cs">
