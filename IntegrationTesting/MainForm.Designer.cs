@@ -46,16 +46,16 @@
             this.OpenLocationAcquistionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CloseLocationAcquistionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.触发定位RPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.触发检测RPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存检测图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存定位图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label_Title = new System.Windows.Forms.Label();
             this.buttonTriggerLocationRPC = new System.Windows.Forms.Button();
             this.groupBoxTest = new System.Windows.Forms.GroupBox();
             this.buttonTriggerDetectionRPC = new System.Windows.Forms.Button();
-            this.aqDisplayDectection = new AqVision.Controls.AqDisplay();
+            this.aqDisplayDetection = new AqVision.Controls.AqDisplay();
             this.tableLayoutPanelShowPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,22 +64,29 @@
             this.label7 = new System.Windows.Forms.Label();
             this.labelLocationScore = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelDetect = new System.Windows.Forms.Label();
+            this.labelDetectResult = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelErrorCount = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.listViewRecord = new System.Windows.Forms.ListView();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelLocationTimes = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labellocationCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelDetectTimes = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labeldetectionCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelRuningTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelRunningTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanelTitle = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelLeft = new System.Windows.Forms.TableLayoutPanel();
             this.panelTitle = new System.Windows.Forms.Panel();
             this.checkBoxCameraAcquisition = new System.Windows.Forms.CheckBox();
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelAqDisplayControls = new System.Windows.Forms.TableLayoutPanel();
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.menuStripMain.SuspendLayout();
             this.tableLayoutPanelShowPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -87,6 +94,7 @@
             this.panel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.tableLayoutPanelTitle.SuspendLayout();
             this.tableLayoutPanelLeft.SuspendLayout();
             this.panelTitle.SuspendLayout();
@@ -176,8 +184,6 @@
             this.OpenLocationAcquistionToolStripMenuItem,
             this.CloseLocationAcquistionToolStripMenuItem,
             this.toolStripSeparator3,
-            this.触发定位RPCToolStripMenuItem,
-            this.触发检测RPCToolStripMenuItem,
             this.toolStripSeparator4});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
@@ -186,13 +192,13 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
             // 
             // OpendetectAcquistionToolStripMenuItem
             // 
             this.OpendetectAcquistionToolStripMenuItem.Name = "OpendetectAcquistionToolStripMenuItem";
-            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.OpendetectAcquistionToolStripMenuItem.Text = "开启检测实时采集";
+            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.OpendetectAcquistionToolStripMenuItem.Text = "检测测试显示";
             this.OpendetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启检测实时采集ToolStripMenuItem_Click);
             // 
             // ClosedetectAcquistionToolStripMenuItem
@@ -200,20 +206,20 @@
             this.ClosedetectAcquistionToolStripMenuItem.Checked = true;
             this.ClosedetectAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ClosedetectAcquistionToolStripMenuItem.Name = "ClosedetectAcquistionToolStripMenuItem";
-            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.ClosedetectAcquistionToolStripMenuItem.Text = "关闭检测实时采集";
+            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.ClosedetectAcquistionToolStripMenuItem.Text = "检测测试隐藏";
             this.ClosedetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭检测实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
             // 
             // OpenLocationAcquistionToolStripMenuItem
             // 
             this.OpenLocationAcquistionToolStripMenuItem.Name = "OpenLocationAcquistionToolStripMenuItem";
-            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.OpenLocationAcquistionToolStripMenuItem.Text = "开启定位实时采集";
+            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.OpenLocationAcquistionToolStripMenuItem.Text = "定位测试显示";
             this.OpenLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启定位实时采集ToolStripMenuItem_Click);
             // 
             // CloseLocationAcquistionToolStripMenuItem
@@ -221,38 +227,26 @@
             this.CloseLocationAcquistionToolStripMenuItem.Checked = true;
             this.CloseLocationAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CloseLocationAcquistionToolStripMenuItem.Name = "CloseLocationAcquistionToolStripMenuItem";
-            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.CloseLocationAcquistionToolStripMenuItem.Text = "关闭定位实时采集";
+            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.CloseLocationAcquistionToolStripMenuItem.Text = "定位测试隐藏";
             this.CloseLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭定位实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(169, 6);
-            // 
-            // 触发定位RPCToolStripMenuItem
-            // 
-            this.触发定位RPCToolStripMenuItem.Name = "触发定位RPCToolStripMenuItem";
-            this.触发定位RPCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.触发定位RPCToolStripMenuItem.Text = "触发定位RPC";
-            this.触发定位RPCToolStripMenuItem.Click += new System.EventHandler(this.触发定位RPCToolStripMenuItem_Click);
-            // 
-            // 触发检测RPCToolStripMenuItem
-            // 
-            this.触发检测RPCToolStripMenuItem.Name = "触发检测RPCToolStripMenuItem";
-            this.触发检测RPCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.触发检测RPCToolStripMenuItem.Text = "触发检测RPC";
-            this.触发检测RPCToolStripMenuItem.Click += new System.EventHandler(this.触发检测RPCToolStripMenuItem_Click);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
             // 
             // ToolStripMenuItemHelp
             // 
             this.ToolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemLog});
+            this.ToolStripMenuItemLog,
+            this.保存检测图片ToolStripMenuItem,
+            this.保存定位图片ToolStripMenuItem});
             this.ToolStripMenuItemHelp.Name = "ToolStripMenuItemHelp";
             this.ToolStripMenuItemHelp.Size = new System.Drawing.Size(44, 21);
             this.ToolStripMenuItemHelp.Text = "帮助";
@@ -260,15 +254,29 @@
             // ToolStripMenuItemLog
             // 
             this.ToolStripMenuItemLog.Name = "ToolStripMenuItemLog";
-            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemLog.Text = "日志信息";
+            // 
+            // 保存检测图片ToolStripMenuItem
+            // 
+            this.保存检测图片ToolStripMenuItem.Name = "保存检测图片ToolStripMenuItem";
+            this.保存检测图片ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.保存检测图片ToolStripMenuItem.Text = "保存检测图片";
+            this.保存检测图片ToolStripMenuItem.Click += new System.EventHandler(this.保存检测图片ToolStripMenuItem_Click);
+            // 
+            // 保存定位图片ToolStripMenuItem
+            // 
+            this.保存定位图片ToolStripMenuItem.Name = "保存定位图片ToolStripMenuItem";
+            this.保存定位图片ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.保存定位图片ToolStripMenuItem.Text = "保存定位图片";
+            this.保存定位图片ToolStripMenuItem.Click += new System.EventHandler(this.保存定位图片ToolStripMenuItem_Click);
             // 
             // label_Title
             // 
             this.label_Title.AutoSize = true;
             this.label_Title.Font = new System.Drawing.Font("SimSun", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_Title.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label_Title.Location = new System.Drawing.Point(230, 15);
+            this.label_Title.Location = new System.Drawing.Point(235, 15);
             this.label_Title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_Title.Name = "label_Title";
             this.label_Title.Size = new System.Drawing.Size(596, 48);
@@ -278,12 +286,13 @@
             // 
             // buttonTriggerLocationRPC
             // 
-            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(135, 8);
+            this.buttonTriggerLocationRPC.Location = new System.Drawing.Point(139, 8);
             this.buttonTriggerLocationRPC.Name = "buttonTriggerLocationRPC";
             this.buttonTriggerLocationRPC.Size = new System.Drawing.Size(90, 25);
             this.buttonTriggerLocationRPC.TabIndex = 11;
             this.buttonTriggerLocationRPC.Text = "触发定位RPC";
             this.buttonTriggerLocationRPC.UseVisualStyleBackColor = true;
+            this.buttonTriggerLocationRPC.Visible = false;
             this.buttonTriggerLocationRPC.Click += new System.EventHandler(this.buttonTriggerLocationRPC_Click);
             // 
             // groupBoxTest
@@ -298,26 +307,27 @@
             // 
             // buttonTriggerDetectionRPC
             // 
-            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(135, 39);
+            this.buttonTriggerDetectionRPC.Location = new System.Drawing.Point(138, 39);
             this.buttonTriggerDetectionRPC.Name = "buttonTriggerDetectionRPC";
             this.buttonTriggerDetectionRPC.Size = new System.Drawing.Size(90, 25);
             this.buttonTriggerDetectionRPC.TabIndex = 11;
             this.buttonTriggerDetectionRPC.Text = "触发检测RPC";
             this.buttonTriggerDetectionRPC.UseVisualStyleBackColor = true;
+            this.buttonTriggerDetectionRPC.Visible = false;
             this.buttonTriggerDetectionRPC.Click += new System.EventHandler(this.buttonTriggerDetectionRPC_Click);
             // 
-            // aqDisplayDectection
+            // aqDisplayDetection
             // 
-            this.aqDisplayDectection.AutoScroll = true;
-            this.aqDisplayDectection.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.aqDisplayDectection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aqDisplayDectection.Image = null;
-            this.aqDisplayDectection.Location = new System.Drawing.Point(573, 2);
-            this.aqDisplayDectection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.aqDisplayDectection.Name = "aqDisplayDectection";
-            this.aqDisplayDectection.ScrollBar = false;
-            this.aqDisplayDectection.Size = new System.Drawing.Size(568, 922);
-            this.aqDisplayDectection.TabIndex = 1;
+            this.aqDisplayDetection.AutoScroll = true;
+            this.aqDisplayDetection.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.aqDisplayDetection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aqDisplayDetection.Image = null;
+            this.aqDisplayDetection.Location = new System.Drawing.Point(573, 2);
+            this.aqDisplayDetection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aqDisplayDetection.Name = "aqDisplayDetection";
+            this.aqDisplayDetection.ScrollBar = false;
+            this.aqDisplayDetection.Size = new System.Drawing.Size(568, 922);
+            this.aqDisplayDetection.TabIndex = 1;
             // 
             // tableLayoutPanelShowPanel
             // 
@@ -369,7 +379,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label8.ForeColor = System.Drawing.Color.Lime;
             this.label8.Location = new System.Drawing.Point(25, 40);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
@@ -404,7 +414,7 @@
             // 
             this.labelLocationScore.AutoSize = true;
             this.labelLocationScore.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelLocationScore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.labelLocationScore.ForeColor = System.Drawing.Color.Lime;
             this.labelLocationScore.Location = new System.Drawing.Point(12, 34);
             this.labelLocationScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelLocationScore.Name = "labelLocationScore";
@@ -414,8 +424,8 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.labelDetect);
+            this.panel3.Controls.Add(this.labelDetectResult);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 264);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
@@ -423,32 +433,32 @@
             this.panel3.Size = new System.Drawing.Size(110, 132);
             this.panel3.TabIndex = 2;
             // 
-            // label4
+            // labelDetect
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(13, 12);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 19);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "检测结果";
+            this.labelDetect.AutoSize = true;
+            this.labelDetect.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDetect.Location = new System.Drawing.Point(13, 12);
+            this.labelDetect.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelDetect.Name = "labelDetect";
+            this.labelDetect.Size = new System.Drawing.Size(85, 19);
+            this.labelDetect.TabIndex = 4;
+            this.labelDetect.Text = "检测结果";
             // 
-            // label3
+            // labelDetectResult
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(25, 40);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 24);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "不良";
+            this.labelDetectResult.AutoSize = true;
+            this.labelDetectResult.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDetectResult.ForeColor = System.Drawing.Color.Red;
+            this.labelDetectResult.Location = new System.Drawing.Point(25, 40);
+            this.labelDetectResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelDetectResult.Name = "labelDetectResult";
+            this.labelDetectResult.Size = new System.Drawing.Size(60, 24);
+            this.labelDetectResult.TabIndex = 4;
+            this.labelDetectResult.Text = "不良";
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.label6);
+            this.panel6.Controls.Add(this.labelErrorCount);
             this.panel6.Controls.Add(this.label5);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 401);
@@ -457,17 +467,17 @@
             this.panel6.Size = new System.Drawing.Size(110, 119);
             this.panel6.TabIndex = 3;
             // 
-            // label6
+            // labelErrorCount
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(36, 39);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 24);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "10";
+            this.labelErrorCount.AutoSize = true;
+            this.labelErrorCount.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelErrorCount.ForeColor = System.Drawing.Color.Red;
+            this.labelErrorCount.Location = new System.Drawing.Point(36, 39);
+            this.labelErrorCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelErrorCount.Name = "labelErrorCount";
+            this.labelErrorCount.Size = new System.Drawing.Size(36, 24);
+            this.labelErrorCount.TabIndex = 4;
+            this.labelErrorCount.Text = "10";
             // 
             // label5
             // 
@@ -502,6 +512,7 @@
             this.listViewRecord.TabIndex = 4;
             this.listViewRecord.UseCompatibleStateImageBehavior = false;
             this.listViewRecord.View = System.Windows.Forms.View.Details;
+            this.listViewRecord.Visible = false;
             // 
             // buttonRun
             // 
@@ -539,12 +550,55 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelLocationTimes,
+            this.labellocationCount,
+            this.toolStripStatusLabelDetectTimes,
+            this.labeldetectionCount,
+            this.toolStripStatusLabelRuningTime,
+            this.toolStripStatusLabelRunningTime});
             this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1271, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelLocationTimes
+            // 
+            this.toolStripStatusLabelLocationTimes.Name = "toolStripStatusLabelLocationTimes";
+            this.toolStripStatusLabelLocationTimes.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabelLocationTimes.Text = "定位次数：";
+            // 
+            // labellocationCount
+            // 
+            this.labellocationCount.Name = "labellocationCount";
+            this.labellocationCount.Size = new System.Drawing.Size(15, 17);
+            this.labellocationCount.Text = "0";
+            // 
+            // toolStripStatusLabelDetectTimes
+            // 
+            this.toolStripStatusLabelDetectTimes.Name = "toolStripStatusLabelDetectTimes";
+            this.toolStripStatusLabelDetectTimes.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabelDetectTimes.Text = "检测次数：";
+            // 
+            // labeldetectionCount
+            // 
+            this.labeldetectionCount.Name = "labeldetectionCount";
+            this.labeldetectionCount.Size = new System.Drawing.Size(15, 17);
+            this.labeldetectionCount.Text = "0";
+            // 
+            // toolStripStatusLabelRuningTime
+            // 
+            this.toolStripStatusLabelRuningTime.Name = "toolStripStatusLabelRuningTime";
+            this.toolStripStatusLabelRuningTime.Size = new System.Drawing.Size(80, 17);
+            this.toolStripStatusLabelRuningTime.Text = "总运行时间：";
+            // 
+            // toolStripStatusLabelRunningTime
+            // 
+            this.toolStripStatusLabelRunningTime.Name = "toolStripStatusLabelRunningTime";
+            this.toolStripStatusLabelRunningTime.Size = new System.Drawing.Size(56, 17);
+            this.toolStripStatusLabelRunningTime.Text = "00:00:00";
             // 
             // tableLayoutPanelTitle
             // 
@@ -595,7 +649,6 @@
             this.panelTitle.Name = "panelTitle";
             this.panelTitle.Size = new System.Drawing.Size(1143, 76);
             this.panelTitle.TabIndex = 0;
-            this.panelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // checkBoxCameraAcquisition
             // 
@@ -604,13 +657,14 @@
             this.checkBoxCameraAcquisition.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraAcquisition.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraAcquisition.Image")));
             this.checkBoxCameraAcquisition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(7, 8);
+            this.checkBoxCameraAcquisition.Location = new System.Drawing.Point(5, 8);
             this.checkBoxCameraAcquisition.Name = "checkBoxCameraAcquisition";
-            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(114, 25);
+            this.checkBoxCameraAcquisition.Size = new System.Drawing.Size(131, 25);
             this.checkBoxCameraAcquisition.TabIndex = 6;
             this.checkBoxCameraAcquisition.Text = "开启定位实时采集";
             this.checkBoxCameraAcquisition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraAcquisition.UseVisualStyleBackColor = false;
+            this.checkBoxCameraAcquisition.Visible = false;
             this.checkBoxCameraAcquisition.CheckedChanged += new System.EventHandler(this.checkBoxCameraAcquisition_CheckedChanged);
             // 
             // checkBoxCameraDetection
@@ -620,13 +674,14 @@
             this.checkBoxCameraDetection.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxCameraDetection.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxCameraDetection.Image")));
             this.checkBoxCameraDetection.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBoxCameraDetection.Location = new System.Drawing.Point(7, 38);
+            this.checkBoxCameraDetection.Location = new System.Drawing.Point(4, 38);
             this.checkBoxCameraDetection.Name = "checkBoxCameraDetection";
-            this.checkBoxCameraDetection.Size = new System.Drawing.Size(114, 25);
+            this.checkBoxCameraDetection.Size = new System.Drawing.Size(131, 25);
             this.checkBoxCameraDetection.TabIndex = 10;
             this.checkBoxCameraDetection.Text = "开启检测实时采集";
             this.checkBoxCameraDetection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxCameraDetection.UseVisualStyleBackColor = false;
+            this.checkBoxCameraDetection.Visible = false;
             this.checkBoxCameraDetection.CheckedChanged += new System.EventHandler(this.checkBoxCameraDetection_CheckedChanged);
             // 
             // tableLayoutPanelAqDisplayControls
@@ -635,7 +690,7 @@
             this.tableLayoutPanelAqDisplayControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelAqDisplayControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelAqDisplayControls.Controls.Add(this.aqDisplayLocation, 0, 0);
-            this.tableLayoutPanelAqDisplayControls.Controls.Add(this.aqDisplayDectection, 1, 0);
+            this.tableLayoutPanelAqDisplayControls.Controls.Add(this.aqDisplayDetection, 1, 0);
             this.tableLayoutPanelAqDisplayControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelAqDisplayControls.Location = new System.Drawing.Point(2, 82);
             this.tableLayoutPanelAqDisplayControls.Margin = new System.Windows.Forms.Padding(2);
@@ -644,6 +699,12 @@
             this.tableLayoutPanelAqDisplayControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelAqDisplayControls.Size = new System.Drawing.Size(1143, 926);
             this.tableLayoutPanelAqDisplayControls.TabIndex = 1;
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Enabled = true;
+            this.timerStatus.Interval = 1000;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
             // MainForm
             // 
@@ -672,6 +733,8 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.tableLayoutPanelTitle.ResumeLayout(false);
             this.tableLayoutPanelLeft.ResumeLayout(false);
             this.panelTitle.ResumeLayout(false);
@@ -693,7 +756,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetLocation;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetDectection;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetRobotConnect;
-        private AqVision.Controls.AqDisplay aqDisplayDectection;
+        private AqVision.Controls.AqDisplay aqDisplayDetection;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemLog;
         private System.Windows.Forms.CheckBox checkBoxCameraDetection;
@@ -707,12 +770,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelDetect;
+        private System.Windows.Forms.Label labelDetectResult;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonRun;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelErrorCount;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
@@ -725,8 +788,6 @@
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpendetectAcquistionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenLocationAcquistionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 触发定位RPCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 触发检测RPCToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ClosedetectAcquistionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -734,6 +795,15 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ListView listViewRecord;
+        private System.Windows.Forms.ToolStripMenuItem 保存检测图片ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 保存定位图片ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelLocationTimes;
+        private System.Windows.Forms.ToolStripStatusLabel labellocationCount;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelDetectTimes;
+        private System.Windows.Forms.ToolStripStatusLabel labeldetectionCount;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelRunningTime;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelRuningTime;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }
 

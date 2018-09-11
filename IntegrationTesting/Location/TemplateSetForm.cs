@@ -141,9 +141,9 @@ namespace IntegrationTesting
                 aqDisplayCreateModel.Update();
                 RunMatcher(ModelFilePath);
                 ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green, aqDisplayCreateModel);
-                //textBox1.Text = LocationResultPosX.ToString("0.000");
-                //textBox2.Text = LocationResultPosY.ToString("0.000");
-                //textBox3.Text = (LocationResultPosTheta / Math.PI * 180).ToString("0.000");
+                textBox1.Text = LocationResultPosX[0].ToString("0.000");
+                textBox2.Text = LocationResultPosY[0].ToString("0.000");
+                textBox3.Text = (LocationResultPosTheta[0] / Math.PI * 180).ToString("0.000");
             }
             catch (Exception ex)
             {
