@@ -123,6 +123,7 @@ namespace IntegrationTesting
 
         private int TriggerCamera(double robotX, double robotY, double robotRz)
         {
+            Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera beg< ");
             int locationResult = -1;
             try
             {
@@ -146,6 +147,7 @@ namespace IntegrationTesting
                     }
                     else
                     {
+                        Tool.DebugInfo.OutputProcessMessage("Integraton Integraton TriggerCamera acquisition beg< ");
                         Bitmap location = null;
                         Bitmap detection = null;
                         m_Acquisition.Acquisition(ref location, ref detection); //853
@@ -160,10 +162,13 @@ namespace IntegrationTesting
                             m_templateSet.ImageInput.Dispose();
                         }
                         m_templateSet.ImageInput = location.Clone() as Bitmap;
+                        Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera acquisition end> ");
                     }
-
+                    
+                    
                     triggerLocationResult.Clear();
                     locationResult = m_templateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm");
+                    
                     if(locationResult == 0)
                     {
                         for(int i=0; i<m_templateSet.LocationResultPosTheta.Length; i++ )
@@ -179,7 +184,7 @@ namespace IntegrationTesting
                             m_templateSet.ShowGetResultsData(AqColorConstants.Green, aqDisplayLocation);
                         }
                     }
-                    if(triggerLocationResult.Count < 2)
+                    if(triggerLocationResult.Count == 0) //未抓到水平放置，才去抓取竖直放置
                     {
                         locationResult = m_templateSet.RunMatcher(Application.StartupPath + @"\location\ModelVertical.shm");
                         if (locationResult == 0)
@@ -198,7 +203,8 @@ namespace IntegrationTesting
                             }
                         }
                     }
-
+                    
+                    Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera RunMatcher end> ");
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                     //AddMessageToListView("Suc");
                     string showScoreAll = null;
@@ -223,15 +229,18 @@ namespace IntegrationTesting
                     }
                 }));
                 //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
-                AddMessageToListView("TriggerCameraDone");
+                //AddMessageToListView("TriggerCameraDone");
+                
                 GC.Collect();
+                Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera collect ------------------");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("TriggerCamera " + ex.Message);
-                return -2;
+                //MessageBox.Show("TriggerCamera " + ex.Message);
+                locationResult = -2;
             }
             m_locationCount++;
+            Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton TriggerCamera locationResult = {0}", locationResult));
             return locationResult;
         }
 
@@ -239,6 +248,7 @@ namespace IntegrationTesting
         {
             if (triggerLocationResult.Count > 0)
             {
+                Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult beg< ");
                 m_calibrateShow.SetCurrentImagePosition(triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle);
                 //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
                 string calibrationPath  = null;
@@ -254,7 +264,9 @@ namespace IntegrationTesting
                 }
                 m_calibrateShow.GetCurrentCatchPosition(ref posX, ref posY, ref theta, calibrationPath);
                 triggerLocationResult.RemoveAt(0);
+                Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult end> ");
                 //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
+                Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton TriggerCamera GetLocalizeResult = {0}, {1}, {2}, {3}.", posX, posY, theta, posture));
             }
             return true;
         }
@@ -263,6 +275,7 @@ namespace IntegrationTesting
         {
             try
             {
+                Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo beg< ");
                 aqDisplayDetection.InteractiveGraphics.Clear();
                 aqDisplayDetection.Update();
                 checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
@@ -290,6 +303,7 @@ namespace IntegrationTesting
                     {
                         Bitmap location = null;
                         Bitmap detection = null;
+                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition beg< ");
                         m_Acquisition.Acquisition(ref location, ref detection);
                         aqDisplayDetection.Invoke(new MethodInvoker(delegate
                         {
@@ -297,10 +311,12 @@ namespace IntegrationTesting
                         }));
 
                         m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
+                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition end> ");
                     }
                     aqDisplayDetection.FitToScreen();
                     aqDisplayDetection.Update();
                     m_aidiMangement.DetectPic();
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo DetectPic end> ");
                     aqDisplayDetection.Image = m_aidiMangement.SourceBitmap[0];
                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 5, aqDisplayDetection);
                     aqDisplayDetection.Update();
@@ -318,8 +334,11 @@ namespace IntegrationTesting
                         labelErrorCount.Text = string.Format("{0}", m_aidiMangement.ObjList[0].Count);
                         labelErrorCount.ForeColor = Color.Red;
                     }
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo ShowResult end> ");
                     //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
                     GC.Collect();
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo Collect ------------------");
+                    Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton GetWorkObjInfo = {0}, {1}.Count={2}", labelDetectResult.Text, labelErrorCount.Text, m_detectonCount));
                 }));
             }
             catch (Exception ex)

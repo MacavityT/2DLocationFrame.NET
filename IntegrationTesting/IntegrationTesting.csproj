@@ -197,6 +197,7 @@
       <DependentUpon>TemplateSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Robot\VisionImpl.cs" />
+    <Compile Include="Tool\DebugInfo.cs" />
     <Compile Include="Tool\IniFile.cs" />
     <Compile Include="Robot\TriggerCamerHandler.cs" />
     <Compile Include="UI2LibInterface.cs" />

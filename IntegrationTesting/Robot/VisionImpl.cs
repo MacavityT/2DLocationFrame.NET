@@ -55,7 +55,7 @@ namespace IntegrationTesting.Robot
                 delta += 360;
             }
 
-            //delta -= 180;  //修改数据
+            delta -= 180;  //修改数据
             Pose2D result_2D_pos = new Pose2D { X = posX, Y = posY, Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
             localizeRespone.VisionStatus = posture;     //1-工件平放状态 2-工件竖立状态
