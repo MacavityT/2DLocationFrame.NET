@@ -109,6 +109,7 @@
       <DependentUpon>AcquisitionImageSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Acquisition\AcquisitionMode.cs" />
+    <Compile Include="Acquisition\CameraParam.cs" />
     <Compile Include="Aidi\AIDI.cs" />
     <Compile Include="Aidi\AidiCalculation.cs" />
     <Compile Include="Aidi\AidiClassify.cs" />

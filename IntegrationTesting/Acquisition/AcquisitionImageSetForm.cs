@@ -14,86 +14,14 @@ namespace IntegrationTesting
 {
     public partial class AcqusitionImageSet : Form
     {
-        string m_cameraNameLocation = "";
+        CameraParam cameraParam = new CameraParam();
 
-        public string CameraNameLocation
+        public CameraParam CameraParamSet
         {
-            get { return m_cameraNameLocation; }
-            set { m_cameraNameLocation = value; }
-        }
-        UInt32 m_exposureTimeLocation = 5000;
-
-        public UInt32 ExposureTimeLocation
-        {
-            get { return m_exposureTimeLocation; }
-            set { m_exposureTimeLocation = value; }
+            get { return cameraParam; }
+            set { cameraParam = value; }
         }
 
-        int m_cameraBrandLocation;
-        public int CameraBrandLocation
-        {
-            get { return m_cameraBrandLocation; }
-            set { m_cameraBrandLocation = value; }
-        }
-
-        string m_cameraNameDetection = "";
-
-        public string CameraNameDetection
-        {
-            get { return m_cameraNameDetection; }
-            set { m_cameraNameDetection = value; }
-        }
-        UInt32 m_exposureTimeDetection = 5000;
-
-        public UInt32 ExposureTimeDetection
-        {
-            get { return m_exposureTimeDetection; }
-            set { m_exposureTimeDetection = value; }
-        }
-
-        int m_cameraBrandDetection;
-        public int CameraBrandDetection
-        {
-            get { return m_cameraBrandDetection; }
-            set { m_cameraBrandDetection = value; }
-        }
-
-        string m_inputImageFileLocationPath = null;
-
-        public string InputImageFileLocationPath
-        {
-            get { return m_inputImageFileLocationPath; }
-            set { m_inputImageFileLocationPath = value; }
-        }
-        string m_inputImageFileDetectionPath = null;
-
-        public string InputImageFileDetectionPath
-        {
-            get { return m_inputImageFileDetectionPath; }
-            set { m_inputImageFileDetectionPath = value; }
-        }
-        string m_inputImageFolderLocationPath = null;
-
-        public string InputImageFolderLocationPath
-        {
-            get { return m_inputImageFolderLocationPath; }
-            set { m_inputImageFolderLocationPath = value; }
-        }
-        string m_inputImageFolderDetectionPath = null;
-
-        public string InputImageFolderDetectionPath
-        {
-            get { return m_inputImageFolderDetectionPath; }
-            set { m_inputImageFolderDetectionPath = value; }
-        }
-
-        AcquisitionMode mode = AcquisitionMode.FromCamera;
-
-        public AcquisitionMode Mode
-        {
-            get { return mode; }
-            set { mode = value; }
-        }
         public AcqusitionImageSet()
         {
             InitializeComponent();
@@ -101,17 +29,34 @@ namespace IntegrationTesting
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            CameraNameLocation = textBoxCameraNameLocation.Text;
-            m_exposureTimeLocation = Convert.ToUInt32(textBoxExposureTimeLocation.Text);
-            m_cameraBrandLocation = comboBoxCameraBrandLocation.SelectedIndex;
+            if(comboBoxCameraBrand.SelectedIndex == 0 )
+            {
+                CameraParamSet.CameraNameBrand[comboBoxCameraName.Text] = AqCameraBrand.DaHeng;
+            }
+            else
+            {
+                CameraParamSet.CameraNameBrand[comboBoxCameraName.Text] = AqCameraBrand.Basler;
+            }
 
-            CameraNameDetection = textBoxCameraNameDetection.Text;
-            m_exposureTimeDetection = Convert.ToUInt32(textBoxExposureTimeDetection.Text);
-            m_cameraBrandDetection = comboBoxCameraBrandDetection.SelectedIndex;
-            m_inputImageFileLocationPath = textBoxLocationFile.Text;
-            m_inputImageFileDetectionPath = textBoxDetectionFile.Text;
-            m_inputImageFolderLocationPath = textBoxLocationDirectory.Text;
-            m_inputImageFolderDetectionPath = textBoxDetectionDirectory.Text;            
+            CameraParamSet.CameraNameExposure[comboBoxCameraName.Text] = Convert.ToUInt32(textBoxExposureTime.Text);
+
+            CameraParamSet.CameraNameInputFile[comboBoxCameraName.Text] = textBoxFile.Text;
+
+            CameraParamSet.CameraNameInputFolder[comboBoxCameraName.Text] = textBoxFolder.Text;
+            if (radioButtonCamera.Checked)
+            {
+                CameraParamSet.AcquisitionStyle[comboBoxCameraName.Text] = AcquisitionMode.FromCamera;
+            }
+            else if (radioButtonLocalFile.Checked)
+            {
+                CameraParamSet.AcquisitionStyle[comboBoxCameraName.Text] = AcquisitionMode.FromFile;
+            }
+            else if (radioButtonLocalFolder.Checked)
+            {
+                CameraParamSet.AcquisitionStyle[comboBoxCameraName.Text] = AcquisitionMode.FromFolder;
+            }
+
+            CameraParamSet.UpdateFilesUnderFolder();
             Close();
         }
 
@@ -122,29 +67,31 @@ namespace IntegrationTesting
 
         private void AcqusitionImageSet_Load(object sender, EventArgs e)
         {
-            comboBoxCameraBrandLocation.SelectedIndex = m_cameraBrandLocation;
-            comboBoxCameraBrandDetection.SelectedIndex = m_cameraBrandDetection;
+            for (int i = 0; i < CameraParamSet.CameraName.Count; i++ )
+            {
+                comboBoxCameraName.Items.Add(CameraParamSet.CameraName[i]);
+            }
 
-            textBoxCameraNameLocation.Text = CameraNameLocation;
-            textBoxCameraNameDetection.Text = CameraNameDetection;
+            ShowCameraBaseCameraName(0);
+        }
 
-            textBoxExposureTimeLocation.Text = ExposureTimeLocation.ToString();
-            textBoxExposureTimeDetection.Text = ExposureTimeDetection.ToString();
+        void ShowCameraBaseCameraName(int index)
+        {
+            comboBoxCameraName.SelectedIndex = index;
+            comboBoxCameraBrand.SelectedIndex = Convert.ToInt32(CameraParamSet.CameraNameBrand[CameraParamSet.CameraName[index]]);
+            textBoxExposureTime.Text = CameraParamSet.CameraNameExposure[CameraParamSet.CameraName[index]].ToString();
+            textBoxFile.Text = CameraParamSet.CameraNameInputFile[CameraParamSet.CameraName[index]];
+            textBoxFolder.Text = CameraParamSet.CameraNameInputFolder[CameraParamSet.CameraName[index]];
 
-            textBoxLocationFile.Text = m_inputImageFileLocationPath;
-            textBoxDetectionFile.Text = m_inputImageFileDetectionPath;
-            textBoxLocationDirectory.Text = m_inputImageFolderLocationPath;
-            textBoxDetectionDirectory.Text = m_inputImageFolderDetectionPath;  
-
-            if (mode == AcquisitionMode.FromCamera)
+            if (CameraParamSet.AcquisitionStyle[CameraParamSet.CameraName[index]] == AcquisitionMode.FromCamera)
             {
                 radioButtonCamera.Checked = true;
             }
-            else if (mode == AcquisitionMode.FromFile)
+            else if (CameraParamSet.AcquisitionStyle[CameraParamSet.CameraName[index]] == AcquisitionMode.FromFile)
             {
                 radioButtonLocalFile.Checked = true;
             }
-            else if (mode == AcquisitionMode.FromFolder)
+            else if (CameraParamSet.AcquisitionStyle[CameraParamSet.CameraName[index]] == AcquisitionMode.FromFolder)
             {
                 radioButtonLocalFolder.Checked = true;
             }
@@ -155,7 +102,6 @@ namespace IntegrationTesting
             panelCamera.Enabled = true;
             panelCamerapanelLocalFile.Enabled = false;
             panelLocalFolder.Enabled = false;
-            mode = AcquisitionMode.FromCamera;
         }
 
         private void radioButtonLocalFile_CheckedChanged(object sender, EventArgs e)
@@ -163,7 +109,6 @@ namespace IntegrationTesting
             panelCamera.Enabled = false;
             panelCamerapanelLocalFile.Enabled = true;
             panelLocalFolder.Enabled = false;
-            mode = AcquisitionMode.FromFile;
         }
 
         private void radioButtonLocalFolder_CheckedChanged(object sender, EventArgs e)
@@ -171,10 +116,9 @@ namespace IntegrationTesting
             panelCamera.Enabled = false;
             panelCamerapanelLocalFile.Enabled = false;
             panelLocalFolder.Enabled = true;
-            mode = AcquisitionMode.FromFolder;
         }
 
-        private void buttonLocationDirectory_Click(object sender, EventArgs e)
+        private void buttonDirectory_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = false;//该值确定是否可以选择多个文件
@@ -182,41 +126,23 @@ namespace IntegrationTesting
             dialog.Filter = "所有文件(*.*)|*.*";
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBoxLocationFile.Text = dialog.FileName;
+                textBoxFile.Text = dialog.FileName;
             }
         }
 
-        private void buttonDetectionDirectory_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = false;//该值确定是否可以选择多个文件
-            dialog.Title = "选择输入文件";
-            dialog.Filter = "所有文件(*.*)|*.*";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                textBoxDetectionFile.Text = dialog.FileName;
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonSelectFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
             folder.Description = "选择所有文件存放目录";
             if (folder.ShowDialog() == DialogResult.OK)
             {
-
-                textBoxLocationDirectory.Text = folder.SelectedPath;
+                textBoxFolder.Text = folder.SelectedPath;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void comboBoxCameraName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.Description = "选择所有文件存放目录";
-            if (folder.ShowDialog() == DialogResult.OK)
-            {
-                textBoxDetectionDirectory.Text = folder.SelectedPath;
-            }
+            ShowCameraBaseCameraName(comboBoxCameraName.SelectedIndex);
         }
     }
 }

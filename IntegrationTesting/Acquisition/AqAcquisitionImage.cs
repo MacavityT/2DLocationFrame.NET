@@ -12,160 +12,36 @@ using AqDevice;
 using IntegrationTesting.Acquisition;
 using System.IO;
 
+//目前取像部分：支持到大恒相机，最多支持6个相机
 namespace AqVision.Acquisition
 {
     public delegate void DelegateOnError(int id);
     public delegate void DelegateOnBitmap(string strBmpBase64);
+
     class AqAcquisitionImage
     {
         private event DelegateOnError m_EventOnError;
         private event DelegateOnBitmap m_EventOnBitmap;
         private bool m_GetBitmapSuc = false;
-
-        bool m_acquisitionParamChanged = false;
-        public bool AcquisitionParamChanged
-        {
-            get { return m_acquisitionParamChanged; }
-            set { m_acquisitionParamChanged = value; }
-        }
-
+        AqDevice.IAqCameraManager cameramanager = null;
+        bool m_connected = false;
+        
         System.Drawing.Bitmap m_RevBitmap = null;
-        string[] m_cameraName = new string[] { "Aqrose_L", "Aqrose_D" };
-
-        public string[] CameraName
-        {
-            get { return m_cameraName; }
-            set
-            {
-                if ((value[0] != m_cameraName[0]) || (value[1] != m_cameraName[1]))
-                {
-                    AcquisitionParamChanged = true;
-                }
-                m_cameraName = value;
-            }
-        }
-
-        UInt32[] m_cameraExposure = new UInt32[] { 5000, 5000 };
-        public UInt32[] CameraExposure
-        {
-            get { return m_cameraExposure; }
-            set
-            {
-                if ((value[0] != m_cameraExposure[0]) || (value[1] != m_cameraExposure[1]))
-                {
-                    AcquisitionParamChanged = true;
-                }
-                m_cameraExposure = value;
-            }
-        }
-
-
-        AqCameraBrand[] m_cameraBrand = new AqCameraBrand[] { AqCameraBrand.DaHeng, AqCameraBrand.DaHeng };
-        public AqCameraBrand[] CameraBrand
-        {
-            get { return m_cameraBrand; }
-            set
-            {
-                if ((value[0] != m_cameraBrand[0]) || (value[1] != m_cameraBrand[1]))
-                {
-                    AcquisitionParamChanged = true;
-                }
-                m_cameraBrand = value;
-            }
-        }
-
         public System.Drawing.Bitmap RevBitmap
         {
             get { return m_RevBitmap; }
             set { m_RevBitmap = value; }
         }
 
-        string m_inputImageFileLocation = null;
-        public string InputImageFileLocation
-        {
-            get { return m_inputImageFileLocation; }
-            set { m_inputImageFileLocation = value; }
-        }
-
-        string m_inputImageFileDetection = null;
-        public string InputImageFileDetection
-        {
-            get { return m_inputImageFileDetection; }
-            set { m_inputImageFileDetection = value; }
-        }
-
-        string m_inputImageFolderLocation = null;
-        public string InputImageFolderLocation
-        {
-            get { return m_inputImageFolderLocation; }
-            set 
-            { 
-                m_inputImageFolderLocation = value;
-                if(m_inputImageFolderLocation != "")
-                {
-                    if (Directory.Exists(m_inputImageFolderLocation))
-                    {
-                        if (Directory.GetFiles(m_inputImageFolderLocation).Length == 0)
-                        {
-                            m_imageListLocation = null;
-                        }
-                        else
-                        {
-                            m_imageListLocation = Directory.GetFiles(m_inputImageFolderLocation);
-                        }
-                    }
-                }
-            }
-        }
-
-        string m_inputImageFolderDetection = null;
-        public string InputImageFolderDetection
-        {
-            get { return m_inputImageFolderDetection; }
-            set 
-            { 
-                m_inputImageFolderDetection = value;
-                if (m_inputImageFolderDetection != "")
-                {
-                    if (Directory.Exists(m_inputImageFolderDetection))
-                    {
-                        if (Directory.GetFiles(m_inputImageFolderDetection).Length == 0)
-                        {
-                            m_imageListDetection = null;
-                        }
-                        else
-                        {
-                            m_imageListDetection = Directory.GetFiles(m_inputImageFolderDetection);
-                        }
-                    }
-                }
-            }
-        }
-        string[] m_imageListLocation = null;
-        public string[] ImageListLocation
-        {
-            get { return m_imageListLocation; }
-        }
-
-        string[] m_imageListDetection = null;
-        public string[] ImageListDetection
-        {
-            get { return m_imageListDetection; }
-        }
-
-
-        AcquisitionMode m_acquisitionStyle;
-        public AcquisitionMode AcquisitionStyle
-        {
-            get { return m_acquisitionStyle; }
-            set { m_acquisitionStyle = value; }
-        }
-
-        UInt16 m_indexPicInFolderLocation = 0;
-        UInt16 m_indexPicInFolderDetection = 0;
-        AqDevice.IAqCameraManager cameramanager = null;
         List<AqDevice.IAqCamera> cameras;
-        bool m_connected = false;
+        Dictionary<string, int> m_cameraNameToIndex;
+
+        CameraParam cameraParam = new CameraParam();
+        public CameraParam CameraParamSet
+        {
+            get { return cameraParam; }
+            set { cameraParam = value; }
+        }
 
         public AqAcquisitionImage()
         {
@@ -182,16 +58,44 @@ namespace AqVision.Acquisition
             RevBitmap = bitmap;
             m_GetBitmapSuc = true;
         }
+
+        public void RecCapture2(object objUserparam, Bitmap bitmap)
+        {
+            RevBitmap = bitmap;
+            m_GetBitmapSuc = true;
+        }
+
+        public void RecCapture3(object objUserparam, Bitmap bitmap)
+        {
+            RevBitmap = bitmap;
+            m_GetBitmapSuc = true;
+        }
+
+        public void RecCapture4(object objUserparam, Bitmap bitmap)
+        {
+            RevBitmap = bitmap;
+            m_GetBitmapSuc = true;
+        }
+
+        public void RecCapture5(object objUserparam, Bitmap bitmap)
+        {
+            RevBitmap = bitmap;
+            m_GetBitmapSuc = true;
+        }
+
         ~AqAcquisitionImage()
         {
         }
 
-
+        /// <summary>
+        /// Connect() //连接相机，最多支持一个软件连接6个相机
+        /// </summary>
+        /// <returns></returns>
         public bool Connect()
         {
             try
             {
-                if (!m_connected && AcquisitionStyle == AcquisitionMode.FromCamera)
+                if (!m_connected)
                 {
                     string dllpath = System.IO.Directory.GetCurrentDirectory() + "\\DaHengCamera.dll";
                     Assembly assem = Assembly.LoadFile(dllpath);
@@ -202,26 +106,51 @@ namespace AqVision.Acquisition
                     cameramanager = (IAqCameraManager)obj;
                     cameramanager.Init();
                     cameras = cameramanager.GetCameras();
-                    if(cameras.Count > 0)
-                    {
-                        cameras[0].TriggerMode = AqDevice.TriggerModes.Unknow;
-                        cameras[0].ExposureTime = CameraExposure[0];
-                        cameras[0].Name = CameraName[0];
-                        cameras[0].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
-                        cameras[0].OpenCamera();
-                        cameras[0].OpenStream();
-                    }
 
-                    if(cameras.Count > 1)
+                    for(int i = 0; i < cameras.Count; i++)
                     {
-                        cameras[1].TriggerMode = AqDevice.TriggerModes.Unknow;
-                        cameras[1].ExposureTime = CameraExposure[1];
-                        cameras[1].Name = CameraName[1];
-                        cameras[1].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
-                        cameras[1].OpenCamera();
-                        cameras[1].OpenStream();
-                    }
+                        cameras[i].TriggerMode = AqDevice.TriggerModes.Unknow;
+                        if (i < CameraParamSet.CameraName.Count)  //防止出现连接了新相机,但是本地参数文件中没该新相机的名字等配置信息情况出现
+                        {
+                            cameras[i].ExposureTime = CameraParamSet.CameraNameExposure[CameraParamSet.CameraName[i]];
+                            cameras[i].Name = CameraParamSet.CameraName[i];
+                        }
+                        else
+                        {
+                            CameraParamSet.CameraName.Add(cameras[i].Name);
+                            CameraParamSet.CameraNameExposure[cameras[i].Name] = Convert.ToUInt32(cameras[i].ExposureTime);                            
+                        }
 
+                        m_cameraNameToIndex.Add(cameras[i].Name, i);
+
+                        if(i == 0)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
+                        }
+                        else if (i == 1)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
+                        }
+                        else if (i == 2)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture2));
+                        }
+                        else if (i == 3)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture3));
+                        }
+                        else if (i == 4)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture4));
+                        }
+                        else if (i == 5)
+                        {
+                            cameras[i].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture5));
+                        }
+
+                        cameras[i].OpenCamera();
+                        cameras[i].OpenStream();
+                    }
                     m_connected = true;
                 }
 
@@ -246,10 +175,10 @@ namespace AqVision.Acquisition
             {
                 if (m_connected)
                 {
-                    if(cameras.Count > 0)
-                        cameras[0].CloseCamera();
-                    if(cameras.Count > 1)
-                        cameras[1].CloseCamera();
+                    for (int i = 0; i < cameras.Count; i++)
+                    {
+                        cameras[i].CloseCamera();
+                    }
                 }
                 m_connected = false;
             }
@@ -261,76 +190,60 @@ namespace AqVision.Acquisition
             return true;
         }
 
-        public bool Acquisition(ref System.Drawing.Bitmap cameraLocationBmp, ref System.Drawing.Bitmap cameraDetectionBmp)
+        /// <summary>
+        /// Acquisition  目前只在取相处，支持一个图片的取像
+        /// </summary>
+        /// <param name="cameraLocationBmp"></param>
+        /// <param name="cameraDetectionBmp"></param>
+        /// <returns></returns>
+        public bool Acquisition(ref List<System.Drawing.Bitmap> AcquisitionBmp, List<string> AcquisitionCameraName)
         {
             try
             {
-                GC.Collect();
-                if (AcquisitionStyle == AcquisitionMode.FromCamera)
+                if (AcquisitionBmp.Count != AcquisitionCameraName.Count)
                 {
-                    if (AcquisitionParamChanged)
-                    {
-                        DisConnect();
-                        Connect();
-                        AcquisitionParamChanged = false;
-                    }
+                    return false;
+                }
 
-                    if (!m_connected)
+                GC.Collect();
+                for (int i = 0; i < AcquisitionCameraName.Count; i++)
+                {
+                    if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromCamera)
                     {
-                        Connect();
-                    }
+                        if (CameraParamSet.AcquisitionParamChanged)
+                        {
+                            DisConnect();
+                            Connect();
+                            CameraParamSet.AcquisitionParamChanged = false;
+                        }
 
-                    if(cameras.Count > 0)
-                    {
+                        if (!m_connected)
+                        {
+                            Connect();
+                        }
+
                         m_GetBitmapSuc = false;
-                        cameras[0].TriggerSoftware();
+                        cameras[m_cameraNameToIndex[AcquisitionCameraName[i]]].TriggerSoftware();
                         while (!m_GetBitmapSuc)
                         {
                             //使用事件的等待
                             Thread.Sleep(10);
                         }
-                        cameraLocationBmp = RevBitmap;
+                        AcquisitionBmp.Add(RevBitmap);
                     }
-
-                    if(cameras.Count > 1)
+                    else if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromFile)
                     {
-                        m_GetBitmapSuc = false;
-                        cameras[1].TriggerSoftware();
-                        while (!m_GetBitmapSuc)
-                        {
-                            Thread.Sleep(10);
-                        }
-                        cameraDetectionBmp = RevBitmap;
+                        AcquisitionBmp.Add(Image.FromFile(CameraParamSet.CameraNameInputFile[AcquisitionCameraName[i]]) as Bitmap);
                     }
-                }
-                else if (AcquisitionStyle == AcquisitionMode.FromFile)
-                {
-                    cameraLocationBmp = Image.FromFile(InputImageFileLocation) as Bitmap;
-                    cameraDetectionBmp = Image.FromFile(InputImageFileDetection) as Bitmap;
-                }
-                else if (AcquisitionStyle == AcquisitionMode.FromFolder)
-                {
-                    cameraLocationBmp = Image.FromFile( m_imageListLocation[m_indexPicInFolderLocation]) as Bitmap; //931.548
-                    if(m_indexPicInFolderLocation == m_imageListLocation.Length-1)
+                    else if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromFolder)
                     {
-                        m_indexPicInFolderLocation = 0;
-                    }
-                    else
-                    {
-                        m_indexPicInFolderLocation++;
-                    }
-
-                    cameraDetectionBmp = Image.FromFile(m_imageListDetection[m_indexPicInFolderDetection]) as Bitmap; //937.22
-                    if(m_indexPicInFolderDetection == m_imageListDetection.Length-1)
-                    {
-                        m_indexPicInFolderDetection = 0;
-                    }
-                    else
-                    {
-                        m_indexPicInFolderDetection++;
+                        string strFolder = CameraParamSet.CameraNameInputFile[AcquisitionCameraName[i]];
+                        AcquisitionBmp.Add(Image.FromFile(CameraParamSet.FolderFiles[strFolder].ElementAt((int)CameraParamSet.FolderIndex[strFolder])) as Bitmap);
+                        CameraParamSet.FolderIndex[strFolder] = CameraParamSet.FolderIndex[strFolder]++;
                     }
                 }
 
+//                 //对图像将进行裁剪
 //                 Image originImage = Image.FromHbitmap(cameraLocationBmp.GetHbitmap());
 //                 Bitmap bitmap = new Bitmap(originImage.Width-156, originImage.Height);
 //                 Graphics gTemplate = Graphics.FromImage(bitmap);
