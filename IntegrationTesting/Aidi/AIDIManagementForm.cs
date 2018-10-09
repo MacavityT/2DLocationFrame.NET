@@ -161,9 +161,13 @@ namespace IntegrationTesting.Aidi
         {
             Stopwatch sp2 = new Stopwatch();
             sp2.Start();
-            InitAidiModel();
+            bool bInitRet = false; 
+            //bInitRet = InitAidiModel();
             sp2.Stop();
-            MessageBox.Show("AIDI初始化完成，耗时" + sp2.ElapsedMilliseconds + " ms");
+            if(bInitRet)
+            { 
+                MessageBox.Show("AIDI初始化完成，耗时" + sp2.ElapsedMilliseconds + " ms");
+            }
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -186,17 +190,17 @@ namespace IntegrationTesting.Aidi
         /// <param name="root_path"></param>
         /// <param name="detectModel"></param>
         /// <param name="batch_size"></param>
-        public void InitAidiModel()
+        public bool InitAidiModel()
         {
             try
             {
                 batch_size.Add(1);
-                runer.Init(model_path, 0, batch_size);
+                return runer.Init(model_path, 0, batch_size);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return;
+                return false;
             }
         }
 

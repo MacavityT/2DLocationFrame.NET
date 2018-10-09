@@ -25,9 +25,6 @@ namespace IntegrationTesting
     public partial class MainForm : Form
     {
         AqVision.Acquisition.AqAcquisitionImage m_Acquisition = new AqVision.Acquisition.AqAcquisitionImage();
-        Thread showPicLocation = null;
-        bool m_endThread = false;
-
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
         TemplateSetForm m_templateSet = new TemplateSetForm();
@@ -42,14 +39,24 @@ namespace IntegrationTesting
         UInt32 m_detectonCount = 0;
         DateTime m_begTime = DateTime.Now;
 
+        Thread showPicLocation = null;
+        bool m_endThread = false;
+
         List<LocationResultSet> triggerLocationResult = new List<LocationResultSet>();
+        string softwareTitle = "定位测试软件"; //软件标题名字
+
         public MainForm()
         {
             InitializeComponent();
+            this.Text = softwareTitle;
+            label_Title.Text = softwareTitle;
+
             listViewRecord.Columns.Add("Message", 1000, HorizontalAlignment.Center);
+
             m_visionImpl.triggerCamerHandler = new TriggerCamerHandler(TriggerCamera);
             m_visionImpl.getLocalizeResultHandler = new GetLocalizeResultHandler(GetLocalizeResult);
             m_visionImpl.getWorkObjInfoHandler = new GetWorkObjInfoHandler(GetWorkObjInfo);
+
             IniFile.IniFillFullPath = Application.StartupPath + "\\Config.ini";
             ReadConfigFromIniFile();
         }
@@ -101,7 +108,7 @@ namespace IntegrationTesting
                 m_Acquisition.AcquisitionStyle = AcquisitionMode.FromFolder;
             }
 
-            m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "127.0.0.1");
+            m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "192.168.0.111");
         }
 
         public void WriteConfigToIniFile()
@@ -273,80 +280,81 @@ namespace IntegrationTesting
 
         private bool GetWorkObjInfo(ref int detectCount)
         {
-            try
-            {
-                Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo beg< ");
-                aqDisplayDetection.InteractiveGraphics.Clear();
-                aqDisplayDetection.Update();
-                checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
-                {
-                    if (m_aidiMangement.SourceBitmap != null)
-                    {
-                        for (int i = 0; i < m_aidiMangement.SourceBitmap.Count; i++)
-                        {
-                            m_aidiMangement.SourceBitmap[i].Dispose();
-                        }
-                        m_aidiMangement.SourceBitmap.Clear();
-                    }
-                    else
-                    {
-                        m_aidiMangement.SourceBitmap = new List<Bitmap>();
-                    }
-
-                    if (checkBoxCameraDetection.Checked)
-                    {
-                        checkBoxCameraDetection.Checked = false;
-                        checkBoxCameraDetection_CheckedChanged(null, null);
-                        m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
-                    }
-                    else
-                    {
-                        Bitmap location = null;
-                        Bitmap detection = null;
-                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition beg< ");
-                        m_Acquisition.Acquisition(ref location, ref detection);
-                        aqDisplayDetection.Invoke(new MethodInvoker(delegate
-                        {
-                            aqDisplayDetection.Image = detection;
-                        }));
-
-                        m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
-                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition end> ");
-                    }
-                    aqDisplayDetection.FitToScreen();
-                    aqDisplayDetection.Update();
-                    m_aidiMangement.DetectPic();
-                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo DetectPic end> ");
-                    aqDisplayDetection.Image = m_aidiMangement.SourceBitmap[0];
-                    m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 5, aqDisplayDetection);
-                    aqDisplayDetection.Update();
-                    if (m_aidiMangement.ObjList[0].Count == 0)
-                    {
-                        labelDetectResult.Text = "良品";
-                        labelDetectResult.ForeColor = Color.Lime;
-                        labelErrorCount.Text = "无";
-                        labelErrorCount.ForeColor = Color.Lime;
-                    }
-                    else
-                    {
-                        labelDetectResult.Text = "差品";
-                        labelDetectResult.ForeColor = Color.Red;
-                        labelErrorCount.Text = string.Format("{0}", m_aidiMangement.ObjList[0].Count);
-                        labelErrorCount.ForeColor = Color.Red;
-                    }
-                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo ShowResult end> ");
-                    //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
-                    GC.Collect();
-                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo Collect ------------------");
-                    Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton GetWorkObjInfo = {0}, {1}.Count={2}", labelDetectResult.Text, labelErrorCount.Text, m_detectonCount));
-                }));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("GetWorkObjInfo " + ex.Message);
-            }
-
-            m_detectonCount++;
+            
+//             try
+//             {
+//                 Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo beg< ");
+//                 aqDisplayDetection.InteractiveGraphics.Clear();
+//                 aqDisplayDetection.Update();
+//                 checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
+//                 {
+//                     if (m_aidiMangement.SourceBitmap != null)
+//                     {
+//                         for (int i = 0; i < m_aidiMangement.SourceBitmap.Count; i++)
+//                         {
+//                             m_aidiMangement.SourceBitmap[i].Dispose();
+//                         }
+//                         m_aidiMangement.SourceBitmap.Clear();
+//                     }
+//                     else
+//                     {
+//                         m_aidiMangement.SourceBitmap = new List<Bitmap>();
+//                     }
+// 
+//                     if (checkBoxCameraDetection.Checked)
+//                     {
+//                         checkBoxCameraDetection.Checked = false;
+//                         checkBoxCameraDetection_CheckedChanged(null, null);
+//                         m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
+//                     }
+//                     else
+//                     {
+//                         Bitmap location = null;
+//                         Bitmap detection = null;
+//                         Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition beg< ");
+//                         m_Acquisition.Acquisition(ref location, ref detection);
+//                         aqDisplayDetection.Invoke(new MethodInvoker(delegate
+//                         {
+//                             aqDisplayDetection.Image = detection;
+//                         }));
+// 
+//                         m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
+//                         Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition end> ");
+//                     }
+//                     aqDisplayDetection.FitToScreen();
+//                     aqDisplayDetection.Update();
+//                     m_aidiMangement.DetectPic();
+//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo DetectPic end> ");
+//                     aqDisplayDetection.Image = m_aidiMangement.SourceBitmap[0];
+//                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 5, aqDisplayDetection);
+//                     aqDisplayDetection.Update();
+//                     if (m_aidiMangement.ObjList[0].Count == 0)
+//                     {
+//                         labelDetectResult.Text = "良品";
+//                         labelDetectResult.ForeColor = Color.Lime;
+//                         labelErrorCount.Text = "无";
+//                         labelErrorCount.ForeColor = Color.Lime;
+//                     }
+//                     else
+//                     {
+//                         labelDetectResult.Text = "差品";
+//                         labelDetectResult.ForeColor = Color.Red;
+//                         labelErrorCount.Text = string.Format("{0}", m_aidiMangement.ObjList[0].Count);
+//                         labelErrorCount.ForeColor = Color.Red;
+//                     }
+//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo ShowResult end> ");
+//                     //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
+//                     GC.Collect();
+//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo Collect ------------------");
+//                     Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton GetWorkObjInfo = {0}, {1}.Count={2}", labelDetectResult.Text, labelErrorCount.Text, m_detectonCount));
+//                 }));
+//             }
+//             catch (Exception ex)
+//             {
+//                 MessageBox.Show("GetWorkObjInfo " + ex.Message);
+//             }
+//             m_detectonCount++;
+            
             return true;// m_aidiMangement.DetectResult;
         }
             
@@ -424,17 +432,17 @@ namespace IntegrationTesting
                         aqDisplayLocation.FitToScreen();
                     }
                 }
-                if (checkBoxCameraDetection.Checked)
-                {
-                    aqDisplayDetection.Image = detection;
-                    aqDisplayDetection.Update();
-
-                    if (firstFrameDetection)
-                    {
-                        firstFrameDetection = false;
-                        aqDisplayDetection.FitToScreen();
-                    }
-                }
+//                 if (checkBoxCameraDetection.Checked)
+//                 {
+//                     aqDisplayDetection.Image = detection;
+//                     aqDisplayDetection.Update();
+// 
+//                     if (firstFrameDetection)
+//                     {
+//                         firstFrameDetection = false;
+//                         aqDisplayDetection.FitToScreen();
+//                     }
+//                 }
             }));
              
         }
@@ -727,13 +735,13 @@ namespace IntegrationTesting
 
         private void 保存检测图片ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "*.jpg(*.jpg)|*.jpg";
-            if(fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                aqDisplayDetection.Image.Save(fileDialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-                aqDisplayDetection.CreateContentBitmap().Save(fileDialog.FileName + "result.jpg");
-            }            
+//             SaveFileDialog fileDialog = new SaveFileDialog();
+//             fileDialog.Filter = "*.jpg(*.jpg)|*.jpg";
+//             if(fileDialog.ShowDialog() == DialogResult.OK)
+//             {      
+//                  aqDisplayDetection.Image.Save(fileDialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+//                  aqDisplayDetection.CreateContentBitmap().Save(fileDialog.FileName + "result.jpg");
+//             }            
         }
 
         private void 保存定位图片ToolStripMenuItem_Click(object sender, EventArgs e)

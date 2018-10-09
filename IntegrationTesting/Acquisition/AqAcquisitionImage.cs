@@ -202,19 +202,25 @@ namespace AqVision.Acquisition
                     cameramanager = (IAqCameraManager)obj;
                     cameramanager.Init();
                     cameras = cameramanager.GetCameras();
-                    cameras[0].TriggerMode = AqDevice.TriggerModes.Unknow;
-                    cameras[0].ExposureTime = CameraExposure[0];
-                    cameras[0].Name = CameraName[0];
-                    cameras[0].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
-                    cameras[0].OpenCamera();
-                    cameras[0].OpenStream();
+                    if(cameras.Count > 0)
+                    {
+                        cameras[0].TriggerMode = AqDevice.TriggerModes.Unknow;
+                        cameras[0].ExposureTime = CameraExposure[0];
+                        cameras[0].Name = CameraName[0];
+                        cameras[0].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture));
+                        cameras[0].OpenCamera();
+                        cameras[0].OpenStream();
+                    }
 
-                    cameras[1].TriggerMode = AqDevice.TriggerModes.Unknow;
-                    cameras[1].ExposureTime = CameraExposure[1];
-                    cameras[1].Name = CameraName[1];
-                    cameras[1].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
-                    cameras[1].OpenCamera();
-                    cameras[1].OpenStream();
+                    if(cameras.Count > 1)
+                    {
+                        cameras[1].TriggerMode = AqDevice.TriggerModes.Unknow;
+                        cameras[1].ExposureTime = CameraExposure[1];
+                        cameras[1].Name = CameraName[1];
+                        cameras[1].RegisterCaptureCallback(new AqCaptureDelegate(RecCapture1));
+                        cameras[1].OpenCamera();
+                        cameras[1].OpenStream();
+                    }
 
                     m_connected = true;
                 }
@@ -240,8 +246,10 @@ namespace AqVision.Acquisition
             {
                 if (m_connected)
                 {
-                    cameras[0].CloseCamera();
-                    cameras[1].CloseCamera();
+                    if(cameras.Count > 0)
+                        cameras[0].CloseCamera();
+                    if(cameras.Count > 1)
+                        cameras[1].CloseCamera();
                 }
                 m_connected = false;
             }
@@ -250,7 +258,6 @@ namespace AqVision.Acquisition
                 System.Windows.Forms.MessageBox.Show("IntegrationTesting DisConnect error " + ex.Message);
                 AqVision.Interaction.UI2LibInterface.OutputDebugString("IntegrationTesting DisConnect error " + ex.Message);
             }
-
             return true;
         }
 
@@ -272,21 +279,29 @@ namespace AqVision.Acquisition
                     {
                         Connect();
                     }
-                    m_GetBitmapSuc = false;
-                    cameras[0].TriggerSoftware();
-                    while (!m_GetBitmapSuc)
+
+                    if(cameras.Count > 0)
                     {
-                        //使用事件的等待
-                        Thread.Sleep(10);
+                        m_GetBitmapSuc = false;
+                        cameras[0].TriggerSoftware();
+                        while (!m_GetBitmapSuc)
+                        {
+                            //使用事件的等待
+                            Thread.Sleep(10);
+                        }
+                        cameraLocationBmp = RevBitmap;
                     }
-                    cameraLocationBmp = RevBitmap;
-                    m_GetBitmapSuc = false;
-                    cameras[1].TriggerSoftware();
-                    while (!m_GetBitmapSuc)
+
+                    if(cameras.Count > 1)
                     {
-                        Thread.Sleep(10);
+                        m_GetBitmapSuc = false;
+                        cameras[1].TriggerSoftware();
+                        while (!m_GetBitmapSuc)
+                        {
+                            Thread.Sleep(10);
+                        }
+                        cameraDetectionBmp = RevBitmap;
                     }
-                    cameraDetectionBmp = RevBitmap;
                 }
                 else if (AcquisitionStyle == AcquisitionMode.FromFile)
                 {
