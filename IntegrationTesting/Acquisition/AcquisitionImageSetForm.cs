@@ -67,12 +67,15 @@ namespace IntegrationTesting
 
         private void AcqusitionImageSet_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < CameraParamSet.CameraName.Count; i++ )
+            if (CameraParamSet.CameraName.Count > 0)
             {
-                comboBoxCameraName.Items.Add(CameraParamSet.CameraName[i]);
-            }
+                for (int i = 0; i < CameraParamSet.CameraName.Count; i++)
+                {
+                    comboBoxCameraName.Items.Add(CameraParamSet.CameraName[i]);
+                }
 
-            ShowCameraBaseCameraName(0);
+                ShowCameraBaseCameraName(0);
+            }
         }
 
         void ShowCameraBaseCameraName(int index)

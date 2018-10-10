@@ -34,7 +34,7 @@ namespace AqVision.Acquisition
         }
 
         List<AqDevice.IAqCamera> cameras;
-        Dictionary<string, int> m_cameraNameToIndex;
+        Dictionary<string, int> m_cameraNameToIndex = new Dictionary<string,int>();
 
         CameraParam cameraParam = new CameraParam();
         public CameraParam CameraParamSet
@@ -200,28 +200,27 @@ namespace AqVision.Acquisition
         {
             try
             {
-                if (AcquisitionBmp.Count != AcquisitionCameraName.Count)
+                if (CameraParamSet.AcquisitionParamChanged)
+                {
+                    DisConnect();
+                    Connect();
+                    CameraParamSet.AcquisitionParamChanged = false;
+                }
+
+                if (!m_connected)
+                {
+                    Connect();
+                }
+
+                if (cameras.Count < AcquisitionCameraName.Count)
                 {
                     return false;
                 }
-
                 GC.Collect();
                 for (int i = 0; i < AcquisitionCameraName.Count; i++)
                 {
                     if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromCamera)
                     {
-                        if (CameraParamSet.AcquisitionParamChanged)
-                        {
-                            DisConnect();
-                            Connect();
-                            CameraParamSet.AcquisitionParamChanged = false;
-                        }
-
-                        if (!m_connected)
-                        {
-                            Connect();
-                        }
-
                         m_GetBitmapSuc = false;
                         cameras[m_cameraNameToIndex[AcquisitionCameraName[i]]].TriggerSoftware();
                         while (!m_GetBitmapSuc)

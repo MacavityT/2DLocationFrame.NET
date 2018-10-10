@@ -80,6 +80,7 @@ namespace IntegrationTesting
         {
             m_calibrationCenter.CalibrationResultSavePath = resultPath;
             m_calibrationCenter.LoadCalibrationResult();
+            //m_calibrationCenter.SetConfig(0, true);//暂时固定，后需要保存到配置中
             m_calibrationCenter.GetRobotPoint();
             posX = m_calibrationCenter.CatchPoint.CatchX;
             posY = m_calibrationCenter.CatchPoint.CatchY;

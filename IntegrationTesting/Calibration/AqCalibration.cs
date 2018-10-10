@@ -204,6 +204,7 @@ namespace IntegrationTesting
             double catchX = 0;
             double catchY = 0;
             double catchRz = 0;
+            //ImageA, RobotRz, catchRz是弧度
             if (!AqVision.Interaction.UI2LibInterface.get_robot_point(ImagePoint.ImageX, ImagePoint.ImageY, ImagePoint.ImageA, RobotPoint.RobotX, RobotPoint.RobotY, RobotPoint.RobotRz,
                                                                         ref catchX, ref catchY, ref catchRz))
            {

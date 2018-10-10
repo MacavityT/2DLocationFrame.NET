@@ -219,9 +219,6 @@
             // 
             this.comboBoxCameraName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCameraName.FormattingEnabled = true;
-            this.comboBoxCameraName.Items.AddRange(new object[] {
-            "DaHeng",
-            "Balser"});
             this.comboBoxCameraName.Location = new System.Drawing.Point(81, 17);
             this.comboBoxCameraName.Name = "comboBoxCameraName";
             this.comboBoxCameraName.Size = new System.Drawing.Size(74, 20);

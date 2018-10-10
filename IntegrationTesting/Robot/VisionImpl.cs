@@ -25,7 +25,7 @@ namespace IntegrationTesting.Robot
                 int flag = 0;
                 if (triggerCamerHandler != null)
                 {
-                    flag = triggerCamerHandler((double)(request.RobotPose.X*1000), (double)(request.RobotPose.Y*1000), (request.RobotPose.Theta*180/Math.PI));
+                    flag = triggerCamerHandler((double)(request.RobotPose.X*1000), (double)(request.RobotPose.Y*1000), (request.RobotPose.Theta));
                 }
                 resultFlag.ErrorFlag = flag;
                 //m_triggering = false;
@@ -46,16 +46,11 @@ namespace IntegrationTesting.Robot
             getLocalizeResultHandler(ref posX, ref posY, ref delta, ref posture);
 
             //delta = delta * 180 / Math.PI;
-            while (delta > 180) 
+            while (delta > Math.PI*2) 
             {
-                delta -= 360;
-            }
-            while (delta < -180) 
-            {
-                delta += 360;
+                delta -= Math.PI*2;
             }
 
-            //delta -= 180;  //修改数据
             Pose2D result_2D_pos = new Pose2D { X = (double)(posX/1000), Y = (double)(posY/1000), Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
             localizeRespone.VisionStatus = 0;     //1-工件平放状态 2-工件竖立状态

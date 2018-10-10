@@ -67,21 +67,21 @@ namespace IntegrationTesting
 
         public void ReadConfigFromIniFile()
         {
-            UInt32 CameraCount = Convert.ToUInt32(IniFile.ReadValue("Acquisition", "CameraCount", "1"));
+            UInt32 CameraCount = Convert.ToUInt32(IniFile.ReadValue("Acquisition", "CameraCount", "0"));
             m_Acquisition.CameraParamSet.CameraName.Clear();
             for (int i = 0; i < CameraCount; i++)
             {
                 string strKey = string.Format("CameraName{0}", i);
                 string strCameraName;
                 string strValue = null;
-                strCameraName = IniFile.ReadValue("Acquisition", "CameraNameLocation", "Location");
+                strCameraName = IniFile.ReadValue("Acquisition", strKey, "Location");
                 m_Acquisition.CameraParamSet.CameraName.Add(strCameraName);
 
-                strKey = string.Format("Acquisition{0}", i);
+                strKey = string.Format("ExposureTime{0}", i);
                 m_Acquisition.CameraParamSet.CameraNameExposure[strCameraName] = Convert.ToUInt32(IniFile.ReadValue("Acquisition", strKey, "5000"));
 
-                strKey = string.Format("Acquisition{0}", i);
-                IniFile.ReadValue("Acquisition", strKey, strValue);
+                strKey = string.Format("AcquisitionStyle{0}", i);
+                strValue = IniFile.ReadValue("Acquisition", strKey, "FromCamera");
                 if(strValue == "FromCamera")
                 {
                     m_Acquisition.CameraParamSet.AcquisitionStyle[strCameraName] = AcquisitionMode.FromCamera;
@@ -96,7 +96,7 @@ namespace IntegrationTesting
                 }
 
                 strKey = string.Format("CameraBrand{0}", i);
-                IniFile.ReadValue("Acquisition", strKey, strValue);
+                strValue = IniFile.ReadValue("Acquisition", strKey, "DaHeng");
                 if (strValue == "DaHeng")
                 {
                     m_Acquisition.CameraParamSet.CameraNameBrand[strCameraName] = AqCameraBrand.DaHeng;
@@ -107,12 +107,13 @@ namespace IntegrationTesting
                 }
 
                 strKey = string.Format("InputImageFile{0}", i);
-                IniFile.ReadValue("Acquisition", strKey, strValue);
-                m_Acquisition.CameraParamSet.CameraNameInputFile[strCameraName] = strCameraName;
+                strValue = IniFile.ReadValue("Acquisition", strKey, "");
+                m_Acquisition.CameraParamSet.CameraNameInputFile[strCameraName] = strValue;
 
                 strKey = string.Format("InputImageFolder{0}", i);
-                IniFile.ReadValue("Acquisition", strKey, strValue);
+                strValue = IniFile.ReadValue("Acquisition", strKey, "");
                 m_Acquisition.CameraParamSet.CameraNameInputFolder[strCameraName] = strValue;
+                m_Acquisition.CameraParamSet.UpdateFilesUnderFolder();
             }
             IniFile.WriteValue("Acquisition", "LocalIP", m_localIP);
             m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "192.168.0.111");
@@ -130,7 +131,7 @@ namespace IntegrationTesting
                 IniFile.WriteValue("Acquisition", strKey, m_Acquisition.CameraParamSet.CameraNameExposure[m_Acquisition.CameraParamSet.CameraName[i]].ToString());
 
                 strKey = string.Format("CameraBrand{0}", i);
-                IniFile.WriteValue("Acquisition", strKey, m_Acquisition.CameraParamSet.CameraNameExposure[m_Acquisition.CameraParamSet.CameraName[i]].ToString());
+                IniFile.WriteValue("Acquisition", strKey, m_Acquisition.CameraParamSet.CameraNameBrand[m_Acquisition.CameraParamSet.CameraName[i]].ToString());
 
                 strKey = string.Format("InputImageFile{0}", i);
                 IniFile.WriteValue("Acquisition", strKey, m_Acquisition.CameraParamSet.CameraNameInputFile[m_Acquisition.CameraParamSet.CameraName[i]].ToString());
@@ -171,9 +172,14 @@ namespace IntegrationTesting
                     else
                     {
                         Tool.DebugInfo.OutputProcessMessage("Integraton Integraton TriggerCamera acquisition beg< ");
+
                         Bitmap location = null;
-                        Bitmap detection = null;
-                        //m_Acquisition.Acquisition(ref location, ref detection); //?????????????
+                        List<System.Drawing.Bitmap> acquisitionBmp = new List<Bitmap>();
+                        List<string> acquisitionCameraName = new List<string>();
+                        acquisitionCameraName.Add("Aqrose_L");
+                        m_Acquisition.Acquisition(ref acquisitionBmp, acquisitionCameraName);
+                        location = acquisitionBmp[0];
+
                         aqDisplayLocation.Invoke(new MethodInvoker(delegate
                         {
                             aqDisplayLocation.Image = location;
@@ -218,7 +224,7 @@ namespace IntegrationTesting
                                 result.CenterX = m_templateSet.LocationResultPosX[i];
                                 result.CenterY = m_templateSet.LocationResultPosY[i];
                                 result.Posture = ProductPosture.Vertical;
-                                result.Angle = m_templateSet.LocationResultPosTheta[i];
+                                result.Angle = m_templateSet.LocationResultPosTheta[i]*180/Math.PI;
                                 result.Transmited = false;
                                 result.Score = m_templateSet.Score[i];
                                 triggerLocationResult.Add(result);
@@ -230,6 +236,7 @@ namespace IntegrationTesting
                     Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera RunMatcher end> ");
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                     //AddMessageToListView("Suc");
+                    //MessageBox.Show(string.Format("{0},{1},{2},",robotX, robotY, robotRz));
                     string showScoreAll = null;
                     for (int i = 0; i < triggerLocationResult.Count; i++ )
                     {
@@ -238,18 +245,18 @@ namespace IntegrationTesting
                     labelLocationScore.Text = showScoreAll;
                     labelLocationScore.ForeColor = Color.Lime;
 
-                    if (triggerLocationResult.Count == 1)
-                    {
-                        locationResult = 1; //定位到1个产品
-                    }
-                    else if(triggerLocationResult.Count == 2)
-                    {
-                        locationResult = 2; //定位到1个产品
-                    }
-                    else if(triggerLocationResult.Count > 2)
-                    {
-                        locationResult = triggerLocationResult.Count;
-                    }
+//                     if (triggerLocationResult.Count == 1)
+//                     {
+//                         locationResult = 1; //定位到1个产品
+//                     }
+//                     else if(triggerLocationResult.Count == 2)
+//                     {
+//                         locationResult = 2; //定位到1个产品
+//                     }
+//                     else if(triggerLocationResult.Count > 2)
+//                     {
+//                         locationResult = triggerLocationResult.Count;
+//                     }
                 }));
                 //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 //AddMessageToListView("TriggerCameraDone");
@@ -273,6 +280,7 @@ namespace IntegrationTesting
             {
                 Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult beg< ");
                 m_calibrateShow.SetCurrentImagePosition(triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle);
+                //MessageBox.Show(string.Format("{0},{1},{2},", triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle));
                 //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
                 string calibrationPath  = null;
                 if(triggerLocationResult[0].Posture == ProductPosture.Normal)
@@ -296,81 +304,81 @@ namespace IntegrationTesting
 
         private bool GetWorkObjInfo(ref int detectCount)
         {
-            
-//             try
-//             {
-//                 Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo beg< ");
-//                 aqDisplayDetection.InteractiveGraphics.Clear();
-//                 aqDisplayDetection.Update();
-//                 checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
-//                 {
-//                     if (m_aidiMangement.SourceBitmap != null)
-//                     {
-//                         for (int i = 0; i < m_aidiMangement.SourceBitmap.Count; i++)
-//                         {
-//                             m_aidiMangement.SourceBitmap[i].Dispose();
-//                         }
-//                         m_aidiMangement.SourceBitmap.Clear();
-//                     }
-//                     else
-//                     {
-//                         m_aidiMangement.SourceBitmap = new List<Bitmap>();
-//                     }
-// 
-//                     if (checkBoxCameraDetection.Checked)
-//                     {
-//                         checkBoxCameraDetection.Checked = false;
-//                         checkBoxCameraDetection_CheckedChanged(null, null);
-//                         m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
-//                     }
-//                     else
-//                     {
-//                         Bitmap location = null;
-//                         Bitmap detection = null;
-//                         Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition beg< ");
-//                         m_Acquisition.Acquisition(ref location, ref detection);
-//                         aqDisplayDetection.Invoke(new MethodInvoker(delegate
-//                         {
-//                             aqDisplayDetection.Image = detection;
-//                         }));
-// 
-//                         m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
-//                         Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition end> ");
-//                     }
-//                     aqDisplayDetection.FitToScreen();
-//                     aqDisplayDetection.Update();
-//                     m_aidiMangement.DetectPic();
-//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo DetectPic end> ");
-//                     aqDisplayDetection.Image = m_aidiMangement.SourceBitmap[0];
-//                     m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 5, aqDisplayDetection);
-//                     aqDisplayDetection.Update();
-//                     if (m_aidiMangement.ObjList[0].Count == 0)
-//                     {
-//                         labelDetectResult.Text = "良品";
-//                         labelDetectResult.ForeColor = Color.Lime;
-//                         labelErrorCount.Text = "无";
-//                         labelErrorCount.ForeColor = Color.Lime;
-//                     }
-//                     else
-//                     {
-//                         labelDetectResult.Text = "差品";
-//                         labelDetectResult.ForeColor = Color.Red;
-//                         labelErrorCount.Text = string.Format("{0}", m_aidiMangement.ObjList[0].Count);
-//                         labelErrorCount.ForeColor = Color.Red;
-//                     }
-//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo ShowResult end> ");
-//                     //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
-//                     GC.Collect();
-//                     Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo Collect ------------------");
-//                     Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton GetWorkObjInfo = {0}, {1}.Count={2}", labelDetectResult.Text, labelErrorCount.Text, m_detectonCount));
-//                 }));
-//             }
-//             catch (Exception ex)
-//             {
-//                 MessageBox.Show("GetWorkObjInfo " + ex.Message);
-//             }
-//             m_detectonCount++;
-            
+            /*
+            try
+            {
+                Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo beg< ");
+                aqDisplayDetection.InteractiveGraphics.Clear();
+                aqDisplayDetection.Update();
+                checkBoxCameraDetection.Invoke(new MethodInvoker(delegate
+                {
+                    if (m_aidiMangement.SourceBitmap != null)
+                    {
+                        for (int i = 0; i < m_aidiMangement.SourceBitmap.Count; i++)
+                        {
+                            m_aidiMangement.SourceBitmap[i].Dispose();
+                        }
+                        m_aidiMangement.SourceBitmap.Clear();
+                    }
+                    else
+                    {
+                        m_aidiMangement.SourceBitmap = new List<Bitmap>();
+                    }
+
+                    if (checkBoxCameraDetection.Checked)
+                    {
+                        checkBoxCameraDetection.Checked = false;
+                        checkBoxCameraDetection_CheckedChanged(null, null);
+                        m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
+                    }
+                    else
+                    {
+                        Bitmap location = null;
+                        Bitmap detection = null;
+                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition beg< ");
+                        m_Acquisition.Acquisition(ref location, ref detection);
+                        aqDisplayDetection.Invoke(new MethodInvoker(delegate
+                        {
+                            aqDisplayDetection.Image = detection;
+                        }));
+
+                        m_aidiMangement.SourceBitmap.Add(aqDisplayDetection.Image.Clone() as Bitmap);
+                        Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo acquisition end> ");
+                    }
+                    aqDisplayDetection.FitToScreen();
+                    aqDisplayDetection.Update();
+                    m_aidiMangement.DetectPic();
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo DetectPic end> ");
+                    aqDisplayDetection.Image = m_aidiMangement.SourceBitmap[0];
+                    m_aidiMangement.DrawContours(m_aidiMangement.ObjList[0], AqVision.AqColorConstants.Red, 5, aqDisplayDetection);
+                    aqDisplayDetection.Update();
+                    if (m_aidiMangement.ObjList[0].Count == 0)
+                    {
+                        labelDetectResult.Text = "良品";
+                        labelDetectResult.ForeColor = Color.Lime;
+                        labelErrorCount.Text = "无";
+                        labelErrorCount.ForeColor = Color.Lime;
+                    }
+                    else
+                    {
+                        labelDetectResult.Text = "差品";
+                        labelDetectResult.ForeColor = Color.Red;
+                        labelErrorCount.Text = string.Format("{0}", m_aidiMangement.ObjList[0].Count);
+                        labelErrorCount.ForeColor = Color.Red;
+                    }
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo ShowResult end> ");
+                    //SaveImageToFile(aqDisplayDectection, m_aidiMangement.SourceBitmap[0], @"D:\Detect\");
+                    GC.Collect();
+                    Tool.DebugInfo.OutputProcessMessage("Integraton GetWorkObjInfo Collect ------------------");
+                    Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton GetWorkObjInfo = {0}, {1}.Count={2}", labelDetectResult.Text, labelErrorCount.Text, m_detectonCount));
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("GetWorkObjInfo " + ex.Message);
+            }
+            m_detectonCount++;
+            */
             return true;// m_aidiMangement.DetectResult;
         }
             
@@ -432,9 +440,13 @@ namespace IntegrationTesting
         public void AcquisitionBmpOnce(bool firstFrameLocation, bool firstFrameDetection)
         {
             Bitmap location = null;
-            Bitmap detection = null;
-            //m_Acquisition.Acquisition(ref location, ref detection);//?????????????????
             
+            List<System.Drawing.Bitmap> acquisitionBmp = new List<Bitmap>();
+            List<string> acquisitionCameraName = new List<string>();
+            acquisitionCameraName.Add("Aqrose_L");
+            m_Acquisition.Acquisition(ref acquisitionBmp, acquisitionCameraName);
+            location = acquisitionBmp[0];
+
             aqDisplayLocation.Invoke(new MethodInvoker(delegate
             {
                 if (checkBoxCameraAcquisition.Checked)
@@ -448,17 +460,6 @@ namespace IntegrationTesting
                         aqDisplayLocation.FitToScreen();
                     }
                 }
-//                 if (checkBoxCameraDetection.Checked)
-//                 {
-//                     aqDisplayDetection.Image = detection;
-//                     aqDisplayDetection.Update();
-// 
-//                     if (firstFrameDetection)
-//                     {
-//                         firstFrameDetection = false;
-//                         aqDisplayDetection.FitToScreen();
-//                     }
-//                 }
             }));
              
         }
@@ -597,8 +598,13 @@ namespace IntegrationTesting
                 else
                 {
                     Bitmap location = null;
-                    Bitmap detection = null;
-                    //m_Acquisition.Acquisition(ref location, ref detection); //?????????????????
+
+                    List<System.Drawing.Bitmap> acquisitionBmp = new List<Bitmap>();
+                    List<string> acquisitionCameraName = new List<string>();
+                    acquisitionCameraName.Add("Aqrose_L");
+                    m_Acquisition.Acquisition(ref acquisitionBmp, acquisitionCameraName);
+                    location = acquisitionBmp[0];
+
                     aqDisplayLocation.Invoke(new MethodInvoker(delegate
                     {
                         aqDisplayLocation.Image = location;
