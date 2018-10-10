@@ -115,8 +115,8 @@ namespace IntegrationTesting
                 m_Acquisition.CameraParamSet.CameraNameInputFolder[strCameraName] = strValue;
                 m_Acquisition.CameraParamSet.UpdateFilesUnderFolder();
             }
+            m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "192.168.1.111");
             IniFile.WriteValue("Acquisition", "LocalIP", m_localIP);
-            m_localIP = IniFile.ReadValue("Acquisition", "LocalIP", "192.168.0.111");
         }
 
         public void WriteConfigToIniFile()
@@ -236,7 +236,6 @@ namespace IntegrationTesting
                     Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera RunMatcher end> ");
                     m_calibrateShow.SetCurrentRobotPosition(robotX, robotY, robotRz);
                     //AddMessageToListView("Suc");
-                    //MessageBox.Show(string.Format("{0},{1},{2},",robotX, robotY, robotRz));
                     string showScoreAll = null;
                     for (int i = 0; i < triggerLocationResult.Count; i++ )
                     {
@@ -244,19 +243,6 @@ namespace IntegrationTesting
                     }
                     labelLocationScore.Text = showScoreAll;
                     labelLocationScore.ForeColor = Color.Lime;
-
-//                     if (triggerLocationResult.Count == 1)
-//                     {
-//                         locationResult = 1; //定位到1个产品
-//                     }
-//                     else if(triggerLocationResult.Count == 2)
-//                     {
-//                         locationResult = 2; //定位到1个产品
-//                     }
-//                     else if(triggerLocationResult.Count > 2)
-//                     {
-//                         locationResult = triggerLocationResult.Count;
-//                     }
                 }));
                 //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 //AddMessageToListView("TriggerCameraDone");
@@ -280,7 +266,6 @@ namespace IntegrationTesting
             {
                 Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult beg< ");
                 m_calibrateShow.SetCurrentImagePosition(triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle);
-                //MessageBox.Show(string.Format("{0},{1},{2},", triggerLocationResult[0].CenterX, triggerLocationResult[0].CenterY, triggerLocationResult[0].Angle));
                 //AddMessageToListView(string.Format("location result: {0} {1} {2}", m_templateSet.LocationResultPosX, m_templateSet.LocationResultPosY, m_templateSet.LocationResultPosTheta));
                 string calibrationPath  = null;
                 if(triggerLocationResult[0].Posture == ProductPosture.Normal)
@@ -437,7 +422,7 @@ namespace IntegrationTesting
             }
         }
 
-        public void AcquisitionBmpOnce(bool firstFrameLocation, bool firstFrameDetection)
+        public void AcquisitionBmpOnce(ref bool firstFrameLocation,ref bool firstFrameDetection)
         {
             Bitmap location = null;
             
@@ -453,14 +438,14 @@ namespace IntegrationTesting
                 {
                     aqDisplayLocation.Image = location;
                     aqDisplayLocation.Update();
-
-                    if (firstFrameLocation)
-                    {
-                        firstFrameLocation = false;
-                        aqDisplayLocation.FitToScreen();
-                    }
                 }
             }));
+
+            if (firstFrameLocation)
+            {
+                firstFrameLocation = false;
+                aqDisplayLocation.FitToScreen();
+            }
              
         }
         public void RegisterVisionAPI()
@@ -471,7 +456,7 @@ namespace IntegrationTesting
             {
                 try
                 {
-                    AcquisitionBmpOnce(firstFrameLocation, firstFrameDetection);
+                    AcquisitionBmpOnce(ref firstFrameLocation,ref firstFrameDetection);
                 }
                 catch (SEHException e)
                 {

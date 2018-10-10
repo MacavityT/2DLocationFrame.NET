@@ -38,7 +38,7 @@ namespace IntegrationTesting
             {
                 comboBoxModeList.Items.Add(mode);
             }
-            comboBoxModeList.SelectedIndex = 2;
+            comboBoxModeList.SelectedIndex = 0;
 
             m_calibrationCenter.CalibrationResultSavePath = Application.StartupPath + @"\location\\ResultNormal.txt";
             if(File.Exists(m_calibrationCenter.CalibrationResultSavePath))
@@ -80,7 +80,6 @@ namespace IntegrationTesting
         {
             m_calibrationCenter.CalibrationResultSavePath = resultPath;
             m_calibrationCenter.LoadCalibrationResult();
-            //m_calibrationCenter.SetConfig(0, true);//暂时固定，后需要保存到配置中
             m_calibrationCenter.GetRobotPoint();
             posX = m_calibrationCenter.CatchPoint.CatchX;
             posY = m_calibrationCenter.CatchPoint.CatchY;
@@ -204,6 +203,7 @@ namespace IntegrationTesting
 
         private void buttonNewLine_Click(object sender, EventArgs e)
         {
+            DoEmpty();
             ListViewItem line = new ListViewItem(textBoxCameraX.Text, 0);
             line.SubItems.Add(textBoxCameraY.Text);
             line.SubItems.Add(textBoxRobotX.Text);
@@ -239,6 +239,7 @@ namespace IntegrationTesting
         {
             if(listViewParameterSet.SelectedItems.Count > 0)
             {
+                DoEmpty();
                 listViewParameterSet.SelectedItems[0].SubItems[0].Text = textBoxCameraX.Text;
                 listViewParameterSet.SelectedItems[0].SubItems[1].Text = textBoxCameraY.Text;
                 listViewParameterSet.SelectedItems[0].SubItems[2].Text = textBoxRobotX.Text;
@@ -529,6 +530,55 @@ namespace IntegrationTesting
         {
             panelSingleInput.Enabled = false;
             panelBatchInput.Enabled = true;
+        }
+
+        private void buttonInsertLine_Click(object sender, EventArgs e)
+        {
+            if (listViewParameterSet.SelectedItems.Count > 0)
+            {
+                DoEmpty();
+                int index = listViewParameterSet.Items.IndexOf(listViewParameterSet.SelectedItems[0]);
+
+                ListViewItem line = new ListViewItem(textBoxCameraX.Text, 0);
+                line.SubItems.Add(textBoxCameraY.Text);
+                line.SubItems.Add(textBoxRobotX.Text);
+                line.SubItems.Add(textBoxRobotY.Text);
+                line.SubItems.Add(textBoxRobotRz.Text);
+                listViewParameterSet.Items.Insert(index, line);
+
+                AqCalibration.CalibrationDataGroup calibrationlineData = new AqCalibration.CalibrationDataGroup();
+                calibrationlineData.CameraPosition.ImageX = Convert.ToDouble(textBoxCameraX.Text);
+                calibrationlineData.CameraPosition.ImageY = Convert.ToDouble(textBoxCameraY.Text);
+                calibrationlineData.RobotCoordinate.RobotX = Convert.ToDouble(textBoxRobotX.Text);
+                calibrationlineData.RobotCoordinate.RobotY = Convert.ToDouble(textBoxRobotY.Text);
+                calibrationlineData.RobotCoordinate.RobotRz = Convert.ToDouble(textBoxRobotRz.Text);
+                m_calibrationCenter.AllLineData.Insert(index, calibrationlineData);
+            }
+        }
+
+        private void DoEmpty()
+        {
+
+            if (textBoxCameraX.Text == "")
+            {
+                textBoxCameraX.Text = "0";
+            }
+            if (textBoxCameraY.Text == "")
+            {
+                textBoxCameraY.Text = "0";
+            }
+            if (textBoxRobotX.Text == "")
+            {
+                textBoxRobotX.Text = "0";
+            }
+            if (textBoxRobotY.Text == "")
+            {
+                textBoxRobotY.Text = "0";
+            }
+            if (textBoxRobotRz.Text == "")
+            {
+                textBoxRobotRz.Text = "0";
+            }
         }
     }
 }

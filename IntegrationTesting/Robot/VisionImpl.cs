@@ -13,31 +13,22 @@ namespace IntegrationTesting.Robot
         public TriggerCamerHandler triggerCamerHandler = null;
         public GetLocalizeResultHandler getLocalizeResultHandler = null;
         public GetWorkObjInfoHandler getWorkObjInfoHandler = null;
-        //static bool m_triggering = false;
         // Server side handler of the SayHello RPC
         
         public override Task<SetFlag> triggerCamera(TriggerReq request, ServerCallContext context)
         {
-            //if(!m_triggering)
+            SetFlag resultFlag = new SetFlag();
+            int flag = 0;
+            if (triggerCamerHandler != null)
             {
-               // m_triggering = true;
-                SetFlag resultFlag = new SetFlag();
-                int flag = 0;
-                if (triggerCamerHandler != null)
-                {
-                    flag = triggerCamerHandler((double)(request.RobotPose.X*1000), (double)(request.RobotPose.Y*1000), (request.RobotPose.Theta));
-                }
-                resultFlag.ErrorFlag = flag;
-                //m_triggering = false;
-                return Task.FromResult(resultFlag);
+                flag = triggerCamerHandler((double)(request.RobotPose.X * 1000), (double)(request.RobotPose.Y * 1000), (request.RobotPose.Theta));
             }
+            resultFlag.ErrorFlag = flag;
+            return Task.FromResult(resultFlag);
         }
 
         public override Task<LocalizeRep> getLocalizeResult(LocalizeReq request, ServerCallContext context)
         {
-//             request.VisionMode;
-//             request.Flag;
-//             request.TaskId;
             LocalizeRep localizeRespone = new LocalizeRep();
             double posX = 0;
             double posY = 0;
@@ -64,11 +55,6 @@ namespace IntegrationTesting.Robot
             Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
                 " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
                 " Terminate " + request.Terminate.ToString());
-//             request.Position.X;      //double
-//             request.Position.Y;      //double
-//             request.Position.Z;      //double
-//             request.Terminate;       //bool
-//             request.OffsetMethod;    //string
             SetFlag resultFlag = new SetFlag();
             return Task.FromResult(resultFlag);
         }

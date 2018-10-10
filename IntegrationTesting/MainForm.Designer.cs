@@ -79,6 +79,11 @@
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelAqDisplayControls = new System.Windows.Forms.TableLayoutPanel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label_LocationResult = new System.Windows.Forms.Label();
+            this.label_LocationX = new System.Windows.Forms.Label();
+            this.label_LocationY = new System.Windows.Forms.Label();
+            this.label_LocationR = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tableLayoutPanelShowPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -89,6 +94,7 @@
             this.tableLayoutPanelLeft.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.tableLayoutPanelAqDisplayControls.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // aqDisplayLocation
@@ -182,12 +188,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // OpendetectAcquistionToolStripMenuItem
             // 
             this.OpendetectAcquistionToolStripMenuItem.Name = "OpendetectAcquistionToolStripMenuItem";
-            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.OpendetectAcquistionToolStripMenuItem.Text = "检测测试显示";
             this.OpendetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启检测实时采集ToolStripMenuItem_Click);
             // 
@@ -196,20 +202,20 @@
             this.ClosedetectAcquistionToolStripMenuItem.Checked = true;
             this.ClosedetectAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ClosedetectAcquistionToolStripMenuItem.Name = "ClosedetectAcquistionToolStripMenuItem";
-            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ClosedetectAcquistionToolStripMenuItem.Text = "检测测试隐藏";
             this.ClosedetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭检测实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // OpenLocationAcquistionToolStripMenuItem
             // 
             this.OpenLocationAcquistionToolStripMenuItem.Enabled = false;
             this.OpenLocationAcquistionToolStripMenuItem.Name = "OpenLocationAcquistionToolStripMenuItem";
-            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.OpenLocationAcquistionToolStripMenuItem.Text = "定位测试显示";
             this.OpenLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启定位实时采集ToolStripMenuItem_Click);
             // 
@@ -219,19 +225,19 @@
             this.CloseLocationAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CloseLocationAcquistionToolStripMenuItem.Enabled = false;
             this.CloseLocationAcquistionToolStripMenuItem.Name = "CloseLocationAcquistionToolStripMenuItem";
-            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CloseLocationAcquistionToolStripMenuItem.Text = "定位测试隐藏";
             this.CloseLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭定位实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // ToolStripMenuItemHelp
             // 
@@ -306,6 +312,7 @@
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel7, 0, 4);
+            this.tableLayoutPanelShowPanel.Controls.Add(this.panel3, 0, 2);
             this.tableLayoutPanelShowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelShowPanel.Location = new System.Drawing.Point(1153, 2);
             this.tableLayoutPanelShowPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -316,6 +323,7 @@
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.60972F));
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.31156F));
             this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.15745F));
+            this.tableLayoutPanelShowPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelShowPanel.Size = new System.Drawing.Size(116, 1010);
             this.tableLayoutPanelShowPanel.TabIndex = 12;
             // 
@@ -602,6 +610,65 @@
             this.timerStatus.Interval = 1000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.label_LocationResult);
+            this.panel3.Controls.Add(this.label_LocationR);
+            this.panel3.Controls.Add(this.label_LocationY);
+            this.panel3.Controls.Add(this.label_LocationX);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(4, 265);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(108, 130);
+            this.panel3.TabIndex = 5;
+            // 
+            // label_LocationResult
+            // 
+            this.label_LocationResult.AutoSize = true;
+            this.label_LocationResult.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationResult.Location = new System.Drawing.Point(12, 13);
+            this.label_LocationResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationResult.Name = "label_LocationResult";
+            this.label_LocationResult.Size = new System.Drawing.Size(85, 19);
+            this.label_LocationResult.TabIndex = 4;
+            this.label_LocationResult.Text = "定位结果";
+            // 
+            // label_LocationX
+            // 
+            this.label_LocationX.AutoSize = true;
+            this.label_LocationX.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationX.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationX.Location = new System.Drawing.Point(19, 52);
+            this.label_LocationX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationX.Name = "label_LocationX";
+            this.label_LocationX.Size = new System.Drawing.Size(75, 19);
+            this.label_LocationX.TabIndex = 4;
+            this.label_LocationX.Text = "95.321";
+            // 
+            // label_LocationY
+            // 
+            this.label_LocationY.AutoSize = true;
+            this.label_LocationY.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationY.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationY.Location = new System.Drawing.Point(19, 76);
+            this.label_LocationY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationY.Name = "label_LocationY";
+            this.label_LocationY.Size = new System.Drawing.Size(75, 19);
+            this.label_LocationY.TabIndex = 4;
+            this.label_LocationY.Text = "95.321";
+            // 
+            // label_LocationR
+            // 
+            this.label_LocationR.AutoSize = true;
+            this.label_LocationR.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationR.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationR.Location = new System.Drawing.Point(19, 99);
+            this.label_LocationR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationR.Name = "label_LocationR";
+            this.label_LocationR.Size = new System.Drawing.Size(75, 19);
+            this.label_LocationR.TabIndex = 4;
+            this.label_LocationR.Text = "95.321";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -632,6 +699,8 @@
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();
             this.tableLayoutPanelAqDisplayControls.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -688,6 +757,11 @@
         private System.Windows.Forms.ListView listViewRecord;
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label_LocationResult;
+        private System.Windows.Forms.Label label_LocationR;
+        private System.Windows.Forms.Label label_LocationY;
+        private System.Windows.Forms.Label label_LocationX;
     }
 }
 

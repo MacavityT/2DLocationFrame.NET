@@ -87,6 +87,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButtonSingleInput = new System.Windows.Forms.RadioButton();
             this.radioButtonBatchInput = new System.Windows.Forms.RadioButton();
+            this.buttonInsertLine = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelSingleInput.SuspendLayout();
             this.panelBatchInput.SuspendLayout();
@@ -361,7 +362,7 @@
             // 
             // buttonDeleteLine
             // 
-            this.buttonDeleteLine.Location = new System.Drawing.Point(348, 38);
+            this.buttonDeleteLine.Location = new System.Drawing.Point(348, 5);
             this.buttonDeleteLine.Name = "buttonDeleteLine";
             this.buttonDeleteLine.Size = new System.Drawing.Size(173, 26);
             this.buttonDeleteLine.TabIndex = 4;
@@ -534,6 +535,7 @@
             this.panel1.Controls.Add(this.labelRobotPosY);
             this.panel1.Controls.Add(this.buttonUpdateLine);
             this.panel1.Controls.Add(this.textBoxRobotPosY);
+            this.panel1.Controls.Add(this.buttonInsertLine);
             this.panel1.Controls.Add(this.buttonDeleteLine);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.labelRobotPosRz);
@@ -570,7 +572,7 @@
             this.panelSingleInput.Controls.Add(this.label11);
             this.panelSingleInput.Controls.Add(this.label13);
             this.panelSingleInput.Location = new System.Drawing.Point(30, 41);
-            this.panelSingleInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelSingleInput.Margin = new System.Windows.Forms.Padding(2);
             this.panelSingleInput.Name = "panelSingleInput";
             this.panelSingleInput.Size = new System.Drawing.Size(489, 55);
             this.panelSingleInput.TabIndex = 7;
@@ -585,7 +587,7 @@
             this.panelBatchInput.Controls.Add(this.buttonSelectWorldPos);
             this.panelBatchInput.Controls.Add(this.buttonSelectCalPic);
             this.panelBatchInput.Location = new System.Drawing.Point(30, 122);
-            this.panelBatchInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelBatchInput.Margin = new System.Windows.Forms.Padding(2);
             this.panelBatchInput.Name = "panelBatchInput";
             this.panelBatchInput.Size = new System.Drawing.Size(489, 60);
             this.panelBatchInput.TabIndex = 8;
@@ -594,7 +596,7 @@
             // 
             this.textBoxWorldCoordianteFilePath.Enabled = false;
             this.textBoxWorldCoordianteFilePath.Location = new System.Drawing.Point(119, 34);
-            this.textBoxWorldCoordianteFilePath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxWorldCoordianteFilePath.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxWorldCoordianteFilePath.Name = "textBoxWorldCoordianteFilePath";
             this.textBoxWorldCoordianteFilePath.Size = new System.Drawing.Size(270, 21);
             this.textBoxWorldCoordianteFilePath.TabIndex = 1;
@@ -603,7 +605,7 @@
             // 
             this.textBoxCalibrateImagPath.Enabled = false;
             this.textBoxCalibrateImagPath.Location = new System.Drawing.Point(119, 6);
-            this.textBoxCalibrateImagPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCalibrateImagPath.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCalibrateImagPath.Name = "textBoxCalibrateImagPath";
             this.textBoxCalibrateImagPath.Size = new System.Drawing.Size(270, 21);
             this.textBoxCalibrateImagPath.TabIndex = 1;
@@ -656,9 +658,9 @@
             this.groupBox1.Controls.Add(this.panelSingleInput);
             this.groupBox1.Controls.Add(this.panelBatchInput);
             this.groupBox1.Location = new System.Drawing.Point(7, 2);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(521, 188);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
@@ -668,7 +670,7 @@
             // 
             this.radioButtonSingleInput.AutoSize = true;
             this.radioButtonSingleInput.Location = new System.Drawing.Point(2, 24);
-            this.radioButtonSingleInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonSingleInput.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonSingleInput.Name = "radioButtonSingleInput";
             this.radioButtonSingleInput.Size = new System.Drawing.Size(71, 16);
             this.radioButtonSingleInput.TabIndex = 9;
@@ -681,7 +683,7 @@
             this.radioButtonBatchInput.AutoSize = true;
             this.radioButtonBatchInput.Checked = true;
             this.radioButtonBatchInput.Location = new System.Drawing.Point(2, 106);
-            this.radioButtonBatchInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonBatchInput.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonBatchInput.Name = "radioButtonBatchInput";
             this.radioButtonBatchInput.Size = new System.Drawing.Size(71, 16);
             this.radioButtonBatchInput.TabIndex = 9;
@@ -689,6 +691,16 @@
             this.radioButtonBatchInput.Text = "批量输入";
             this.radioButtonBatchInput.UseVisualStyleBackColor = true;
             this.radioButtonBatchInput.CheckedChanged += new System.EventHandler(this.radioButtonBatchInput_CheckedChanged);
+            // 
+            // buttonInsertLine
+            // 
+            this.buttonInsertLine.Location = new System.Drawing.Point(348, 37);
+            this.buttonInsertLine.Name = "buttonInsertLine";
+            this.buttonInsertLine.Size = new System.Drawing.Size(173, 26);
+            this.buttonInsertLine.TabIndex = 4;
+            this.buttonInsertLine.Text = "插入行";
+            this.buttonInsertLine.UseVisualStyleBackColor = true;
+            this.buttonInsertLine.Click += new System.EventHandler(this.buttonInsertLine_Click);
             // 
             // CalibrationSetForm
             // 
@@ -776,5 +788,6 @@
         private System.Windows.Forms.Button buttonSelectWorldPos;
         private System.Windows.Forms.RadioButton radioButtonBatchInput;
         private System.Windows.Forms.RadioButton radioButtonSingleInput;
+        private System.Windows.Forms.Button buttonInsertLine;
     }
 }
