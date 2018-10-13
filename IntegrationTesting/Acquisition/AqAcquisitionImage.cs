@@ -212,15 +212,15 @@ namespace AqVision.Acquisition
                     Connect();
                 }
 
-                if (cameras.Count < AcquisitionCameraName.Count)
-                {
-                    return false;
-                }
                 GC.Collect();
                 for (int i = 0; i < AcquisitionCameraName.Count; i++)
                 {
                     if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromCamera)
                     {
+                        if (cameras.Count < AcquisitionCameraName.Count)
+                        {
+                            return false;
+                        }
                         m_GetBitmapSuc = false;
                         cameras[m_cameraNameToIndex[AcquisitionCameraName[i]]].TriggerSoftware();
                         while (!m_GetBitmapSuc)
@@ -236,8 +236,10 @@ namespace AqVision.Acquisition
                     }
                     else if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromFolder)
                     {
-                        string strFolder = CameraParamSet.CameraNameInputFile[AcquisitionCameraName[i]];
-                        AcquisitionBmp.Add(Image.FromFile(CameraParamSet.FolderFiles[strFolder].ElementAt((int)CameraParamSet.FolderIndex[strFolder])) as Bitmap);
+                        string strFolder = CameraParamSet.CameraNameInputFolder[AcquisitionCameraName[i]];
+                        string strFile = CameraParamSet.FolderFiles[strFolder].ElementAt((int)CameraParamSet.FolderIndex[strFolder]);
+                        int len = CameraParamSet.FolderFiles[strFolder].Count;
+                        AcquisitionBmp.Add(Image.FromFile(strFile) as Bitmap);
                         CameraParamSet.FolderIndex[strFolder] = CameraParamSet.FolderIndex[strFolder]++;
                     }
                 }

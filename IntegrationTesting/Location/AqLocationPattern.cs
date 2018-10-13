@@ -95,7 +95,7 @@ namespace AqVision.Location
           set { m_minLength = value; }
         }
 
-        double m_minScore = 0.67;
+        double m_minScore = 0.57;
         public double MinScore
         {
           get { return m_minScore; }
@@ -380,7 +380,7 @@ namespace AqVision.Location
 
         }
 
-        public void RunMatcherByHalcon()
+        public bool RunMatcherByHalcon()
         {
             HTuple xldRowsM = new HTuple();
             HTuple xldColsM = new HTuple();
@@ -409,7 +409,7 @@ namespace AqVision.Location
 
             if(score == null)
             {
-//                return;
+                return false;
             }
             Score = score.DArr;
             Scale = scale.DArr;
@@ -421,6 +421,7 @@ namespace AqVision.Location
             XldRowsM = xldRowsM.DArr;
 
             image.Dispose();//1061.388
+            return true;
         }
 
         public bool SaveModel(string modelFullPath)

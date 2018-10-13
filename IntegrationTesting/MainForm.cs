@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IntegrationTesting.Aidi;
+//using IntegrationTesting.Aid;
 using IntegrationTesting.Robot;
 using Grpc.Core;
 using App2D;
@@ -28,7 +28,13 @@ namespace IntegrationTesting
         CalibrationSetForm m_calibrateShow = new CalibrationSetForm();
         AcqusitionImageSet m_acqusitionImageSet = new AcqusitionImageSet();
         TemplateSetForm m_templateSet = new TemplateSetForm();
-        AIDIManagementForm m_aidiMangement = new AIDIManagementForm();
+
+        public TemplateSetForm TemplateSet
+        {
+            get { return m_templateSet; }
+            set { m_templateSet = value; }
+        }
+//        AIDIManagementForm m_aidiMangement = new AIDIManagementForm();
         RobotManagementForm m_robotSeverForm = new RobotManagementForm();
 
         static VisionImpl m_visionImpl = new VisionImpl();
@@ -41,9 +47,12 @@ namespace IntegrationTesting
 
         Thread showPicLocation = null;
         bool m_endThread = false;
+        UInt16 _TriggerCount = 0;
 
         List<LocationResultSet> triggerLocationResult = new List<LocationResultSet>();
-        string softwareTitle = "定位测试软件"; //软件标题名字
+        string softwareTitle = "阿丘科技定位软件(V1.0)"; //软件标题名字
+
+        
 
         public MainForm()
         {
@@ -193,11 +202,10 @@ namespace IntegrationTesting
                         m_templateSet.ImageInput = location.Clone() as Bitmap;
                         Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera acquisition end> ");
                     }
-                    
-                    
+
                     triggerLocationResult.Clear();
                     locationResult = m_templateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm");
-                    
+
                     if(locationResult == 0)
                     {
                         for(int i=0; i<m_templateSet.LocationResultPosTheta.Length; i++ )
@@ -243,8 +251,23 @@ namespace IntegrationTesting
                     }
                     labelLocationScore.Text = showScoreAll;
                     labelLocationScore.ForeColor = Color.Lime;
+
+                    label_LocationX.Text = triggerLocationResult[0].CenterX.ToString("f3");
+                    label_LocationY.Text = triggerLocationResult[0].CenterY.ToString("f3");
+                    label_LocationR.Text = (triggerLocationResult[0].Angle * 180 / Math.PI).ToString("f3");
+
+                    //if ((_TriggerCount % 2) == 0)
+                    {
+                        string PicName = SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
+                        StreamWriter sw = File.AppendText(@"D:\Debug.csv");
+                        sw.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", PicName, label_LocationX.Text, label_LocationY.Text, label_LocationR.Text
+                            ,robotX, robotY,robotRz));
+                        sw.Flush();
+                        sw.Close();
+                    }
+
+                    _TriggerCount++;
                 }));
-                //SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");//1146.88
                 //AddMessageToListView("TriggerCameraDone");
                 
                 GC.Collect();
@@ -283,6 +306,9 @@ namespace IntegrationTesting
                 Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult end> ");
                 //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
                 Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton TriggerCamera GetLocalizeResult = {0}, {1}, {2}, {3}.", posX, posY, theta, posture));
+                labelRobotX.Text = posX.ToString("f3");
+                labelRobotY.Text = posY.ToString("f3");
+                labelRobotRz.Text = theta.ToString("f3");
             }
             return true;
         }
@@ -367,7 +393,7 @@ namespace IntegrationTesting
             return true;// m_aidiMangement.DetectResult;
         }
             
-        public bool SaveImageToFile(AqDisplay aqDisplay, Bitmap originBitmap, string strSavePath)
+        public string SaveImageToFile(AqDisplay aqDisplay, Bitmap originBitmap, string strSavePath)
         {
             string sourcePath = strSavePath + @"Source\";
             string resultPath = strSavePath + @"Result\";
@@ -391,16 +417,16 @@ namespace IntegrationTesting
             string timeNowToString = string.Format("{0}{1}{2}{3}{4}{5}{6}", DateTime.Now.Year, DateTime.Now.Month,
                                DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
 
-            string picSourceName = string.Format("{0}{1}_{2}_.jpg", sourcePath, count.ToString(), timeNowToString);
+            string picSourceName = string.Format("{0}{1}_{2}_.bmp", sourcePath, count.ToString(), timeNowToString);
             string picResultFullName = string.Format("{0}{1}_{2}_.jpg", resultPath, count.ToString(), timeNowToString);
 
-            bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Jpeg);
+            bitmap.Save(picSourceName, System.Drawing.Imaging.ImageFormat.Bmp);
             aqDisplay.CreateContentBitmap().Save(picResultFullName); // 1304.456
 
             gTemplate.Dispose();
             bitmap.Dispose();//1225.496
             originImage.Dispose();//1146.756
-            return true;
+            return picSourceName;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -482,7 +508,30 @@ namespace IntegrationTesting
             m_server.Start();
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
+            _TriggerCount = 0;
+            if (File.Exists(@"D:\Debug.csv"))
+            {
+                File.Delete(@"D:\Debug.csv");
+            }
+
+            DeleteDirectory(@"D:\Location\Result");
+            DeleteDirectory(@"D:\Location\Source");
         }
+
+        void DeleteDirectory(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                string[] allFiles = Directory.GetFiles(path);
+                while (allFiles.Length != 0)
+                {
+                    File.Delete(allFiles[0]);
+                    allFiles = Directory.GetFiles(path);
+                }
+                Directory.Delete(path);
+            }
+        }
+
 
         public void AddMessageToListView(string strMessage)
         {
@@ -565,7 +614,9 @@ namespace IntegrationTesting
             {
                 m_calibrateShow = new CalibrationSetForm();
             }
+            m_calibrateShow.GetMainForm = this;
             m_calibrateShow.Show();
+
             m_calibrateShow.Focus();
         }
 
@@ -605,7 +656,7 @@ namespace IntegrationTesting
 
         private void ToolStripMenuItemSetDectection_Click(object sender, EventArgs e)
         {
-            m_aidiMangement.ShowDialog();
+            //m_aidiMangement.ShowDialog();
         }
 
         private void ToolStripMenuItemSetRobotConnect_Click(object sender, EventArgs e)

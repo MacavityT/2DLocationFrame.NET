@@ -82,6 +82,9 @@ namespace IntegrationTesting.Acquisition
 
         public void UpdateFilesUnderFolder()
         {
+            FolderFiles.Clear();
+            FolderIndex.Clear();
+            
             foreach (string folder in CameraNameInputFolder.Values)
             {
                 if (folder != "")
@@ -96,6 +99,7 @@ namespace IntegrationTesting.Acquisition
                     }
                 }
             }
+            
         }
     }
 }

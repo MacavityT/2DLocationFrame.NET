@@ -144,6 +144,7 @@ namespace IntegrationTesting
                 textBox1.Text = LocationResultPosX[0].ToString("0.000");
                 textBox2.Text = LocationResultPosY[0].ToString("0.000");
                 textBox3.Text = (LocationResultPosTheta[0] / Math.PI * 180).ToString("0.000");
+                //ShowCenterMatchePos(LocationResultPosX);
             }
             catch (Exception ex)
             {
@@ -172,7 +173,7 @@ namespace IntegrationTesting
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
                 iResult = -1;
             }
             return iResult;
@@ -260,10 +261,7 @@ namespace IntegrationTesting
             }
             st.Stop();
             aqDisplayShow.Update();
-//             for(int i = 0; i<countPointList.Length; i++)
-//             {
-//                 listBox1.Items.Add(string.Format("{0}, {1}", centerX[i], centerY[i]));
-//             }
+
             //MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//fortest
         }
 
@@ -300,11 +298,28 @@ namespace IntegrationTesting
         private void buttonLoadModel_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "shm file(*.shm)|*.shm";
             if(fileDialog.ShowDialog() == DialogResult.OK)
             {
                 ModelFilePath = fileDialog.FileName;
                 m_Location.LoadModel(ModelFilePath);
             }
+        }
+
+        private void buttonLoadPic_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "bmp file(*.bmp)|*.bmp";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string picPath = fileDialog.FileName;
+                aqDisplayCreateModel.Image = Image.FromFile(picPath) as Bitmap;
+                this.Text = picPath;
+                aqDisplayCreateModel.FitToScreen();
+                ImageInput = aqDisplayCreateModel.Image.Clone() as Bitmap;
+            }
+            aqDisplayCreateModel.InteractiveGraphics.Clear();
+            aqDisplayCreateModel.Update();
         }
     }
 }

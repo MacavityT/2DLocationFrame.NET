@@ -35,14 +35,14 @@
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonCross = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.buttonLoadModel = new System.Windows.Forms.Button();
             this.buttonSaveModel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonLoadModel = new System.Windows.Forms.Button();
+            this.buttonLoadPic = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -50,9 +50,9 @@
             // buttonRemoveGraph
             // 
             this.buttonRemoveGraph.Location = new System.Drawing.Point(7, 334);
-            this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRemoveGraph.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRemoveGraph.Name = "buttonRemoveGraph";
-            this.buttonRemoveGraph.Size = new System.Drawing.Size(92, 34);
+            this.buttonRemoveGraph.Size = new System.Drawing.Size(91, 40);
             this.buttonRemoveGraph.TabIndex = 10;
             this.buttonRemoveGraph.Text = "移除所有图形";
             this.buttonRemoveGraph.UseVisualStyleBackColor = true;
@@ -60,8 +60,8 @@
             // 
             // buttonAddRectangleRegion
             // 
-            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(5, 18);
-            this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAddRectangleRegion.Location = new System.Drawing.Point(4, 2);
+            this.buttonAddRectangleRegion.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddRectangleRegion.Name = "buttonAddRectangleRegion";
             this.buttonAddRectangleRegion.Size = new System.Drawing.Size(92, 34);
             this.buttonAddRectangleRegion.TabIndex = 7;
@@ -71,8 +71,8 @@
             // 
             // buttonTraining
             // 
-            this.buttonTraining.Location = new System.Drawing.Point(5, 56);
-            this.buttonTraining.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonTraining.Location = new System.Drawing.Point(4, 40);
+            this.buttonTraining.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTraining.Name = "buttonTraining";
             this.buttonTraining.Size = new System.Drawing.Size(92, 34);
             this.buttonTraining.TabIndex = 8;
@@ -82,7 +82,7 @@
             // 
             // buttonLocation
             // 
-            this.buttonLocation.Location = new System.Drawing.Point(5, 95);
+            this.buttonLocation.Location = new System.Drawing.Point(4, 79);
             this.buttonLocation.Name = "buttonLocation";
             this.buttonLocation.Size = new System.Drawing.Size(92, 34);
             this.buttonLocation.TabIndex = 11;
@@ -104,11 +104,11 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.buttonLoadPic);
+            this.panel1.Controls.Add(this.buttonCross);
             this.panel1.Controls.Add(this.textBox3);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
             this.panel1.Controls.Add(this.buttonLocation);
             this.panel1.Controls.Add(this.buttonLoadModel);
@@ -121,16 +121,16 @@
             this.panel1.Size = new System.Drawing.Size(230, 725);
             this.panel1.TabIndex = 12;
             // 
-            // button1
+            // buttonCross
             // 
-            this.button1.Location = new System.Drawing.Point(31, 300);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 18);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonCross.Location = new System.Drawing.Point(7, 385);
+            this.buttonCross.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCross.Name = "buttonCross";
+            this.buttonCross.Size = new System.Drawing.Size(91, 40);
+            this.buttonCross.TabIndex = 14;
+            this.buttonCross.Text = "定位十字";
+            this.buttonCross.UseVisualStyleBackColor = true;
+            this.buttonCross.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox3
             // 
@@ -153,19 +153,21 @@
             this.textBox1.Size = new System.Drawing.Size(100, 21);
             this.textBox1.TabIndex = 13;
             // 
-            // listBox1
+            // buttonLoadModel
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(9, 373);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(209, 340);
-            this.listBox1.TabIndex = 12;
+            this.buttonLoadModel.Location = new System.Drawing.Point(4, 118);
+            this.buttonLoadModel.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLoadModel.Name = "buttonLoadModel";
+            this.buttonLoadModel.Size = new System.Drawing.Size(92, 34);
+            this.buttonLoadModel.TabIndex = 5;
+            this.buttonLoadModel.Text = "加载模板";
+            this.buttonLoadModel.UseVisualStyleBackColor = true;
+            this.buttonLoadModel.Click += new System.EventHandler(this.buttonLoadModel_Click);
             // 
             // buttonSaveModel
             // 
-            this.buttonSaveModel.Location = new System.Drawing.Point(7, 172);
-            this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSaveModel.Location = new System.Drawing.Point(6, 156);
+            this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveModel.Name = "buttonSaveModel";
             this.buttonSaveModel.Size = new System.Drawing.Size(92, 34);
             this.buttonSaveModel.TabIndex = 5;
@@ -182,16 +184,16 @@
             this.panel2.Size = new System.Drawing.Size(833, 725);
             this.panel2.TabIndex = 13;
             // 
-            // buttonLoadModel
+            // buttonLoadPic
             // 
-            this.buttonLoadModel.Location = new System.Drawing.Point(5, 134);
-            this.buttonLoadModel.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonLoadModel.Name = "buttonLoadModel";
-            this.buttonLoadModel.Size = new System.Drawing.Size(92, 34);
-            this.buttonLoadModel.TabIndex = 5;
-            this.buttonLoadModel.Text = "加载模板";
-            this.buttonLoadModel.UseVisualStyleBackColor = true;
-            this.buttonLoadModel.Click += new System.EventHandler(this.buttonLoadModel_Click);
+            this.buttonLoadPic.Location = new System.Drawing.Point(7, 437);
+            this.buttonLoadPic.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLoadPic.Name = "buttonLoadPic";
+            this.buttonLoadPic.Size = new System.Drawing.Size(91, 40);
+            this.buttonLoadPic.TabIndex = 14;
+            this.buttonLoadPic.Text = "加载图片";
+            this.buttonLoadPic.UseVisualStyleBackColor = true;
+            this.buttonLoadPic.Click += new System.EventHandler(this.buttonLoadPic_Click);
             // 
             // TemplateSetForm
             // 
@@ -219,13 +221,13 @@
         private System.Windows.Forms.Button buttonLocation;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttonSaveModel;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonCross;
         private System.Windows.Forms.Button buttonLoadModel;
+        private System.Windows.Forms.Button buttonLoadPic;
 
     }
 }

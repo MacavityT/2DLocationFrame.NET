@@ -65,6 +65,16 @@
             this.listViewRecord = new System.Windows.Forms.ListView();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label_LocationResult = new System.Windows.Forms.Label();
+            this.label_LocationR = new System.Windows.Forms.Label();
+            this.label_LocationY = new System.Windows.Forms.Label();
+            this.label_LocationX = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.labelRobotY = new System.Windows.Forms.Label();
+            this.labelRobotRz = new System.Windows.Forms.Label();
+            this.labelRobotX = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelLocationTimes = new System.Windows.Forms.ToolStripStatusLabel();
             this.labellocationCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -79,22 +89,18 @@
             this.checkBoxCameraDetection = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelAqDisplayControls = new System.Windows.Forms.TableLayoutPanel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label_LocationResult = new System.Windows.Forms.Label();
-            this.label_LocationX = new System.Windows.Forms.Label();
-            this.label_LocationY = new System.Windows.Forms.Label();
-            this.label_LocationR = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tableLayoutPanelShowPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanelTitle.SuspendLayout();
             this.tableLayoutPanelLeft.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.tableLayoutPanelAqDisplayControls.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // aqDisplayLocation
@@ -188,12 +194,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
             // 
             // OpendetectAcquistionToolStripMenuItem
             // 
             this.OpendetectAcquistionToolStripMenuItem.Name = "OpendetectAcquistionToolStripMenuItem";
-            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.OpendetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.OpendetectAcquistionToolStripMenuItem.Text = "检测测试显示";
             this.OpendetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启检测实时采集ToolStripMenuItem_Click);
             // 
@@ -202,20 +208,20 @@
             this.ClosedetectAcquistionToolStripMenuItem.Checked = true;
             this.ClosedetectAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ClosedetectAcquistionToolStripMenuItem.Name = "ClosedetectAcquistionToolStripMenuItem";
-            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ClosedetectAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.ClosedetectAcquistionToolStripMenuItem.Text = "检测测试隐藏";
             this.ClosedetectAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭检测实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
             // 
             // OpenLocationAcquistionToolStripMenuItem
             // 
             this.OpenLocationAcquistionToolStripMenuItem.Enabled = false;
             this.OpenLocationAcquistionToolStripMenuItem.Name = "OpenLocationAcquistionToolStripMenuItem";
-            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.OpenLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.OpenLocationAcquistionToolStripMenuItem.Text = "定位测试显示";
             this.OpenLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.开启定位实时采集ToolStripMenuItem_Click);
             // 
@@ -225,19 +231,19 @@
             this.CloseLocationAcquistionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CloseLocationAcquistionToolStripMenuItem.Enabled = false;
             this.CloseLocationAcquistionToolStripMenuItem.Name = "CloseLocationAcquistionToolStripMenuItem";
-            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CloseLocationAcquistionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.CloseLocationAcquistionToolStripMenuItem.Text = "定位测试隐藏";
             this.CloseLocationAcquistionToolStripMenuItem.Click += new System.EventHandler(this.关闭定位实时采集ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
             // 
             // ToolStripMenuItemHelp
             // 
@@ -313,6 +319,7 @@
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel7, 0, 4);
             this.tableLayoutPanelShowPanel.Controls.Add(this.panel3, 0, 2);
+            this.tableLayoutPanelShowPanel.Controls.Add(this.panel4, 0, 3);
             this.tableLayoutPanelShowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelShowPanel.Location = new System.Drawing.Point(1153, 2);
             this.tableLayoutPanelShowPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -343,7 +350,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(13, 7);
+            this.label1.Location = new System.Drawing.Point(12, 7);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 19);
@@ -353,12 +360,12 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label8.ForeColor = System.Drawing.Color.Lime;
-            this.label8.Location = new System.Drawing.Point(25, 40);
+            this.label8.Location = new System.Drawing.Point(30, 40);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 24);
+            this.label8.Size = new System.Drawing.Size(49, 19);
             this.label8.TabIndex = 4;
             this.label8.Text = "极好";
             // 
@@ -378,7 +385,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(13, 6);
+            this.label7.Location = new System.Drawing.Point(12, 6);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 19);
@@ -388,14 +395,14 @@
             // labelLocationScore
             // 
             this.labelLocationScore.AutoSize = true;
-            this.labelLocationScore.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelLocationScore.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelLocationScore.ForeColor = System.Drawing.Color.Lime;
-            this.labelLocationScore.Location = new System.Drawing.Point(12, 34);
+            this.labelLocationScore.Location = new System.Drawing.Point(17, 34);
             this.labelLocationScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelLocationScore.Name = "labelLocationScore";
-            this.labelLocationScore.Size = new System.Drawing.Size(88, 24);
+            this.labelLocationScore.Size = new System.Drawing.Size(75, 19);
             this.labelLocationScore.TabIndex = 4;
-            this.labelLocationScore.Text = "95.321";
+            this.labelLocationScore.Text = "00.000";
             // 
             // panel7
             // 
@@ -453,6 +460,124 @@
             this.buttonStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonStop.UseVisualStyleBackColor = true;
             this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.label_LocationResult);
+            this.panel3.Controls.Add(this.label_LocationR);
+            this.panel3.Controls.Add(this.label_LocationY);
+            this.panel3.Controls.Add(this.label_LocationX);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(4, 265);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(108, 130);
+            this.panel3.TabIndex = 5;
+            // 
+            // label_LocationResult
+            // 
+            this.label_LocationResult.AutoSize = true;
+            this.label_LocationResult.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationResult.Location = new System.Drawing.Point(12, 13);
+            this.label_LocationResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationResult.Name = "label_LocationResult";
+            this.label_LocationResult.Size = new System.Drawing.Size(85, 19);
+            this.label_LocationResult.TabIndex = 4;
+            this.label_LocationResult.Text = "定位结果";
+            // 
+            // label_LocationR
+            // 
+            this.label_LocationR.AutoSize = true;
+            this.label_LocationR.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationR.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationR.Location = new System.Drawing.Point(11, 99);
+            this.label_LocationR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationR.Name = "label_LocationR";
+            this.label_LocationR.Size = new System.Drawing.Size(86, 19);
+            this.label_LocationR.TabIndex = 4;
+            this.label_LocationR.Text = "000.000";
+            // 
+            // label_LocationY
+            // 
+            this.label_LocationY.AutoSize = true;
+            this.label_LocationY.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationY.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationY.Location = new System.Drawing.Point(11, 76);
+            this.label_LocationY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationY.Name = "label_LocationY";
+            this.label_LocationY.Size = new System.Drawing.Size(86, 19);
+            this.label_LocationY.TabIndex = 4;
+            this.label_LocationY.Text = "000.000";
+            // 
+            // label_LocationX
+            // 
+            this.label_LocationX.AutoSize = true;
+            this.label_LocationX.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_LocationX.ForeColor = System.Drawing.Color.Lime;
+            this.label_LocationX.Location = new System.Drawing.Point(11, 52);
+            this.label_LocationX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LocationX.Name = "label_LocationX";
+            this.label_LocationX.Size = new System.Drawing.Size(86, 19);
+            this.label_LocationX.TabIndex = 4;
+            this.label_LocationX.Text = "000.000";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.labelRobotY);
+            this.panel4.Controls.Add(this.labelRobotRz);
+            this.panel4.Controls.Add(this.labelRobotX);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(4, 402);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(108, 117);
+            this.panel4.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(2, 13);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 19);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "机器人坐标";
+            // 
+            // labelRobotY
+            // 
+            this.labelRobotY.AutoSize = true;
+            this.labelRobotY.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelRobotY.ForeColor = System.Drawing.Color.Lime;
+            this.labelRobotY.Location = new System.Drawing.Point(11, 71);
+            this.labelRobotY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelRobotY.Name = "labelRobotY";
+            this.labelRobotY.Size = new System.Drawing.Size(86, 19);
+            this.labelRobotY.TabIndex = 4;
+            this.labelRobotY.Text = "000.000";
+            // 
+            // labelRobotRz
+            // 
+            this.labelRobotRz.AutoSize = true;
+            this.labelRobotRz.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelRobotRz.ForeColor = System.Drawing.Color.Lime;
+            this.labelRobotRz.Location = new System.Drawing.Point(11, 94);
+            this.labelRobotRz.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelRobotRz.Name = "labelRobotRz";
+            this.labelRobotRz.Size = new System.Drawing.Size(86, 19);
+            this.labelRobotRz.TabIndex = 4;
+            this.labelRobotRz.Text = "000.000";
+            // 
+            // labelRobotX
+            // 
+            this.labelRobotX.AutoSize = true;
+            this.labelRobotX.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelRobotX.ForeColor = System.Drawing.Color.Lime;
+            this.labelRobotX.Location = new System.Drawing.Point(11, 47);
+            this.labelRobotX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelRobotX.Name = "labelRobotX";
+            this.labelRobotX.Size = new System.Drawing.Size(86, 19);
+            this.labelRobotX.TabIndex = 4;
+            this.labelRobotX.Text = "000.000";
             // 
             // statusStrip1
             // 
@@ -610,65 +735,6 @@
             this.timerStatus.Interval = 1000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.label_LocationResult);
-            this.panel3.Controls.Add(this.label_LocationR);
-            this.panel3.Controls.Add(this.label_LocationY);
-            this.panel3.Controls.Add(this.label_LocationX);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(4, 265);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(108, 130);
-            this.panel3.TabIndex = 5;
-            // 
-            // label_LocationResult
-            // 
-            this.label_LocationResult.AutoSize = true;
-            this.label_LocationResult.Font = new System.Drawing.Font("SimSun", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_LocationResult.Location = new System.Drawing.Point(12, 13);
-            this.label_LocationResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LocationResult.Name = "label_LocationResult";
-            this.label_LocationResult.Size = new System.Drawing.Size(85, 19);
-            this.label_LocationResult.TabIndex = 4;
-            this.label_LocationResult.Text = "定位结果";
-            // 
-            // label_LocationX
-            // 
-            this.label_LocationX.AutoSize = true;
-            this.label_LocationX.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_LocationX.ForeColor = System.Drawing.Color.Lime;
-            this.label_LocationX.Location = new System.Drawing.Point(19, 52);
-            this.label_LocationX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LocationX.Name = "label_LocationX";
-            this.label_LocationX.Size = new System.Drawing.Size(75, 19);
-            this.label_LocationX.TabIndex = 4;
-            this.label_LocationX.Text = "95.321";
-            // 
-            // label_LocationY
-            // 
-            this.label_LocationY.AutoSize = true;
-            this.label_LocationY.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_LocationY.ForeColor = System.Drawing.Color.Lime;
-            this.label_LocationY.Location = new System.Drawing.Point(19, 76);
-            this.label_LocationY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LocationY.Name = "label_LocationY";
-            this.label_LocationY.Size = new System.Drawing.Size(75, 19);
-            this.label_LocationY.TabIndex = 4;
-            this.label_LocationY.Text = "95.321";
-            // 
-            // label_LocationR
-            // 
-            this.label_LocationR.AutoSize = true;
-            this.label_LocationR.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_LocationR.ForeColor = System.Drawing.Color.Lime;
-            this.label_LocationR.Location = new System.Drawing.Point(19, 99);
-            this.label_LocationR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LocationR.Name = "label_LocationR";
-            this.label_LocationR.Size = new System.Drawing.Size(75, 19);
-            this.label_LocationR.TabIndex = 4;
-            this.label_LocationR.Text = "95.321";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -692,6 +758,10 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel7.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanelTitle.ResumeLayout(false);
@@ -699,8 +769,6 @@
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();
             this.tableLayoutPanelAqDisplayControls.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -762,6 +830,11 @@
         private System.Windows.Forms.Label label_LocationR;
         private System.Windows.Forms.Label label_LocationY;
         private System.Windows.Forms.Label label_LocationX;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelRobotY;
+        private System.Windows.Forms.Label labelRobotRz;
+        private System.Windows.Forms.Label labelRobotX;
     }
 }
 

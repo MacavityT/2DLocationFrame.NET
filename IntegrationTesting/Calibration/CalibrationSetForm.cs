@@ -29,6 +29,9 @@ namespace IntegrationTesting
             set { m_Ispositive = value; }
         }
 
+        public MainForm GetMainForm { get; set; }
+
+
         public CalibrationSetForm()
         {
             InitializeComponent();
@@ -437,30 +440,55 @@ namespace IntegrationTesting
 
         private void buttonSelectCalPic_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = false;//该值确定是否可以选择多个文件
-            dialog.Title = "选择输入文件";
-            dialog.Filter = "所有文件(*.*)|*.*";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {   
-                textBoxCalibrateImagPath.Text = dialog.FileName;
-                double[] cols = new double[11];
-                double[] rows = new double[11];
-                if (!m_calibrationCenter.Get11PointFromCalibrationBoard(dialog.FileName, ref rows, ref cols))
+            if (comboBoxModeList.SelectedIndex == 2 || comboBoxModeList.SelectedIndex == 3)
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Multiselect = false;//该值确定是否可以选择多个文件
+                dialog.Title = "选择输入文件";
+                dialog.Filter = "所有文件(*.*)|*.*";
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    MessageBox.Show("找11圆失败");
-                    return;
-                }
-                for (int i = 0; i < m_calibrationCenter.AllLineData.Count; i++ )
-                {
-                    int robotIndexAtCalibrationList = Convert.ToInt32(m_calibrationCenter.AllLineData[i].CameraPosition.ImageA);
-                    listViewParameterSet.Items[i].SubItems[0].Text = cols[robotIndexAtCalibrationList].ToString();
-                    listViewParameterSet.Items[i].SubItems[1].Text = rows[robotIndexAtCalibrationList].ToString();
+                    textBoxCalibrateImagPath.Text = dialog.FileName;
+                    double[] cols = new double[11];
+                    double[] rows = new double[11];
+                    if (!m_calibrationCenter.Get11PointFromCalibrationBoard(dialog.FileName, ref rows, ref cols))
+                    {
+                        MessageBox.Show("找11圆失败");
+                        return;
+                    }
+                    for (int i = 0; i < m_calibrationCenter.AllLineData.Count; i++)
+                    {
+                        int robotIndexAtCalibrationList = Convert.ToInt32(m_calibrationCenter.AllLineData[i].CameraPosition.ImageA);
+                        listViewParameterSet.Items[i].SubItems[0].Text = cols[robotIndexAtCalibrationList].ToString();
+                        listViewParameterSet.Items[i].SubItems[1].Text = rows[robotIndexAtCalibrationList].ToString();
 
-                    m_calibrationCenter.AllLineData[i].CameraPosition.ImageX = cols[robotIndexAtCalibrationList];
-                    m_calibrationCenter.AllLineData[i].CameraPosition.ImageY = rows[robotIndexAtCalibrationList];
+                        m_calibrationCenter.AllLineData[i].CameraPosition.ImageX = cols[robotIndexAtCalibrationList];
+                        m_calibrationCenter.AllLineData[i].CameraPosition.ImageY = rows[robotIndexAtCalibrationList];
+                    }
+                    buttonSelectCalPic.Enabled = false;
                 }
-                buttonSelectCalPic.Enabled = false;
+            }
+            else
+            {
+                //相机在手上
+                FolderBrowserDialog folder = new FolderBrowserDialog();
+                folder.Description = "选择标定图片所在的目录";
+                if (folder.ShowDialog() == DialogResult.OK)
+                {
+                    textBoxCalibrateImagPath.Text = folder.SelectedPath;
+                    int fileCount = Directory.GetFiles(folder.SelectedPath).Length;
+                    for (int i = 0; i < fileCount; i++)
+                    {
+                        string fileName = string.Format(@"{0}\{1}.bmp", folder.SelectedPath, i + 1);
+                        GetMainForm.TemplateSet.ImageInput = Image.FromFile(fileName) as Bitmap;
+                        GetMainForm.TemplateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm");
+                        listViewParameterSet.Items[i].SubItems[0].Text = GetMainForm.TemplateSet.LocationResultPosX[0].ToString("f3");
+                        listViewParameterSet.Items[i].SubItems[1].Text = GetMainForm.TemplateSet.LocationResultPosY[0].ToString("f3");
+
+                        m_calibrationCenter.AllLineData[i].CameraPosition.ImageX = GetMainForm.TemplateSet.LocationResultPosX[0];
+                        m_calibrationCenter.AllLineData[i].CameraPosition.ImageY = GetMainForm.TemplateSet.LocationResultPosY[0];
+                    }
+                }
             }
         }
 
@@ -469,7 +497,7 @@ namespace IntegrationTesting
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = false;//该值确定是否可以选择多个文件
             dialog.Title = "选择输入文件";
-            dialog.Filter = "所有文件(*.*)|*.*";
+            dialog.Filter = "datafile.txt(*.txt)|*.txt";
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 textBoxWorldCoordianteFilePath.Text = dialog.FileName;
@@ -482,7 +510,7 @@ namespace IntegrationTesting
                 String sourceMessage;
                 while ((sourceMessage = sr.ReadLine()) != null) 
                 {
-//                     sourceMessage = "02, 240.45, -321.864, -341.843, -179.9956, 0.0033, -0.0098";
+//                  sourceMessage = "02, 240.45, -321.864, -341.843, -179.9956, 0.0033, -0.0098";
                     AqCalibration.CalibrationDataGroup calibrationlineData = new AqCalibration.CalibrationDataGroup();
                     int startIndex = 0;
                     for (int i = 0; i < 6; i++)
@@ -490,7 +518,7 @@ namespace IntegrationTesting
                         int endIndex = sourceMessage.IndexOf(",", startIndex);
                         if (i == 0)
                         {
-                            //ImageA，暂时用作用来标记世界坐标系下对应图像中圆点的索引
+                            //ImageA，暂时用作用来标记世界坐标系下对应图像中圆点的索引(相机在手外用)
                             calibrationlineData.CameraPosition.ImageA = Convert.ToUInt16(sourceMessage.Substring(startIndex, endIndex - startIndex));
                         }
                         else if (i == 1)
