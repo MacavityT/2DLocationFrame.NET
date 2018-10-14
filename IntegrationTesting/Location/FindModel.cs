@@ -174,5 +174,193 @@ namespace ApplyHalcon
             HOperatorSet.ReadShapeModel(modelName, out hv_ModelId);
             return hv_ModelId;
         }
+
+        public static void detect_line(HObject ho_Image, HTuple hv_RowSource, HTuple hv_ColSource,
+              HTuple hv_AngleSource, HTuple hv_RowImage, HTuple hv_ColImage, HTuple hv_AngleImage,
+              HTuple hv_RectRow1, HTuple hv_RectCol1, HTuple hv_RectRow2, HTuple hv_RectCol2,
+              HTuple hv_Step, HTuple hv_Direction, HTuple hv_Sigma, HTuple hv_Threshold, HTuple hv_Transition,
+              HTuple hv_Selection, out HTuple hv_LineRow1, out HTuple hv_LineCol1, out HTuple hv_LineRow2,
+              out HTuple hv_LineCol2)
+        {
+
+            // Stack for temporary objects 
+            HObject[] OTemp = new HObject[20];
+
+            // Local iconic variables 
+
+            HObject ho_Rectangle1 = null, ho_Rectangle = null;
+            HObject ho_lineXLD = null;
+
+            // Local copy input parameter variables 
+            HObject ho_Image_COPY_INP_TMP;
+            ho_Image_COPY_INP_TMP = ho_Image.CopyObj(1, -1);
+
+
+
+            // Local control variables 
+
+            HTuple hv_RevertHomMat2D = new HTuple(), hv_HomMat2D = new HTuple();
+            HTuple hv_row0 = new HTuple(), hv_col0 = new HTuple();
+            HTuple hv_radius0 = new HTuple(), hv_len01 = new HTuple();
+            HTuple hv_len02 = new HTuple(), hv_phi0 = new HTuple();
+            HTuple hv_phi1 = new HTuple(), hv_radius1 = new HTuple();
+            HTuple hv_stepLen = new HTuple(), hv_RowsEdge = new HTuple();
+            HTuple hv_ColsEdge = new HTuple(), hv_len1Meas = new HTuple();
+            HTuple hv_len2Meas = new HTuple(), hv_radiusMeas = new HTuple();
+            HTuple hv_WidthImg = new HTuple(), hv_HeightImg = new HTuple();
+            HTuple hv_i = new HTuple(), hv_rowMeas = new HTuple();
+            HTuple hv_colMeas = new HTuple(), hv_MeasureHandle = new HTuple();
+            HTuple hv_RowEdgePoint = new HTuple(), hv_ColEdgePoint = new HTuple();
+            HTuple hv_Amp = new HTuple(), hv_Dist = new HTuple(), hv_indices = new HTuple();
+            HTuple hv_tempMax = new HTuple(), hv_Nr = new HTuple();
+            HTuple hv_Nc = new HTuple(), hv_Dist1 = new HTuple(), hv_Exception = null;
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_Rectangle1);
+            HOperatorSet.GenEmptyObj(out ho_Rectangle);
+            HOperatorSet.GenEmptyObj(out ho_lineXLD);
+            hv_LineRow1 = new HTuple();
+            hv_LineCol1 = new HTuple();
+            hv_LineRow2 = new HTuple();
+            hv_LineCol2 = new HTuple();
+            try
+            {
+                //**********************************************************
+                if (HDevWindowStack.IsOpen())
+                {
+                    //dev_close_window ()
+                }
+                //dev_open_window (0, 0, 800, 800, 'black', WindowHandle)
+
+                try
+                {
+                    //step1.
+                    HOperatorSet.VectorAngleToRigid(hv_RowSource, hv_ColSource, hv_AngleSource,
+                        hv_RowImage, hv_ColImage, hv_AngleImage, out hv_RevertHomMat2D);
+                    HOperatorSet.VectorAngleToRigid(hv_RowImage, hv_ColImage, hv_AngleImage,
+                        hv_RowSource, hv_ColSource, hv_AngleSource, out hv_HomMat2D);
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransImage(ho_Image_COPY_INP_TMP, out ExpTmpOutVar_0,
+                            hv_HomMat2D, "constant", "false");
+                        ho_Image_COPY_INP_TMP.Dispose();
+                        ho_Image_COPY_INP_TMP = ExpTmpOutVar_0;
+                    }
+
+                    ho_Rectangle1.Dispose();
+                    HOperatorSet.GenRectangle1(out ho_Rectangle1, hv_RectRow1, hv_RectCol1, hv_RectRow2,
+                        hv_RectCol2);
+                    HOperatorSet.SmallestRectangle2(ho_Rectangle1, out hv_row0, out hv_col0,
+                        out hv_radius0, out hv_len01, out hv_len02);
+                    hv_phi0 = hv_radius0.TupleDeg();
+                    if ((int)(new HTuple(hv_phi0.TupleLess(0))) != 0)
+                    {
+                        hv_phi0 = hv_phi0 + 180;
+                    }
+                    hv_radius0 = hv_phi0.TupleRad();
+                    if ((int)(new HTuple((new HTuple("horizontal")).TupleEqual(hv_Direction))) != 0)
+                    {
+                        if ((int)(new HTuple(hv_phi0.TupleLess(90))) != 0)
+                        {
+                            hv_phi1 = hv_phi0 + 90;
+                        }
+                        else
+                        {
+                            hv_phi1 = hv_phi0 - 90;
+                        }
+                    }
+                    else if ((int)(new HTuple((new HTuple("vertical")).TupleEqual(hv_Direction))) != 0)
+                    {
+                        hv_phi1 = hv_phi0 - 90;
+                    }
+                    hv_radius1 = hv_phi1.TupleRad();
+
+                    //step2.
+                    hv_stepLen = (hv_len01 * 1.0) / hv_Step;
+                    hv_RowsEdge = new HTuple();
+                    hv_ColsEdge = new HTuple();
+                    hv_len1Meas = hv_len02.Clone();
+                    hv_len2Meas = 0.6 * hv_stepLen;
+                    hv_radiusMeas = hv_radius1.Clone();
+                    HOperatorSet.GetImageSize(ho_Image_COPY_INP_TMP, out hv_WidthImg, out hv_HeightImg);
+                    HTuple end_val36 = hv_Step;
+                    HTuple step_val36 = 1;
+                    for (hv_i = 0; hv_i.Continue(end_val36, step_val36); hv_i = hv_i.TupleAdd(step_val36))
+                    {
+                        hv_rowMeas = hv_row0 + (((hv_Step - (2 * hv_i)) * hv_stepLen) * (hv_radius0.TupleSin()
+                            ));
+                        hv_colMeas = hv_col0 - (((hv_Step - (2 * hv_i)) * hv_stepLen) * (hv_radius0.TupleCos()
+                            ));
+                        ho_Rectangle.Dispose();
+                        HOperatorSet.GenRectangle2(out ho_Rectangle, hv_rowMeas, hv_colMeas, hv_radiusMeas,
+                            hv_len1Meas, hv_len2Meas);
+                        HOperatorSet.GenMeasureRectangle2(hv_rowMeas, hv_colMeas, hv_radiusMeas,
+                            hv_len1Meas, hv_len2Meas, hv_WidthImg, hv_HeightImg, "nearest_neighbor",
+                            out hv_MeasureHandle);
+                        HOperatorSet.MeasurePos(ho_Image_COPY_INP_TMP, hv_MeasureHandle, hv_Sigma,
+                            hv_Threshold, hv_Transition, hv_Selection, out hv_RowEdgePoint, out hv_ColEdgePoint,
+                            out hv_Amp, out hv_Dist);
+                        HOperatorSet.CloseMeasure(hv_MeasureHandle);
+                        if ((int)(new HTuple((new HTuple(hv_Amp.TupleLength())).TupleGreater(0))) != 0)
+                        {
+                            hv_indices = 0;
+                            HOperatorSet.TupleAbs(hv_Amp, out hv_Amp);
+                            HOperatorSet.TupleMax(hv_Amp, out hv_tempMax);
+                            HOperatorSet.TupleFind(hv_Amp, hv_tempMax, out hv_indices);
+                            hv_RowsEdge = hv_RowsEdge.TupleConcat(hv_RowEdgePoint.TupleSelect(hv_indices.TupleSelect(
+                                0)));
+                            hv_ColsEdge = hv_ColsEdge.TupleConcat(hv_ColEdgePoint.TupleSelect(hv_indices.TupleSelect(
+                                0)));
+                        }
+                    }
+
+                    //step3.
+                    if ((int)(new HTuple((new HTuple(hv_RowsEdge.TupleLength())).TupleGreater(
+                        hv_Step * 0.5))) != 0)
+                    {
+                        ho_lineXLD.Dispose();
+                        HOperatorSet.GenContourPolygonXld(out ho_lineXLD, hv_RowsEdge, hv_ColsEdge);
+                        HOperatorSet.FitLineContourXld(ho_lineXLD, "tukey", -1, 0, 5, 2, out hv_LineRow1,
+                            out hv_LineCol1, out hv_LineRow2, out hv_LineCol2, out hv_Nr, out hv_Nc,
+                            out hv_Dist1);
+                        HOperatorSet.AffineTransPoint2d(hv_RevertHomMat2D, hv_LineRow1, hv_LineCol1,
+                            out hv_LineRow1, out hv_LineCol1);
+                        HOperatorSet.AffineTransPoint2d(hv_RevertHomMat2D, hv_LineRow2, hv_LineCol2,
+                            out hv_LineRow2, out hv_LineCol2);
+                    }
+                }
+                // catch (Exception) 
+                catch (HalconException HDevExpDefaultException1)
+                {
+                    HDevExpDefaultException1.ToHTuple(out hv_Exception);
+                    //*     log_exception (Exception)
+                }
+                ho_Image_COPY_INP_TMP.Dispose();
+                ho_Rectangle1.Dispose();
+                ho_Rectangle.Dispose();
+                ho_lineXLD.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+                ho_Image_COPY_INP_TMP.Dispose();
+                ho_Rectangle1.Dispose();
+                ho_Rectangle.Dispose();
+                ho_lineXLD.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
+        public static void IntersetionPtAngle(HTuple hv_LineLeftRow1, HTuple hv_LineLeftCol1, HTuple hv_LineLeftRow2, HTuple hv_LineLeftCol2, 
+            HTuple hv_LineUpRow1, HTuple hv_LineUpCol1, HTuple hv_LineUpRow2, HTuple hv_LineUpCol2,
+            out HTuple hv_RowCross, out HTuple hv_ColCross, out HTuple hv_Phi, out HTuple hv_IsOverlapping)
+        {
+            HOperatorSet.IntersectionLines(hv_LineLeftRow1, hv_LineLeftCol1, hv_LineLeftRow2,
+                        hv_LineLeftCol2, hv_LineUpRow1, hv_LineUpCol1, hv_LineUpRow2, hv_LineUpCol2,
+                        out hv_RowCross, out hv_ColCross, out hv_IsOverlapping);
+            HOperatorSet.TupleAtan2(hv_LineLeftRow2-hv_LineLeftRow1, hv_LineLeftCol2-hv_LineLeftCol1, out hv_Phi);
+
+        }
     }
 }

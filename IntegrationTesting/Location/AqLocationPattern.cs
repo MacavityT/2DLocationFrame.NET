@@ -74,14 +74,14 @@ namespace AqVision.Location
           set { m_scaleMax = value; }
         }
 
-        int m_minContrast = 110;
+        int m_minContrast = 20;
         public int MinContrast
         {
           get { return m_minContrast; }
           set { m_minContrast = value; }
         }
 
-        int m_maxContrast = 140;
+        int m_maxContrast = 40;
         public int MaxContrast
         {
           get { return m_maxContrast; }
@@ -95,7 +95,7 @@ namespace AqVision.Location
           set { m_minLength = value; }
         }
 
-        double m_minScore = 0.57;
+        double m_minScore = 0.47;
         public double MinScore
         {
           get { return m_minScore; }
@@ -234,6 +234,83 @@ namespace AqVision.Location
             set { m_TemplatePath = value; }
         }
 
+        private double _leftTopLineHorX;
+        public double LeftTopLineHorX
+        {
+            get { return _leftTopLineHorX; }
+            set { _leftTopLineHorX = value; }
+        }
+
+        private double _leftTopLineHorY;
+        public double LeftTopLineHorY
+        {
+            get { return _leftTopLineHorY; }
+            set { _leftTopLineHorY = value; }
+        }
+
+        private double _rightBottomLineHorX;
+        public double RightBottomLineHorX
+        {
+            get { return _rightBottomLineHorX; }
+            set { _rightBottomLineHorX = value; }
+        }
+
+        private double _rightBottomLineHorY;
+        public double RightBottomLineHorY
+        {
+            get { return _rightBottomLineHorY; }
+            set { _rightBottomLineHorY = value; }
+        }
+
+        private double _leftTopLineVerX;
+        public double LeftTopLineVerX
+        {
+            get { return _leftTopLineVerX; }
+            set { _leftTopLineVerX = value; }
+        }
+
+        private double _leftTopLineVerY;
+        public double LeftTopLineVerY
+        {
+            get { return _leftTopLineVerY; }
+            set { _leftTopLineVerY = value; }
+        }
+
+        private double _rightBottomLineVerX;
+        public double RightBottomLineVerX
+        {
+            get { return _rightBottomLineVerX; }
+            set { _rightBottomLineVerX = value; }
+        }
+
+        private double _rightBottomLineVerY;
+        public double RightBottomLineVerY
+        {
+            get { return _rightBottomLineVerY; }
+            set { _rightBottomLineVerY = value; }
+        }
+
+        private double _intersectionX;
+        public double IntersectionX
+        {
+            get { return _intersectionX; }
+            set { _intersectionX = value; }
+        }
+
+        private double _intersectionY;
+        public double IntersectionY
+        {
+            get { return _intersectionY; }
+            set { _intersectionY = value; }
+        }
+
+        private double _intersectionAngle;
+        public double IntersectionAngle
+        {
+            get { return _intersectionAngle; }
+            set { _intersectionAngle = value; }
+        }
+
         private AqVision.Shape.AqRectangleAffine m_RoiRegionTemplate = new Shape.AqRectangleAffine();
         public AqVision.Shape.AqRectangleAffine RoiRegionTemplate
         {
@@ -293,6 +370,63 @@ namespace AqVision.Location
             }
         }
 
+
+        private double _lineLeftRow1;
+        public double LineLeftRow1
+        {
+            get { return _lineLeftRow1; }
+            set { _lineLeftRow1 = value; }
+        }
+
+        private double _lineLeftCol1;
+        public double LineLeftCol1
+        {
+            get { return _lineLeftCol1; }
+            set { _lineLeftCol1 = value; }
+        }
+
+        private double _lineLeftRow2;
+        public double LineLeftRow2
+        {
+            get { return _lineLeftRow2; }
+            set { _lineLeftRow2 = value; }
+        }
+
+        private double _lineLeftCol2;
+        public double LineLeftCol2
+        {
+            get { return _lineLeftCol2; }
+            set { _lineLeftCol2 = value; }
+        }
+
+        private double _lineUpRow1;
+        public double LineUpRow1
+        {
+            get { return _lineUpRow1; }
+            set { _lineUpRow1 = value; }
+        }
+
+        private double _lineUpCol1;
+        public double LineUpCol1
+        {
+            get { return _lineUpCol1; }
+            set { _lineUpCol1 = value; }
+        }
+
+        private double _lineUpRow2;
+        public double LineUpRow2
+        {
+            get { return _lineUpRow2; }
+            set { _lineUpRow2 = value; }
+        }
+
+        private double _lineUpCol2;
+        public double LineUpCol2
+        {
+            get { return _lineUpCol2; }
+            set { _lineUpCol2 = value; }
+        }
+
         public bool CreateTempateImage(string createPath)
         {
             if (File.Exists(createPath))
@@ -315,6 +449,7 @@ namespace AqVision.Location
             return true;
         }
 
+        #region CIDI
         public bool RunMatcher()
         {
             char[] angle = new char[500];
@@ -332,7 +467,7 @@ namespace AqVision.Location
             m_ResultAngle = new string(angle);
             return MatherResult;
         }
-
+        #endregion
 
         public bool CreateModel()
         {
@@ -407,7 +542,7 @@ namespace AqVision.Location
                                         out xldPointCountsM, out row, out column,
                                         out angle, out scale, out score);
 
-            if(score == null)
+            if(score.Length == 0)
             {
                 return false;
             }
@@ -422,6 +557,68 @@ namespace AqVision.Location
 
             image.Dispose();//1061.388
             return true;
+        }
+        //按照只能定位一个图形处理
+        public bool CalHorVerLineIntersection()
+        {
+            HTuple hv_LineLeftRow1 = new HTuple();
+            HTuple hv_LineLeftCol1 = new HTuple();
+            HTuple hv_LineLeftRow2 = new HTuple();
+            HTuple hv_LineLeftCol2 = new HTuple();
+
+            HTuple hv_LineUpRow1 = new HTuple();
+            HTuple hv_LineUpCol1 = new HTuple();
+            HTuple hv_LineUpRow2 = new HTuple();
+            HTuple hv_LineUpCol2 = new HTuple();
+
+            HTuple hv_RowCross = new HTuple();
+            HTuple hv_ColCross = new HTuple();
+            HTuple hv_Phi = new HTuple();
+            HTuple hv_IsOverlapping = new HTuple();
+
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            ApplyHalcon.FindModel.detect_line(image, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(LeftTopLineVerY), new HTuple(LeftTopLineVerX), new HTuple(RightBottomLineVerY), new HTuple(RightBottomLineVerX),
+                  30, "vertical", 3, 20, "negative", "first", out hv_LineLeftRow1, out hv_LineLeftCol1, out hv_LineLeftRow2,
+                  out hv_LineLeftCol2);
+
+            ApplyHalcon.FindModel.detect_line(image, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(LeftTopLineHorY), new HTuple(LeftTopLineHorX), new HTuple(RightBottomLineHorY), new HTuple(RightBottomLineHorX),
+                  30, "horizontal", 3, 20, "positive", "last", out hv_LineUpRow1,
+                         out hv_LineUpCol1, out hv_LineUpRow2, out hv_LineUpCol2);
+  
+            ApplyHalcon.FindModel.IntersetionPtAngle(hv_LineLeftRow1, hv_LineLeftCol1, hv_LineLeftRow2, hv_LineLeftCol2, 
+                hv_LineUpRow1, hv_LineUpCol1, hv_LineUpRow2, hv_LineUpCol2,
+                out hv_RowCross, out hv_ColCross, out hv_Phi, out hv_IsOverlapping);
+
+            IntersectionX = hv_ColCross.D;
+            IntersectionY = hv_RowCross.D;
+            IntersectionAngle = hv_Phi;
+            LineLeftRow1 = hv_LineLeftRow1;
+            LineLeftCol1 = hv_LineLeftCol1;
+            LineLeftRow2 = hv_LineLeftRow2;
+            LineLeftCol2 = hv_LineLeftCol2;
+
+            LineUpRow1 = hv_LineUpRow1;
+            LineUpCol1 = hv_LineUpCol1;
+            LineUpRow2 = hv_LineUpRow2;
+            LineUpCol2 = hv_LineUpCol2;
+
+
+
+            image.Dispose();
+            return true;            
         }
 
         public bool SaveModel(string modelFullPath)

@@ -1,6 +1,7 @@
 ﻿using AqVision;
 using AqVision.Controls;
 using AqVision.Shape;
+using IntegrationTesting.Tool;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,13 @@ namespace IntegrationTesting
 {
     public partial class TemplateSetForm : Form
     {
-        AqVision.Location.AqLocationPattern m_Location = new AqVision.Location.AqLocationPattern();
+        AqVision.Location.AqLocationPattern _location = new AqVision.Location.AqLocationPattern();
+
+        internal AqVision.Location.AqLocationPattern Location1
+        {
+            get { return _location; }
+            set { _location = value; }
+        }
         string m_title = null;
         private double[] m_locationResultPosX = null;
         public double[] LocationResultPosX
@@ -27,7 +34,7 @@ namespace IntegrationTesting
 
         public double[] Score
         {
-            get { return m_Location.Score; }
+            get { return _location.Score; }
         }
 
         private double[] m_locationResultPosY = null;
@@ -51,7 +58,7 @@ namespace IntegrationTesting
             set 
             { 
                 m_imageInput = value;
-                m_Location.OriginImage = ImageInput.Clone() as Bitmap;
+                _location.OriginImage = ImageInput.Clone() as Bitmap;
             }
         }
 
@@ -62,6 +69,33 @@ namespace IntegrationTesting
             set { m_modelFilePath = value; }
         }
 
+        double _roiLTX = 0;
+        public double ROILTX
+        {
+            get { return _roiLTX; }
+            set { _roiLTX = value; }
+        }
+
+        double _roiLTY = 0;
+        public double ROILTY
+        {
+            get { return _roiLTY; }
+            set { _roiLTY = value; }
+        }
+
+        double _roiRBX = 0;
+        public double ROIRBX
+        {
+            get { return _roiRBX; }
+            set { _roiRBX = value; }
+        }
+
+        double _roiRBY = 0;
+        public double ROIRBY
+        {
+            get { return _roiRBY; }
+            set { _roiRBY = value; }
+        }
 
         public TemplateSetForm()
         {
@@ -83,29 +117,59 @@ namespace IntegrationTesting
         {
             aqDisplayCreateModel.InteractiveGraphics.Clear();
             aqDisplayCreateModel.Update();
+            if (isCreateROIHorVerRectangle())
+            {
+                buttonTraining.Visible = true;
+            }
+            else
+            {
+                VisionControls(false);
+            }
         }
 
+        private void VisionControls(bool bShow)
+        {
+            buttonTraining.Visible = bShow;
+            buttonLocation.Visible = bShow;
+            buttonSaveModel.Visible = bShow;
+        }
         private void buttonTraining_Click(object sender, EventArgs e)
         {
             try
             {
-                if (aqDisplayCreateModel.InteractiveGraphics.Count > 0)
+                _location.OriginImage = aqDisplayCreateModel.Image;
+                int index = aqDisplayCreateModel.InteractiveGraphics.FindItem("ROI_Region_Create_Model", AqDisplayZOrderConstants.Back);
+                _location.RoiRegionTemplate = (AqRectangleAffine)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                ROILTX = _location.RoiRegionTemplate.LeftTopPointX;
+                ROILTY = _location.RoiRegionTemplate.LeftTopPointY;
+                ROIRBX = _location.RoiRegionTemplate.RightBottomX;
+                ROIRBY = _location.RoiRegionTemplate.RightBottomY;
+
+                _location.CreateTempateImage(@"D:\Bitmap.bmp");
+                if (_location.CreateModel())
                 {
-                    m_Location.OriginImage = aqDisplayCreateModel.Image;
-                    m_Location.RoiRegionTemplate = (AqRectangleAffine)(aqDisplayCreateModel.InteractiveGraphics[0]);
-                    m_Location.CreateTempateImage(@"D:\Bitmap.bmp");
-                    m_Location.CreateModel();
-                    aqDisplayCreateModel.InteractiveGraphics.Clear();
-                    ShowGetResultsData(m_Location.ModeXldColsM, m_Location.ModeXldRowsM, m_Location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
-//                     AddMessageToListView((new Rectangle((int)(m_Location.RoiRegionTemplate.LeftTopPointX), (int)(m_Location.RoiRegionTemplate.LeftTopPointY),
-//                                            (int)(m_Location.RoiRegionTemplate.RightBottomX - m_Location.RoiRegionTemplate.LeftTopPointX),
-//                                            (int)(m_Location.RoiRegionTemplate.RightBottomY - m_Location.RoiRegionTemplate.LeftTopPointY))).ToString());
+                    //保存横线和竖线
+                    index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Find_Line_Hor",AqDisplayZOrderConstants.Front);
+                    AqRectangleAffine rectangle = (AqRectangleAffine)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                    _location.LeftTopLineHorX = rectangle.LeftTopPointX;
+                    _location.LeftTopLineHorY = rectangle.LeftTopPointY;
+                    _location.RightBottomLineHorX = rectangle.RightBottomX;
+                    _location.RightBottomLineHorY = rectangle.RightBottomY;
+
+                    index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Find_Line_Ver", AqDisplayZOrderConstants.Front);
+                    rectangle = (AqRectangleAffine)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                    _location.LeftTopLineVerX = rectangle.LeftTopPointX;
+                    _location.LeftTopLineVerY = rectangle.LeftTopPointY;
+                    _location.RightBottomLineVerX = rectangle.RightBottomX;
+                    _location.RightBottomLineVerY = rectangle.RightBottomY;
+
+                    SaveModelParam();
+                    ShowGetContourData(_location.ModeXldColsM, _location.ModeXldRowsM, _location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
+                    ShowCenterCross(_location.ModelCenterX, _location.ModelCenterY);
                     aqDisplayCreateModel.Update();
                     MessageBox.Show("create Model success");
-                }
-                else
-                {
-                    //AddMessageToListView("aqDisplay1 is empty");
+
+                    buttonSaveModel.Visible = true;
                 }
             }
             catch (Exception ex)
@@ -116,21 +180,7 @@ namespace IntegrationTesting
 
         private void buttonAddRectangleRegion_Click(object sender, EventArgs e)
         {
-            try
-            {
-                aqDisplayCreateModel.InteractiveGraphics.Clear();
-                AqRectangleAffine rectangle = new AqRectangleAffine();
-                rectangle.LeftTopPointX = 120;
-                rectangle.LeftTopPointY = 120;
-                rectangle.RightBottomX = 300;
-                rectangle.RightBottomY = 300;
-                aqDisplayCreateModel.InteractiveGraphics.Add(rectangle, "AAA 22222", true);
-                aqDisplayCreateModel.Update();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            AddRectangelToAqDisplay("ROI_Region_Create_Model", AqColorConstants.Magenta);
         }
 
         private void buttonLocation_Click(object sender, EventArgs e)
@@ -139,12 +189,15 @@ namespace IntegrationTesting
             {
                 aqDisplayCreateModel.InteractiveGraphics.Clear();
                 aqDisplayCreateModel.Update();
-                RunMatcher(ModelFilePath);
-                ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, AqColorConstants.Green, aqDisplayCreateModel);
-                textBox1.Text = LocationResultPosX[0].ToString("0.000");
-                textBox2.Text = LocationResultPosY[0].ToString("0.000");
-                textBox3.Text = (LocationResultPosTheta[0] / Math.PI * 180).ToString("0.000");
-                //ShowCenterMatchePos(LocationResultPosX);
+                if (RunMatcher(ModelFilePath) == 0)
+                {
+                    ShowGetContourData(_location.XldColsM, _location.XldRowsM, _location.XldPointCountsM, AqColorConstants.Green, aqDisplayCreateModel);
+                    ShowIntersectionHorVerLine();
+                    textBox1.Text = LocationResultPosX[0].ToString("0.000");
+                    textBox2.Text = LocationResultPosY[0].ToString("0.000");
+                    textBox3.Text = (LocationResultPosTheta[0] / Math.PI * 180).ToString("0.000");
+                    ShowCenterCross(LocationResultPosX[0], LocationResultPosY[0]);
+                }
             }
             catch (Exception ex)
             {
@@ -152,24 +205,94 @@ namespace IntegrationTesting
             }
         }
 
+        private void SaveModelParam()
+        {
+            IniFile.WriteValue("TemplateParam", "FindLineHorRectangelLTX", _location.LeftTopLineHorX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineHorRectangelLTY", _location.LeftTopLineHorY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineHorRectangelRBX", _location.RightBottomLineHorX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineHorRectangelRBY", _location.RightBottomLineHorY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineVerRectangelLTX", _location.LeftTopLineVerX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineVerRectangelLTY", _location.LeftTopLineVerY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineVerRectangelRBX", _location.RightBottomLineVerX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "FindLineVerRectangelRBY", _location.RightBottomLineVerY.ToString("f3"));
+
+            IniFile.WriteValue("TemplateParam", "ModelCenterX", _location.ModelCenterX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelCenterY", _location.ModelCenterY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelAngle", _location.ModelAngle.ToString("f3"));
+
+            IniFile.WriteValue("TemplateParam", "ROILTX", ROILTX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ROILTY", ROILTY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ROIRBX", ROIRBX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ROIRBY", ROIRBY.ToString("f3"));
+        }
+
+        private void LoadModelParam()
+        {
+            string strValue;
+            strValue = IniFile.ReadValue("TemplateParam", "ROILTX", "0.00");
+            ROILTX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ROILTY", "0.00");
+            ROILTY = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ROIRBX", "0.00");
+            ROIRBX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ROIRBY", "0.00");
+            ROIRBY = Convert.ToDouble(strValue);
+
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineHorRectangelLTX", "0.00");
+            _location.LeftTopLineHorX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineHorRectangelLTY", "0.00");
+            _location.LeftTopLineHorY = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineHorRectangelRBX", "0.00");
+            _location.RightBottomLineHorX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineHorRectangelRBY", "0.00");
+            _location.RightBottomLineHorY = Convert.ToDouble(strValue);
+
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineVerRectangelLTX", "0.00");
+            _location.LeftTopLineVerX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineVerRectangelLTY", "0.00");
+            _location.LeftTopLineVerY = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineVerRectangelRBX", "0.00");
+            _location.RightBottomLineVerX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "FindLineVerRectangelRBY", "0.00");
+            _location.RightBottomLineVerY = Convert.ToDouble(strValue);
+
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCenterX", "0.00");
+            _location.ModelCenterX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCenterY", "0.00");
+            _location.ModelCenterY = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelAngle", "0.00");
+            _location.ModelAngle = Convert.ToDouble(strValue);
+        }
         public int RunMatcher(string modeFilePath)
         {
             int iResult = -1;
             try
             {
-                m_Location.LoadModel(modeFilePath);
-                m_Location.RunMatcherByHalcon();
-                LocationResultPosX = m_Location.CenterX;
-                LocationResultPosY = m_Location.CenterY;
-                LocationResultPosTheta = m_Location.Angle;
-                if (m_Location.XldPointCountsM.Length > 0)
+                _location.LoadModel(modeFilePath);
+                LoadModelParam();
+
+                if (_location.RunMatcherByHalcon())
                 {
-                    iResult = 0;
+                    if (_location.XldPointCountsM.Length > 0)
+                    {
+                        iResult = 0;
+                    }
+                    else
+                    {
+                        iResult = -2;
+                    }
+                    if (iResult == 0)
+                    {
+                        _location.CalHorVerLineIntersection();
+                        LocationResultPosX = new double[1] { _location.IntersectionX };
+                        LocationResultPosY = new double[1] { _location.IntersectionY };
+                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+//                         LocationResultPosX = _location.CenterX;
+//                         LocationResultPosY = _location.CenterY;
+//                         LocationResultPosTheta = _location.Angle;
+                    }
                 }
-                else
-                {
-                    iResult = -2;
-                }
+
             }
             catch (Exception ex)
             {
@@ -181,10 +304,32 @@ namespace IntegrationTesting
 
         public void ShowGetResultsData(AqColorConstants color, AqDisplay aqDisplayShow)
         {
-            ShowGetResultsData(m_Location.XldColsM, m_Location.XldRowsM, m_Location.XldPointCountsM, color, aqDisplayShow);
+            ShowGetContourData(_location.XldColsM, _location.XldRowsM, _location.XldPointCountsM, color, aqDisplayShow);
         }
 
-        private void ShowGetResultsData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color, AqDisplay aqDisplayShow)
+        private void ShowCenterCross(double centerX, double centerY)
+        {
+            AqLineSegment line = new AqLineSegment();
+            line.StartX = centerX - 20;
+            line.StartY = centerY;
+            line.EndX = centerX + 20;
+            line.EndY = centerY;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            AqLineSegment line2 = new AqLineSegment();
+            line2.StartX = centerX;
+            line2.StartY = centerY - 20;
+            line2.EndX = centerX;
+            line2.EndY = centerY + 20;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+
+            aqDisplayCreateModel.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayCreateModel.InteractiveGraphics.Add(line2, "LineVer", false);
+            aqDisplayCreateModel.Update();
+        }
+        private void ShowGetContourData(double[] xPointList, double[] yPointList, long[] countPointList, AqColorConstants color, AqDisplay aqDisplayShow)
         {
             Stopwatch st = new Stopwatch();
             st.Start();
@@ -265,6 +410,29 @@ namespace IntegrationTesting
             //MessageBox.Show(string.Format("{0},{1},{2} ",st.Elapsed, st.ElapsedMilliseconds, iPointList));//fortest
         }
 
+        private void ShowIntersectionHorVerLine()
+        {
+            ShowCenterCross(_location.IntersectionX, _location.IntersectionY);
+
+            AqLineSegment line = new AqLineSegment();
+            line.StartX = _location.LineLeftCol1;
+            line.StartY = _location.LineLeftRow1;
+            line.EndX = _location.LineLeftCol2;
+            line.EndY = _location.LineLeftRow2;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            AqLineSegment line2 = new AqLineSegment();
+            line2.StartX = _location.LineUpCol1;
+            line2.StartY = _location.LineUpRow1;
+            line2.EndX = _location.LineUpCol2;
+            line2.EndY = _location.LineUpRow2;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+            
+            aqDisplayCreateModel.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayCreateModel.InteractiveGraphics.Add(line2, "LineVer", false);
+        }
         private void buttonSaveModel_Click(object sender, EventArgs e)
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -272,7 +440,9 @@ namespace IntegrationTesting
             if(fileDialog.ShowDialog() == DialogResult.OK)
             {
                 ModelFilePath = fileDialog.FileName;
-                m_Location.SaveModel(fileDialog.FileName);
+                _location.SaveModel(fileDialog.FileName);
+                SaveModelParam();
+                buttonLocation.Visible = true;
             }
         }
 
@@ -302,7 +472,13 @@ namespace IntegrationTesting
             if(fileDialog.ShowDialog() == DialogResult.OK)
             {
                 ModelFilePath = fileDialog.FileName;
-                m_Location.LoadModel(ModelFilePath);
+                _location.LoadModel(ModelFilePath);
+                LoadModelParam();
+                AddRectangelToAqDisplay("ROI_Region_Create_Model", AqColorConstants.Magenta,ROILTX, ROILTY, ROIRBX, ROIRBY);
+                AddRectangelToAqDisplay("Find_Line_Hor", AqColorConstants.Orange,_location.LeftTopLineHorX, _location.LeftTopLineHorY,
+                                        _location.RightBottomLineHorX, _location.RightBottomLineHorY);
+                AddRectangelToAqDisplay("Find_Line_Ver", AqColorConstants.Green,_location.LeftTopLineVerX, _location.LeftTopLineVerY,
+                                        _location.RightBottomLineVerX, _location.RightBottomLineVerY);
             }
         }
 
@@ -320,6 +496,75 @@ namespace IntegrationTesting
             }
             aqDisplayCreateModel.InteractiveGraphics.Clear();
             aqDisplayCreateModel.Update();
+        }
+
+
+        private bool isCreateROIHorVerRectangle()
+        {
+            if ((aqDisplayCreateModel.InteractiveGraphics.FindItem("Find_Line_Hor", AqDisplayZOrderConstants.Back) >= 0) &&
+                (aqDisplayCreateModel.InteractiveGraphics.FindItem("Find_Line_Ver", AqDisplayZOrderConstants.Back) >= 0) &&
+                (aqDisplayCreateModel.InteractiveGraphics.FindItem("ROI_Region_Create_Model", AqDisplayZOrderConstants.Back) >= 0))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void AddRectangelToAqDisplay(string rectangleName, AqColorConstants color, double leftTopX,
+                                                double leftTopY, double rightBottomX, double rightBottomY)
+        {
+            if (Math.Abs(leftTopX - rightBottomX) < 0.0001 &&
+                Math.Abs(leftTopY - rightBottomY) < 0.0001)
+            {
+                leftTopX = 120;
+                leftTopY = 120;
+                rightBottomX = 300;
+                rightBottomY = 300;
+            }
+
+            try
+            {
+                if (aqDisplayCreateModel.InteractiveGraphics.FindItem(rectangleName, AqDisplayZOrderConstants.Back) < 0)
+                {
+                    AqRectangleAffine rectangle = new AqRectangleAffine();
+                    rectangle.LeftTopPointX = leftTopX;
+                    rectangle.LeftTopPointY = leftTopY;
+                    rectangle.RightBottomX = rightBottomX;
+                    rectangle.RightBottomY = rightBottomY;
+                    rectangle.Color = color;
+                    rectangle.LineWidthInScreenPixels = 5;
+                    aqDisplayCreateModel.InteractiveGraphics.Add(rectangle, rectangleName, true);
+                    aqDisplayCreateModel.Update();
+                }
+                if (isCreateROIHorVerRectangle())
+                {
+                    buttonTraining.Visible = true;
+                }
+                else
+                {
+                    //VisionControls(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void AddRectangelToAqDisplay(string rectangleName, AqColorConstants color)
+        {
+            AddRectangelToAqDisplay(rectangleName, color, 120, 120, 300, 300);
+        }
+        private void buttonAddHorZone_Click(object sender, EventArgs e)
+        {
+            AddRectangelToAqDisplay("Find_Line_Hor", AqColorConstants.Orange);
+        }
+
+        private void buttonAddVerZone_Click(object sender, EventArgs e)
+        {
+            AddRectangelToAqDisplay("Find_Line_Ver",AqColorConstants.Green);
         }
     }
 }

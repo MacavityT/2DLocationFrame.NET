@@ -19,6 +19,7 @@ using AqVision;
 using System.Diagnostics;
 using AqVision.Controls;
 using IntegrationTesting.Acquisition;
+using AqVision.Shape;
 
 namespace IntegrationTesting
 {
@@ -255,7 +256,7 @@ namespace IntegrationTesting
                     label_LocationX.Text = triggerLocationResult[0].CenterX.ToString("f3");
                     label_LocationY.Text = triggerLocationResult[0].CenterY.ToString("f3");
                     label_LocationR.Text = (triggerLocationResult[0].Angle * 180 / Math.PI).ToString("f3");
-
+                    ShowIntersectionHorVerLine();
                     //if ((_TriggerCount % 2) == 0)
                     {
                         string PicName = SaveImageToFile(aqDisplayLocation, m_templateSet.ImageInput, @"D:\Location\");
@@ -283,6 +284,49 @@ namespace IntegrationTesting
             return locationResult;
         }
 
+        private void ShowIntersectionHorVerLine()
+        {
+            AqLineSegment line = new AqLineSegment();
+            line.StartX = m_templateSet.Location1.LineLeftCol1;
+            line.StartY = m_templateSet.Location1.LineLeftRow1;
+            line.EndX = m_templateSet.Location1.LineLeftCol2;
+            line.EndY = m_templateSet.Location1.LineLeftRow2;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            AqLineSegment line2 = new AqLineSegment();
+            line2.StartX = m_templateSet.Location1.LineUpCol1;
+            line2.StartY = m_templateSet.Location1.LineUpRow1;
+            line2.EndX = m_templateSet.Location1.LineUpCol2;
+            line2.EndY = m_templateSet.Location1.LineUpRow2;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+
+            aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
+
+
+            line = new AqLineSegment();
+            line.StartX = m_templateSet.Location1.IntersectionX - 20;
+            line.StartY = m_templateSet.Location1.IntersectionY;
+            line.EndX = m_templateSet.Location1.IntersectionX + 20;
+            line.EndY = m_templateSet.Location1.IntersectionY;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            line2 = new AqLineSegment();
+            line2.StartX = m_templateSet.Location1.IntersectionX;
+            line2.StartY = m_templateSet.Location1.IntersectionY - 20;
+            line2.EndX = m_templateSet.Location1.IntersectionX;
+            line2.EndY = m_templateSet.Location1.IntersectionY + 20;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+
+            aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
+            aqDisplayLocation.Update();
+        }
+
         private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta, ref int posture)
         {
             if (triggerLocationResult.Count > 0)
@@ -306,9 +350,16 @@ namespace IntegrationTesting
                 Tool.DebugInfo.OutputProcessMessage("Integraton GetLocalizeResult end> ");
                 //AddMessageToListView(string.Format("GetCurrentCatchPosition: {0} {1} {2}", posX, posY, theta));
                 Tool.DebugInfo.OutputProcessMessage(string.Format("Integraton TriggerCamera GetLocalizeResult = {0}, {1}, {2}, {3}.", posX, posY, theta, posture));
-                labelRobotX.Text = posX.ToString("f3");
-                labelRobotY.Text = posY.ToString("f3");
-                labelRobotRz.Text = theta.ToString("f3");
+                double posX2 = posX;
+                double posY2 = posY;
+                double theta2 = theta;
+                labelRobotX.Invoke(new MethodInvoker(delegate
+               {  
+                    labelRobotX.Text = posX2.ToString("f3");
+                    labelRobotY.Text = posY2.ToString("f3");
+                    labelRobotRz.Text = theta2.ToString("f3");
+               }));
+
             }
             return true;
         }
