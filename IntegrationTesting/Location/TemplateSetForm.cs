@@ -163,9 +163,16 @@ namespace IntegrationTesting
                     _location.RightBottomLineVerX = rectangle.RightBottomX;
                     _location.RightBottomLineVerY = rectangle.RightBottomY;
 
+                    index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle", AqDisplayZOrderConstants.Front);
+                    AqCircularArc circle = (AqCircularArc)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                    _location.ModelCircleCenterX = circle.CenterPoint.X;
+                    _location.ModelCircleCenterY = circle.CenterPoint.Y;
+                    _location.ModelCircleRadius = circle.Radius;
+
                     SaveModelParam();
                     ShowGetContourData(_location.ModeXldColsM, _location.ModeXldRowsM, _location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
                     ShowCenterCross(_location.ModelCenterX, _location.ModelCenterY);
+                    ShowCenterCross(_location.ModelCircleCenterX, _location.ModelCircleCenterY); //圆心
                     aqDisplayCreateModel.Update();
                     MessageBox.Show("create Model success");
 
@@ -224,6 +231,10 @@ namespace IntegrationTesting
             IniFile.WriteValue("TemplateParam", "ROILTY", ROILTY.ToString("f3"));
             IniFile.WriteValue("TemplateParam", "ROIRBX", ROIRBX.ToString("f3"));
             IniFile.WriteValue("TemplateParam", "ROIRBY", ROIRBY.ToString("f3"));
+
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterX", _location.ModelCircleCenterX.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterY", _location.ModelCircleCenterY.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterRadius", _location.ModelCircleRadius.ToString("f3"));
         }
 
         private void LoadModelParam()
@@ -262,6 +273,14 @@ namespace IntegrationTesting
             _location.ModelCenterY = Convert.ToDouble(strValue);
             strValue = IniFile.ReadValue("TemplateParam", "ModelAngle", "0.00");
             _location.ModelAngle = Convert.ToDouble(strValue);
+
+
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterX", "0.00");
+            _location.ModelCircleCenterX = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterY", "0.00");
+            _location.ModelCircleCenterY = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterRadius", "0.00");
+            _location.ModelCircleRadius = Convert.ToDouble(strValue);
         }
         public int RunMatcher(string modeFilePath)
         {
@@ -284,12 +303,16 @@ namespace IntegrationTesting
                     if (iResult == 0)
                     {
                         _location.CalHorVerLineIntersection();
-                        LocationResultPosX = new double[1] { _location.IntersectionX };
-                        LocationResultPosY = new double[1] { _location.IntersectionY };
-                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+//                         LocationResultPosX = new double[1] { _location.IntersectionX };
+//                         LocationResultPosY = new double[1] { _location.IntersectionY };
+//                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
 //                         LocationResultPosX = _location.CenterX;
 //                         LocationResultPosY = _location.CenterY;
 //                         LocationResultPosTheta = _location.Angle;
+                        _location.GetCircleCenter();
+                        LocationResultPosX = new double[1] { _location.CircleCenterX };
+                        LocationResultPosY = new double[1] { _location.CircleCenterY };
+                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
                     }
                 }
 
@@ -471,6 +494,7 @@ namespace IntegrationTesting
             fileDialog.Filter = "shm file(*.shm)|*.shm";
             if(fileDialog.ShowDialog() == DialogResult.OK)
             {
+                aqDisplayCreateModel.InteractiveGraphics.Clear();
                 ModelFilePath = fileDialog.FileName;
                 _location.LoadModel(ModelFilePath);
                 LoadModelParam();
@@ -479,6 +503,15 @@ namespace IntegrationTesting
                                         _location.RightBottomLineHorX, _location.RightBottomLineHorY);
                 AddRectangelToAqDisplay("Find_Line_Ver", AqColorConstants.Green,_location.LeftTopLineVerX, _location.LeftTopLineVerY,
                                         _location.RightBottomLineVerX, _location.RightBottomLineVerY);
+                AqGdiPointF leftTopPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX - _location.ModelCircleRadius),
+                                                            (float)(_location.ModelCircleCenterY - _location.ModelCircleRadius));
+                AqGdiPointF rightBottomPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX + _location.ModelCircleRadius),
+                                                            (float)(_location.ModelCircleCenterY + _location.ModelCircleRadius));
+                AqCircularArc arc = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arc.Color = AqColorConstants.Cyan;
+                arc.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arc, "Circle", true);
+                aqDisplayCreateModel.Update();
             }
         }
 

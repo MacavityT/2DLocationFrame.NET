@@ -290,6 +290,52 @@ namespace AqVision.Location
             set { _rightBottomLineVerY = value; }
         }
 
+        double _circleCenterX = 0;
+        public double CircleCenterX
+        {
+            get { return _circleCenterX; }
+            set { _circleCenterX = value; }
+        }
+
+        double _circleCenterY = 0;
+        public double CircleCenterY
+        {
+            get { return _circleCenterY; }
+            set { _circleCenterY = value; }
+        }
+
+        double _circleRadius = 0;
+        public double CircleRadius
+        {
+            get { return _circleRadius; }
+            set { _circleRadius = value; }
+        }
+
+        double _modelCircleCenterX = 0;
+
+        public double ModelCircleCenterX
+        {
+            get { return _modelCircleCenterX; }
+            set { _modelCircleCenterX = value; }
+        }
+
+        double _modelCircleCenterY = 0;
+
+        public double ModelCircleCenterY
+        {
+            get { return _modelCircleCenterY; }
+            set { _modelCircleCenterY = value; }
+        }
+
+        double _modelCircleRadius = 0;
+
+        public double ModelCircleRadius
+        {
+            get { return _modelCircleRadius; }
+            set { _modelCircleRadius = value; }
+        }
+
+
         private double _intersectionX;
         public double IntersectionX
         {
@@ -558,6 +604,40 @@ namespace AqVision.Location
             image.Dispose();//1061.388
             return true;
         }
+
+        public bool GetCircleCenter()
+        {
+            HObject ho_Circle, ho_Cross = null;
+            HObject ho_PartCircleXLD = null, ho_Regions = null;
+//             ho_PartCircleXLD.Dispose(); ho_Regions.Dispose(); ho_Cross.Dispose(); ho_Circle.Dispose();
+
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            HTuple hv_RowCenter = new HTuple();
+            HTuple hv_ColCenter = new HTuple();
+            HTuple hv_Radius = new HTuple();
+
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(ModelCircleCenterX), new HTuple(ModelCircleCenterY), new HTuple(ModelCircleRadius),
+                0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                out hv_RowCenter, out hv_ColCenter, out hv_Radius);
+
+            CircleCenterX = hv_ColCenter.D;
+            CircleCenterY = hv_RowCenter.D;
+            CircleRadius = hv_Radius.D;            
+            return true;
+        }
+
         //按照只能定位一个图形处理
         public bool CalHorVerLineIntersection()
         {
@@ -614,8 +694,6 @@ namespace AqVision.Location
             LineUpCol1 = hv_LineUpCol1;
             LineUpRow2 = hv_LineUpRow2;
             LineUpCol2 = hv_LineUpCol2;
-
-
 
             image.Dispose();
             return true;            

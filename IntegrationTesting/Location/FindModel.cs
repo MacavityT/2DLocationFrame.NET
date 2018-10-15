@@ -175,6 +175,563 @@ namespace ApplyHalcon
             return hv_ModelId;
         }
 
+        public static void detect_circle(HObject ho_Image, out HObject ho_PartCircleXLD, out HObject ho_Regions,
+            out HObject ho_Cross, out HObject ho_Circle, HTuple hv_RowSource, HTuple hv_ColSource,
+            HTuple hv_AngleSource, HTuple hv_RowImage, HTuple hv_ColImage, HTuple hv_AngleImage,
+            HTuple hv_DrawRow, HTuple hv_DrawCol, HTuple hv_DrawRadius, HTuple hv_StartAngle,
+            HTuple hv_EndAngle, HTuple hv_Elements, HTuple hv_DetectHeight, HTuple hv_DetectWidth,
+            HTuple hv_Sigma, HTuple hv_Threshold, HTuple hv_Transition, HTuple hv_Select,
+            HTuple hv_Direct, HTuple hv_crossSize, HTuple hv_RealArcType, out HTuple hv_RowCenter,
+            out HTuple hv_ColCenter, out HTuple hv_Radius)
+        {
+
+
+
+
+            // Stack for temporary objects 
+            HObject[] OTemp = new HObject[20];
+
+            // Local copy input parameter variables 
+            HObject ho_Image_COPY_INP_TMP;
+            ho_Image_COPY_INP_TMP = ho_Image.CopyObj(1, -1);
+
+
+
+            // Local control variables 
+
+            HTuple hv_RevertHomMat2D = new HTuple(), hv_HomMat2D = new HTuple();
+            HTuple hv_SourceRow = new HTuple(), hv_SourceCol = new HTuple();
+            HTuple hv_ResultRow = new HTuple(), hv_ResultColumn = new HTuple();
+            HTuple hv_ArcType = new HTuple(), hv_Exception = null;
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_PartCircleXLD);
+            HOperatorSet.GenEmptyObj(out ho_Regions);
+            HOperatorSet.GenEmptyObj(out ho_Cross);
+            HOperatorSet.GenEmptyObj(out ho_Circle);
+            hv_RowCenter = new HTuple();
+            hv_ColCenter = new HTuple();
+            hv_Radius = new HTuple();
+            try
+            {
+                ho_PartCircleXLD.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_PartCircleXLD);
+                ho_Cross.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Cross);
+                ho_Circle.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Circle);
+                ho_Regions.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Regions);
+
+                try
+                {
+                    HOperatorSet.VectorAngleToRigid(hv_RowSource, hv_ColSource, hv_AngleSource,
+                        hv_RowImage, hv_ColImage, hv_AngleImage, out hv_RevertHomMat2D);
+                    HOperatorSet.VectorAngleToRigid(hv_RowImage, hv_ColImage, hv_AngleImage,
+                        hv_RowSource, hv_ColSource, hv_AngleSource, out hv_HomMat2D);
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransImage(ho_Image_COPY_INP_TMP, out ExpTmpOutVar_0,
+                            hv_HomMat2D, "constant", "false");
+                        ho_Image_COPY_INP_TMP.Dispose();
+                        ho_Image_COPY_INP_TMP = ExpTmpOutVar_0;
+                    }
+
+                    ho_PartCircleXLD.Dispose();
+                    HOperatorSet.GenCircleContourXld(out ho_PartCircleXLD, hv_DrawRow, hv_DrawCol,
+                        hv_DrawRadius, hv_StartAngle.TupleRad(), hv_EndAngle.TupleRad(), "positive",
+                        1);
+                    HOperatorSet.GetContourXld(ho_PartCircleXLD, out hv_SourceRow, out hv_SourceCol);
+                    ho_Regions.Dispose();
+                    spoke(ho_Image_COPY_INP_TMP, out ho_Regions, hv_Elements, hv_DetectHeight,
+                        hv_DetectWidth, hv_Sigma, hv_Threshold, hv_Transition, hv_Select, hv_SourceRow,
+                        hv_SourceCol, hv_Direct, out hv_ResultRow, out hv_ResultColumn, out hv_ArcType);
+                    ho_Cross.Dispose();
+                    HOperatorSet.GenCrossContourXld(out ho_Cross, hv_ResultRow, hv_ResultColumn,
+                        hv_crossSize, 0.785398);
+
+                    //通过上面两段圆弧上的过渡点，根据点集合[ResultRow, ResultColumn]拟合出最合适的圆Circle
+                    //该圆的信息为：RowCenter, ColCenter, Radius
+                    ho_Circle.Dispose();
+                    pts_to_best_circle(out ho_Circle, hv_ResultRow, hv_ResultColumn, (new HTuple((new HTuple(hv_ResultRow.TupleLength()
+                        )) * 0.8)).TupleInt(), hv_RealArcType, out hv_RowCenter, out hv_ColCenter,
+                        out hv_Radius);
+
+
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransContourXld(ho_PartCircleXLD, out ExpTmpOutVar_0,
+                            hv_RevertHomMat2D);
+                        ho_PartCircleXLD.Dispose();
+                        ho_PartCircleXLD = ExpTmpOutVar_0;
+                    }
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransContourXld(ho_Cross, out ExpTmpOutVar_0, hv_RevertHomMat2D);
+                        ho_Cross.Dispose();
+                        ho_Cross = ExpTmpOutVar_0;
+                    }
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransContourXld(ho_Circle, out ExpTmpOutVar_0, hv_RevertHomMat2D);
+                        ho_Circle.Dispose();
+                        ho_Circle = ExpTmpOutVar_0;
+                    }
+                    //union1 (RegionVec, Regions)
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.AffineTransRegion(ho_Regions, out ExpTmpOutVar_0, hv_RevertHomMat2D,
+                            "nearest_neighbor");
+                        ho_Regions.Dispose();
+                        ho_Regions = ExpTmpOutVar_0;
+                    }
+                    HOperatorSet.AffineTransPoint2d(hv_RevertHomMat2D, hv_RowCenter, hv_ColCenter,
+                        out hv_RowCenter, out hv_ColCenter);
+                }
+                // catch (Exception) 
+                catch (HalconException HDevExpDefaultException1)
+                {
+                    HDevExpDefaultException1.ToHTuple(out hv_Exception);
+                    //*     log_exception (Exception)
+                }
+                ho_Image_COPY_INP_TMP.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+                ho_Image_COPY_INP_TMP.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
+        public static void spoke(HObject ho_Image, out HObject ho_Regions, HTuple hv_Elements,
+            HTuple hv_DetectHeight, HTuple hv_DetectWidth, HTuple hv_Sigma, HTuple hv_Threshold,
+            HTuple hv_Transition, HTuple hv_Select, HTuple hv_ROIRows, HTuple hv_ROICols,
+            HTuple hv_Direct, out HTuple hv_ResultRow, out HTuple hv_ResultColumn, out HTuple hv_ArcType)
+        {
+
+
+
+
+            // Stack for temporary objects 
+            HObject[] OTemp = new HObject[20];
+
+            // Local iconic variables 
+
+            HObject ho_Contour, ho_ContCircle, ho_Rectangle1 = null;
+            HObject ho_Arrow1 = null, ho_Arrow1Region = null;
+
+            // Local control variables 
+
+            HTuple hv_Width = null, hv_Height = null, hv_RowC = null;
+            HTuple hv_ColumnC = null, hv_Radius = null, hv_StartPhi = null;
+            HTuple hv_EndPhi = null, hv_PointOrder = null, hv_RowXLD = null;
+            HTuple hv_ColXLD = null, hv_Length = null, hv_Length2 = null;
+            HTuple hv_i = null, hv_j = new HTuple(), hv_RowE = new HTuple();
+            HTuple hv_ColE = new HTuple(), hv_ATan = new HTuple();
+            HTuple hv_RowL2 = new HTuple(), hv_RowL1 = new HTuple();
+            HTuple hv_ColL2 = new HTuple(), hv_ColL1 = new HTuple();
+            HTuple hv_MsrHandle_Measure = new HTuple(), hv_RowEdge = new HTuple();
+            HTuple hv_ColEdge = new HTuple(), hv_Amplitude = new HTuple();
+            HTuple hv_Distance = new HTuple(), hv_tRow = new HTuple();
+            HTuple hv_tCol = new HTuple(), hv_t = new HTuple(), hv_Number = new HTuple();
+            HTuple hv_k = new HTuple();
+            HTuple hv_Select_COPY_INP_TMP = hv_Select.Clone();
+            HTuple hv_Transition_COPY_INP_TMP = hv_Transition.Clone();
+
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_Regions);
+            HOperatorSet.GenEmptyObj(out ho_Contour);
+            HOperatorSet.GenEmptyObj(out ho_ContCircle);
+            HOperatorSet.GenEmptyObj(out ho_Rectangle1);
+            HOperatorSet.GenEmptyObj(out ho_Arrow1);
+            HOperatorSet.GenEmptyObj(out ho_Arrow1Region);
+            hv_ArcType = new HTuple();
+            try
+            {
+                HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
+
+                ho_Regions.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Regions);
+                hv_ResultRow = new HTuple();
+                hv_ResultColumn = new HTuple();
+
+
+                ho_Contour.Dispose();
+                HOperatorSet.GenContourPolygonXld(out ho_Contour, hv_ROIRows, hv_ROICols);
+
+                HOperatorSet.FitCircleContourXld(ho_Contour, "algebraic", -1, 0, 0, 3, 2, out hv_RowC,
+                    out hv_ColumnC, out hv_Radius, out hv_StartPhi, out hv_EndPhi, out hv_PointOrder);
+                ho_ContCircle.Dispose();
+                HOperatorSet.GenCircleContourXld(out ho_ContCircle, hv_RowC, hv_ColumnC, hv_Radius,
+                    hv_StartPhi, hv_EndPhi, hv_PointOrder, 3);
+                HOperatorSet.GetContourXld(ho_ContCircle, out hv_RowXLD, out hv_ColXLD);
+
+                HOperatorSet.LengthXld(ho_ContCircle, out hv_Length);
+                HOperatorSet.TupleLength(hv_ColXLD, out hv_Length2);
+                if ((int)(new HTuple(hv_Elements.TupleLess(1))) != 0)
+                {
+
+                    ho_Contour.Dispose();
+                    ho_ContCircle.Dispose();
+                    ho_Rectangle1.Dispose();
+                    ho_Arrow1.Dispose();
+                    ho_Arrow1Region.Dispose();
+
+                    return;
+                }
+                HTuple end_val19 = hv_Elements - 1;
+                HTuple step_val19 = 1;
+                for (hv_i = 0; hv_i.Continue(end_val19, step_val19); hv_i = hv_i.TupleAdd(step_val19))
+                {
+                    if ((int)(new HTuple(((hv_RowXLD.TupleSelect(0))).TupleEqual(hv_RowXLD.TupleSelect(
+                        hv_Length2 - 1)))) != 0)
+                    {
+                        HOperatorSet.TupleInt(((1.0 * hv_Length2) / (hv_Elements - 1)) * hv_i, out hv_j);
+                        hv_ArcType = "circle";
+                    }
+                    else
+                    {
+                        HOperatorSet.TupleInt(((1.0 * hv_Length2) / (hv_Elements - 1)) * hv_i, out hv_j);
+                        hv_ArcType = "arc";
+                    }
+                    if ((int)(new HTuple(hv_j.TupleGreaterEqual(hv_Length2))) != 0)
+                    {
+                        hv_j = hv_Length2 - 1;
+                        //continue
+                    }
+                    hv_RowE = hv_RowXLD.TupleSelect(hv_j);
+                    hv_ColE = hv_ColXLD.TupleSelect(hv_j);
+
+                    //超出图像区域，不检测，否则容易报异常
+                    if ((int)((new HTuple((new HTuple((new HTuple(hv_RowE.TupleGreater(hv_Height - 1))).TupleOr(
+                        new HTuple(hv_RowE.TupleLess(0))))).TupleOr(new HTuple(hv_ColE.TupleGreater(
+                        hv_Width - 1))))).TupleOr(new HTuple(hv_ColE.TupleLess(0)))) != 0)
+                    {
+                        continue;
+                    }
+                    if ((int)(new HTuple(hv_Direct.TupleEqual("inner"))) != 0)
+                    {
+                        HOperatorSet.TupleAtan2((-hv_RowE) + hv_RowC, hv_ColE - hv_ColumnC, out hv_ATan);
+                        hv_ATan = ((new HTuple(180)).TupleRad()) + hv_ATan;
+
+                    }
+                    else
+                    {
+                        HOperatorSet.TupleAtan2((-hv_RowE) + hv_RowC, hv_ColE - hv_ColumnC, out hv_ATan);
+
+                    }
+
+
+                    ho_Rectangle1.Dispose();
+                    HOperatorSet.GenRectangle2(out ho_Rectangle1, hv_RowE, hv_ColE, hv_ATan,
+                        hv_DetectHeight / 2, hv_DetectWidth / 2);
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.ConcatObj(ho_Regions, ho_Rectangle1, out ExpTmpOutVar_0);
+                        ho_Regions.Dispose();
+                        ho_Regions = ExpTmpOutVar_0;
+                    }
+                    if ((int)(new HTuple(hv_i.TupleEqual(0))) != 0)
+                    {
+                        hv_RowL2 = hv_RowE + ((hv_DetectHeight / 2) * (((-hv_ATan)).TupleSin()));
+                        hv_RowL1 = hv_RowE - ((hv_DetectHeight / 2) * (((-hv_ATan)).TupleSin()));
+                        hv_ColL2 = hv_ColE + ((hv_DetectHeight / 2) * (((-hv_ATan)).TupleCos()));
+                        hv_ColL1 = hv_ColE - ((hv_DetectHeight / 2) * (((-hv_ATan)).TupleCos()));
+                        ho_Arrow1.Dispose();
+                        gen_arrow_contour_xld(out ho_Arrow1, hv_RowL1, hv_ColL1, hv_RowL2, hv_ColL2,
+                            25, 25);
+                        ho_Arrow1Region.Dispose();
+                        HOperatorSet.GenRegionContourXld(ho_Arrow1, out ho_Arrow1Region, "margin");
+                        {
+                            HObject ExpTmpOutVar_0;
+                            HOperatorSet.ConcatObj(ho_Regions, ho_Arrow1Region, out ExpTmpOutVar_0);
+                            ho_Regions.Dispose();
+                            ho_Regions = ExpTmpOutVar_0;
+                        }
+                    }
+
+                    HOperatorSet.GenMeasureRectangle2(hv_RowE, hv_ColE, hv_ATan, hv_DetectHeight / 2,
+                        hv_DetectWidth / 2, hv_Width, hv_Height, "nearest_neighbor", out hv_MsrHandle_Measure);
+
+
+                    if ((int)(new HTuple(hv_Transition_COPY_INP_TMP.TupleEqual("negative"))) != 0)
+                    {
+                        hv_Transition_COPY_INP_TMP = "negative";
+                    }
+                    else
+                    {
+                        if ((int)(new HTuple(hv_Transition_COPY_INP_TMP.TupleEqual("positive"))) != 0)
+                        {
+
+                            hv_Transition_COPY_INP_TMP = "positive";
+                        }
+                        else
+                        {
+                            hv_Transition_COPY_INP_TMP = "all";
+                        }
+                    }
+
+                    if ((int)(new HTuple(hv_Select_COPY_INP_TMP.TupleEqual("first"))) != 0)
+                    {
+                        hv_Select_COPY_INP_TMP = "first";
+                    }
+                    else
+                    {
+                        if ((int)(new HTuple(hv_Select_COPY_INP_TMP.TupleEqual("last"))) != 0)
+                        {
+
+                            hv_Select_COPY_INP_TMP = "last";
+                        }
+                        else
+                        {
+                            hv_Select_COPY_INP_TMP = "all";
+                        }
+                    }
+
+                    HOperatorSet.MeasurePos(ho_Image, hv_MsrHandle_Measure, hv_Sigma, hv_Threshold,
+                        hv_Transition_COPY_INP_TMP, hv_Select_COPY_INP_TMP, out hv_RowEdge, out hv_ColEdge,
+                        out hv_Amplitude, out hv_Distance);
+                    HOperatorSet.CloseMeasure(hv_MsrHandle_Measure);
+                    hv_tRow = 0;
+                    hv_tCol = 0;
+                    hv_t = 0;
+                    HOperatorSet.TupleLength(hv_RowEdge, out hv_Number);
+                    if ((int)(new HTuple(hv_Number.TupleLess(1))) != 0)
+                    {
+                        continue;
+                    }
+                    HTuple end_val94 = hv_Number - 1;
+                    HTuple step_val94 = 1;
+                    for (hv_k = 0; hv_k.Continue(end_val94, step_val94); hv_k = hv_k.TupleAdd(step_val94))
+                    {
+                        if ((int)(new HTuple(((((hv_Amplitude.TupleSelect(hv_k))).TupleAbs())).TupleGreater(
+                            hv_t))) != 0)
+                        {
+
+                            hv_tRow = hv_RowEdge.TupleSelect(hv_k);
+                            hv_tCol = hv_ColEdge.TupleSelect(hv_k);
+                            hv_t = ((hv_Amplitude.TupleSelect(hv_k))).TupleAbs();
+                        }
+                    }
+                    if ((int)(new HTuple(hv_t.TupleGreater(0))) != 0)
+                    {
+
+                        hv_ResultRow = hv_ResultRow.TupleConcat(hv_tRow);
+                        hv_ResultColumn = hv_ResultColumn.TupleConcat(hv_tCol);
+                    }
+                }
+
+
+                ho_Contour.Dispose();
+                ho_ContCircle.Dispose();
+                ho_Rectangle1.Dispose();
+                ho_Arrow1.Dispose();
+                ho_Arrow1Region.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+                ho_Contour.Dispose();
+                ho_ContCircle.Dispose();
+                ho_Rectangle1.Dispose();
+                ho_Arrow1.Dispose();
+                ho_Arrow1Region.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
+        // Chapter: XLD / Creation
+        // Short Description: Creates an arrow shaped XLD contour. 
+        public static void gen_arrow_contour_xld(out HObject ho_Arrow, HTuple hv_Row1, HTuple hv_Column1,
+            HTuple hv_Row2, HTuple hv_Column2, HTuple hv_HeadLength, HTuple hv_HeadWidth)
+        {
+
+
+
+            // Stack for temporary objects 
+            HObject[] OTemp = new HObject[20];
+
+            // Local iconic variables 
+
+            HObject ho_TempArrow = null;
+
+            // Local control variables 
+
+            HTuple hv_Length = null, hv_ZeroLengthIndices = null;
+            HTuple hv_DR = null, hv_DC = null, hv_HalfHeadWidth = null;
+            HTuple hv_RowP1 = null, hv_ColP1 = null, hv_RowP2 = null;
+            HTuple hv_ColP2 = null, hv_Index = null;
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_Arrow);
+            HOperatorSet.GenEmptyObj(out ho_TempArrow);
+            try
+            {
+                //This procedure generates arrow shaped XLD contours,
+                //pointing from (Row1, Column1) to (Row2, Column2).
+                //If starting and end point are identical, a contour consisting
+                //of a single point is returned.
+                //
+                //input parameteres:
+                //Row1, Column1: Coordinates of the arrows' starting points
+                //Row2, Column2: Coordinates of the arrows' end points
+                //HeadLength, HeadWidth: Size of the arrow heads in pixels
+                //
+                //output parameter:
+                //Arrow: The resulting XLD contour
+                //
+                //The input tuples Row1, Column1, Row2, and Column2 have to be of
+                //the same length.
+                //HeadLength and HeadWidth either have to be of the same length as
+                //Row1, Column1, Row2, and Column2 or have to be a single element.
+                //If one of the above restrictions is violated, an error will occur.
+                //
+                //
+                //Init
+                ho_Arrow.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Arrow);
+                //
+                //Calculate the arrow length
+                HOperatorSet.DistancePp(hv_Row1, hv_Column1, hv_Row2, hv_Column2, out hv_Length);
+                //
+                //Mark arrows with identical start and end point
+                //(set Length to -1 to avoid division-by-zero exception)
+                hv_ZeroLengthIndices = hv_Length.TupleFind(0);
+                if ((int)(new HTuple(hv_ZeroLengthIndices.TupleNotEqual(-1))) != 0)
+                {
+                    if (hv_Length == null)
+                        hv_Length = new HTuple();
+                    hv_Length[hv_ZeroLengthIndices] = -1;
+                }
+                //
+                //Calculate auxiliary variables.
+                hv_DR = (1.0 * (hv_Row2 - hv_Row1)) / hv_Length;
+                hv_DC = (1.0 * (hv_Column2 - hv_Column1)) / hv_Length;
+                hv_HalfHeadWidth = hv_HeadWidth / 2.0;
+                //
+                //Calculate end points of the arrow head.
+                hv_RowP1 = (hv_Row1 + ((hv_Length - hv_HeadLength) * hv_DR)) + (hv_HalfHeadWidth * hv_DC);
+                hv_ColP1 = (hv_Column1 + ((hv_Length - hv_HeadLength) * hv_DC)) - (hv_HalfHeadWidth * hv_DR);
+                hv_RowP2 = (hv_Row1 + ((hv_Length - hv_HeadLength) * hv_DR)) - (hv_HalfHeadWidth * hv_DC);
+                hv_ColP2 = (hv_Column1 + ((hv_Length - hv_HeadLength) * hv_DC)) + (hv_HalfHeadWidth * hv_DR);
+                //
+                //Finally create output XLD contour for each input point pair
+                for (hv_Index = 0; (int)hv_Index <= (int)((new HTuple(hv_Length.TupleLength())) - 1); hv_Index = (int)hv_Index + 1)
+                {
+                    if ((int)(new HTuple(((hv_Length.TupleSelect(hv_Index))).TupleEqual(-1))) != 0)
+                    {
+                        //Create_ single points for arrows with identical start and end point
+                        ho_TempArrow.Dispose();
+                        HOperatorSet.GenContourPolygonXld(out ho_TempArrow, hv_Row1.TupleSelect(
+                            hv_Index), hv_Column1.TupleSelect(hv_Index));
+                    }
+                    else
+                    {
+                        //Create arrow contour
+                        ho_TempArrow.Dispose();
+                        HOperatorSet.GenContourPolygonXld(out ho_TempArrow, ((((((((((hv_Row1.TupleSelect(
+                            hv_Index))).TupleConcat(hv_Row2.TupleSelect(hv_Index)))).TupleConcat(
+                            hv_RowP1.TupleSelect(hv_Index)))).TupleConcat(hv_Row2.TupleSelect(hv_Index)))).TupleConcat(
+                            hv_RowP2.TupleSelect(hv_Index)))).TupleConcat(hv_Row2.TupleSelect(hv_Index)),
+                            ((((((((((hv_Column1.TupleSelect(hv_Index))).TupleConcat(hv_Column2.TupleSelect(
+                            hv_Index)))).TupleConcat(hv_ColP1.TupleSelect(hv_Index)))).TupleConcat(
+                            hv_Column2.TupleSelect(hv_Index)))).TupleConcat(hv_ColP2.TupleSelect(
+                            hv_Index)))).TupleConcat(hv_Column2.TupleSelect(hv_Index)));
+                    }
+                    {
+                        HObject ExpTmpOutVar_0;
+                        HOperatorSet.ConcatObj(ho_Arrow, ho_TempArrow, out ExpTmpOutVar_0);
+                        ho_Arrow.Dispose();
+                        ho_Arrow = ExpTmpOutVar_0;
+                    }
+                }
+                ho_TempArrow.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+                ho_TempArrow.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
+        public static void pts_to_best_circle(out HObject ho_Circle, HTuple hv_Rows, HTuple hv_Cols,
+            HTuple hv_ActiveNum, HTuple hv_ArcType, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
+            out HTuple hv_Radius)
+        {
+
+
+
+            // Local iconic variables 
+
+            HObject ho_Contour = null;
+
+            // Local control variables 
+
+            HTuple hv_Length = null, hv_StartPhi = new HTuple();
+            HTuple hv_EndPhi = new HTuple(), hv_PointOrder = new HTuple();
+            HTuple hv_Length1 = new HTuple();
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_Circle);
+            HOperatorSet.GenEmptyObj(out ho_Contour);
+            try
+            {
+                hv_RowCenter = 0;
+                hv_ColCenter = 0;
+                hv_Radius = 0;
+
+                ho_Circle.Dispose();
+                HOperatorSet.GenEmptyObj(out ho_Circle);
+                HOperatorSet.TupleLength(hv_Cols, out hv_Length);
+
+                if ((int)((new HTuple(hv_Length.TupleGreaterEqual(hv_ActiveNum))).TupleAnd(
+                    new HTuple(hv_ActiveNum.TupleGreater(2)))) != 0)
+                {
+
+                    ho_Contour.Dispose();
+                    HOperatorSet.GenContourPolygonXld(out ho_Contour, hv_Rows, hv_Cols);
+                    HOperatorSet.FitCircleContourXld(ho_Contour, "geotukey", -1, 0, 0, 3, 2,
+                        out hv_RowCenter, out hv_ColCenter, out hv_Radius, out hv_StartPhi, out hv_EndPhi,
+                        out hv_PointOrder);
+
+                    HOperatorSet.TupleLength(hv_StartPhi, out hv_Length1);
+                    if ((int)(new HTuple(hv_Length1.TupleLess(1))) != 0)
+                    {
+                        ho_Contour.Dispose();
+
+                        return;
+                    }
+                    if ((int)(new HTuple(hv_ArcType.TupleEqual("arc"))) != 0)
+                    {
+                        ho_Circle.Dispose();
+                        HOperatorSet.GenCircleContourXld(out ho_Circle, hv_RowCenter, hv_ColCenter,
+                            hv_Radius, hv_StartPhi, hv_EndPhi, hv_PointOrder, 1);
+                    }
+                    else
+                    {
+                        ho_Circle.Dispose();
+                        HOperatorSet.GenCircleContourXld(out ho_Circle, hv_RowCenter, hv_ColCenter,
+                            hv_Radius, 0, (new HTuple(360)).TupleRad(), hv_PointOrder, 1);
+                    }
+                }
+
+                ho_Contour.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+                ho_Contour.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
         public static void detect_line(HObject ho_Image, HTuple hv_RowSource, HTuple hv_ColSource,
               HTuple hv_AngleSource, HTuple hv_RowImage, HTuple hv_ColImage, HTuple hv_AngleImage,
               HTuple hv_RectRow1, HTuple hv_RectCol1, HTuple hv_RectRow2, HTuple hv_RectCol2,
