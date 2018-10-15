@@ -85,13 +85,13 @@ namespace IntegrationTesting
                 {
                     textBoxImageX.Invoke(new MethodInvoker(delegate
                     {
-                        textBoxImageX.Text = m_calibrationCenter.AllLineData[10].CameraPosition.ImageX.ToString("f3");
-                        textBoxImageY.Text = m_calibrationCenter.AllLineData[10].CameraPosition.ImageY.ToString("f3");
-                        textBoxImageA.Text = (m_calibrationCenter.AllLineData[10].CameraPosition.ImageA).ToString("f3");
+                        textBoxImageX.Text = m_calibrationCenter.AllLineData[4].CameraPosition.ImageX.ToString("f3");
+                        textBoxImageY.Text = m_calibrationCenter.AllLineData[4].CameraPosition.ImageY.ToString("f3");
+                        textBoxImageA.Text = (m_calibrationCenter.AllLineData[4].CameraPosition.ImageA).ToString("f3");
 
-                        textBoxRobotPosX.Text = m_calibrationCenter.AllLineData[10].RobotCoordinate.RobotX.ToString("f3");
-                        textBoxRobotPosY.Text = m_calibrationCenter.AllLineData[10].RobotCoordinate.RobotY.ToString("f3");
-                        textBoxRobotPosRz.Text = (m_calibrationCenter.AllLineData[10].RobotCoordinate.RobotRz).ToString("f3");
+                        textBoxRobotPosX.Text = m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotX.ToString("f3");
+                        textBoxRobotPosY.Text = m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotY.ToString("f3");
+                        textBoxRobotPosRz.Text = (m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotRz).ToString("f3");
 
                         textBoxCatchRobotX.Text = (teachX*1000).ToString("f3");
                         textBoxCatchRobotY.Text = (teachY*1000).ToString("f3");

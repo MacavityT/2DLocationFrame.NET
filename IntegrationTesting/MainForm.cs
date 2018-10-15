@@ -330,6 +330,26 @@ namespace IntegrationTesting
             aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
             aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
             aqDisplayLocation.Update();
+
+            line = new AqLineSegment();
+            line.StartX = m_templateSet.Location1.CircleCenterX - 20;
+            line.StartY = m_templateSet.Location1.CircleCenterY;
+            line.EndX = m_templateSet.Location1.CircleCenterX + 20;
+            line.EndY = m_templateSet.Location1.CircleCenterY;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            line2 = new AqLineSegment();
+            line2.StartX = m_templateSet.Location1.CircleCenterX;
+            line2.StartY = m_templateSet.Location1.CircleCenterY - 20;
+            line2.EndX = m_templateSet.Location1.CircleCenterX;
+            line2.EndY = m_templateSet.Location1.CircleCenterY + 20;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+
+            aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
+            aqDisplayLocation.Update();
         }
 
         private bool GetLocalizeResult(ref double posX, ref double posY, ref double theta, ref int posture)

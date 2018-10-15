@@ -628,7 +628,7 @@ namespace AqVision.Location
             ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
                 out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
                   new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
-                  new HTuple(ModelCircleCenterX), new HTuple(ModelCircleCenterY), new HTuple(ModelCircleRadius),
+                  new HTuple(ModelCircleCenterY), new HTuple(ModelCircleCenterX), new HTuple(ModelCircleRadius),
                 0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
                 out hv_RowCenter, out hv_ColCenter, out hv_Radius);
 

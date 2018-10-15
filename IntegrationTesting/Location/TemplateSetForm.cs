@@ -303,9 +303,9 @@ namespace IntegrationTesting
                     if (iResult == 0)
                     {
                         _location.CalHorVerLineIntersection();
-//                         LocationResultPosX = new double[1] { _location.IntersectionX };
-//                         LocationResultPosY = new double[1] { _location.IntersectionY };
-//                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+                        LocationResultPosX = new double[1] { _location.IntersectionX };
+                        LocationResultPosY = new double[1] { _location.IntersectionY };
+                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
 //                         LocationResultPosX = _location.CenterX;
 //                         LocationResultPosY = _location.CenterY;
 //                         LocationResultPosTheta = _location.Angle;
