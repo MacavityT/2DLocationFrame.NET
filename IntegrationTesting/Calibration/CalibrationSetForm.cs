@@ -136,7 +136,7 @@ namespace IntegrationTesting
                 line.SubItems.Add(calibrationlineData.CameraPosition.ImageY.ToString("f3"));
                 line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotX.ToString("f3"));
                 line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotY.ToString("f3"));
-                line.SubItems.Add((calibrationlineData.RobotCoordinate.RobotRz*180/Math.PI).ToString("f3"));
+                line.SubItems.Add((calibrationlineData.RobotCoordinate.RobotRz).ToString("f3"));
                 listViewParameterSet.Items.Add(line);
 
                 listBoxMessage.Items.Add(string.Format("获取标定数据: {0}", m_calibrationCenter.AllLineData.Count));

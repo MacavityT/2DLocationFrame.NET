@@ -39,11 +39,15 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.buttonCircleZone = new System.Windows.Forms.Button();
             this.buttonAddVerZone = new System.Windows.Forms.Button();
             this.buttonAddHorZone = new System.Windows.Forms.Button();
             this.buttonLoadModel = new System.Windows.Forms.Button();
             this.buttonSaveModel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.textBoxCircleWidth = new System.Windows.Forms.TextBox();
+            this.textBoxCircleHeight = new System.Windows.Forms.TextBox();
+            this.buttonUpdateCircle = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +77,7 @@
             // 
             // buttonTraining
             // 
-            this.buttonTraining.Location = new System.Drawing.Point(1, 116);
+            this.buttonTraining.Location = new System.Drawing.Point(2, 154);
             this.buttonTraining.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTraining.Name = "buttonTraining";
             this.buttonTraining.Size = new System.Drawing.Size(126, 34);
@@ -84,7 +88,7 @@
             // 
             // buttonLocation
             // 
-            this.buttonLocation.Location = new System.Drawing.Point(3, 193);
+            this.buttonLocation.Location = new System.Drawing.Point(4, 231);
             this.buttonLocation.Name = "buttonLocation";
             this.buttonLocation.Size = new System.Drawing.Size(126, 34);
             this.buttonLocation.TabIndex = 11;
@@ -108,8 +112,11 @@
             // 
             this.panel1.Controls.Add(this.buttonLoadPic);
             this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.textBoxCircleHeight);
             this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.textBoxCircleWidth);
             this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.buttonCircleZone);
             this.panel1.Controls.Add(this.buttonAddVerZone);
             this.panel1.Controls.Add(this.buttonAddHorZone);
             this.panel1.Controls.Add(this.buttonAddRectangleRegion);
@@ -117,6 +124,7 @@
             this.panel1.Controls.Add(this.buttonLoadModel);
             this.panel1.Controls.Add(this.buttonSaveModel);
             this.panel1.Controls.Add(this.buttonTraining);
+            this.panel1.Controls.Add(this.buttonUpdateCircle);
             this.panel1.Controls.Add(this.buttonRemoveGraph);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(1228, 0);
@@ -156,6 +164,18 @@
             this.textBox1.Size = new System.Drawing.Size(126, 21);
             this.textBox1.TabIndex = 13;
             // 
+            // buttonCircleZone
+            // 
+            this.buttonCircleZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonCircleZone.Location = new System.Drawing.Point(2, 116);
+            this.buttonCircleZone.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCircleZone.Name = "buttonCircleZone";
+            this.buttonCircleZone.Size = new System.Drawing.Size(126, 34);
+            this.buttonCircleZone.TabIndex = 7;
+            this.buttonCircleZone.Text = "添加圆形区域(绿色)";
+            this.buttonCircleZone.UseVisualStyleBackColor = true;
+            this.buttonCircleZone.Click += new System.EventHandler(this.buttonCircleZone_Click);
+            // 
             // buttonAddVerZone
             // 
             this.buttonAddVerZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -193,7 +213,7 @@
             // 
             // buttonSaveModel
             // 
-            this.buttonSaveModel.Location = new System.Drawing.Point(2, 154);
+            this.buttonSaveModel.Location = new System.Drawing.Point(3, 192);
             this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveModel.Name = "buttonSaveModel";
             this.buttonSaveModel.Size = new System.Drawing.Size(126, 34);
@@ -210,6 +230,31 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1228, 725);
             this.panel2.TabIndex = 13;
+            // 
+            // textBoxCircleWidth
+            // 
+            this.textBoxCircleWidth.Location = new System.Drawing.Point(3, 599);
+            this.textBoxCircleWidth.Name = "textBoxCircleWidth";
+            this.textBoxCircleWidth.Size = new System.Drawing.Size(126, 21);
+            this.textBoxCircleWidth.TabIndex = 13;
+            // 
+            // textBoxCircleHeight
+            // 
+            this.textBoxCircleHeight.Location = new System.Drawing.Point(3, 626);
+            this.textBoxCircleHeight.Name = "textBoxCircleHeight";
+            this.textBoxCircleHeight.Size = new System.Drawing.Size(126, 21);
+            this.textBoxCircleHeight.TabIndex = 13;
+            // 
+            // buttonUpdateCircle
+            // 
+            this.buttonUpdateCircle.Location = new System.Drawing.Point(3, 652);
+            this.buttonUpdateCircle.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonUpdateCircle.Name = "buttonUpdateCircle";
+            this.buttonUpdateCircle.Size = new System.Drawing.Size(126, 34);
+            this.buttonUpdateCircle.TabIndex = 10;
+            this.buttonUpdateCircle.Text = "更新圆形";
+            this.buttonUpdateCircle.UseVisualStyleBackColor = true;
+            this.buttonUpdateCircle.Click += new System.EventHandler(this.buttonUpdateCircle_Click);
             // 
             // TemplateSetForm
             // 
@@ -245,6 +290,10 @@
         private System.Windows.Forms.Button buttonLoadPic;
         private System.Windows.Forms.Button buttonAddHorZone;
         private System.Windows.Forms.Button buttonAddVerZone;
+        private System.Windows.Forms.Button buttonCircleZone;
+        private System.Windows.Forms.TextBox textBoxCircleHeight;
+        private System.Windows.Forms.TextBox textBoxCircleWidth;
+        private System.Windows.Forms.Button buttonUpdateCircle;
 
     }
 }

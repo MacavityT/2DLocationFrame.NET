@@ -566,5 +566,46 @@ namespace IntegrationTesting
         {
             AddRectangelToAqDisplay("Find_Line_Ver",AqColorConstants.Green);
         }
+
+        private void buttonCircleZone_Click(object sender, EventArgs e)
+        {
+            int index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle", AqDisplayZOrderConstants.Front);
+            if (index < 0)
+            {
+                AqGdiPointF leftTopPoint = new AqGdiPointF(120, 120);
+                AqGdiPointF rightBottomPoint = new AqGdiPointF(300, 300);
+                AqCircularArc arc = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arc.Color = AqColorConstants.Cyan;
+                arc.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arc, "Circle", true);
+                aqDisplayCreateModel.Update();
+            }
+        }
+
+        private void buttonUpdateCircle_Click(object sender, EventArgs e)
+        {
+            int index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle", AqDisplayZOrderConstants.Front);
+            if (index >= 0)
+            {
+                AqCircularArc arc = (AqCircularArc)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                float leftTopX =(float)(arc.LeftTopPoint.X-(Convert.ToDouble(textBoxCircleWidth.Text)-(arc.RightBottomPoint.X-arc.LeftTopPoint.X))/2.0);
+                float rightBottomX = (float)(arc.RightBottomPoint.X+(Convert.ToDouble(textBoxCircleWidth.Text)-(arc.RightBottomPoint.X-arc.LeftTopPoint.X))/2.0);
+
+                float leftTopY = (float)(arc.LeftTopPoint.Y-(Convert.ToDouble(textBoxCircleHeight.Text)-(arc.RightBottomPoint.Y-arc.LeftTopPoint.Y))/2.0);
+                float rightBottomY = (float)(arc.RightBottomPoint.Y+(Convert.ToDouble(textBoxCircleHeight.Text)-(arc.RightBottomPoint.Y-arc.LeftTopPoint.Y))/2.0);
+
+                AqGdiPointF leftTopPoint = new AqGdiPointF(leftTopX, leftTopY);
+                AqGdiPointF rightBottomPoint = new AqGdiPointF(rightBottomX, rightBottomY);
+
+                aqDisplayCreateModel.InteractiveGraphics.Remove(index);
+
+                AqCircularArc arcNew = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arcNew.Color = AqColorConstants.Cyan;
+                arcNew.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arcNew, "Circle", true);
+                aqDisplayCreateModel.Update();
+                
+            }
+        }
     }
 }
