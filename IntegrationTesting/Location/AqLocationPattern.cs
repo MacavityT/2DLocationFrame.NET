@@ -304,7 +304,7 @@ namespace AqVision.Location
             set { _circleCenterY = value; }
         }
 
-        double _circleCenterAngle = 0;
+        double _circleCenterAngle = 0;  //双圆角度
         public double CircleCenterAngle
         {
             get { return _circleCenterAngle; }
@@ -636,11 +636,46 @@ namespace AqVision.Location
             return true;
         }
 
-        public bool GetCircleCenter()
+        public bool GetSingleCircleCenter()
         {
             HObject ho_Circle, ho_Cross = null;
             HObject ho_PartCircleXLD = null, ho_Regions = null;
-//             ho_PartCircleXLD.Dispose(); ho_Regions.Dispose(); ho_Cross.Dispose(); ho_Circle.Dispose();
+
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            HTuple hv_RowCenter = new HTuple();
+            HTuple hv_ColCenter = new HTuple();
+            HTuple hv_Radius = new HTuple();
+            HTuple hv_RowCenter2 = new HTuple();
+            HTuple hv_ColCenter2 = new HTuple();
+            HTuple hv_Radius2 = new HTuple();
+            HTuple hv_Phi = new HTuple();
+
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(ModelCircleCenterY), new HTuple(ModelCircleCenterX), new HTuple(ModelCircleRadius),
+                0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                out hv_RowCenter, out hv_ColCenter, out hv_Radius);
+
+            CircleCenterX = hv_ColCenter.D;
+            CircleCenterY = hv_RowCenter.D;
+            CircleRadius = hv_Radius.D;
+            return true;
+        }
+
+        public bool GetDoubleCircleCenterAngle()
+        {
+            HObject ho_Circle, ho_Cross = null;
+            HObject ho_PartCircleXLD = null, ho_Regions = null;
 
             HImage image = null;
             if (m_TemplatePath.Length == 0)
@@ -674,15 +709,14 @@ namespace AqVision.Location
                             0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
                             out hv_RowCenter2, out hv_ColCenter2, out hv_Radius2);
 
-            CircleCenterX = (hv_ColCenter.D+hv_ColCenter2.D)/2.0;
-            CircleCenterY = (hv_RowCenter.D+hv_RowCenter2.D)/2.0;
-            CircleRadius = (hv_Radius.D + hv_Radius2.D)/2.0;
+            CircleCenterX = (hv_ColCenter.D + hv_ColCenter2.D) / 2.0;
+            CircleCenterY = (hv_RowCenter.D + hv_RowCenter2.D) / 2.0;
+            CircleRadius = (hv_Radius.D + hv_Radius2.D) / 2.0;
 
-            HOperatorSet.TupleAtan2(hv_RowCenter-hv_RowCenter2, hv_ColCenter-hv_ColCenter2, out hv_Phi);
+            HOperatorSet.TupleAtan2(hv_RowCenter - hv_RowCenter2, hv_ColCenter - hv_ColCenter2, out hv_Phi);
             CircleCenterAngle = hv_Phi.D;
             return true;
         }
-
         //按照只能定位一个图形处理
         public bool CalHorVerLineIntersection()
         {

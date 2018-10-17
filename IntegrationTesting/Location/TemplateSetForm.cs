@@ -179,7 +179,7 @@ namespace IntegrationTesting
                     ShowGetContourData(_location.ModeXldColsM, _location.ModeXldRowsM, _location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
                     ShowCenterCross(_location.ModelCenterX, _location.ModelCenterY);
                     ShowCenterCross(_location.ModelCircleCenterX, _location.ModelCircleCenterY); //圆心
-                    ShowCenterCross(_location.ModelCircleCenterX2, _location.ModelCircleCenterY2); //圆心
+                    ShowCenterCross(_location.ModelCircleCenterX2, _location.ModelCircleCenterY2); //圆心2
                     aqDisplayCreateModel.Update();
                     MessageBox.Show("create Model success");
 
@@ -322,16 +322,44 @@ namespace IntegrationTesting
                     if (iResult == 0)
                     {
                         _location.CalHorVerLineIntersection();
-                        //LocationResultPosX = new double[1] { _location.IntersectionX };
-                        //LocationResultPosY = new double[1] { _location.IntersectionY };
-                        //LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+                        _location.GetSingleCircleCenter();
+
+//                         //1.模板匹配
 //                         LocationResultPosX = _location.CenterX;
 //                         LocationResultPosY = _location.CenterY;
 //                         LocationResultPosTheta = _location.Angle;
-                        _location.GetCircleCenter();
+
+//                         //2.直线交点
+//                         LocationResultPosX = new double[1] { _location.IntersectionX };
+//                         LocationResultPosY = new double[1] { _location.IntersectionY };
+//                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+ 
+//                         //3.圆心直线角度
+//                         LocationResultPosX = new double[1] { _location.CircleCenterX };
+//                         LocationResultPosY = new double[1] { _location.CircleCenterY };
+//                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+// 
+//                         //4.圆心直线角度 + 畸变校正
+//                         LocationResultPosX = new double[1] { _location.CircleCenterX };
+//                         LocationResultPosY = new double[1] { _location.CircleCenterY };
+//                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+// 
+                        //5.双圆心
+                        _location.GetDoubleCircleCenterAngle();
                         LocationResultPosX = new double[1] { _location.CircleCenterX };
                         LocationResultPosY = new double[1] { _location.CircleCenterY };
                         LocationResultPosTheta = new double[1] { _location.CircleCenterAngle };
+// 
+//                         //6.双圆心 + 畸变
+//                         _location.GetDoubleCircleCenterAngle();
+//                         LocationResultPosX = new double[1] { _location.CircleCenterX };
+//                         LocationResultPosY = new double[1] { _location.CircleCenterY };
+//                         LocationResultPosTheta = new double[1] { _location.CircleCenterAngle };
+
+//                         //7.单圆心 + 模板角度
+//                         LocationResultPosX = new double[1] { _location.CircleCenterX };
+//                         LocationResultPosY = new double[1] { _location.CircleCenterY };
+//                         LocationResultPosTheta = _location.Angle;
                     }
                 }
 
@@ -522,6 +550,7 @@ namespace IntegrationTesting
                                         _location.RightBottomLineHorX, _location.RightBottomLineHorY);
                 AddRectangelToAqDisplay("Find_Line_Ver", AqColorConstants.Green,_location.LeftTopLineVerX, _location.LeftTopLineVerY,
                                         _location.RightBottomLineVerX, _location.RightBottomLineVerY);
+                
                 AqGdiPointF leftTopPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX - _location.ModelCircleRadius),
                                                             (float)(_location.ModelCircleCenterY - _location.ModelCircleRadius));
                 AqGdiPointF rightBottomPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX + _location.ModelCircleRadius),
@@ -531,6 +560,17 @@ namespace IntegrationTesting
                 arc.LineWidthInScreenPixels = 5;
                 aqDisplayCreateModel.InteractiveGraphics.Add(arc, "Circle", true);
                 aqDisplayCreateModel.Update();
+
+                leftTopPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX2 - _location.ModelCircleRadius2),
+                                                (float)(_location.ModelCircleCenterY2 - _location.ModelCircleRadius2));
+                rightBottomPoint = new AqGdiPointF((float)(_location.ModelCircleCenterX2 + _location.ModelCircleRadius2),
+                                                            (float)(_location.ModelCircleCenterY2 + _location.ModelCircleRadius2));
+                AqCircularArc arc2 = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arc2.Color = AqColorConstants.Cyan;
+                arc2.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arc2, "Circle2", true);
+                aqDisplayCreateModel.Update();
+            
             }
         }
 

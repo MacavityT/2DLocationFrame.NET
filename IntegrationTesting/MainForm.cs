@@ -274,7 +274,6 @@ namespace IntegrationTesting
 
                     _TriggerCount++;
                 }));
-                //AddMessageToListView("TriggerCameraDone");
                 
                 GC.Collect();
                 Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera collect ------------------");
@@ -289,7 +288,7 @@ namespace IntegrationTesting
             return locationResult;
         }
 
-        private void ShowIntersectionHorVerLine()
+        public void ShowIntersectionHorVerLine()
         {
             AqLineSegment line = new AqLineSegment();
             line.StartX = m_templateSet.Location1.LineLeftCol1;
@@ -309,7 +308,6 @@ namespace IntegrationTesting
 
             aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
             aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
-
 
             line = new AqLineSegment();
             line.StartX = m_templateSet.Location1.IntersectionX - 20;

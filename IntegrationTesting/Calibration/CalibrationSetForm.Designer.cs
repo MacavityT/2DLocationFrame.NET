@@ -89,12 +89,12 @@
             this.radioButtonSingleInput = new System.Windows.Forms.RadioButton();
             this.radioButtonBatchInput = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonStart = new System.Windows.Forms.Button();
-            this.radioButtonAutoCalibrate = new System.Windows.Forms.RadioButton();
             this.radioButtonManualCalibrate = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listBoxMessage = new System.Windows.Forms.ListBox();
+            this.radioButtonAutoCalibrate = new System.Windows.Forms.RadioButton();
+            this.buttonStart = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelSingleInput.SuspendLayout();
             this.panelBatchInput.SuspendLayout();
@@ -108,7 +108,7 @@
             // 
             this.listViewParameterSet.FullRowSelect = true;
             this.listViewParameterSet.GridLines = true;
-            this.listViewParameterSet.Location = new System.Drawing.Point(2, 221);
+            this.listViewParameterSet.Location = new System.Drawing.Point(3, 202);
             this.listViewParameterSet.Name = "listViewParameterSet";
             this.listViewParameterSet.Size = new System.Drawing.Size(522, 202);
             this.listViewParameterSet.TabIndex = 0;
@@ -120,7 +120,7 @@
             // 
             this.comboBoxModeList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxModeList.FormattingEnabled = true;
-            this.comboBoxModeList.Location = new System.Drawing.Point(2, 429);
+            this.comboBoxModeList.Location = new System.Drawing.Point(3, 410);
             this.comboBoxModeList.Name = "comboBoxModeList";
             this.comboBoxModeList.Size = new System.Drawing.Size(519, 20);
             this.comboBoxModeList.TabIndex = 1;
@@ -562,7 +562,7 @@
             this.panel1.Controls.Add(this.labelCatchRobotY);
             this.panel1.Controls.Add(this.textBoxCatchRobotX);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Location = new System.Drawing.Point(4, 455);
+            this.panel1.Location = new System.Drawing.Point(4, 436);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(521, 256);
             this.panel1.TabIndex = 6;
@@ -677,7 +677,7 @@
             this.groupBoxInputData.Controls.Add(this.radioButtonBatchInput);
             this.groupBoxInputData.Controls.Add(this.panelSingleInput);
             this.groupBoxInputData.Controls.Add(this.panelBatchInput);
-            this.groupBoxInputData.Location = new System.Drawing.Point(4, 30);
+            this.groupBoxInputData.Location = new System.Drawing.Point(4, 9);
             this.groupBoxInputData.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxInputData.Name = "groupBoxInputData";
             this.groupBoxInputData.Padding = new System.Windows.Forms.Padding(2);
@@ -717,50 +717,17 @@
             this.panel2.Controls.Add(this.groupBoxInputData);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.listViewParameterSet);
-            this.panel2.Controls.Add(this.radioButtonManualCalibrate);
             this.panel2.Controls.Add(this.comboBoxModeList);
-            this.panel2.Location = new System.Drawing.Point(367, 16);
+            this.panel2.Location = new System.Drawing.Point(367, 41);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(530, 715);
+            this.panel2.Size = new System.Drawing.Size(530, 690);
             this.panel2.TabIndex = 10;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.panel3);
-            this.groupBox2.Controls.Add(this.panel2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 10);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(903, 746);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "标定模式";
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Location = new System.Drawing.Point(79, 48);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(124, 28);
-            this.buttonStart.TabIndex = 12;
-            this.buttonStart.Text = "启动自动标定流程";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
-            // 
-            // radioButtonAutoCalibrate
-            // 
-            this.radioButtonAutoCalibrate.AutoSize = true;
-            this.radioButtonAutoCalibrate.Location = new System.Drawing.Point(118, 9);
-            this.radioButtonAutoCalibrate.Name = "radioButtonAutoCalibrate";
-            this.radioButtonAutoCalibrate.Size = new System.Drawing.Size(71, 16);
-            this.radioButtonAutoCalibrate.TabIndex = 11;
-            this.radioButtonAutoCalibrate.Text = "自动标定";
-            this.radioButtonAutoCalibrate.UseVisualStyleBackColor = true;
-            this.radioButtonAutoCalibrate.CheckedChanged += new System.EventHandler(this.radioButtonAutoCalibrate_CheckedChanged);
             // 
             // radioButtonManualCalibrate
             // 
             this.radioButtonManualCalibrate.AutoSize = true;
             this.radioButtonManualCalibrate.Checked = true;
-            this.radioButtonManualCalibrate.Location = new System.Drawing.Point(213, 9);
+            this.radioButtonManualCalibrate.Location = new System.Drawing.Point(591, 16);
             this.radioButtonManualCalibrate.Name = "radioButtonManualCalibrate";
             this.radioButtonManualCalibrate.Size = new System.Drawing.Size(71, 16);
             this.radioButtonManualCalibrate.TabIndex = 11;
@@ -769,14 +736,26 @@
             this.radioButtonManualCalibrate.UseVisualStyleBackColor = true;
             this.radioButtonManualCalibrate.CheckedChanged += new System.EventHandler(this.radioButtonManualCalibrate_CheckedChanged);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.panel3);
+            this.groupBox2.Controls.Add(this.radioButtonAutoCalibrate);
+            this.groupBox2.Controls.Add(this.panel2);
+            this.groupBox2.Controls.Add(this.radioButtonManualCalibrate);
+            this.groupBox2.Location = new System.Drawing.Point(12, 10);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(903, 746);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "标定模式";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.listBoxMessage);
-            this.panel3.Controls.Add(this.radioButtonAutoCalibrate);
             this.panel3.Controls.Add(this.buttonStart);
-            this.panel3.Location = new System.Drawing.Point(6, 16);
+            this.panel3.Location = new System.Drawing.Point(6, 41);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(355, 715);
+            this.panel3.Size = new System.Drawing.Size(355, 690);
             this.panel3.TabIndex = 13;
             // 
             // listBoxMessage
@@ -787,6 +766,27 @@
             this.listBoxMessage.Name = "listBoxMessage";
             this.listBoxMessage.Size = new System.Drawing.Size(324, 616);
             this.listBoxMessage.TabIndex = 13;
+            // 
+            // radioButtonAutoCalibrate
+            // 
+            this.radioButtonAutoCalibrate.AutoSize = true;
+            this.radioButtonAutoCalibrate.Location = new System.Drawing.Point(116, 16);
+            this.radioButtonAutoCalibrate.Name = "radioButtonAutoCalibrate";
+            this.radioButtonAutoCalibrate.Size = new System.Drawing.Size(71, 16);
+            this.radioButtonAutoCalibrate.TabIndex = 11;
+            this.radioButtonAutoCalibrate.Text = "自动标定";
+            this.radioButtonAutoCalibrate.UseVisualStyleBackColor = true;
+            this.radioButtonAutoCalibrate.CheckedChanged += new System.EventHandler(this.radioButtonAutoCalibrate_CheckedChanged);
+            // 
+            // buttonStart
+            // 
+            this.buttonStart.Location = new System.Drawing.Point(79, 48);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(124, 28);
+            this.buttonStart.TabIndex = 12;
+            this.buttonStart.Text = "启动自动标定流程";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // CalibrationSetForm
             // 
@@ -807,10 +807,9 @@
             this.groupBoxInputData.ResumeLayout(false);
             this.groupBoxInputData.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }

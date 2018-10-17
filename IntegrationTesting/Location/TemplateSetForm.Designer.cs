@@ -35,6 +35,7 @@
             this.buttonLocation = new System.Windows.Forms.Button();
             this.aqDisplayCreateModel = new AqVision.Controls.AqDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonCircle2Zone = new System.Windows.Forms.Button();
             this.buttonLoadPic = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBoxCircleHeight = new System.Windows.Forms.TextBox();
@@ -48,7 +49,6 @@
             this.buttonSaveModel = new System.Windows.Forms.Button();
             this.buttonUpdateCircle = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonCircle2Zone = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -134,6 +134,18 @@
             this.panel1.Size = new System.Drawing.Size(130, 725);
             this.panel1.TabIndex = 12;
             // 
+            // buttonCircle2Zone
+            // 
+            this.buttonCircle2Zone.ForeColor = System.Drawing.Color.Blue;
+            this.buttonCircle2Zone.Location = new System.Drawing.Point(3, 154);
+            this.buttonCircle2Zone.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCircle2Zone.Name = "buttonCircle2Zone";
+            this.buttonCircle2Zone.Size = new System.Drawing.Size(126, 34);
+            this.buttonCircle2Zone.TabIndex = 15;
+            this.buttonCircle2Zone.Text = "添加圆形区域2(蓝色)";
+            this.buttonCircle2Zone.UseVisualStyleBackColor = true;
+            this.buttonCircle2Zone.Click += new System.EventHandler(this.buttonCircle2Zone_Click);
+            // 
             // buttonLoadPic
             // 
             this.buttonLoadPic.Location = new System.Drawing.Point(3, 455);
@@ -182,13 +194,13 @@
             // 
             // buttonCircleZone
             // 
-            this.buttonCircleZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonCircleZone.ForeColor = System.Drawing.Color.Blue;
             this.buttonCircleZone.Location = new System.Drawing.Point(2, 116);
             this.buttonCircleZone.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCircleZone.Name = "buttonCircleZone";
             this.buttonCircleZone.Size = new System.Drawing.Size(126, 34);
             this.buttonCircleZone.TabIndex = 7;
-            this.buttonCircleZone.Text = "添加圆形区域(绿色)";
+            this.buttonCircleZone.Text = "添加圆形区域(蓝色)";
             this.buttonCircleZone.UseVisualStyleBackColor = true;
             this.buttonCircleZone.Click += new System.EventHandler(this.buttonCircleZone_Click);
             // 
@@ -257,18 +269,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1228, 725);
             this.panel2.TabIndex = 13;
-            // 
-            // buttonCircle2Zone
-            // 
-            this.buttonCircle2Zone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttonCircle2Zone.Location = new System.Drawing.Point(3, 154);
-            this.buttonCircle2Zone.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonCircle2Zone.Name = "buttonCircle2Zone";
-            this.buttonCircle2Zone.Size = new System.Drawing.Size(126, 34);
-            this.buttonCircle2Zone.TabIndex = 15;
-            this.buttonCircle2Zone.Text = "添加圆形2(绿色)";
-            this.buttonCircle2Zone.UseVisualStyleBackColor = true;
-            this.buttonCircle2Zone.Click += new System.EventHandler(this.buttonCircle2Zone_Click);
             // 
             // TemplateSetForm
             // 

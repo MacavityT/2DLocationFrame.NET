@@ -11,6 +11,7 @@ using System.IO;
 using IntegrationTesting.Tool;
 using IntegrationTesting.Robot;
 using System.Threading;
+using AqVision;
 
 namespace IntegrationTesting
 {
@@ -123,24 +124,40 @@ namespace IntegrationTesting
             //获取图片
             bool firstLocation = false;
             bool firstDetection = false;
+            GetMainForm.MainDisplayLocation.InteractiveGraphics.Clear();
             GetMainForm.TemplateSet.ImageInput = GetMainForm.AcquisitionBmp(ref firstLocation, ref firstDetection).Clone() as Bitmap;
-            GetMainForm.TemplateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm");
+            GetMainForm.MainDisplayLocation.Image = GetMainForm.TemplateSet.ImageInput;
+            GetMainForm.MainDisplayLocation.FitToScreen();
+            if (GetMainForm.TemplateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm") == 0)
+            {
+                calibrationlineData.CameraPosition.ImageX = GetMainForm.TemplateSet.LocationResultPosX[0];
+                calibrationlineData.CameraPosition.ImageY = GetMainForm.TemplateSet.LocationResultPosY[0];
+                calibrationlineData.CameraPosition.ImageA = GetMainForm.TemplateSet.LocationResultPosTheta[0] * 180 / Math.PI;
+                m_calibrationCenter.AllLineData.Add(calibrationlineData);
 
-            calibrationlineData.CameraPosition.ImageX = GetMainForm.TemplateSet.LocationResultPosX[0];
-            calibrationlineData.CameraPosition.ImageY = GetMainForm.TemplateSet.LocationResultPosY[0];
-            calibrationlineData.CameraPosition.ImageA = GetMainForm.TemplateSet.LocationResultPosTheta[0]*180/Math.PI;
-            m_calibrationCenter.AllLineData.Add(calibrationlineData);
+                listViewParameterSet.Invoke(new MethodInvoker(delegate
+                {
+                    ListViewItem line = new ListViewItem(calibrationlineData.CameraPosition.ImageX.ToString("f3"), 0);
+                    line.SubItems.Add(calibrationlineData.CameraPosition.ImageY.ToString("f3"));
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotX.ToString("f3"));
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotY.ToString("f3"));
+                    line.SubItems.Add((calibrationlineData.RobotCoordinate.RobotRz).ToString("f3"));
+                    listViewParameterSet.Items.Add(line);
 
-            listViewParameterSet.Invoke(new MethodInvoker(delegate {
-                ListViewItem line = new ListViewItem(calibrationlineData.CameraPosition.ImageX.ToString("f3"), 0);
-                line.SubItems.Add(calibrationlineData.CameraPosition.ImageY.ToString("f3"));
-                line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotX.ToString("f3"));
-                line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotY.ToString("f3"));
-                line.SubItems.Add((calibrationlineData.RobotCoordinate.RobotRz).ToString("f3"));
-                listViewParameterSet.Items.Add(line);
-
-                listBoxMessage.Items.Add(string.Format("获取标定数据: {0}", m_calibrationCenter.AllLineData.Count));
-            }));
+                    listBoxMessage.Items.Add(string.Format("获取标定数据: {0}", m_calibrationCenter.AllLineData.Count));
+                }));
+                
+                GetMainForm.ShowIntersectionHorVerLine();
+                GetMainForm.TemplateSet.ShowGetResultsData(AqColorConstants.Green, GetMainForm.MainDisplayLocation);
+                GetMainForm.SaveImageToFile(GetMainForm.MainDisplayLocation, GetMainForm.TemplateSet.ImageInput, @"D:\Location\");
+            }
+            else
+            {
+                listViewParameterSet.Invoke(new MethodInvoker(delegate
+                {
+                    listBoxMessage.Items.Add(string.Format("!!!标定定位出错!!!"));
+                }));
+            }
 
             if(terminal || (m_calibrationCenter.AllLineData.Count == 11))
             {
@@ -429,6 +446,7 @@ namespace IntegrationTesting
             if(m_calibrationCenter.NPoint2AngleCalibartion())
             {
                 MessageBox.Show("N Point to Angle Calibration Error =>" + string.Format("RMS:{0}",m_calibrationCenter.ResultRMS));
+                listBoxMessage.Items.Add(string.Format("RMS:{0}", m_calibrationCenter.ResultRMS));
             }
         }
 
