@@ -304,6 +304,13 @@ namespace AqVision.Location
             set { _circleCenterY = value; }
         }
 
+        double _circleCenterAngle = 0;
+        public double CircleCenterAngle
+        {
+            get { return _circleCenterAngle; }
+            set { _circleCenterAngle = value; }
+        }
+
         double _circleRadius = 0;
         public double CircleRadius
         {
@@ -335,6 +342,30 @@ namespace AqVision.Location
             set { _modelCircleRadius = value; }
         }
 
+
+        double _modelCircleCenterX2 = 0;
+
+        public double ModelCircleCenterX2
+        {
+            get { return _modelCircleCenterX2; }
+            set { _modelCircleCenterX2 = value; }
+        }
+
+        double _modelCircleCenterY2 = 0;
+
+        public double ModelCircleCenterY2
+        {
+            get { return _modelCircleCenterY2; }
+            set { _modelCircleCenterY2 = value; }
+        }
+
+        double _modelCircleRadius2 = 0;
+
+        public double ModelCircleRadius2
+        {
+            get { return _modelCircleRadius2; }
+            set { _modelCircleRadius2 = value; }
+        }
 
         private double _intersectionX;
         public double IntersectionX
@@ -624,6 +655,10 @@ namespace AqVision.Location
             HTuple hv_RowCenter = new HTuple();
             HTuple hv_ColCenter = new HTuple();
             HTuple hv_Radius = new HTuple();
+            HTuple hv_RowCenter2 = new HTuple();
+            HTuple hv_ColCenter2 = new HTuple();
+            HTuple hv_Radius2 = new HTuple();
+            HTuple hv_Phi = new HTuple();
 
             ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
                 out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
@@ -632,9 +667,19 @@ namespace AqVision.Location
                 0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
                 out hv_RowCenter, out hv_ColCenter, out hv_Radius);
 
-            CircleCenterX = hv_ColCenter.D;
-            CircleCenterY = hv_RowCenter.D;
-            CircleRadius = hv_Radius.D;            
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                            out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                              new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                              new HTuple(ModelCircleCenterY2), new HTuple(ModelCircleCenterX2), new HTuple(ModelCircleRadius2),
+                            0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                            out hv_RowCenter2, out hv_ColCenter2, out hv_Radius2);
+
+            CircleCenterX = (hv_ColCenter.D+hv_ColCenter2.D)/2.0;
+            CircleCenterY = (hv_RowCenter.D+hv_RowCenter2.D)/2.0;
+            CircleRadius = (hv_Radius.D + hv_Radius2.D)/2.0;
+
+            HOperatorSet.TupleAtan2(hv_RowCenter-hv_RowCenter2, hv_ColCenter-hv_ColCenter2, out hv_Phi);
+            CircleCenterAngle = hv_Phi.D;
             return true;
         }
 

@@ -37,17 +37,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonLoadPic = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBoxCircleHeight = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxCircleWidth = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonCircleZone = new System.Windows.Forms.Button();
             this.buttonAddVerZone = new System.Windows.Forms.Button();
             this.buttonAddHorZone = new System.Windows.Forms.Button();
             this.buttonLoadModel = new System.Windows.Forms.Button();
             this.buttonSaveModel = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.textBoxCircleWidth = new System.Windows.Forms.TextBox();
-            this.textBoxCircleHeight = new System.Windows.Forms.TextBox();
             this.buttonUpdateCircle = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonCircle2Zone = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -77,7 +78,7 @@
             // 
             // buttonTraining
             // 
-            this.buttonTraining.Location = new System.Drawing.Point(2, 154);
+            this.buttonTraining.Location = new System.Drawing.Point(4, 206);
             this.buttonTraining.Margin = new System.Windows.Forms.Padding(2);
             this.buttonTraining.Name = "buttonTraining";
             this.buttonTraining.Size = new System.Drawing.Size(126, 34);
@@ -88,7 +89,7 @@
             // 
             // buttonLocation
             // 
-            this.buttonLocation.Location = new System.Drawing.Point(4, 231);
+            this.buttonLocation.Location = new System.Drawing.Point(1, 283);
             this.buttonLocation.Name = "buttonLocation";
             this.buttonLocation.Size = new System.Drawing.Size(126, 34);
             this.buttonLocation.TabIndex = 11;
@@ -110,6 +111,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonCircle2Zone);
             this.panel1.Controls.Add(this.buttonLoadPic);
             this.panel1.Controls.Add(this.textBox3);
             this.panel1.Controls.Add(this.textBoxCircleHeight);
@@ -150,12 +152,26 @@
             this.textBox3.Size = new System.Drawing.Size(126, 21);
             this.textBox3.TabIndex = 13;
             // 
+            // textBoxCircleHeight
+            // 
+            this.textBoxCircleHeight.Location = new System.Drawing.Point(3, 626);
+            this.textBoxCircleHeight.Name = "textBoxCircleHeight";
+            this.textBoxCircleHeight.Size = new System.Drawing.Size(126, 21);
+            this.textBoxCircleHeight.TabIndex = 13;
+            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(3, 391);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(126, 21);
             this.textBox2.TabIndex = 13;
+            // 
+            // textBoxCircleWidth
+            // 
+            this.textBoxCircleWidth.Location = new System.Drawing.Point(3, 599);
+            this.textBoxCircleWidth.Name = "textBoxCircleWidth";
+            this.textBoxCircleWidth.Size = new System.Drawing.Size(126, 21);
+            this.textBoxCircleWidth.TabIndex = 13;
             // 
             // textBox1
             // 
@@ -213,7 +229,7 @@
             // 
             // buttonSaveModel
             // 
-            this.buttonSaveModel.Location = new System.Drawing.Point(3, 192);
+            this.buttonSaveModel.Location = new System.Drawing.Point(5, 244);
             this.buttonSaveModel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveModel.Name = "buttonSaveModel";
             this.buttonSaveModel.Size = new System.Drawing.Size(126, 34);
@@ -221,29 +237,6 @@
             this.buttonSaveModel.Text = "保存模板";
             this.buttonSaveModel.UseVisualStyleBackColor = true;
             this.buttonSaveModel.Click += new System.EventHandler(this.buttonSaveModel_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.aqDisplayCreateModel);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1228, 725);
-            this.panel2.TabIndex = 13;
-            // 
-            // textBoxCircleWidth
-            // 
-            this.textBoxCircleWidth.Location = new System.Drawing.Point(3, 599);
-            this.textBoxCircleWidth.Name = "textBoxCircleWidth";
-            this.textBoxCircleWidth.Size = new System.Drawing.Size(126, 21);
-            this.textBoxCircleWidth.TabIndex = 13;
-            // 
-            // textBoxCircleHeight
-            // 
-            this.textBoxCircleHeight.Location = new System.Drawing.Point(3, 626);
-            this.textBoxCircleHeight.Name = "textBoxCircleHeight";
-            this.textBoxCircleHeight.Size = new System.Drawing.Size(126, 21);
-            this.textBoxCircleHeight.TabIndex = 13;
             // 
             // buttonUpdateCircle
             // 
@@ -255,6 +248,27 @@
             this.buttonUpdateCircle.Text = "更新圆形";
             this.buttonUpdateCircle.UseVisualStyleBackColor = true;
             this.buttonUpdateCircle.Click += new System.EventHandler(this.buttonUpdateCircle_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.aqDisplayCreateModel);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1228, 725);
+            this.panel2.TabIndex = 13;
+            // 
+            // buttonCircle2Zone
+            // 
+            this.buttonCircle2Zone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonCircle2Zone.Location = new System.Drawing.Point(3, 154);
+            this.buttonCircle2Zone.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCircle2Zone.Name = "buttonCircle2Zone";
+            this.buttonCircle2Zone.Size = new System.Drawing.Size(126, 34);
+            this.buttonCircle2Zone.TabIndex = 15;
+            this.buttonCircle2Zone.Text = "添加圆形2(绿色)";
+            this.buttonCircle2Zone.UseVisualStyleBackColor = true;
+            this.buttonCircle2Zone.Click += new System.EventHandler(this.buttonCircle2Zone_Click);
             // 
             // TemplateSetForm
             // 
@@ -294,6 +308,7 @@
         private System.Windows.Forms.TextBox textBoxCircleHeight;
         private System.Windows.Forms.TextBox textBoxCircleWidth;
         private System.Windows.Forms.Button buttonUpdateCircle;
+        private System.Windows.Forms.Button buttonCircle2Zone;
 
     }
 }

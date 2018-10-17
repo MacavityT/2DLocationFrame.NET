@@ -168,11 +168,18 @@ namespace IntegrationTesting
                     _location.ModelCircleCenterX = circle.CenterPoint.X;
                     _location.ModelCircleCenterY = circle.CenterPoint.Y;
                     _location.ModelCircleRadius = circle.Radius;
+                
+                    index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle2", AqDisplayZOrderConstants.Front);
+                    AqCircularArc circle2 = (AqCircularArc)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                    _location.ModelCircleCenterX2 = circle2.CenterPoint.X;
+                    _location.ModelCircleCenterY2 = circle2.CenterPoint.Y;
+                    _location.ModelCircleRadius2 = circle2.Radius;
 
                     SaveModelParam();
                     ShowGetContourData(_location.ModeXldColsM, _location.ModeXldRowsM, _location.ModeXldPointCountsM, AqColorConstants.Blue, aqDisplayCreateModel);
                     ShowCenterCross(_location.ModelCenterX, _location.ModelCenterY);
                     ShowCenterCross(_location.ModelCircleCenterX, _location.ModelCircleCenterY); //圆心
+                    ShowCenterCross(_location.ModelCircleCenterX2, _location.ModelCircleCenterY2); //圆心
                     aqDisplayCreateModel.Update();
                     MessageBox.Show("create Model success");
 
@@ -235,6 +242,10 @@ namespace IntegrationTesting
             IniFile.WriteValue("TemplateParam", "ModelCircleCenterX", _location.ModelCircleCenterX.ToString("f3"));
             IniFile.WriteValue("TemplateParam", "ModelCircleCenterY", _location.ModelCircleCenterY.ToString("f3"));
             IniFile.WriteValue("TemplateParam", "ModelCircleCenterRadius", _location.ModelCircleRadius.ToString("f3"));
+
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterX2", _location.ModelCircleCenterX2.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterY2", _location.ModelCircleCenterY2.ToString("f3"));
+            IniFile.WriteValue("TemplateParam", "ModelCircleCenterRadius2", _location.ModelCircleRadius2.ToString("f3"));
         }
 
         private void LoadModelParam()
@@ -281,6 +292,14 @@ namespace IntegrationTesting
             _location.ModelCircleCenterY = Convert.ToDouble(strValue);
             strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterRadius", "0.00");
             _location.ModelCircleRadius = Convert.ToDouble(strValue);
+
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterX2", "0.00");
+            _location.ModelCircleCenterX2 = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterY2", "0.00");
+            _location.ModelCircleCenterY2 = Convert.ToDouble(strValue);
+            strValue = IniFile.ReadValue("TemplateParam", "ModelCircleCenterRadius2", "0.00");
+            _location.ModelCircleRadius2 = Convert.ToDouble(strValue);
+
         }
         public int RunMatcher(string modeFilePath)
         {
@@ -303,16 +322,16 @@ namespace IntegrationTesting
                     if (iResult == 0)
                     {
                         _location.CalHorVerLineIntersection();
-                        LocationResultPosX = new double[1] { _location.IntersectionX };
-                        LocationResultPosY = new double[1] { _location.IntersectionY };
-                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+                        //LocationResultPosX = new double[1] { _location.IntersectionX };
+                        //LocationResultPosY = new double[1] { _location.IntersectionY };
+                        //LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
 //                         LocationResultPosX = _location.CenterX;
 //                         LocationResultPosY = _location.CenterY;
 //                         LocationResultPosTheta = _location.Angle;
                         _location.GetCircleCenter();
                         LocationResultPosX = new double[1] { _location.CircleCenterX };
                         LocationResultPosY = new double[1] { _location.CircleCenterY };
-                        LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
+                        LocationResultPosTheta = new double[1] { _location.CircleCenterAngle };
                     }
                 }
 
@@ -618,7 +637,8 @@ namespace IntegrationTesting
         private void buttonUpdateCircle_Click(object sender, EventArgs e)
         {
             int index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle", AqDisplayZOrderConstants.Front);
-            if (index >= 0)
+            int index2 = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle2", AqDisplayZOrderConstants.Front);
+            if (index >= 0 && index2 >= 0)
             {
                 AqCircularArc arc = (AqCircularArc)(aqDisplayCreateModel.InteractiveGraphics[index]);
                 float leftTopX =(float)(arc.LeftTopPoint.X-(Convert.ToDouble(textBoxCircleWidth.Text)-(arc.RightBottomPoint.X-arc.LeftTopPoint.X))/2.0);
@@ -630,15 +650,52 @@ namespace IntegrationTesting
                 AqGdiPointF leftTopPoint = new AqGdiPointF(leftTopX, leftTopY);
                 AqGdiPointF rightBottomPoint = new AqGdiPointF(rightBottomX, rightBottomY);
 
-                aqDisplayCreateModel.InteractiveGraphics.Remove(index);
+                //aqDisplayCreateModel.InteractiveGraphics.Remove(index);
 
                 AqCircularArc arcNew = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
                 arcNew.Color = AqColorConstants.Cyan;
                 arcNew.LineWidthInScreenPixels = 5;
                 aqDisplayCreateModel.InteractiveGraphics.Add(arcNew, "Circle", true);
                 aqDisplayCreateModel.Update();
+
+                // add second circle
+
+                AqCircularArc arc2 = (AqCircularArc)(aqDisplayCreateModel.InteractiveGraphics[index]);
+                leftTopX = (float)(arc.LeftTopPoint.X - (Convert.ToDouble(textBoxCircleWidth.Text) - (arc.RightBottomPoint.X - arc.LeftTopPoint.X)) / 2.0);
+                rightBottomX = (float)(arc.RightBottomPoint.X + (Convert.ToDouble(textBoxCircleWidth.Text) - (arc.RightBottomPoint.X - arc.LeftTopPoint.X)) / 2.0);
+
+                leftTopY = (float)(arc.LeftTopPoint.Y - (Convert.ToDouble(textBoxCircleHeight.Text) - (arc.RightBottomPoint.Y - arc.LeftTopPoint.Y)) / 2.0);
+                rightBottomY = (float)(arc.RightBottomPoint.Y + (Convert.ToDouble(textBoxCircleHeight.Text) - (arc.RightBottomPoint.Y - arc.LeftTopPoint.Y)) / 2.0);
+
+                leftTopPoint = new AqGdiPointF(leftTopX, leftTopY);
+                rightBottomPoint = new AqGdiPointF(rightBottomX, rightBottomY);
+
+                //aqDisplayCreateModel.InteractiveGraphics.Remove(index);
+
+                AqCircularArc arcNew2 = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arcNew2.Color = AqColorConstants.Cyan;
+                arcNew2.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arcNew2, "Circle2", true);
+
+                aqDisplayCreateModel.Update();
                 
             }
+        }
+
+        private void buttonCircle2Zone_Click(object sender, EventArgs e)
+        {
+            int index = aqDisplayCreateModel.InteractiveGraphics.FindItem("Circle2", AqDisplayZOrderConstants.Front);
+            if (index < 0)
+            {
+                AqGdiPointF leftTopPoint = new AqGdiPointF(150, 150);
+                AqGdiPointF rightBottomPoint = new AqGdiPointF(300, 300);
+                AqCircularArc arc2 = new AqCircularArc(leftTopPoint, rightBottomPoint, 0, 360);
+                arc2.Color = AqColorConstants.Cyan;
+                arc2.LineWidthInScreenPixels = 5;
+                aqDisplayCreateModel.InteractiveGraphics.Add(arc2, "Circle2", true);
+                aqDisplayCreateModel.Update();
+            }
+
         }
     }
 }

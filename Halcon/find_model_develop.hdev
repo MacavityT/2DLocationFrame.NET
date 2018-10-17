@@ -7,8 +7,8 @@
 <l>dev_update_off ()</l>
 <l>dev_set_draw ('margin')</l>
 <c></c>
-<l>model_image_path := 'E:/project/【0】主要工作/【0】项目跟进/新建文件夹/cal2/1.bmp'</l>
-<l>test_image_path := 'E:/project/【0】主要工作/【0】项目跟进/新建文件夹/cal2'</l>
+<l>model_image_path := 'D:/2 tasks/2D LiXun Test/1.bmp'</l>
+<l>test_image_path := 'D:/2 tasks/2D LiXun Test'</l>
 <c></c>
 <l as_id="matching" as_name="Matching 01" as_grp="[1,1,1]" as_ord="2">read_image (Image, model_image_path)</l>
 <l>get_image_size (Image, Width, Height)</l>
@@ -31,9 +31,12 @@
 <l>disp_message (WindowHandle, 'Draw RectLeft Region', 'window', 12, 12, 'black', 'true')</l>
 <l>draw_rectangle1(WindowHandle, RowRectLeft1, ColRectLeft1, RowRectLeft2, ColRectLeft2)</l>
 <l>gen_rectangle1(RectLeftRegion, RowRectLeft1, ColRectLeft1, RowRectLeft2, ColRectLeft2)</l>
-<l>disp_message (WindowHandle, 'Draw Circle Region', 'window', 12, 12, 'black', 'true')</l>
-<l>draw_circle (WindowHandle, RowCircle, ColCircle, RadiusCircle)</l>
-<l>gen_circle (Circle, RowCircle, ColCircle, RadiusCircle)</l>
+<l>disp_message (WindowHandle, 'Draw Circle1 Region', 'window', 12, 12, 'black', 'true')</l>
+<l>draw_circle (WindowHandle, RowCircle1, ColCircle1, RadiusCircle1)</l>
+<l>gen_circle (Circle1, RowCircle1, ColCircle1, RadiusCircle1)</l>
+<l>disp_message (WindowHandle, 'Draw Circle2 Region', 'window', 12, 12, 'black', 'true')</l>
+<l>draw_circle (WindowHandle, RowCircle2, ColCircle2, RadiusCircle2)</l>
+<l>gen_circle (Circle2, RowCircle2, ColCircle2, RadiusCircle2)</l>
 <c></c>
 <l>dev_set_window (WindowHandle)</l>
 <l>dev_set_color ('red')</l>
@@ -43,7 +46,8 @@
 <l>dev_set_color ('green')</l>
 <l>dev_display (RectUpRegion)</l>
 <l>dev_display (RectLeftRegion)</l>
-<l>dev_display (Circle)</l>
+<l>dev_display (Circle1)</l>
+<l>dev_display (Circle2)</l>
 <l>stop ()</l>
 <l>Rows :=    [RowModel1,RowModel1,RowModel2,RowModel2,RowModel1]</l>
 <l>Columns := [ColModel1,ColModel2,ColModel2,ColModel1,ColModel1]</l>
@@ -84,12 +88,14 @@
 <l>list_image_files (test_image_path, 'bmp', [], ImageFiles)</l>
 <l>for I := 0 to |ImageFiles|-1 by 1</l>
 <l>    read_image (Image, ImageFiles[I])</l>
+<c>    </c>
 <l>    FindFeatureModel (Image, AngleStart, AngleExtent, AngleStep, ScaleMin, ScaleMax, MinScore, NumMatches, ModelId, XldRowsM, XldColsM, XldPointCountsM, ModelRow, ModelColumn, ModelAngle, ModelScale, ModelScore)</l>
 <l>    if (|ModelScore|&gt;0)</l>
 <l>        detect_line (Image, RowSource, ColumnSource, AngleSource, ModelRow, ModelColumn, ModelAngle, RowRectLeft1, ColRectLeft1, RowRectLeft2, ColRectLeft2, 30, 'vertical', 3, 20, 'positive', 'last', LineLeftRow1, LineLeftCol1, LineLeftRow2, LineLeftCol2)</l>
 <l>        detect_line (Image, RowSource, ColumnSource, AngleSource, ModelRow, ModelColumn, ModelAngle, RowRectUp1, ColRectUp1, RowRectUp2, ColRectUp2, 30, 'horizontal', 3, 20, 'positive', 'last', LineUpRow1, LineUpCol1, LineUpRow2, LineUpCol2)</l>
 <c></c>
-<l>        detect_circle (Image, PartCircleXLD, Regions, Cross, Circle, RowSource, ColumnSource, AngleSource, ModelRow, ModelColumn, ModelAngle, RowCircle, ColCircle, RadiusCircle, 0, 360, 50, 50, 6, 1, 20, 'positive', 'last', 'outer', 10, 'circle', RowCenter, ColCenter, Radius)</l>
+<l>        detect_circle (Image, PartCircleXLD1, Regions1, Cross1, Circle1, RowSource, ColumnSource, AngleSource, ModelRow, ModelColumn, ModelAngle, RowCircle1, ColCircle1, RadiusCircle1, 0, 360, 50, 20, 6, 1, 20, 'positive', 'last', 'outer', 10, 'circle', RowCenter1, ColCenter1, Radius1)</l>
+<l>        detect_circle (Image, PartCircleXLD2, Regions2, Cross2, Circle2, RowSource, ColumnSource, AngleSource, ModelRow, ModelColumn, ModelAngle, RowCircle2, ColCircle2, RadiusCircle2, 0, 360, 50, 20, 6, 1, 20, 'positive', 'last', 'outer', 10, 'circle', RowCenter2, ColCenter2, Radius2)</l>
 <c></c>
 <l>        intersection_lines (LineLeftRow1, LineLeftCol1, LineLeftRow2, LineLeftCol2, LineUpRow1, LineUpCol1, LineUpRow2, LineUpCol2, RowCross, ColCross, IsOverlapping)</l>
 <l>        tuple_atan2 (LineLeftRow2-LineLeftRow1, LineLeftCol2-LineLeftCol1, Phi)</l>
@@ -99,24 +105,37 @@
 <l>        dev_set_draw ('margin')</l>
 <l>        dev_set_line_width (1)</l>
 <l>        dev_display (Image)</l>
-<l>        gen_region_points (RegionPoint, RowCenter, ColCenter)</l>
-<l>        distance_pp (RowCross, ColCross, RowCenter, ColCenter, DistanceCrossCircle)</l>
+<l>*         image_points_to_world_plane (CameraParameters, CameraPose, RowCenter1, ColCenter1, 'mm', RowCenter1, ColCenter1)</l>
+<l>*         image_points_to_world_plane (CameraParameters, CameraPose, RowCenter2, ColCenter2, 'mm', RowCenter2, ColCenter2)</l>
+<l>*         image_points_to_world_plane (CameraParameters, CameraPose, RowCross, ColCross, 'mm', RowCross, ColCross)</l>
+<l>*         image_points_to_world_plane (CameraParameters, CameraPose, ModelRow, ModelColumn, 'mm', ModelRow, ModelColumn)</l>
+<c>        </c>
+<c>        </c>
+<l>        gen_region_points (RegionPoint1, RowCenter1, ColCenter1)</l>
+<l>        gen_region_points (RegionPoint2, RowCenter2, ColCenter2)</l>
+<l>        distance_pp (RowCross, ColCross, RowCenter1, ColCenter1, DistanceCrossCircle)</l>
 <l>        distance_pp (RowCross, ColCross, ModelRow, ModelColumn, DistanceCrossModel)</l>
-<l>        distance_pp (RowCenter, ColCenter, ModelRow, ModelColumn, DistanceCircleModel)</l>
+<l>        distance_pp (RowCenter1, ColCenter1, ModelRow, ModelColumn, DistanceCircleModel)</l>
+<l>        distance_pp (RowCenter1, ColCenter1, RowCenter2, ColCenter2, DistanceCircleCircle)</l>
 <c>        </c>
 <l>        disp_line (WindowHandle, LineLeftRow1, LineLeftCol1, LineLeftRow2, LineLeftCol2)</l>
 <l>        disp_line (WindowHandle, LineUpRow1, LineUpCol1, LineUpRow2, LineUpCol2)</l>
-<l>        dev_display (Regions)</l>
+<l>        dev_display (Regions1)</l>
+<l>        dev_display (Regions2)</l>
 <l>        dev_set_color ('red')</l>
 <l>        dev_set_line_width (1)</l>
-<l>        dev_display (Cross)</l>
-<l>        dev_display (RegionPoint)</l>
-<l>        dev_display (Circle)</l>
+<l>        dev_display (Cross1)</l>
+<l>        dev_display (RegionPoint1)</l>
+<l>        dev_display (Circle1)</l>
+<l>        dev_display (Cross2)</l>
+<l>        dev_display (RegionPoint2)</l>
+<l>        dev_display (Circle2)</l>
 <l>        disp_cross (WindowHandle, RowCross, ColCross, 50, 0)</l>
 <c>        </c>
 <l>        disp_message (WindowHandle, 'Cross &amp; Circle Distance: ' + DistanceCrossCircle, 'window', 12, 12, 'black', 'true')</l>
 <l>        disp_message (WindowHandle, 'Cross &amp; Model  Distance: ' + DistanceCrossModel, 'window', 32, 12, 'black', 'true')</l>
 <l>        disp_message (WindowHandle, 'Model &amp; Circle Distance: ' + DistanceCircleModel, 'window', 52, 12, 'black', 'true')</l>
+<l>        disp_message (WindowHandle, 'C1    &amp; C2     Distance: ' + DistanceCircleCircle, 'window', 72, 12, 'black', 'true')</l>
 <l>        stop ()</l>
 <l>    endif</l>
 <l>endfor</l>
@@ -404,6 +423,8 @@
                           LineRow1, LineCol1, LineRow2, LineCol2, Nr, Nc, Dist1)</l>
 <l>    affine_trans_point_2d (RevertHomMat2D, LineRow1, LineCol1, LineRow1, LineCol1)</l>
 <l>    affine_trans_point_2d (RevertHomMat2D, LineRow2, LineCol2, LineRow2, LineCol2)</l>
+<l>    image_point_in_world (LineRow1, LineCol1, LineRow1, LineCol1)</l>
+<l>    image_point_in_world (LineRow2, LineCol2, LineRow2, LineCol2)</l>
 <l>endif</l>
 <l>catch (Exception)</l>
 <l>*     log_exception (Exception)</l>
@@ -896,12 +917,14 @@ endfor</example>
 <c>*该圆的信息为：RowCenter, ColCenter, Radius</c>
 <l>pts_to_best_circle (Circle, [ResultRow], [ResultColumn], int(|ResultRow|*0.8), RealArcType, RowCenter, ColCenter, Radius)</l>
 <c></c>
+<c></c>
 <l>affine_trans_contour_xld (PartCircleXLD, PartCircleXLD, RevertHomMat2D)</l>
 <l>affine_trans_contour_xld (Cross, Cross, RevertHomMat2D)</l>
 <l>affine_trans_contour_xld (Circle, Circle, RevertHomMat2D)</l>
 <l>* union1 (RegionVec, Regions)</l>
 <l>affine_trans_region (Regions, Regions, RevertHomMat2D, 'nearest_neighbor')</l>
 <l>affine_trans_point_2d (RevertHomMat2D, RowCenter, ColCenter, RowCenter, ColCenter)</l>
+<l>image_point_in_world (RowCenter, ColCenter, RowCenter, ColCenter)</l>
 <l>catch (Exception)</l>
 <l>*     log_exception (Exception)</l>
 <l>endtry</l>
@@ -1587,6 +1610,61 @@ all表示以上两种方向</description>
 <parameter id="Rows">
 <description lang="zh_CN">拟合圆的输入y数组</description>
 <sem_type>real</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="image_point_in_world">
+<interface>
+<ic>
+<par name="ImageRow" base_type="ctrl" dimension="0"/>
+<par name="ImageCol" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="WorldRow" base_type="ctrl" dimension="0"/>
+<par name="WorldCol" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<c as_id="calibration" as_name="Calibration 03" as_grp="[1,1]" as_ord="1">* Calibration 03: Code generated by Calibration 03</c>
+<l as_id="calibration" as_name="Calibration 03" as_grp="[2,1]" as_ord="1">CameraParameters := [0.0361311,-255.17,17.3289,264.664,3.46549e-006,3.45e-006,1263.53,982.218,2448,2048]</l>
+<l as_id="calibration" as_name="Calibration 03" as_grp="[2,2]" as_ord="1">CameraPose := [-0.00497858,0.0012356,0.41697,358.34,344.276,359.933,0]</l>
+<c></c>
+<l>* CameraParameters := ['area_scan_tilt_division',0.0354652,-229.021,0.0210793,9.12259,188.047,3.51938e-006,3.45e-006,1223.88,1023.86,2448,2048]</l>
+<l>* CameraPose := [-0.00359841,-0.000400561,0.401512,344.84,359.377,0.0830362,0]</l>
+<l>image_points_to_world_plane (CameraParameters, CameraPose, ImageRow, ImageCol, 'mm', WorldRow, WorldCol)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="image_point_in_world">
+<parameters>
+<parameter id="ImageCol">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ImageRow">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="WorldCol">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="WorldRow">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
 </parameter>
 </parameters>
 </docu>
