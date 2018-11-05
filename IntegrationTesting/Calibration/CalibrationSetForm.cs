@@ -785,5 +785,13 @@ namespace IntegrationTesting
             groupBoxInputData.Enabled = false;
             AutoCalibateMode = true;
         }
+
+        private void CalibrationSetForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //if (_autoCalibrate.ThreadState == ThreadState.Running)
+            {
+                //_autoCalibrate.Abort();
+            }
+        }
     }
 }

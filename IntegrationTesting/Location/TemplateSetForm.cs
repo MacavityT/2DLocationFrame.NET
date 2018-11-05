@@ -324,10 +324,10 @@ namespace IntegrationTesting
                         _location.CalHorVerLineIntersection();
                         _location.GetSingleCircleCenter();
 
-//                         //1.模板匹配
-//                         LocationResultPosX = _location.CenterX;
-//                         LocationResultPosY = _location.CenterY;
-//                         LocationResultPosTheta = _location.Angle;
+                        //1.模板匹配
+                        LocationResultPosX = _location.CenterX;
+                        LocationResultPosY = _location.CenterY;
+                        LocationResultPosTheta = _location.Angle;
 
 //                         //2.直线交点
 //                         LocationResultPosX = new double[1] { _location.IntersectionX };
@@ -344,11 +344,11 @@ namespace IntegrationTesting
 //                         LocationResultPosY = new double[1] { _location.CircleCenterY };
 //                         LocationResultPosTheta = new double[1] { _location.IntersectionAngle };
 // 
-                        //5.双圆心
-                        _location.GetDoubleCircleCenterAngle();
-                        LocationResultPosX = new double[1] { _location.CircleCenterX };
-                        LocationResultPosY = new double[1] { _location.CircleCenterY };
-                        LocationResultPosTheta = new double[1] { _location.CircleCenterAngle };
+//                         //5.双圆心
+//                         _location.GetDoubleCircleCenterAngle();
+//                         LocationResultPosX = new double[1] { _location.CircleCenterX };
+//                         LocationResultPosY = new double[1] { _location.CircleCenterY };
+//                         LocationResultPosTheta = new double[1] { _location.CircleCenterAngle };
 // 
 //                         //6.双圆心 + 畸变
 //                         _location.GetDoubleCircleCenterAngle();

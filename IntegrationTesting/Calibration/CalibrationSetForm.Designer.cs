@@ -93,8 +93,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listBoxMessage = new System.Windows.Forms.ListBox();
-            this.radioButtonAutoCalibrate = new System.Windows.Forms.RadioButton();
             this.buttonStart = new System.Windows.Forms.Button();
+            this.radioButtonAutoCalibrate = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panelSingleInput.SuspendLayout();
             this.panelBatchInput.SuspendLayout();
@@ -767,6 +767,16 @@
             this.listBoxMessage.Size = new System.Drawing.Size(324, 616);
             this.listBoxMessage.TabIndex = 13;
             // 
+            // buttonStart
+            // 
+            this.buttonStart.Location = new System.Drawing.Point(79, 48);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(124, 28);
+            this.buttonStart.TabIndex = 12;
+            this.buttonStart.Text = "启动自动标定流程";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
             // radioButtonAutoCalibrate
             // 
             this.radioButtonAutoCalibrate.AutoSize = true;
@@ -778,16 +788,6 @@
             this.radioButtonAutoCalibrate.UseVisualStyleBackColor = true;
             this.radioButtonAutoCalibrate.CheckedChanged += new System.EventHandler(this.radioButtonAutoCalibrate_CheckedChanged);
             // 
-            // buttonStart
-            // 
-            this.buttonStart.Location = new System.Drawing.Point(79, 48);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(124, 28);
-            this.buttonStart.TabIndex = 12;
-            this.buttonStart.Text = "启动自动标定流程";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
-            // 
             // CalibrationSetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -797,6 +797,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CalibrationSetForm";
             this.Text = "标定参数设置";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CalibrationSetForm_FormClosed);
             this.Load += new System.EventHandler(this.CalibrationSetForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

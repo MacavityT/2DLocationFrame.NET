@@ -95,7 +95,7 @@ namespace AqVision.Location
           set { m_minLength = value; }
         }
 
-        double m_minScore = 0.47;
+        double m_minScore = 0.5;
         public double MinScore
         {
           get { return m_minScore; }
@@ -764,6 +764,7 @@ namespace AqVision.Location
             IntersectionX = hv_ColCross.D;
             IntersectionY = hv_RowCross.D;
             IntersectionAngle = hv_Phi;
+
             LineLeftRow1 = hv_LineLeftRow1;
             LineLeftCol1 = hv_LineLeftCol1;
             LineLeftRow2 = hv_LineLeftRow2;
