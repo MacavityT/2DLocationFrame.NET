@@ -53,7 +53,7 @@ namespace IntegrationTesting.Robot
         public override Task<SetFlag> doCalibrate(CalibReq request, ServerCallContext context)
         {
             Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
-                " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
+                " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Theta.ToString() +
                 " Terminate " + request.Terminate.ToString());
             SetFlag resultFlag = new SetFlag();
             return Task.FromResult(resultFlag);
