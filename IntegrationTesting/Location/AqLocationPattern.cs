@@ -95,7 +95,7 @@ namespace AqVision.Location
           set { m_minLength = value; }
         }
 
-        double m_minScore = 0.47;
+        double m_minScore = 0.5;
         public double MinScore
         {
           get { return m_minScore; }
@@ -288,6 +288,83 @@ namespace AqVision.Location
         {
             get { return _rightBottomLineVerY; }
             set { _rightBottomLineVerY = value; }
+        }
+
+        double _circleCenterX = 0;
+        public double CircleCenterX
+        {
+            get { return _circleCenterX; }
+            set { _circleCenterX = value; }
+        }
+
+        double _circleCenterY = 0;
+        public double CircleCenterY
+        {
+            get { return _circleCenterY; }
+            set { _circleCenterY = value; }
+        }
+
+        double _circleCenterAngle = 0;  //双圆角度
+        public double CircleCenterAngle
+        {
+            get { return _circleCenterAngle; }
+            set { _circleCenterAngle = value; }
+        }
+
+        double _circleRadius = 0;
+        public double CircleRadius
+        {
+            get { return _circleRadius; }
+            set { _circleRadius = value; }
+        }
+
+        double _modelCircleCenterX = 0;
+
+        public double ModelCircleCenterX
+        {
+            get { return _modelCircleCenterX; }
+            set { _modelCircleCenterX = value; }
+        }
+
+        double _modelCircleCenterY = 0;
+
+        public double ModelCircleCenterY
+        {
+            get { return _modelCircleCenterY; }
+            set { _modelCircleCenterY = value; }
+        }
+
+        double _modelCircleRadius = 0;
+
+        public double ModelCircleRadius
+        {
+            get { return _modelCircleRadius; }
+            set { _modelCircleRadius = value; }
+        }
+
+
+        double _modelCircleCenterX2 = 0;
+
+        public double ModelCircleCenterX2
+        {
+            get { return _modelCircleCenterX2; }
+            set { _modelCircleCenterX2 = value; }
+        }
+
+        double _modelCircleCenterY2 = 0;
+
+        public double ModelCircleCenterY2
+        {
+            get { return _modelCircleCenterY2; }
+            set { _modelCircleCenterY2 = value; }
+        }
+
+        double _modelCircleRadius2 = 0;
+
+        public double ModelCircleRadius2
+        {
+            get { return _modelCircleRadius2; }
+            set { _modelCircleRadius2 = value; }
         }
 
         private double _intersectionX;
@@ -558,6 +635,88 @@ namespace AqVision.Location
             image.Dispose();//1061.388
             return true;
         }
+
+        public bool GetSingleCircleCenter()
+        {
+            HObject ho_Circle, ho_Cross = null;
+            HObject ho_PartCircleXLD = null, ho_Regions = null;
+
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            HTuple hv_RowCenter = new HTuple();
+            HTuple hv_ColCenter = new HTuple();
+            HTuple hv_Radius = new HTuple();
+            HTuple hv_RowCenter2 = new HTuple();
+            HTuple hv_ColCenter2 = new HTuple();
+            HTuple hv_Radius2 = new HTuple();
+            HTuple hv_Phi = new HTuple();
+
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(ModelCircleCenterY), new HTuple(ModelCircleCenterX), new HTuple(ModelCircleRadius),
+                0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                out hv_RowCenter, out hv_ColCenter, out hv_Radius);
+
+            CircleCenterX = hv_ColCenter.D;
+            CircleCenterY = hv_RowCenter.D;
+            CircleRadius = hv_Radius.D;
+            return true;
+        }
+
+        public bool GetDoubleCircleCenterAngle()
+        {
+            HObject ho_Circle, ho_Cross = null;
+            HObject ho_PartCircleXLD = null, ho_Regions = null;
+
+            HImage image = null;
+            if (m_TemplatePath.Length == 0)
+            {
+                image = ApplyHalcon.ImageConvert.Bitmap2HImage_24(OriginImage);
+            }
+            else
+            {
+                image = new HImage(m_TemplatePath);
+            }
+
+            HTuple hv_RowCenter = new HTuple();
+            HTuple hv_ColCenter = new HTuple();
+            HTuple hv_Radius = new HTuple();
+            HTuple hv_RowCenter2 = new HTuple();
+            HTuple hv_ColCenter2 = new HTuple();
+            HTuple hv_Radius2 = new HTuple();
+            HTuple hv_Phi = new HTuple();
+
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                  new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                  new HTuple(ModelCircleCenterY), new HTuple(ModelCircleCenterX), new HTuple(ModelCircleRadius),
+                0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                out hv_RowCenter, out hv_ColCenter, out hv_Radius);
+
+            ApplyHalcon.FindModel.detect_circle(image, out ho_PartCircleXLD, out ho_Regions, out ho_Cross,
+                            out ho_Circle, new HTuple(ModelCenterY), new HTuple(ModelCenterX), new HTuple(ModelAngle),
+                              new HTuple(CenterY[0]), new HTuple(CenterX[0]), new HTuple(Angle[0]),
+                              new HTuple(ModelCircleCenterY2), new HTuple(ModelCircleCenterX2), new HTuple(ModelCircleRadius2),
+                            0, 360, 30, 100, 20, 1, 20, "positive", "first", "outer", 10, "circle",
+                            out hv_RowCenter2, out hv_ColCenter2, out hv_Radius2);
+
+            CircleCenterX = (hv_ColCenter.D + hv_ColCenter2.D) / 2.0;
+            CircleCenterY = (hv_RowCenter.D + hv_RowCenter2.D) / 2.0;
+            CircleRadius = (hv_Radius.D + hv_Radius2.D) / 2.0;
+
+            HOperatorSet.TupleAtan2(hv_RowCenter - hv_RowCenter2, hv_ColCenter - hv_ColCenter2, out hv_Phi);
+            CircleCenterAngle = hv_Phi.D;
+            return true;
+        }
         //按照只能定位一个图形处理
         public bool CalHorVerLineIntersection()
         {
@@ -605,6 +764,7 @@ namespace AqVision.Location
             IntersectionX = hv_ColCross.D;
             IntersectionY = hv_RowCross.D;
             IntersectionAngle = hv_Phi;
+
             LineLeftRow1 = hv_LineLeftRow1;
             LineLeftCol1 = hv_LineLeftCol1;
             LineLeftRow2 = hv_LineLeftRow2;
@@ -614,8 +774,6 @@ namespace AqVision.Location
             LineUpCol1 = hv_LineUpCol1;
             LineUpRow2 = hv_LineUpRow2;
             LineUpCol2 = hv_LineUpCol2;
-
-
 
             image.Dispose();
             return true;            

@@ -52,8 +52,10 @@ namespace IntegrationTesting
 
         List<LocationResultSet> triggerLocationResult = new List<LocationResultSet>();
         string softwareTitle = "阿丘科技定位软件(V1.0)"; //软件标题名字
-
-        
+        public AqDisplay MainDisplayLocation
+        {
+            get { return aqDisplayLocation; }
+        }
 
         public MainForm()
         {
@@ -66,6 +68,8 @@ namespace IntegrationTesting
             m_visionImpl.triggerCamerHandler = new TriggerCamerHandler(TriggerCamera);
             m_visionImpl.getLocalizeResultHandler = new GetLocalizeResultHandler(GetLocalizeResult);
             m_visionImpl.getWorkObjInfoHandler = new GetWorkObjInfoHandler(GetWorkObjInfo);
+            m_visionImpl.doCalibrateHandler = new DoCalibrateHandler(m_calibrateShow.DoingCalibration);
+            m_visionImpl.teachPickPoseHandler = new TeachPickPoseHandler(m_calibrateShow.GetTeachPoint);
 
             IniFile.IniFillFullPath = Application.StartupPath + "\\Config.ini";
             ReadConfigFromIniFile();
@@ -169,6 +173,7 @@ namespace IntegrationTesting
                 {
                     m_calibrateShow = new CalibrationSetForm();
                 }
+
                 checkBoxCameraAcquisition.Invoke(new MethodInvoker(delegate
                 {
                     aqDisplayLocation.InteractiveGraphics.Clear();
@@ -269,7 +274,6 @@ namespace IntegrationTesting
 
                     _TriggerCount++;
                 }));
-                //AddMessageToListView("TriggerCameraDone");
                 
                 GC.Collect();
                 Tool.DebugInfo.OutputProcessMessage("Integraton TriggerCamera collect ------------------");
@@ -284,7 +288,7 @@ namespace IntegrationTesting
             return locationResult;
         }
 
-        private void ShowIntersectionHorVerLine()
+        public void ShowIntersectionHorVerLine()
         {
             AqLineSegment line = new AqLineSegment();
             line.StartX = m_templateSet.Location1.LineLeftCol1;
@@ -305,7 +309,6 @@ namespace IntegrationTesting
             aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
             aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
 
-
             line = new AqLineSegment();
             line.StartX = m_templateSet.Location1.IntersectionX - 20;
             line.StartY = m_templateSet.Location1.IntersectionY;
@@ -319,6 +322,26 @@ namespace IntegrationTesting
             line2.StartY = m_templateSet.Location1.IntersectionY - 20;
             line2.EndX = m_templateSet.Location1.IntersectionX;
             line2.EndY = m_templateSet.Location1.IntersectionY + 20;
+            line2.Color = AqColorConstants.Red;
+            line2.LineWidthInScreenPixels = 5;
+
+            aqDisplayLocation.InteractiveGraphics.Add(line, "LineHor", false);
+            aqDisplayLocation.InteractiveGraphics.Add(line2, "LineVer", false);
+            aqDisplayLocation.Update();
+
+            line = new AqLineSegment();
+            line.StartX = m_templateSet.Location1.CircleCenterX - 20;
+            line.StartY = m_templateSet.Location1.CircleCenterY;
+            line.EndX = m_templateSet.Location1.CircleCenterX + 20;
+            line.EndY = m_templateSet.Location1.CircleCenterY;
+            line.Color = AqColorConstants.Red;
+            line.LineWidthInScreenPixels = 5;
+
+            line2 = new AqLineSegment();
+            line2.StartX = m_templateSet.Location1.CircleCenterX;
+            line2.StartY = m_templateSet.Location1.CircleCenterY - 20;
+            line2.EndX = m_templateSet.Location1.CircleCenterX;
+            line2.EndY = m_templateSet.Location1.CircleCenterY + 20;
             line2.Color = AqColorConstants.Red;
             line2.LineWidthInScreenPixels = 5;
 
@@ -502,13 +525,7 @@ namespace IntegrationTesting
         public void AcquisitionBmpOnce(ref bool firstFrameLocation,ref bool firstFrameDetection)
         {
             Bitmap location = null;
-            
-            List<System.Drawing.Bitmap> acquisitionBmp = new List<Bitmap>();
-            List<string> acquisitionCameraName = new List<string>();
-            acquisitionCameraName.Add("Aqrose_L");
-            m_Acquisition.Acquisition(ref acquisitionBmp, acquisitionCameraName);
-            location = acquisitionBmp[0];
-
+            location = AcquisitionBmp(ref firstFrameLocation, ref firstFrameDetection);
             aqDisplayLocation.Invoke(new MethodInvoker(delegate
             {
                 if (checkBoxCameraAcquisition.Checked)
@@ -523,8 +540,17 @@ namespace IntegrationTesting
                 firstFrameLocation = false;
                 aqDisplayLocation.FitToScreen();
             }
-             
         }
+
+        public Bitmap AcquisitionBmp(ref bool firstFrameLocation, ref bool firstFrameDetection)
+        {
+            List<System.Drawing.Bitmap> acquisitionBmp = new List<Bitmap>();
+            List<string> acquisitionCameraName = new List<string>();
+            acquisitionCameraName.Add("Aqrose_L");
+            m_Acquisition.Acquisition(ref acquisitionBmp, acquisitionCameraName);
+            return acquisitionBmp[0];
+        }
+
         public void RegisterVisionAPI()
         {
             bool firstFrameLocation = true;

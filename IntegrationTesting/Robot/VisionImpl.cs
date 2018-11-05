@@ -13,6 +13,8 @@ namespace IntegrationTesting.Robot
         public TriggerCamerHandler triggerCamerHandler = null;
         public GetLocalizeResultHandler getLocalizeResultHandler = null;
         public GetWorkObjInfoHandler getWorkObjInfoHandler = null;
+        public DoCalibrateHandler doCalibrateHandler = null;
+        public TeachPickPoseHandler teachPickPoseHandler = null;
         // Server side handler of the SayHello RPC
         
         public override Task<SetFlag> triggerCamera(TriggerReq request, ServerCallContext context)
@@ -44,7 +46,7 @@ namespace IntegrationTesting.Robot
 
             Pose2D result_2D_pos = new Pose2D { X = (double)(posX/1000), Y = (double)(posY/1000), Theta = delta };
             localizeRespone.Pose2D = result_2D_pos;
-            localizeRespone.VisionStatus = 0;     //1-工件平放状态 2-工件竖立状态
+            localizeRespone.VisionStatus = 0;
             localizeRespone.OffsetMethod = "P";
 
             return Task.FromResult(localizeRespone);
@@ -52,10 +54,9 @@ namespace IntegrationTesting.Robot
 
         public override Task<SetFlag> doCalibrate(CalibReq request, ServerCallContext context)
         {
-            Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
-                " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Theta.ToString() +
-                " Terminate " + request.Terminate.ToString());
+            int iRet = doCalibrateHandler(request.Position.X, request.Position.Y, request.Position.Theta, request.Terminate);
             SetFlag resultFlag = new SetFlag();
+            resultFlag.ErrorFlag = iRet;
             return Task.FromResult(resultFlag);
         }
          
@@ -79,6 +80,14 @@ namespace IntegrationTesting.Robot
                 objRep.CurrentObjNum = 1;
             }
             return Task.FromResult(objRep);
+        }
+
+        public override Task<SetFlag> teachPickPose(TriggerReq request, ServerCallContext context)
+        {
+            int iRet = teachPickPoseHandler(request.RobotPose.X, request.RobotPose.Y, request.RobotPose.Theta);
+            SetFlag resultFlag = new SetFlag();
+            resultFlag.ErrorFlag = iRet;
+            return Task.FromResult(resultFlag);
         }
     }
 }

@@ -156,6 +156,7 @@
       <DependentUpon>PositionSet.cs</DependentUpon>
     </Compile>
     <Compile Include="ResultStructure.cs" />
+    <Compile Include="Robot\DoCalibrateHandler.cs" />
     <Compile Include="Robot\GetLocalizeResultHandler.cs" />
     <Compile Include="Location\AqLocationPattern.cs" />
     <Compile Include="Calibration\CalibrationSetForm.cs">
@@ -197,6 +198,7 @@
     <Compile Include="Location\TemplateSetForm.Designer.cs">
       <DependentUpon>TemplateSetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Robot\TeachPickPose.cs" />
     <Compile Include="Robot\VisionImpl.cs" />
     <Compile Include="Tool\DebugInfo.cs" />
     <Compile Include="Tool\IniFile.cs" />

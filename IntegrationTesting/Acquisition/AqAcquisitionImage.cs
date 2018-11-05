@@ -200,23 +200,22 @@ namespace AqVision.Acquisition
         {
             try
             {
-                if (CameraParamSet.AcquisitionParamChanged)
-                {
-                    DisConnect();
-                    Connect();
-                    CameraParamSet.AcquisitionParamChanged = false;
-                }
-
-                if (!m_connected)
-                {
-                    Connect();
-                }
-
                 GC.Collect();
                 for (int i = 0; i < AcquisitionCameraName.Count; i++)
                 {
                     if (CameraParamSet.AcquisitionStyle[AcquisitionCameraName[i]] == AcquisitionMode.FromCamera)
                     {
+                        if (CameraParamSet.AcquisitionParamChanged)
+                        {
+                            DisConnect();
+                            Connect();
+                            CameraParamSet.AcquisitionParamChanged = false;
+                        }
+
+                        if (!m_connected)
+                        {
+                            Connect();
+                        }
                         if (cameras.Count < AcquisitionCameraName.Count)
                         {
                             return false;

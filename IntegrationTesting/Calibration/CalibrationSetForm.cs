@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using IntegrationTesting.Tool;
 using IntegrationTesting.Robot;
+using System.Threading;
+using AqVision;
 
 namespace IntegrationTesting
 {
@@ -29,6 +31,17 @@ namespace IntegrationTesting
             set { m_Ispositive = value; }
         }
 
+        bool _autoCalibateMode = false;
+        public bool AutoCalibateMode
+        {
+            get { return _autoCalibateMode; }
+            set { _autoCalibateMode = value; }
+        }
+
+        Thread _autoCalibrate = null;
+        bool _getCalibrateDataDone = false;
+        bool _getTeachDataDone = false;
+        AutoResetEvent waitDone = new AutoResetEvent(false);
         public MainForm GetMainForm { get; set; }
 
 
@@ -65,6 +78,150 @@ namespace IntegrationTesting
             panelBatchInput.Enabled = true;
         }
 
+        public int GetTeachPoint(double teachX, double teachY, double teachTheta)
+        {
+            if (_getCalibrateDataDone)
+            {
+                try
+                {
+                    textBoxImageX.Invoke(new MethodInvoker(delegate
+                    {
+                        textBoxImageX.Text = m_calibrationCenter.AllLineData[4].CameraPosition.ImageX.ToString("f3");
+                        textBoxImageY.Text = m_calibrationCenter.AllLineData[4].CameraPosition.ImageY.ToString("f3");
+                        textBoxImageA.Text = (m_calibrationCenter.AllLineData[4].CameraPosition.ImageA).ToString("f3");
+
+                        textBoxRobotPosX.Text = m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotX.ToString("f3");
+                        textBoxRobotPosY.Text = m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotY.ToString("f3");
+                        textBoxRobotPosRz.Text = (m_calibrationCenter.AllLineData[4].RobotCoordinate.RobotRz).ToString("f3");
+
+                        textBoxCatchRobotX.Text = (teachX*1000).ToString("f3");
+                        textBoxCatchRobotY.Text = (teachY*1000).ToString("f3");
+                        textBoxCatchRobotRz.Text = (teachTheta*180/Math.PI).ToString("f3");
+                        _getTeachDataDone = true;
+                        listBoxMessage.Items.Add("收到示教数据");
+                        waitDone.Set();
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    _getTeachDataDone = false;
+                }
+            }
+            return 0;
+        }
+
+        public int DoingCalibration(double robotX, double robotY, double robotTheta, bool terminal)
+        {
+            if (m_calibrationCenter.AllLineData.Count >= 11)
+            {
+                m_calibrationCenter.AllLineData.Clear();
+            }
+            AqCalibration.CalibrationDataGroup calibrationlineData = new AqCalibration.CalibrationDataGroup();
+            calibrationlineData.RobotCoordinate.RobotX = robotX*1000;
+            calibrationlineData.RobotCoordinate.RobotY = robotY*1000;
+            calibrationlineData.RobotCoordinate.RobotRz = robotTheta*180/Math.PI;
+
+            //获取图片
+            bool firstLocation = false;
+            bool firstDetection = false;
+            GetMainForm.MainDisplayLocation.InteractiveGraphics.Clear();
+            GetMainForm.TemplateSet.ImageInput = GetMainForm.AcquisitionBmp(ref firstLocation, ref firstDetection).Clone() as Bitmap;
+            GetMainForm.MainDisplayLocation.Image = GetMainForm.TemplateSet.ImageInput;
+            GetMainForm.MainDisplayLocation.FitToScreen();
+            if (GetMainForm.TemplateSet.RunMatcher(Application.StartupPath + @"\location\ModelNormal.shm") == 0)
+            {
+                calibrationlineData.CameraPosition.ImageX = GetMainForm.TemplateSet.LocationResultPosX[0];
+                calibrationlineData.CameraPosition.ImageY = GetMainForm.TemplateSet.LocationResultPosY[0];
+                calibrationlineData.CameraPosition.ImageA = GetMainForm.TemplateSet.LocationResultPosTheta[0] * 180 / Math.PI;
+                m_calibrationCenter.AllLineData.Add(calibrationlineData);
+
+                listViewParameterSet.Invoke(new MethodInvoker(delegate
+                {
+                    ListViewItem line = new ListViewItem(calibrationlineData.CameraPosition.ImageX.ToString("f3"), 0);
+                    line.SubItems.Add(calibrationlineData.CameraPosition.ImageY.ToString("f3"));
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotX.ToString("f3"));
+                    line.SubItems.Add(calibrationlineData.RobotCoordinate.RobotY.ToString("f3"));
+                    line.SubItems.Add((calibrationlineData.RobotCoordinate.RobotRz).ToString("f3"));
+                    listViewParameterSet.Items.Add(line);
+
+                    listBoxMessage.Items.Add(string.Format("获取标定数据: {0}", m_calibrationCenter.AllLineData.Count));
+                }));
+                
+                GetMainForm.ShowIntersectionHorVerLine();
+                GetMainForm.TemplateSet.ShowGetResultsData(AqColorConstants.Green, GetMainForm.MainDisplayLocation);
+                GetMainForm.SaveImageToFile(GetMainForm.MainDisplayLocation, GetMainForm.TemplateSet.ImageInput, @"D:\Location\");
+            }
+            else
+            {
+                listViewParameterSet.Invoke(new MethodInvoker(delegate
+                {
+                    listBoxMessage.Items.Add(string.Format("!!!标定定位出错!!!"));
+                }));
+            }
+
+            if(terminal || (m_calibrationCenter.AllLineData.Count == 11))
+            {
+                _getCalibrateDataDone = true;
+                waitDone.Set();
+            }
+            return 0;
+        }
+
+        public void AutoCalibrate()
+        {
+            listBoxMessage.Invoke(new MethodInvoker(delegate
+            {
+                listBoxMessage.Items.Add("等待标定数据");
+            }));
+
+            _getCalibrateDataDone = false;
+            waitDone.WaitOne(500000);
+
+            listBoxMessage.Invoke(new MethodInvoker(delegate
+            {
+                listBoxMessage.Items.Add("计算标定结果");
+            }));
+            
+            listViewParameterSet.Invoke(new MethodInvoker(delegate
+            {
+                buttonCalibration_Click(null, null);
+            }));
+
+            listBoxMessage.Invoke(new MethodInvoker(delegate
+            {
+                listBoxMessage.Items.Add("等待示教数据");
+            }));
+            
+            _getTeachDataDone = false;
+            waitDone.WaitOne(500000);
+
+            listBoxMessage.Invoke(new MethodInvoker(delegate
+            {
+                listBoxMessage.Items.Add("设置示教点");
+            }));
+            textBoxImageX.Invoke(new MethodInvoker(delegate
+            {
+                buttonSetCatchSet_Click(null, null);
+            }));
+
+            listBoxMessage.Invoke(new MethodInvoker(delegate
+            {
+                listBoxMessage.Items.Add("保存标定结果");
+            }));
+            SaveResult(Application.StartupPath + @"\location\ResultNormal.txt");
+            _getCalibrateDataDone = false;
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            //1.清空所有已存在数据
+            listViewParameterSet.Items.Clear();
+            m_calibrationCenter.AllLineData.Clear();
+            listBoxMessage.Items.Add("清空数据");
+            _autoCalibrate = new Thread(new ThreadStart(AutoCalibrate));
+            _autoCalibrate.Start();
+        }
+        
         public void SetCurrentRobotPosition(double robotX, double robotY, double robotRz)
         {
             m_calibrationCenter.RobotPoint.RobotX = robotX;
@@ -289,6 +446,7 @@ namespace IntegrationTesting
             if(m_calibrationCenter.NPoint2AngleCalibartion())
             {
                 MessageBox.Show("N Point to Angle Calibration Error =>" + string.Format("RMS:{0}",m_calibrationCenter.ResultRMS));
+                listBoxMessage.Items.Add(string.Format("RMS:{0}", m_calibrationCenter.ResultRMS));
             }
         }
 
@@ -355,29 +513,34 @@ namespace IntegrationTesting
 
         private void buttonSaveResult_Click(object sender, EventArgs e)
         {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "txt files (*.txt)|*.txt";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveResult(fileDialog.FileName);
+            }
+        }
+
+        private void SaveResult(string strFilePath)
+        {
             WriteCalibrationDataToFile();
-            if(!m_calibrationCenter.SetConfig(CameraInOutHand, IsPositive))
+            if (!m_calibrationCenter.SetConfig(CameraInOutHand, IsPositive))
             {
                 MessageBox.Show("SetConfig error");
             }
             else
             {
-                SaveFileDialog fileDialog = new SaveFileDialog();
-                fileDialog.Filter = "txt files (*.txt)|*.txt";
-                if(fileDialog.ShowDialog() == DialogResult.OK)
+                m_calibrationCenter.CalibrationResultSavePath = strFilePath;
+                if (!m_calibrationCenter.SaveCalibrationResult())
                 {
-                    m_calibrationCenter.CalibrationResultSavePath = fileDialog.FileName;
-                    if (!m_calibrationCenter.SaveCalibrationResult())
-                    {
-                        MessageBox.Show("Save calibration Result error");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Save calibration Result done");
-                    }
+                    MessageBox.Show("Save calibration Result error");
+                }
+                else
+                {
+                    MessageBox.Show("Save calibration Result done");
                 }
             }
-            
+
         }
 
         private void buttonLoadResult_Click(object sender, EventArgs e)
@@ -606,6 +769,28 @@ namespace IntegrationTesting
             if (textBoxRobotRz.Text == "")
             {
                 textBoxRobotRz.Text = "0";
+            }
+        }
+
+        private void radioButtonManualCalibrate_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStart.Enabled = false;
+            groupBoxInputData.Enabled = true;
+            AutoCalibateMode = false;
+        }
+
+        private void radioButtonAutoCalibrate_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStart.Enabled = true;
+            groupBoxInputData.Enabled = false;
+            AutoCalibateMode = true;
+        }
+
+        private void CalibrationSetForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //if (_autoCalibrate.ThreadState == ThreadState.Running)
+            {
+                //_autoCalibrate.Abort();
             }
         }
     }
