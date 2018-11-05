@@ -25,7 +25,11 @@ namespace IntegrationTesting.Robot
                 int flag = 0;
                 if (triggerCamerHandler != null)
                 {
-                    flag = triggerCamerHandler(request.RobotPose.Position.X, request.RobotPose.Position.Y, request.RobotPose.Position.Z);
+                    /*
+                     * 原来代码可以编译flag = triggerCamerHandler(request.RobotPose.Position.X, request.RobotPose.Position.Y, request.RobotPose.Position.Z);
+                     * 目前机器人端.pro文件如果为更新过则需要更新机器人端.pro协议,否则软件可能不能工作
+                     */
+                    flag = triggerCamerHandler(request.RobotPose.X, request.RobotPose.Y, request.RobotPose.Theta);
                 }
                 resultFlag.ErrorFlag = flag;
                 //m_triggering = false;
@@ -66,8 +70,13 @@ namespace IntegrationTesting.Robot
 
         public override Task<SetFlag> doCalibrate(CalibReq request, ServerCallContext context)
         {
+            /*
+             * 原来代码可以编译 Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
+             * 目前机器人端.pro文件如果为更新过则需要更新机器人端.pro协议,否则软件可能不能工作
+             */
+
             Console.WriteLine("reve doCalibrate: OffsetMethod  " + request.OffsetMethod +
-                " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Z.ToString() +
+                " Position X " + request.Position.X.ToString() + " Y " + request.Position.Y.ToString() + " Z " + request.Position.Theta.ToString() +
                 " Terminate " + request.Terminate.ToString());
 //             request.Position.X;      //double
 //             request.Position.Y;      //double
